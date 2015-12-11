@@ -1,0 +1,11 @@
+﻿{
+    "CookiePrefix": "lsyy",
+    "ShopServiceUrl": "http://shop.alinq.cn/UserServices/Shop/",
+    "WeixinServiceUrl": "http://shop.alinq.cn/UserServices/WeiXin/",
+    "MemberServiceUrl": "http://shop.alinq.cn/UserServices/Member/",
+    "SiteServiceUrl": "http://shop.alinq.cn/UserServices/Site/",
+    "AccountServiceUrl": "http://shop.alinq.cn/UserServices/Account/",
+    "ImageBaseUrl": "http://shop.alinq.cn/AdminServices/Shop",
+    "appId": "7bbfa36c-8115-47ad-8d47-9e52b58e7efd",
+    "appSecret": "Ymt7uwVe"
+}

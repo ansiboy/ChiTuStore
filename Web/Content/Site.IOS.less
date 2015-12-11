@@ -1,0 +1,80 @@
+﻿.page-container {
+    position: relative;
+    background-color: white;
+
+    & .leftButton {
+        position: absolute;
+        font-size: 16px;
+        top: 10px;
+        left: 12px;
+
+        & :nth-child(2) {
+            left: 40px;
+        }
+    }
+
+    & i {
+        /*position: absolute;
+        display: block;
+        top: 50%;*/
+        /*margin-top: -80px;*/
+        /*font-size: 80px;*/
+        /*color: #BF0705;*/
+    }
+}
+
+.page-node {
+    position: relative;
+    /*background-color: white;*/
+    /*width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 0px;
+    bottom: 0px;*/
+    .page-header {
+        padding: 0px;
+        margin: 0px;
+        border: none;
+        position: fixed;
+        z-index: @zindex-modal-background - 200;
+    }
+
+    .page-body {
+        /*padding-top:20px;*/
+        background-color: white;
+        z-index: @zindex-modal-background - 202;
+
+        .page-content {
+            background-color: white;
+            position: relative;
+            z-index: @zindex-modal-background - 203;
+        }
+    }
+
+    .page-pulldown {
+        .icon-spin {
+            color: @gray;
+        }
+    }
+
+    .page-loading {
+        width: 100%;
+        position: absolute;
+        text-align: center;
+        top: 0px;
+        bottom: 0px;
+        background-color: white;
+        z-index: @zindex-modal-background - 201;
+
+        div {
+            /*background-color: white;*/
+            margin-top: 140px;
+
+            .icon-spinner {
+                color: @brand-primary;
+                font-size: 140px;
+                /*margin-top: 140px;*/
+            }
+        }
+    }
+}

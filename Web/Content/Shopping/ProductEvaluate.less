@@ -1,0 +1,86 @@
+﻿@import "../../Source/bootstrap-3.3.5/less/variables.less";
+@import "../Variables.less";
+
+.Shopping-ProductEvaluate {
+    /*.page-node {
+        .ios {*/
+    .page-content {
+        padding-top: @v-padding + 50px;
+        padding-bottom: 50px;
+    }
+    /*}
+    }*/
+    .icon-star, .icon-star-empty {
+        color: @brand-primary;
+        font-size: 24px;
+    }
+
+    .evaluation {
+        margin-top: 10px;
+
+        textarea {
+            height: 100px;
+
+            &::-webkit-input-placeholder:after {
+                display: block;
+                content: "写下购买体会或使用过程中带来的帮助等，可以为其它小伙伴带来参考"; /*  \A 表示换行  */
+                /*color: red;*/
+            }
+        }
+
+        .word-num {
+            position: absolute;
+            right: 20px;
+            bottom: 0px;
+            color: @gray-light;
+        }
+    }
+
+    .pictures {
+        margin-top: @v-padding;
+
+        .item {
+            text-align: center;
+            width: 80px;
+            height: 80px;
+            border: 1px solid @input-border;
+            margin-right: 10px;
+            margin-bottom: 10px;
+
+            i {
+                margin-top: 18px;
+                display: block;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        i {
+            font-size: 38px;
+            position: relative;
+            top: -80px;
+            left: 0px;
+            z-index: 1;
+        }
+
+        [type="file"] {
+            opacity: 0;
+            width: 80px;
+            height: 80px;
+            position: relative;
+            top: -20px;
+            z-index: 2;
+        }
+    }
+
+    .anonymous {
+    }
+
+    .tips {
+        margin-top: 10px;
+        color: @gray-light;
+    }
+}

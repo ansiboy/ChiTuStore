@@ -1,0 +1,83 @@
+﻿<!--<div ch-part="header" class="bg-primary topbar" style="">
+    <a data-bind="click:back,tap:back" href="javascript:" class="leftButton" style="padding-right:20px;padding-left:20px;margin-left:-20px;">
+        <i class="icon-chevron-left"></i>
+    </a>
+    <h4>订单详情</h4>
+</div>-->
+
+<div data-bind="with:order" class="container order" style="padding-top:10px;">
+    <div class="list">
+        <div class="">
+            <div>
+                <label>订单状态：</label>
+                <span data-bind="text:StatusText" style="color:#f70"></span>
+            </div>
+            <div>
+                <label>订单编号：</label>
+                <span data-bind="text:Serial"></span>
+            </div>
+            <div>
+                <label class="pull-left">
+                    订单总计：
+                </label>
+                <div style="margin-left:80px;">
+                    <span data-bind="money:Sum" class="price"></span>
+                    (邮费：<span data-bind="money:Freight"></span>)
+                    <div data-bind="visible:ko.unwrap(Status)=='WaitingForPayment' && ko.unwrap(BalanceAmount) > 0">
+                        <strong>已付：</strong><span data-bind="money:BalanceAmount"></span>
+                        &nbsp;&nbsp;
+                        <strong>待付：</strong><span data-bind="money:ko.unwrap(Sum)-ko.unwrap(BalanceAmount)"></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div data-bind="visible:ReceiptAddress">
+                <label style="float:left;">收货信息：</label>
+                <span style="float:left;" data-bind="html:ReceiptAddress"></span>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <label>下单时间：</label>
+                <span data-bind="text:['{0:g}', OrderDate]"></span>
+            </div>
+
+            <div data-bind="visible:ko.unwrap(Status) == 'WaitingForPayment'">
+                <button data-bind="tap:$parent.purchase,click:$parent.purchase" class="btn btn-block btn-primary">微信支付</button>
+            </div>
+            <div data-bind="visible:ko.unwrap(Status) == 'Send'">
+                <!---->
+                <button data-bind="tap:$parent.confirmReceived,click:$parent.confirmReceived" data-dialog="type:confirm,content:'你确定收到货了吗？'" class="btn btn-primary btn-block">确认收货</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-bind="visible:expressCompany" class="container order" style="display:none;">
+    <h4 class="light">物流信息</h4>
+    <div class="list">
+        <div class="box padding-lr-15">
+            <p>快递公司：<span data-bind="text:expressCompany"></span></p>
+            <p>快递单号：<span data-bind="text:expressBillNo"></span></p>
+        </div>
+    </div>
+</div>
+<div data-bind="with:order" class="container order">
+    <div>
+        <h4 class="text-primary" style="font-weight:bold;">购物清单</h4>
+    </div>
+    <div name="orderDetails" class="list" data-bind="foreach:OrderDetails">
+        <div class="row">
+            <div class="col-xs-4" style="padding-right:0px;">
+                <a href="#"><img data-bind="attr:{src:ImageUrl}" class="img-responsive"></a>
+            </div>
+            <div class="col-xs-8">
+                <a href="#" class="title" data-bind="text:ProductName"></a>
+                <div class="">价格：<span class="price" data-bind="money:Price"></span></div>
+                <div class="">数量：<span class="price" data-bind="text:Quantity"></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-bind="with:order" class="container" style="padding-top:10px;padding-bottom:20px;">
+    <a data-bind="tap:$parent.cancelOrder, click:$parent.cancelOrder, visible:Status() == 'WaitingForPayment'" data-dialog='type:"confirm",content:"你取消该定单吗？"' href="javascript:" class="btn btn-block btn-default">取消订单</a>
+</div>

@@ -1,0 +1,41 @@
+﻿<nav ch-part="header" class="navbar navbar-default navbar-fixed-top search bg-primary" style="">
+    <div name="search_box" class="form-control" style="border-width:0;border-radius:4px;">
+        寻找商品、品牌、品类
+    </div>
+    <div class="search-icon">
+        <i class="glyphicon glyphicon-search"></i>
+    </div>
+</nav>
+<div class="container" style="padding:0;">
+    <div class="" style="position:relative;">
+
+        <!--<h4 style="padding-bottom:0px;">品类</h4>-->
+        <div class="text-center" data-bind="foreach:categories,visible:ko.unwrap(categories).length > 0">
+            <div class="col-xs-3" style="margin-top:14px;padding:0px;">
+                <a data-bind="attr:{href:'#Home_ProductList_category_'+ko.unwrap(Id)}">
+                    <img data-bind="attr:{src:ImagePath}" class="img-responsive-100">
+                    <span class="mini interception" data-bind="html:Name"></span>
+                </a>
+            </div>
+        </div>
+        <div data-bind="visible:ko.unwrap(categories).length == 0" class="text-center" style="padding:120px 0px 120px 0px">
+            暂无品类，请到后台添加。
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <!--<div class="class" style="padding-top:20px;">
+        <h4 style="">品牌</h4>
+        <div class="text-center" data-bind="foreach:brands">
+            <div class="col-xs-3" style="margin-bottom:14px;padding:0px;">
+                <a data-bind="attr:{href:'#Home_ProductList_brand_' + ko.unwrap(Id)}">
+                    <img data-bind="attr:{src:Image}" class="img-responsive-100">
+                    <span class="mini interception" data-bind="html:Name"></span>
+                </a>
+            </div>
+        </div>
+        <div data-bind="visible:ko.unwrap(brands).length == 0" class="text-center" style="padding:120px 0px 120px 0px">
+            暂无品牌，请到后台添加。
+        </div>
+    </div>-->
+
+</div>

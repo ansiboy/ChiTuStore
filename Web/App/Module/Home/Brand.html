@@ -1,0 +1,11 @@
+<div class="container brand-intro">
+  <div class="title bg-white">
+    <h3 class="pull-left" data-bind="html:brand.Name"></h3>
+    <a data-bind="attr:{href:'#Home/ProductList/brand/'+ encodeURI(brand.Id)}" class="btn btn-primary pull-right" style="margin-top:8px;">商品订购</a>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+  <div class="padding-lr-15 detail">
+    <div data-bind="html:brand.Introduce" class="full-img"></div>
+  </div>
+</div>

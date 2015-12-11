@@ -1,0 +1,30 @@
+﻿<!--<nav class="navbar navbar-default topBar" role="navigation" style="padding:0px;margin-bottom:0px;">
+    <div class="col-xs-offset-4 col-xs-4" style="text-align: center">
+        <h4>登录</h4>
+    </div>
+</nav>-->
+<div class="container">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <!--<label for="UserName" class="col-xs-3 control-label text-right">用户名</label>-->
+            <div class="col-xs-12">
+                <input data-bind="value:username" type="text" name="UserName" class="form-control" placeholder="用户名">
+            </div>
+        </div>
+        <div class="form-group">
+            <!--<label for="Password" class="col-xs-3 control-label text-right">密码</label>-->
+            <div class="col-xs-12">
+                <input data-bind="value:password,textInput:password" type="password" name="Password" class="form-control" placeholder="密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <button id="Login" type="button" class="btn btn-primary btn-block" data-bind="tap:login, click:login">立即登录</button>
+            </div>
+            <div class="col-xs-12 text-center" style="margin-top:10px;">
+                <a href="#User_Register" class="pull-left">我要注册</a>
+                <a href="#User_AccountSecurity_ResetPassword" class="pull-right">忘记密码</a>
+            </div>
+        </div>
+    </form>
+</div>

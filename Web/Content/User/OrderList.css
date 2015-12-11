@@ -1,0 +1,24 @@
+﻿.tabs li {
+  float: left;
+  text-align: center;
+  background-color: #fff;
+  font-size: 16px;
+  display: block;
+  border: 1px solid #eeeeee;
+  border-left: none;
+  box-sizing: border-box;
+  padding: 8px;
+  color: #999;
+  cursor: pointer;
+}
+.tabs li:first-child {
+  border-left: 1px solid #e5e5e5;
+}
+.tabs li a {
+  text-decoration: none;
+}
+.tabs li a.active {
+  color: #9f0604;
+  font-weight: bold;
+}
+/*# sourceMappingURL=OrderList.css.map */

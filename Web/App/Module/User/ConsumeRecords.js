@@ -1,0 +1,2 @@
+﻿chitu.action(function () {
+});

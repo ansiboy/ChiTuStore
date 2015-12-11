@@ -1,0 +1,61 @@
+﻿.AccountSecurity-MobileBinding .container {
+  padding-top: 60px;
+}
+.AccountSecurity-MobileBinding .container .step {
+  margin-top: 10px;
+  padding: 0px 10px 0px 10px;
+  height: 80px;
+}
+.AccountSecurity-MobileBinding .container .step .step1 {
+  float: left;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  /**/
+  background-color: #777777;
+  font-size: 24px;
+  text-align: center;
+  color: white;
+  padding: 2px;
+}
+.AccountSecurity-MobileBinding .container .step .step1 .name {
+  position: relative;
+  top: 10px;
+  left: -20px;
+  width: 80px;
+  font-size: 14px;
+  color: black;
+}
+.AccountSecurity-MobileBinding .container .step .step2 {
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #777777;
+  font-size: 24px;
+  text-align: center;
+  color: white;
+  padding: 2px;
+}
+.AccountSecurity-MobileBinding .container .step .step2 .name {
+  position: relative;
+  top: 10px;
+  left: -22px;
+  width: 80px;
+  font-size: 14px;
+  color: black;
+}
+.AccountSecurity-MobileBinding .container .step .active {
+  background-color: #f50000;
+}
+.AccountSecurity-MobileBinding .container .step hr {
+  position: relative;
+  top: 20px;
+}
+.AccountSecurity-MobileBinding .container hr {
+  margin-top: 6px;
+}
+.AccountSecurity-MobileBinding .container .alert {
+  margin-bottom: 0;
+}
+/*# sourceMappingURL=MobileBinding.css.map */

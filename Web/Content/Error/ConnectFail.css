@@ -1,0 +1,14 @@
+﻿.Error-ConnectFail .page-content {
+  padding-top: 50px;
+}
+.Error-ConnectFail .norecords .icon-rss {
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  position: relative;
+  top: 14px;
+  left: 3px;
+}
+/*# sourceMappingURL=ConnectFail.css.map */

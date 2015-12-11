@@ -1,0 +1,60 @@
+﻿<div data-bind="foreach: receipts">
+    <div style="margin-bottom:14px;">
+        <div class=" container">
+            <h5 data-bind="text:Name"></h5>
+            <div class="small" data-bind="text:Detail,tap:$parent.setAddress,click:$parent.setAddress"></div>
+        </div>
+        <div style="margin-top:6px;">
+            <hr style="margin-bottom:8px;" />
+            <div class="container">
+                <div class="pull-left">
+                    <a data-bind="tap:$parent.setDefaultReceipt,click:$parent.setDefaultReceipt" href="javascript:">
+                        <span data-bind="visible:!ko.unwrap(IsDefault)" class="glyphicon glyphicon-ok-circle pull-left" style="font-size:20px;"></span>
+                        <span data-bind="visible:IsDefault" class="glyphicon glyphicon-ok pull-left" style="font-size:14px;"></span>
+                        <span style="margin-left:8px;">默认地址</span>
+                    </a>
+                </div>
+                <div class="pull-right">
+                    <a data-bind="attr:{href:'#User_ReceiptEdit_'+ko.unwrap(Id)}" href="javascript:">
+                        <!--tap:$parent.modifyReceipt,click:$parent.modifyReceipt-->
+                        <span class="icon-pencil" style="font-size:20px;"></span>
+                        <span style="margin-left:4px;">编辑</span>
+                    </a>
+                    <a data-bind="tap:$parent.deleteReceipt,click:$parent.deleteReceipt" data-dialog='type:"confirm",content:"你删除该收货地址吗？"' href="javascript:" style="margin-left:12px;">
+                        <span class="icon-remove" style="font-size:20px;"></span>
+                        <span style="margin-left:4px;">删除</span>
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <hr style="margin-top:8px;border-top-width:12px;" />
+        </div>
+
+    </div>
+</div>
+<!--<div class="container address">
+    <div class="row list" data-bind="foreach: receipts">
+        <div class="box">
+            <div data-bind="attr:{style:$root.allowSelect()? '' : 'padding-left:20px;'}" class="choose">
+                <span data-bind="visible:$root.allowSelect() && $root.selectedItemId() != $data.Id(), click:$root.setAddress" class="glyphicon glyphicon-ok-circle myadd"></span>
+                <span data-bind="visible:$root.allowSelect() && $root.selectedItemId() == $data.Id(), click:$root.setAddress" class="glyphicon glyphicon-ok myadd"></span>
+                <h5 class="no-padding">
+                    <span data-bind="text:Name"></span>
+                    <span data-bind="visible:IsDefault" style="color: blue">默认</span>
+                </h5>
+                <span class="small" data-bind="text:Detail"></span>
+            </div>
+            <a href="javascript:" data-bind="click:$root.modifyReceipt" class="edit">
+                <i class="icon-pencil" style="color: blue"></i>
+            </a>
+            <a href="javascript:" data-bind="click:$root.deleteReceipt" data-dialog="type:'confirm',content:'你确认需要删除吗？'" class="remove">
+                <i class="icon-remove" style="color: blue"></i>
+            </a>
+        </div>
+    </div>
+</div>-->
+<div class="container">
+    <div style="margin-bottom: 20px;">
+        <a href="#User_ReceiptEdit" class="btn btn-primary btn-block" data-bind="click:newReceipt, text:status() == 'new' ? '取消添加收货地址' : '添加新的收货地址'"></a>
+    </div>
+</div>
