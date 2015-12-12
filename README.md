@@ -7,8 +7,8 @@
 * 兼容性好，可以运行于微信，以及打包为 APP 。
  
 ## 视频
-<video width="640" height="480" autoplay="autoplay" preload="none" controls="controls" src="http://u.alinq.cn/test/20151208122155.mp4">
-</video>
+[![]](http://u.alinq.cn/test/20151208122155.mp4)
+
 
 ## 截图
 <img src="http://images2015.cnblogs.com/blog/24769/201512/24769-20151208122817293-191192690.png" width="250px"/>
