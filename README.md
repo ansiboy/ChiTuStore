@@ -6,6 +6,9 @@
 * 接近原生的用户体验，优其是在 IPhone 以及 Android 5.0  。
 * 兼容性好，可以运行于微信，以及打包为 APP 。
  
+## 视频
+<video src="http://u.alinq.cn/test/20151208122155.mp4"></video>
+
 ## 截图
 <img src="http://images2015.cnblogs.com/blog/24769/201512/24769-20151208122817293-191192690.png" width="250px"/>
 <img src="http://images2015.cnblogs.com/blog/24769/201512/24769-20151208122838136-2052553047.png" width="250px"/>
