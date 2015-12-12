@@ -106,9 +106,9 @@ class ProductPanel {
         this.node.style.display = 'none';
 
         //==========================================
-        // 说明：不能添加到 container，容易卡死
+        // 说明：不能添加到 page 的 container，容易卡死
         //page.nodes().container.appendChild(this.node);
-        $('#footer').append(this.node);
+        document.body.appendChild(this.node);
         //==========================================
         this._page.closed.add(this.page_closed);
 

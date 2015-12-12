@@ -124,7 +124,7 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
             this.width = $(window).width() * site.config.panelWithRate;
             this.node = document.createElement('div');
             this.node.style.display = 'none';
-            $('#footer').append(this.node);
+            document.body.appendChild(this.node);
             this._page.closed.add(this.page_closed);
             requirejs(['text!Module/Home/Product/ProductPanel.html'], this.html_loaded);
         }

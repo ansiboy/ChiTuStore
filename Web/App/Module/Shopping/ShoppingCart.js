@@ -253,8 +253,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
             return model.loadItems();
         });
         page.viewChanged.add(function () {
-            ko.applyBindings(model, page.nodes().content);
-            ko.applyBindings(model, page.nodes().footer.querySelector('.settlement'));
+            ko.applyBindings(model, page.nodes().container);
         });
     };
 });

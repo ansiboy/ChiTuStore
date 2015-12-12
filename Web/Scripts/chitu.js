@@ -813,8 +813,6 @@ window['crossroads'] = factory(window['jQuery']);
             this.page_stack = [];
             this._routes = new chitu.RouteCollection();
             this._runned = false;
-            this.controllerFactory = new chitu.ControllerFactory();
-            this.viewFactory = new chitu.ViewFactory();
             if (config == null)
                 throw e.argumentNull('container');
             if (!config.container) {
@@ -836,13 +834,6 @@ window['crossroads'] = factory(window['jQuery']);
         Application.prototype.routes = function () {
             return this._routes;
         };
-        Application.prototype.controller = function (routeData) {
-            if (typeof routeData !== 'object')
-                throw chitu.Errors.paramTypeError('routeData', 'object');
-            if (!routeData)
-                throw chitu.Errors.argumentNull('routeData');
-            return this.controllerFactory.getController(routeData);
-        };
         Application.prototype.currentPage = function () {
             if (this.page_stack.length > 0)
                 return this.page_stack[this.page_stack.length - 1];
@@ -852,24 +843,6 @@ window['crossroads'] = factory(window['jQuery']);
             if (this.page_stack.length > 1)
                 return this.page_stack[this.page_stack.length - 2];
             return null;
-        };
-        Application.prototype.action = function (routeData) {
-            if (typeof routeData !== 'object')
-                throw chitu.Errors.paramTypeError('routeData', 'object');
-            if (!routeData)
-                throw chitu.Errors.argumentNull('routeData');
-            var controllerName = routeData.controller;
-            if (!controllerName)
-                throw e.argumentNull('name');
-            if (typeof controllerName != 'string')
-                throw e.routeDataRequireController();
-            var actionName = routeData.action;
-            if (!actionName)
-                throw e.argumentNull('name');
-            if (typeof actionName != 'string')
-                throw e.routeDataRequireAction();
-            var controller = this.controller(routeData);
-            return controller.getAction(actionName);
         };
         Application.prototype.hashchange = function () {
             if (window.location['skip'] == true) {
@@ -974,10 +947,9 @@ window['crossroads'] = factory(window['jQuery']);
             }
             var controllerName = routeData.values().controller;
             var actionName = routeData.values().action;
-            var controller = this.controller(routeData);
-            var view_deferred = this.viewFactory.getView(routeData);
-            var action_deferred = controller.getAction(routeData);
-            var context = new ns.ControllerContext(controller, view_deferred, routeData);
+            var view_deferred = chitu.createViewDeferred(routeData);
+            var action_deferred = chitu.createActionDeferred(routeData);
+            var context = new ns.ControllerContext(view_deferred, routeData);
             this.on_pageCreating(context);
             var scrollType = this.config.scrollType(routeData);
             var page = new ns.Page(container, scrollType, parent);
@@ -1007,15 +979,11 @@ window['crossroads'] = factory(window['jQuery']);
 var chitu;
 (function (chitu) {
     var ControllerContext = (function () {
-        function ControllerContext(controller, view, routeData) {
+        function ControllerContext(view, routeData) {
             this._routeData = routeData;
-            this._controller = controller;
             this._view = view;
             this._routeData = routeData;
         }
-        ControllerContext.prototype.controller = function () {
-            return this._controller;
-        };
         ControllerContext.prototype.view = function () {
             return this._view;
         };
@@ -1040,188 +1008,12 @@ var chitu;
         ControllerFactory.prototype.controllers = function () {
             return this._controllers;
         };
-        ControllerFactory.prototype.createController = function (name) {
-            /// <param name="routeData" type="Object"/>
-            /// <returns type="ns.Controller"/>
-            //if (!routeData.values().controller)
-            //    throw e.routeDataRequireController();
-            return new chitu.Controller(name);
-        };
         ControllerFactory.prototype.actionLocationFormater = function () {
             return this._actionLocationFormater;
-        };
-        ControllerFactory.prototype.getController = function (routeData) {
-            /// <summary>Gets the controller by routeData.</summary>
-            /// <param name="routeData" type="Object"/>
-            /// <returns type="chitu.Controller"/>
-            if (!routeData.values().controller)
-                throw e.routeDataRequireController();
-            if (!this._controllers[routeData.values().controller])
-                this._controllers[routeData.values().controller] = this.createController(routeData.values().controller);
-            return this._controllers[routeData.values().controller];
         };
         return ControllerFactory;
     })();
     chitu.ControllerFactory = ControllerFactory;
-})(chitu || (chitu = {}));
-var chitu;
-(function (chitu) {
-    var e = chitu.Errors;
-    var crossroads = window['crossroads'];
-    function interpolate(pattern, data) {
-        var http_prefix = 'http://'.toLowerCase();
-        if (pattern.substr(0, http_prefix.length).toLowerCase() == http_prefix) {
-            var link = document.createElement('a');
-            link.setAttribute('href', pattern);
-            pattern = decodeURI(link.pathname);
-            var route = crossroads.addRoute(pattern);
-            return http_prefix + link.host + route.interpolate(data);
-        }
-        var route = crossroads.addRoute(pattern);
-        return route.interpolate(data);
-    }
-    var Controller = (function () {
-        function Controller(name) {
-            //if (!routeData) throw e.argumentNull('routeData');
-            ////if (typeof routeData !== 'object') throw e.paramTypeError('routeData', 'object');
-            this._actions = {};
-            this._name = name;
-            this._actions = {};
-            this.actionCreated = chitu.Callbacks();
-        }
-        Controller.prototype.name = function () {
-            return this._name;
-        };
-        Controller.prototype.getAction = function (routeData) {
-            /// <param name="value" type="chitu.Action" />
-            /// <returns type="jQuery.Deferred" />
-            var controller = routeData.values().controller;
-            ;
-            if (!controller)
-                throw chitu.Errors.routeDataRequireController();
-            if (this._name != controller) {
-                throw new Error('Not same a controller.');
-            }
-            var name = routeData.values().action;
-            if (!name)
-                throw chitu.Errors.routeDataRequireAction();
-            var self = this;
-            if (!this._actions[name]) {
-                this._actions[name] = this._createAction(routeData);
-            }
-            return this._actions[name];
-        };
-        Controller.prototype._createAction = function (routeData) {
-            /// <param name="actionName" type="String"/>
-            /// <returns type="jQuery.Deferred"/>
-            var actionName = routeData.values().action;
-            if (!actionName)
-                throw e.routeDataRequireAction();
-            var self = this;
-            var url = interpolate(routeData.actionPath(), routeData.values());
-            var result = $.Deferred();
-            requirejs([url], $.proxy(function (obj) {
-                if (!obj) {
-                    result.reject();
-                }
-                var func = obj.func || obj;
-                if (!$.isFunction(func))
-                    throw chitu.Errors.modelFileExpecteFunction(this.actionName);
-                var action = new Action(self, this.actionName, func);
-                self.actionCreated.fire(self, action);
-                this.result.resolve(action);
-            }, { actionName: actionName, result: result }), $.proxy(function (err) {
-                this.result.reject(err);
-            }, { actionName: actionName, result: result }));
-            return result;
-        };
-        return Controller;
-    })();
-    chitu.Controller = Controller;
-    var Action = (function () {
-        function Action(controller, name, handle) {
-            /// <param name="controller" type="chitu.Controller"/>
-            /// <param name="name" type="String">Name of the action.</param>
-            /// <param name="handle" type="Function"/>
-            if (!controller)
-                throw chitu.Errors.argumentNull('controller');
-            if (!name)
-                throw chitu.Errors.argumentNull('name');
-            if (!handle)
-                throw chitu.Errors.argumentNull('handle');
-            if (!$.isFunction(handle))
-                throw chitu.Errors.paramTypeError('handle', 'Function');
-            this._name = name;
-            this._handle = handle;
-        }
-        Action.prototype.name = function () {
-            return this._name;
-        };
-        Action.prototype.execute = function (page) {
-            if (!page)
-                throw e.argumentNull('page');
-            var result = this._handle.apply({}, [page]);
-            return chitu.Utility.isDeferred(result) ? result : $.Deferred().resolve();
-        };
-        return Action;
-    })();
-    chitu.Action = Action;
-    function action(deps, filters, func) {
-        /// <param name="deps" type="Array" canBeNull="true"/>
-        /// <param name="filters" type="Array" canBeNull="true"/>
-        /// <param name="func" type="Function" canBeNull="false"/>
-        switch (arguments.length) {
-            case 0:
-                throw e.argumentNull('func');
-            case 1:
-                if (typeof arguments[0] != 'function')
-                    throw e.paramTypeError('arguments[0]', 'Function');
-                func = deps;
-                filters = deps = [];
-                break;
-            case 2:
-                func = filters;
-                if (typeof func != 'function')
-                    throw e.paramTypeError('func', 'Function');
-                if (!$.isArray(deps))
-                    throw e.paramTypeError('deps', 'Array');
-                if (deps.length == 0) {
-                    deps = filters = [];
-                }
-                else if (typeof deps[0] == 'function') {
-                    filters = deps;
-                    deps = [];
-                }
-                else {
-                    filters = [];
-                }
-                break;
-        }
-        for (var i = 0; i < deps.length; i++) {
-            if (typeof deps[i] != 'string')
-                throw e.paramTypeError('deps[' + i + ']', 'string');
-        }
-        for (var i = 0; i < filters.length; i++) {
-            if (typeof filters[i] != 'function')
-                throw e.paramTypeError('filters[' + i + ']', 'function');
-        }
-        if (!$.isFunction(func))
-            throw e.paramTypeError('func', 'function');
-        define(deps, $.proxy(function () {
-            var args = Array.prototype.slice.call(arguments, 0);
-            var func = this.func;
-            var filters = this.filters;
-            return {
-                func: function (page) {
-                    args.unshift(page);
-                    return func.apply(func, args);
-                },
-                filters: filters
-            };
-        }, { func: func, filters: filters }));
-        return func;
-    }
-    ;
 })(chitu || (chitu = {}));
 var chitu;
 (function (chitu) {
@@ -2428,6 +2220,9 @@ var chitu;
         };
         Page.prototype.on_load = function (args) {
             var _this = this;
+            if (args.loading == null) {
+                args.loading = args.loadType == chitu.PageLoadType.scroll ? this.bottomLoading : this.formLoading;
+            }
             args.loading.show();
             var result = this.fireEvent(this.load, args);
             result.done(function () { return args.loading.hide(); });
@@ -2761,51 +2556,88 @@ var chitu;
         var route = crossroads.addRoute(pattern);
         return route.interpolate(data);
     }
-    var ViewFactory = (function () {
-        function ViewFactory() {
-            this._views = [];
+    var Action = (function () {
+        function Action(controller, name, handle) {
+            /// <param name="controller" type="chitu.Controller"/>
+            /// <param name="name" type="String">Name of the action.</param>
+            /// <param name="handle" type="Function"/>
+            if (!controller)
+                throw chitu.Errors.argumentNull('controller');
+            if (!name)
+                throw chitu.Errors.argumentNull('name');
+            if (!handle)
+                throw chitu.Errors.argumentNull('handle');
+            if (!$.isFunction(handle))
+                throw chitu.Errors.paramTypeError('handle', 'Function');
+            this._name = name;
+            this._handle = handle;
         }
-        ViewFactory.prototype.getView = function (routeData) {
-            /// <param name="routeData" type="Object"/>
-            /// <returns type="jQuery.Deferred"/>
-            if (!routeData.values().controller)
-                throw e.routeDataRequireController();
-            if (!routeData.values().action)
-                throw e.routeDataRequireAction();
-            var url = interpolate(routeData.viewPath(), routeData.values());
-            var self = this;
-            var viewName = routeData.values().controller + '_' + routeData.values().action;
-            if (!this._views[viewName]) {
-                this._views[viewName] = $.Deferred();
-                var http = 'http://';
-                if (url.substr(0, http.length).toLowerCase() == http) {
-                    $.ajax({ url: url })
-                        .done($.proxy(function (html) {
-                        if (html != null)
-                            this.deferred.resolve(html);
-                        else
-                            this.deferred.reject();
-                    }, { deferred: this._views[viewName] }))
-                        .fail($.proxy(function (err) {
-                        this.deferred.reject(err);
-                    }, { deferred: this._views[viewName] }));
-                }
-                else {
-                    requirejs(['text!' + url], $.proxy(function (html) {
-                        if (html != null)
-                            this.deferred.resolve(html);
-                        else
-                            this.deferred.reject();
-                    }, { deferred: this._views[viewName] }), $.proxy(function (err) {
-                        this.deferred.reject(err);
-                    }, { deferred: this._views[viewName] }));
-                }
-            }
-            return this._views[viewName];
+        Action.prototype.name = function () {
+            return this._name;
         };
-        return ViewFactory;
+        Action.prototype.execute = function (page) {
+            if (!page)
+                throw e.argumentNull('page');
+            var result = this._handle.apply({}, [page]);
+            return chitu.Utility.isDeferred(result) ? result : $.Deferred().resolve();
+        };
+        return Action;
     })();
-    chitu.ViewFactory = ViewFactory;
+    chitu.Action = Action;
+    function createActionDeferred(routeData) {
+        /// <param name="actionName" type="String"/>
+        /// <returns type="jQuery.Deferred"/>
+        var actionName = routeData.values().action;
+        if (!actionName)
+            throw e.routeDataRequireAction();
+        var url = interpolate(routeData.actionPath(), routeData.values());
+        var result = $.Deferred();
+        requirejs([url], function (obj) {
+            if (!obj) {
+                console.warn(chitu.Utility.format('加载活动“{1}.{0}”失败。', actionName, routeData.values().controller));
+                result.reject();
+            }
+            var func = obj.func || obj;
+            if (!$.isFunction(func))
+                throw chitu.Errors.modelFileExpecteFunction(actionName);
+            var action = new Action(self, actionName, func);
+            result.resolve(action);
+        }, function (err) { return result.reject(err); });
+        return result;
+    }
+    chitu.createActionDeferred = createActionDeferred;
+    function createViewDeferred(routeData) {
+        /// <param name="routeData" type="Object"/>
+        /// <returns type="jQuery.Deferred"/>
+        if (!routeData.values().controller)
+            throw e.routeDataRequireController();
+        if (!routeData.values().action)
+            throw e.routeDataRequireAction();
+        var url = interpolate(routeData.viewPath(), routeData.values());
+        var self = this;
+        var result = $.Deferred();
+        var http = 'http://';
+        if (url.substr(0, http.length).toLowerCase() == http) {
+            $.ajax({ url: url })
+                .done(function (html) {
+                if (html != null)
+                    result.resolve(html);
+                else
+                    result.reject();
+            })
+                .fail(function (err) { return result.reject(err); });
+        }
+        else {
+            requirejs(['text!' + url], function (html) {
+                if (html != null)
+                    result.resolve(html);
+                else
+                    result.reject();
+            }, function (err) { return result.reject(err); });
+        }
+        return result;
+    }
+    chitu.createViewDeferred = createViewDeferred;
 })(chitu || (chitu = {}));
 ;    //
     window['chitu'] = chitu;
