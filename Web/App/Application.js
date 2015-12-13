@@ -3,45 +3,42 @@ define(["require", "exports", 'Site', 'jquery'], function (require, exports, sit
     var app = new chitu.Application({
         container: function () { return document.getElementById('main'); },
         scrollType: function () {
+            if (site.env.isDegrade)
+                return chitu.ScrollType.Document;
             if (site.env.isIOS)
                 return chitu.ScrollType.IScroll;
-            return chitu.ScrollType.Document;
+            if (site.env.isAndroid)
+                return chitu.ScrollType.Div;
+            return chitu.ScrollType.Div;
         },
         openSwipe: function (routeData) {
-            if (site.env.isIOS) {
-                var controller = routeData.values().controller;
-                var action = routeData.values().action;
-                var name = controller + '.' + action;
-                if (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
-                    name == 'Home.NewsList' || name == 'User.Index')
-                    return chitu.SwipeDirection.None;
-                if (name == 'Home.ProductDetail')
-                    return chitu.SwipeDirection.Up;
-                return chitu.SwipeDirection.Left;
-            }
-            return chitu.SwipeDirection.None;
+            if (site.env.isDegrade)
+                return chitu.SwipeDirection.None;
+            var controller = routeData.values().controller;
+            var action = routeData.values().action;
+            var name = controller + '.' + action;
+            if (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
+                name == 'Home.NewsList' || name == 'User.Index')
+                return chitu.SwipeDirection.None;
+            if (name == 'Home.ProductDetail')
+                return chitu.SwipeDirection.Up;
+            return chitu.SwipeDirection.Left;
         },
         closeSwipe: function (routeData) {
-            if (site.env.isIOS) {
-                var controller = routeData.values().controller;
-                var action = routeData.values().action;
-                var name = controller + '.' + action;
-                if (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
-                    name == 'Home.NewsList' || name == 'User.Index')
-                    return chitu.SwipeDirection.None;
-                if (name == 'Home.ProductDetail')
-                    return chitu.SwipeDirection.Donw;
-                return chitu.SwipeDirection.Right;
-            }
-            return chitu.SwipeDirection.None;
+            if (site.env.isDegrade)
+                return chitu.SwipeDirection.None;
+            var controller = routeData.values().controller;
+            var action = routeData.values().action;
+            var name = controller + '.' + action;
+            if (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
+                name == 'Home.NewsList' || name == 'User.Index')
+                return chitu.SwipeDirection.None;
+            if (name == 'Home.ProductDetail')
+                return chitu.SwipeDirection.Donw;
+            return chitu.SwipeDirection.Right;
         }
     });
     app.pageCreated.add(function (sender, page) {
-        //page.nodes().container.style.zIndex = zindex.toString();
-        //page.nodes().body.style.zIndex = (zindex + 5).toString();
-        //page.nodes().loading.style.zIndex = (zindex + 5).toString();
-        //page.nodes().header.style.zIndex = (zindex + 10).toString();
-        //page.nodes().footer.style.zIndex = (zindex + 10).toString();
         var route_values = page.routeData.values();
         var controller = route_values.controller;
         var action = route_values.action;
@@ -49,9 +46,7 @@ define(["require", "exports", 'Site', 'jquery'], function (require, exports, sit
         var is_menu_page = (controller == 'Home' && (action == 'Index' || action == 'NewsList' || action == 'Class')) ||
             (controller == 'Shopping' && action == 'ShoppingCart') ||
             (controller == 'User' && action == 'Index');
-        if (is_menu_page) {
-        }
-        else {
+        if (!is_menu_page) {
             if ($.event.special.swipe) {
                 $(page.node())
                     .on('swiperight', function () {
@@ -63,8 +58,6 @@ define(["require", "exports", 'Site', 'jquery'], function (require, exports, sit
                     }
                 });
             }
-        }
-        if (controller == 'Home' && action == 'ProductDetail') {
         }
     });
     var viewPath = '../App/Module/{controller}/{action}.html';

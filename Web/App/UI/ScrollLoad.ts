@@ -468,7 +468,7 @@ var entrance = (page: chitu.Page, config, loadData) => {
     if (config['pullUp']) {
         pullUpBar = PullUpBar.createPullUpBar(page, config['pullUp']);
         //if (menu == null || !menu.visible()) {
-            //page.nodes().content.style.marginBottom = (0 - PULLUP_BAR_HEIGHT) + 'px';
+        //page.nodes().content.style.marginBottom = (0 - PULLUP_BAR_HEIGHT) + 'px';
         //}
     }
 
@@ -587,10 +587,10 @@ var entrance = (page: chitu.Page, config, loadData) => {
     if (site.env.isIOS) {
         enable_iscroll_gesture(page, pullDownBar, pullUpBar);
     }
-    else if (site.env.isAndroid) {
+    else if (site.env.isAndroid && !site.env.isWeiXin) {
         enable_divfixed_gesture(page, pullDownBar, pullUpBar);
     }
-    else if (site.env.isQQ) {
+    else {
         enable_divfixed_gesture(page, pullDownBar, pullUpBar);
     }
 

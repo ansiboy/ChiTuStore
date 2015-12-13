@@ -84,11 +84,10 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
     })();
     return function (page) {
         page.load.add(function (sender, args) {
-            page_args = args;
+            model.status(args.status || '');
             return model.loadOrders().done(function (items) { return items.length < site.config.pageSize; });
         });
         var model = new Model(page);
-        model.status(page.routeData.values().status || '');
         page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
     };
 });

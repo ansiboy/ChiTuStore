@@ -63,8 +63,8 @@ export var func = function (page: chitu.Page) {
 
     });
 
-    var viewDeferred = page.viewDeferred;
-    page.viewDeferred = $.when(viewDeferred, chitu.Utility.loadjs(['css!sc/Home/Index', 'ui/PromotionLabel']));
+    var viewDeferred = page.view;
+    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['css!sc/Home/Index', 'ui/PromotionLabel']));
     page.viewChanged.add(() => ko.applyBindings(model, page.nodes().content));
 
     page.loadCompleted.add(() => {

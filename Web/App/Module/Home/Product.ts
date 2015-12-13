@@ -69,8 +69,8 @@ class ProductModel {
 
 export = function (page: chitu.Page) {
 
-    var viewDeferred = page.viewDeferred;
-    page.viewDeferred = $.when(viewDeferred, chitu.Utility.loadjs(['ui/Promotion']));
+    var viewDeferred = page.view;
+    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['ui/Promotion']));
 
     //c.scrollLoad(page, {
     //    pullUp: {
@@ -88,19 +88,13 @@ export = function (page: chitu.Page) {
     //        }
     //    }
     //});
-
-    page.viewChanged.add(() => {
-        var node = page.nodes().header.querySelectorAll('.topbar')[0];
-        (<HTMLElement>node).remove();
-    });
-
     var model = new ProductModel(page);
     page.load.add(function (sender, args) {
         var productId = args.id;
         auth.whenLogin(() => shopping.isFavored(productId).done((value) => model.isFavored(value)));
 
         return $.when(shopping.getProduct(productId), services.shopping.getProductStock(productId),
-            shopping.getProductComments(page.routeData.values().id, 4))
+            shopping.getProductComments(args.id, 4))
             .done(function (product: any, stock, comments) {
                 product.Stock = stock.Quantity != null ? stock.Quantity : 1000000; //如果 Quantity 没有，则不限库存
                 model.comments(comments);
@@ -125,13 +119,18 @@ export = function (page: chitu.Page) {
 
                 }, model.product)
 
-                ko.applyBindings(model, page.nodes().container);
             });
     });
 
     //======================================================================
     // 实现顶部图片切换
     page.viewChanged.add(() => {
+        //=============================================
+        // 移除掉原来的 TopBar
+        var node = page.nodes().header.querySelectorAll('.topbar')[0];
+        (<HTMLElement>node).remove();
+        //=============================================
+
         requirejs(['swiper'], function (Swiper) {
             var mySwiper = new Swiper($(page.node()).find('[name="productImages"]')[0], {
                 pagination: $(page.node()).find('[name="productImages-pagination"]')[0],
@@ -143,8 +142,8 @@ export = function (page: chitu.Page) {
         })
     });
     //======================================================================
-
-
+    // 说明：必须是视图，和加载都加完成了，才进行绑定。
+    page.loadCompleted.add(() => ko.applyBindings(model, page.nodes().container));
 
 
 };

@@ -135,11 +135,6 @@ class SiteEnvironment {
 
     private 'type'(): EnvironmentType {
         if (this._environmentType == null) {
-            if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {
-                this._environmentType = EnvironmentType.low;
-                return this._environmentType;
-            }
-
             var andriod_version = SiteEnvironment.isAndroid(navigator.userAgent);
             if (andriod_version) {
                 if (andriod_version < 4) {
@@ -164,8 +159,17 @@ class SiteEnvironment {
     get isAndroid() {
         return site.env.type() == EnvironmentType.android;
     }
-    get isQQ() {
-        return site.env.type() == EnvironmentType.low;
+    /// <summary>
+    /// 是否需要降级
+    /// </summary>
+    get isDegrade(): boolean {
+        if (this.isWeiXin && this.isAndroid)
+            return true;
+
+        if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {
+            return true;
+        }
+        return false;
     }
     get isWeiXin(): boolean {
         var ua = navigator.userAgent.toLowerCase();
@@ -177,33 +181,6 @@ class SiteEnvironment {
 
 
 }
-
-//class Browser {
-//    private user_agent: string
-//    private is_safari: boolean = false;
-//    private is_chrome: boolean = false;
-//    private is_qq: boolean = false;
-//    constructor(userAgent: string) {
-//        console.log('userAgent:' + userAgent);
-//        userAgent = userAgent || '';
-//        if (userAgent.indexOf("Chrome") >= 0)
-//            this.is_chrome = true;
-//        else if (userAgent.indexOf('MQQBrowser') >= 0)
-//            this.is_qq = true;
-//        else if (userAgent.indexOf("AppleWebKit") >= 0)
-//            this.is_safari = true;
-//    }
-//    get isSafari(): boolean {
-//        return this.is_safari;
-//    }
-//    get isChrome(): boolean {
-//        return this.is_chrome;
-//    }
-//    get isQQ(): boolean {
-//        return this.is_qq;
-//    }
-//}
-
 
 class Site {
     config: SiteConfig

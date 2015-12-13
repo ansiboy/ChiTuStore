@@ -190,9 +190,6 @@ class ProductPanel {
                 this.is_doing = false;
             });
     }
-
-
-
 }
 
 

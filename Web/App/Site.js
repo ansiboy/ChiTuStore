@@ -123,10 +123,6 @@ define(["require", "exports"], function (require, exports) {
         };
         SiteEnvironment.prototype['type'] = function () {
             if (this._environmentType == null) {
-                if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {
-                    this._environmentType = EnvironmentType.low;
-                    return this._environmentType;
-                }
                 var andriod_version = SiteEnvironment.isAndroid(navigator.userAgent);
                 if (andriod_version) {
                     if (andriod_version < 4) {
@@ -159,9 +155,14 @@ define(["require", "exports"], function (require, exports) {
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(SiteEnvironment.prototype, "isQQ", {
+        Object.defineProperty(SiteEnvironment.prototype, "isDegrade", {
             get: function () {
-                return site.env.type() == EnvironmentType.low;
+                if (this.isWeiXin && this.isAndroid)
+                    return true;
+                if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {
+                    return true;
+                }
+                return false;
             },
             enumerable: true,
             configurable: true

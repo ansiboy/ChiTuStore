@@ -58,17 +58,13 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
         return ProductModel;
     })();
     return function (page) {
-        var viewDeferred = page.viewDeferred;
-        page.viewDeferred = $.when(viewDeferred, chitu.Utility.loadjs(['ui/Promotion']));
-        page.viewChanged.add(function () {
-            var node = page.nodes().header.querySelectorAll('.topbar')[0];
-            node.remove();
-        });
+        var viewDeferred = page.view;
+        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['ui/Promotion']));
         var model = new ProductModel(page);
         page.load.add(function (sender, args) {
             var productId = args.id;
             auth.whenLogin(function () { return shopping.isFavored(productId).done(function (value) { return model.isFavored(value); }); });
-            return $.when(shopping.getProduct(productId), services.shopping.getProductStock(productId), shopping.getProductComments(page.routeData.values().id, 4))
+            return $.when(shopping.getProduct(productId), services.shopping.getProductStock(productId), shopping.getProductComments(args.id, 4))
                 .done(function (product, stock, comments) {
                 product.Stock = stock.Quantity != null ? stock.Quantity : 1000000;
                 model.comments(comments);
@@ -89,10 +85,11 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
                     str = str + this.Count() + '件';
                     return str;
                 }, model.product);
-                ko.applyBindings(model, page.nodes().container);
             });
         });
         page.viewChanged.add(function () {
+            var node = page.nodes().header.querySelectorAll('.topbar')[0];
+            node.remove();
             requirejs(['swiper'], function (Swiper) {
                 var mySwiper = new Swiper($(page.node()).find('[name="productImages"]')[0], {
                     pagination: $(page.node()).find('[name="productImages-pagination"]')[0],
@@ -101,5 +98,6 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
                 });
             });
         });
+        page.loadCompleted.add(function () { return ko.applyBindings(model, page.nodes().container); });
     };
 });

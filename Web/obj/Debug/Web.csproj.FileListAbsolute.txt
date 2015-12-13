@@ -20,3 +20,5 @@ D:\MyProjects\ChiTuStore\Web\bin\ShopColud.UserClient.pdb
 D:\MyProjects\ChiTuStore\Web\obj\Debug\Web.csprojResolveAssemblyReference.cache
 D:\MyProjects\ChiTuStore\Web\obj\Debug\ShopColud.UserClient.dll
 D:\MyProjects\ChiTuStore\Web\obj\Debug\ShopColud.UserClient.pdb
+D:\MyProjects\ChiTuStore\Web\bin\System.Web.Mvc.dll
+D:\MyProjects\ChiTuStore\Web\bin\System.Web.Mvc.xml

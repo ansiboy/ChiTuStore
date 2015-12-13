@@ -410,10 +410,10 @@ define(["require", "exports", 'Site', 'move', 'hammer'], function (require, expo
         if (site.env.isIOS) {
             enable_iscroll_gesture(page, pullDownBar, pullUpBar);
         }
-        else if (site.env.isAndroid) {
+        else if (site.env.isAndroid && !site.env.isWeiXin) {
             enable_divfixed_gesture(page, pullDownBar, pullUpBar);
         }
-        else if (site.env.isQQ) {
+        else {
             enable_divfixed_gesture(page, pullDownBar, pullUpBar);
         }
     };

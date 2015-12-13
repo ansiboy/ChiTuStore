@@ -30,8 +30,8 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home'], 
                 sender.enableScrollLoad = homeProducts.length == services.defaultPageSize;
             });
         });
-        var viewDeferred = page.viewDeferred;
-        page.viewDeferred = $.when(viewDeferred, chitu.Utility.loadjs(['css!sc/Home/Index', 'ui/PromotionLabel']));
+        var viewDeferred = page.view;
+        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['css!sc/Home/Index', 'ui/PromotionLabel']));
         page.viewChanged.add(function () { return ko.applyBindings(model, page.nodes().content); });
         page.loadCompleted.add(function () {
             requirejs(['swiper'], function (Swiper) {

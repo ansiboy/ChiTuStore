@@ -2,8 +2,8 @@ define(["require", "exports", 'Services/Coupon'], function (require, exports, co
     return function (page) {
         var loadjsDeferred = $.Deferred();
         requirejs(['ui/CouponListItem', 'css!content/User/Coupon'], function () { return loadjsDeferred.resolve(); });
-        var viewDeferred = page.viewDeferred;
-        page.viewDeferred = $.when(viewDeferred, loadjsDeferred);
+        var viewDeferred = page.view;
+        page.view = $.when(viewDeferred, loadjsDeferred);
         page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
         var queryArguments = {
             pageIndex: 0,

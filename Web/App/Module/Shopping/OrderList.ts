@@ -114,13 +114,12 @@ class Model {
 
 export = function (page: chitu.Page) {
 
-    page.load.add(function (sender: chitu.Page, args: chitu.PageLoadArguments) {
-        page_args = args;
+    page.load.add(function (sender: chitu.Page, args: any) {
+        model.status(args.status || '');
         return model.loadOrders().done((items) => items.length < site.config.pageSize);
     });
 
     var model = new Model(page);
-    model.status(page.routeData.values().status || '');
     page.viewChanged.add(() => ko.applyBindings(model, page.node()));
     //model.orderEvaluate.open({});
     //return c.scrollLoad(page,);
