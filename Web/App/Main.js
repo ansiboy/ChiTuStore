@@ -18,10 +18,10 @@ var require_config = {
         //'knockout.validation': {
         //    deps: ['../Scripts/knockout.validation']
         //},
-        'ko.mapping': {
-            deps: ['knockout']
+        'knockout': {
+            exports: 'ko'
         },
-        'ko.ext': {
+        'ko.mapping': {
             deps: ['knockout']
         },
         swiper: {
@@ -35,10 +35,7 @@ var require_config = {
             exports: 'CryptoJS'
         },
         'Application': {
-            deps: ['chitu', 'knockout', 'ko.ext/knockout.extentions', 'Site']
-        },
-        'ko.ext/knockout.extentions': {
-            deps: ['knockout', 'jquery', 'Site']
+            deps: ['chitu', 'knockout', 'ko.ext', 'Site']
         },
         'jquery.cookie': {
             deps: ['jquery']
@@ -82,7 +79,7 @@ var require_config = {
         chitu: '../Scripts/chitu',
         hammer: '../Scripts/hammer',
         knockout: '../Scripts/knockout-3.2.0.debug',//['http://cdn.bootcss.com/knockout/3.3.0/knockout-min', 'knockout-3.2.0.debug'],
-        'ko.ext': '../Scripts/knockout.extentions',
+        'ko.ext': 'Core/ko.ext',
         'ko.val': '../Scripts/knockout.validation.cn',
         'knockout.validation': '../Scripts/knockout.validation',
         'knockout.mapping': '../Scripts/knockout.mapping',//['http://cdn.bootcss.com/knockout.mapping/2.4.1/knockout.mapping.min', 'scr/knockout.mapping'],

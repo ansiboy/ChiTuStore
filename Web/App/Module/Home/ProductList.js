@@ -1,4 +1,4 @@
-define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapping', 'Site'], function (require, exports, app, shopping, mapping, site) {
+define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapping', 'knockout', 'Site'], function (require, exports, app, shopping, mapping, ko, site) {
     requirejs(['css!content/Home/ProductList']);
     exports.func = function (page) {
         /// <param name="page" type="chitu.Page"/>

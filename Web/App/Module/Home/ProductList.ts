@@ -1,7 +1,7 @@
 ﻿import app = require('Application');
 import shopping = require('Services/Shopping');
 import mapping = require('knockout.mapping');
-//import c = require('ui/ScrollLoad');
+import ko = require('knockout');
 import site = require('Site');
 
 requirejs(['css!content/Home/ProductList']);

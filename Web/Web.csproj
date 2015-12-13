@@ -126,6 +126,7 @@
     <Content Include="App\Module\User\SquareCode.html" />
     <Content Include="App\Module\User\SquareCode.js" />
     <TypeScriptCompile Include="App\Core\ImageFileResize.ts" />
+    <TypeScriptCompile Include="App\Core\ko.ext.ts" />
     <TypeScriptCompile Include="App\Core\Page.ts" />
     <TypeScriptCompile Include="App\Core\Panel.ts" />
     <TypeScriptCompile Include="App\Module\Error\ConnectFail.ts" />
@@ -651,7 +652,7 @@
     <Content Include="Scripts\knockout.extentions\AlterDialog.html" />
     <Content Include="Scripts\knockout.extentions\ComfirmDialog.html" />
     <Content Include="Scripts\knockout.extentions\dialog.js" />
-    <Content Include="Scripts\knockout.extentions\FlashDialog.html" />
+    <Content Include="Scripts\knockout.extentions\ToastDialog.html" />
     <Content Include="Scripts\knockout.extentions\format.js" />
     <Content Include="Scripts\knockout.extentions\knockout.extentions.js" />
     <Content Include="Scripts\knockout.validation.cn.js" />
@@ -2605,6 +2606,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Module\Shopping\UserInfo\" />
+    <Folder Include="Scripts\typings\knockout\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="App\Application.ts" />
@@ -2647,7 +2649,7 @@
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout.mapping\knockout.mapping.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\knockout.validation\knockout.validation.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\knockout\knockout.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\knockout.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\requirejs\require.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\stylus\stylus.d.ts" />
