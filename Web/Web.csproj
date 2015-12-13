@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\Core\bootbox.js" />
+    <Content Include="App\Core\bootbox.min.js">
+      <DependentUpon>bootbox.js</DependentUpon>
+    </Content>
     <Content Include="App\Core\prequire.js" />
     <Content Include="App\Core\prequire.min.js">
       <DependentUpon>prequire.js</DependentUpon>
@@ -210,6 +213,9 @@
     <Content Include="Content\font\fontdiao.svg" />
     <Content Include="Content\font\fontdiao.ttf" />
     <Content Include="Content\font\fontdiao.woff" />
+    <Content Include="App\Core\bootbox.min.js.map">
+      <DependentUpon>bootbox.min.js</DependentUpon>
+    </Content>
     <None Include="Content\Home\Product.less" />
     <Content Include="Content\Home\Product.css">
       <DependentUpon>Product.less</DependentUpon>
@@ -536,24 +542,65 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Scripts\bootbox.cn.js" />
+    <Content Include="Scripts\bootbox.cn.min.js">
+      <DependentUpon>bootbox.cn.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js">
+      <DependentUpon>bootbox.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chitu.js" />
-    <Content Include="Scripts\chitu.min.js" />
-    <Content Include="Scripts\ChiTu.min.js.map">
-      <DependentUpon>chitu.min.js</DependentUpon>
+    <Content Include="Scripts\chitu.min.js">
+      <DependentUpon>chitu.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\crossroads.min.js">
+      <DependentUpon>crossroads.js</DependentUpon>
     </Content>
     <Content Include="Scripts\CryptoJS\core-min.js" />
+    <Content Include="Scripts\CryptoJS\core-min.min.js">
+      <DependentUpon>core-min.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\CryptoJS\core.js" />
     <Content Include="Scripts\crossroads.js" />
+    <Content Include="Scripts\CryptoJS\core.min.js">
+      <DependentUpon>core.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\md5-min.min.js">
+      <DependentUpon>md5-min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\md5.min.js">
+      <DependentUpon>md5.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\sha1-min.min.js">
+      <DependentUpon>sha1-min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\sha1.min.js">
+      <DependentUpon>sha1.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\css.js" />
+    <Content Include="Scripts\css.min.js">
+      <DependentUpon>css.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\hammer.js" />
     <Content Include="Scripts\hammer.min.js" />
     <Content Include="Scripts\idangerous.swiper.js" />
+    <Content Include="Scripts\idangerous.swiper.min.js">
+      <DependentUpon>idangerous.swiper.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\intellisense.js" />
+    <Content Include="Scripts\intellisense.min.js">
+      <DependentUpon>intellisense.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\iscroll-lite.js" />
+    <Content Include="Scripts\iscroll-lite.min.js">
+      <DependentUpon>iscroll-lite.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\iscroll-probe.js" />
+    <Content Include="Scripts\iscroll-probe.min.js">
+      <DependentUpon>iscroll-probe.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\iscroll.js" />
     <Content Include="Content\Home\Index.css.map">
       <DependentUpon>Index.css</DependentUpon>
@@ -627,45 +674,201 @@
     <Content Include="Content\User\Recharge.css.map">
       <DependentUpon>Recharge.css</DependentUpon>
     </Content>
+    <Content Include="Scripts\iscroll-lite.min.js.map">
+      <DependentUpon>iscroll-lite.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\chitu.min.js.map">
+      <DependentUpon>chitu.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\crossroads.min.js.map">
+      <DependentUpon>crossroads.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootbox.cn.min.js.map">
+      <DependentUpon>bootbox.cn.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootbox.min.js.map">
+      <DependentUpon>bootbox.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\css.min.js.map">
+      <DependentUpon>css.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\idangerous.swiper.min.js.map">
+      <DependentUpon>idangerous.swiper.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\intellisense.min.js.map">
+      <DependentUpon>intellisense.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\iscroll-probe.min.js.map">
+      <DependentUpon>iscroll-probe.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\iscroll.min.js.map">
+      <DependentUpon>iscroll.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\core-min.min.js.map">
+      <DependentUpon>core-min.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\core.min.js.map">
+      <DependentUpon>core.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\md5-min.min.js.map">
+      <DependentUpon>md5-min.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\md5.min.js.map">
+      <DependentUpon>md5.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\sha1-min.min.js.map">
+      <DependentUpon>sha1-min.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\CryptoJS\sha1.min.js.map">
+      <DependentUpon>sha1.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.6-vsdoc.js" />
+    <Content Include="Scripts\iscroll.min.js">
+      <DependentUpon>iscroll.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.6-vsdoc.min.js">
+      <DependentUpon>jquery-1.6-vsdoc.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-1.6.js" />
     <Content Include="Scripts\jquery-1.6.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.intellisense.min.js">
+      <DependentUpon>jquery-1.8.2.intellisense.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-2.1.0.intellisense.min.js">
+      <DependentUpon>jquery-2.1.0.intellisense.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-ui-1.9.0.js" />
     <Content Include="Scripts\jquery-ui-1.9.0.min.js" />
+    <Content Include="Scripts\jquery.cookie.min.js">
+      <DependentUpon>jquery.cookie.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.event.move.js" />
+    <Content Include="Scripts\jquery.event.move.min.js">
+      <DependentUpon>jquery.event.move.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.event.swipe.js" />
+    <Content Include="Scripts\jquery.event.swipe.min.js">
+      <DependentUpon>jquery.event.swipe.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\cors\jquery.postmessage-transport.js" />
+    <Content Include="Scripts\jQuery.FileUpload\cors\jquery.postmessage-transport.min.js">
+      <DependentUpon>jquery.postmessage-transport.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\cors\jquery.xdr-transport.js" />
+    <Content Include="Scripts\jQuery.FileUpload\cors\jquery.xdr-transport.min.js">
+      <DependentUpon>jquery.xdr-transport.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-angular.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-angular.min.js">
+      <DependentUpon>jquery.fileupload-angular.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-audio.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-audio.min.js">
+      <DependentUpon>jquery.fileupload-audio.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-image.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-image.min.js">
+      <DependentUpon>jquery.fileupload-image.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-jquery-ui.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-jquery-ui.min.js">
+      <DependentUpon>jquery.fileupload-jquery-ui.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-process.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-process.min.js">
+      <DependentUpon>jquery.fileupload-process.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-ui.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-ui.min.js">
+      <DependentUpon>jquery.fileupload-ui.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-validate.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-validate.min.js">
+      <DependentUpon>jquery.fileupload-validate.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-video.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-video.min.js">
+      <DependentUpon>jquery.fileupload-video.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload.min.js">
+      <DependentUpon>jquery.fileupload.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jQuery.FileUpload\jquery.iframe-transport.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.iframe-transport.min.js">
+      <DependentUpon>jquery.iframe-transport.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.ui.widget.js" />
+    <Content Include="Scripts\jquery.ui.widget.min.js">
+      <DependentUpon>jquery.ui.widget.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.validate-vsdoc.min.js">
+      <DependentUpon>jquery.validate-vsdoc.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\knockout-3.2.0.debug.min.js">
+      <DependentUpon>knockout-3.2.0.debug.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\knockout-3.2.0.js" />
+    <Content Include="Scripts\knockout-3.2.0.min.js">
+      <DependentUpon>knockout-3.2.0.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\knockout.extentions\AlterDialog.html" />
     <Content Include="Scripts\knockout.extentions\ComfirmDialog.html" />
     <Content Include="Scripts\knockout.extentions\dialog.js" />
+    <Content Include="Scripts\knockout.extentions\dialog.min.js">
+      <DependentUpon>dialog.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout.extentions\format.min.js">
+      <DependentUpon>format.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout.extentions\knockout.extentions.min.js">
+      <DependentUpon>knockout.extentions.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\knockout.extentions\ToastDialog.html" />
     <Content Include="Scripts\knockout.extentions\format.js" />
     <Content Include="Scripts\knockout.extentions\knockout.extentions.js" />
+    <Content Include="Scripts\knockout.mapping.min.js">
+      <DependentUpon>knockout.mapping.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\knockout.validation.cn.js" />
+    <Content Include="Scripts\knockout.validation.cn.min.js">
+      <DependentUpon>knockout.validation.cn.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\knockout.validation.min.js" />
     <Content Include="Scripts\ko.ext\AlterDialog.html" />
     <Content Include="Scripts\ko.ext\click.js" />
+    <Content Include="Scripts\ko.ext\click.min.js">
+      <DependentUpon>click.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\ko.ext\ComfirmDialog.html" />
     <Content Include="Scripts\ko.ext\format.js" />
+    <Content Include="Scripts\ko.ext\format.min.js">
+      <DependentUpon>format.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\ko.ext\img.js" />
+    <Content Include="Scripts\ko.ext\img.min.js">
+      <DependentUpon>img.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\modal.js" />
+    <Content Include="Scripts\modal.min.js">
+      <DependentUpon>modal.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\move.js" />
     <Content Include="Scripts\move.min.js" />
+    <Content Include="Scripts\numeral.min.js">
+      <DependentUpon>numeral.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\r.min.js">
+      <DependentUpon>r.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\require.min.js">
+      <DependentUpon>require.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\sammy.min.js">
+      <DependentUpon>sammy.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\swiper.jquery.js" />
     <Content Include="Scripts\swiper.jquery.min.js" />
     <Content Include="Scripts\swiper.js" />
@@ -689,6 +892,117 @@
     </Content>
     <Content Include="Scripts\knockout.validation.min.js.map">
       <DependentUpon>knockout.validation.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.6-vsdoc.min.js.map">
+      <DependentUpon>jquery-1.6-vsdoc.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.8.2.intellisense.min.js.map">
+      <DependentUpon>jquery-1.8.2.intellisense.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-2.1.0.intellisense.min.js.map">
+      <DependentUpon>jquery-2.1.0.intellisense.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.cookie.min.js.map">
+      <DependentUpon>jquery.cookie.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.event.move.min.js.map">
+      <DependentUpon>jquery.event.move.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.event.swipe.min.js.map">
+      <DependentUpon>jquery.event.swipe.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.ui.widget.min.js.map">
+      <DependentUpon>jquery.ui.widget.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.validate-vsdoc.min.js.map">
+      <DependentUpon>jquery.validate-vsdoc.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout-3.2.0.debug.min.js.map">
+      <DependentUpon>knockout-3.2.0.debug.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout-3.2.0.min.js.map">
+      <DependentUpon>knockout-3.2.0.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout.mapping.min.js.map">
+      <DependentUpon>knockout.mapping.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout.validation.cn.min.js.map">
+      <DependentUpon>knockout.validation.cn.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\modal.min.js.map">
+      <DependentUpon>modal.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\numeral.min.js.map">
+      <DependentUpon>numeral.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\r.min.js.map">
+      <DependentUpon>r.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\require.min.js.map">
+      <DependentUpon>require.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\sammy.min.js.map">
+      <DependentUpon>sammy.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\text.min.js.map">
+      <DependentUpon>text.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\wptr.1.1.min.js.map">
+      <DependentUpon>wptr.1.1.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-angular.min.js.map">
+      <DependentUpon>jquery.fileupload-angular.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-audio.min.js.map">
+      <DependentUpon>jquery.fileupload-audio.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-image.min.js.map">
+      <DependentUpon>jquery.fileupload-image.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-jquery-ui.min.js.map">
+      <DependentUpon>jquery.fileupload-jquery-ui.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-process.min.js.map">
+      <DependentUpon>jquery.fileupload-process.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-ui.min.js.map">
+      <DependentUpon>jquery.fileupload-ui.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-validate.min.js.map">
+      <DependentUpon>jquery.fileupload-validate.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-video.min.js.map">
+      <DependentUpon>jquery.fileupload-video.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload.min.js.map">
+      <DependentUpon>jquery.fileupload.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\jquery.iframe-transport.min.js.map">
+      <DependentUpon>jquery.iframe-transport.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\cors\jquery.postmessage-transport.min.js.map">
+      <DependentUpon>jquery.postmessage-transport.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jQuery.FileUpload\cors\jquery.xdr-transport.min.js.map">
+      <DependentUpon>jquery.xdr-transport.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout.extentions\dialog.min.js.map">
+      <DependentUpon>dialog.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout.extentions\format.min.js.map">
+      <DependentUpon>format.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout.extentions\knockout.extentions.min.js.map">
+      <DependentUpon>knockout.extentions.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\ko.ext\click.min.js.map">
+      <DependentUpon>click.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\ko.ext\format.min.js.map">
+      <DependentUpon>format.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\ko.ext\img.min.js.map">
+      <DependentUpon>img.min.js</DependentUpon>
     </Content>
     <None Include="Scripts\_references.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -714,9 +1028,18 @@
     <Content Include="Scripts\sammy.js" />
     <Content Include="Scripts\CryptoJS\sha1-min.js" />
     <Content Include="Scripts\CryptoJS\sha1.js" />
+    <Content Include="Scripts\text.min.js">
+      <DependentUpon>text.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\unslider.js" />
     <Content Include="Scripts\unslider.min.js" />
     <Content Include="Scripts\wptr.1.1.js" />
+    <Content Include="Scripts\wptr.1.1.min.js">
+      <DependentUpon>wptr.1.1.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\_references.min.js">
+      <DependentUpon>_references.js</DependentUpon>
+    </Content>
     <Content Include="Source\bootstrap-3.3.5\.gitattributes" />
     <Content Include="Source\bootstrap-3.3.5\.gitignore" />
     <Content Include="Source\bootstrap-3.3.5\.idea\encodings.xml" />
@@ -2579,6 +2902,9 @@
     </Content>
     <Content Include="Source\bootstrap-3.3.5\less\mixins\forms.css.map">
       <DependentUpon>forms.css</DependentUpon>
+    </Content>
+    <Content Include="Scripts\_references.min.js.map">
+      <DependentUpon>_references.min.js</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

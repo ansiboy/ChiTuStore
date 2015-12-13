@@ -1,11 +1,11 @@
-define(["require", "exports", 'Services/Auth', 'Services/Member'], function (require, exports, auth, member) {
+define(["require", "exports", 'Services/Auth', 'Services/Member', 'knockout.validation'], function (require, exports, auth, member, ko_val) {
     return function (page) {
         var _this = this;
         var model = {
             mobile: ko.observable(),
             verifyCode: ko.observable(),
             submit: function () {
-                var val = ko.validation.group(model);
+                var val = ko_val.group(model);
                 if (!model['isValid']()) {
                     val.showAllMessages();
                     return;

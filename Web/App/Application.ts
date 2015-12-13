@@ -1,5 +1,4 @@
 ﻿import site = require('Site');
-import $ = require('jquery');
 
 chitu.Page.animationTime = site.config.pageAnimationTime;
 

@@ -1,23 +1,14 @@
 ﻿
 
 var require_config = {
-    urlArgs: "bust=45",
+    urlArgs: "bust=46",
     shim: {
         chitu: {
             deps: ['jquery', 'crossroads']
         },
-        bootstrap: {
-            deps: ['jquery']
-        },
         bootbox: {
             deps: ['jquery']
         },
-        'ko.val': {
-            deps: ['../Scripts/knockout.validation']
-        },
-        //'knockout.validation': {
-        //    deps: ['../Scripts/knockout.validation']
-        //},
         'knockout': {
             exports: 'ko'
         },
@@ -25,7 +16,7 @@ var require_config = {
             deps: ['knockout']
         },
         swiper: {
-            deps: ['jquery', 'css!content/swiper']//'css!http://cdn.bootcss.com/Swiper/3.0.8/css/swiper.min']
+            deps: ['jquery', 'css!content/swiper']
         },
         wptr: {
             deps: ['hammer']
@@ -44,7 +35,7 @@ var require_config = {
             deps: ['jquery.event.move']
         },
         Site: {
-            deps: ['jquery.cookie']
+            deps: ['jquery.cookie', 'jquery']
         },
         ErrorHandler: {
             deps: ['Rewrite']
@@ -65,38 +56,30 @@ var require_config = {
     },
 
     paths: {
-        css: '../Scripts/css',//['http://cdn.bootcss.com/require-css/0.1.8/css.min', 'css'],
-        text: '../Scripts/text',//['http://cdn.bootcss.com/require-text/2.0.12/text.min', 'text'],
-        crossroads: '../Scripts/crossroads',
-        iscroll: '../Scripts/iscroll-lite',
-        jquery: '../Scripts/jquery-2.1.0',//['http://libs.baidu.com/jquery/2.0.0/jquery.min', 'jquery-2.1.0'],// 
-        'jquery.cookie': '../Scripts/jquery.cookie',//['http://cdn.bootcss.com/jquery-cookie/1.4.0/jquery.cookie.min', 'jquery.cookie'],
-        'jquery.event.swipe': '../Scripts/jquery.event.swipe',
-        'jquery.event.move': '../Scripts/jquery.event.move',
-        'jquery.ui.widget': '../Scripts/jquery.ui.widget',
-        unslider: '../Scripts/unslider',
-        wptr: '../Scripts/wptr.1.1',
+        css: '../Scripts/css.min',
+        text: '../Scripts/text.min',
+        crossroads: '../Scripts/crossroads.min',
+        iscroll: '../Scripts/iscroll-lite.min',
+        jquery: '../Scripts/jquery-2.1.0.min', 
+        'jquery.cookie': '../Scripts/jquery.cookie.min',
+        'jquery.event.swipe': '../Scripts/jquery.event.swipe.min',
+        'jquery.event.move': '../Scripts/jquery.event.move.min',
         chitu: '../Scripts/chitu',
-        hammer: '../Scripts/hammer',
-        knockout: '../Scripts/knockout-3.2.0.debug',//['http://cdn.bootcss.com/knockout/3.3.0/knockout-min', 'knockout-3.2.0.debug'],
+        hammer: '../Scripts/hammer.min',
+        knockout: '../Scripts/knockout-3.2.0.min',
         'ko.ext': 'Core/ko.ext',
-        'ko.val': '../Scripts/knockout.validation.cn',
-        'knockout.validation': '../Scripts/knockout.validation',
-        'knockout.mapping': '../Scripts/knockout.mapping',//['http://cdn.bootcss.com/knockout.mapping/2.4.1/knockout.mapping.min', 'scr/knockout.mapping'],
-        bootstrap: '../Scripts/bootstrap.min',//['http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min', 'bootstrap.min'],
-        scrollLoad: 'UI/ScrollLoad',
+        'knockout.validation': '../Scripts/knockout.validation.min',
+        'knockout.mapping': '../Scripts/knockout.mapping.min',
         sv: '../App/Services',
-        //app: '.',
-        bootbox: 'Core/bootbox',
+        bootbox: 'Core/bootbox.min',
         ui: 'UI',
         mod: '../App/Module',
         scr: '../Scripts',
-        swiper: ['../Scripts/swiper.jquery', 'http://cdn.bootcss.com/Swiper/3.0.8/js/swiper.jquery.min'],
-        move: '../Scripts/move',
-        md5: '../Scripts/CryptoJS/md5',
+        swiper: '../Scripts/swiper.jquery.min',
+        move: '../Scripts/move.min',
+        md5: '../Scripts/CryptoJS/md5.min',
         content: '../Content',
         sc: '../Content',       // Site CSS 文件夹
-        'app/Custom': 'http://p.alinq.cn/LSYY/App/WebClient/StoreToken',
         jweixin: 'http://res.wx.qq.com/open/js/jweixin-1.0.0'
     }
 };
@@ -104,11 +87,7 @@ var require_config = {
 requirejs.config(require_config);
 
 
-requirejs(['Application', 'bootbox', 'ErrorHandler', 'Rewrite', 'ui/Loading'], function () {//, 
-    //if (site.env.isIOS) {
-    //    require(['iscroll']);
-    //}
-
+requirejs(['Application', 'bootbox', 'ErrorHandler', 'Rewrite', 'ui/Loading'], function () {//, ]
     site.ready(function () {
         //====================================================
         // 说明：如果是微信环境，则加载微信模块
@@ -131,8 +110,7 @@ requirejs(['Application', 'bootbox', 'ErrorHandler', 'Rewrite', 'ui/Loading'], f
             app.run();
             if (!location.hash)
                 location.hash = 'Home_Index';
-
-            console.log('Home_Index');
+           console.log('Home_Index');
             //==================================================
 
             require(['ui/ScrollLoad', 'ui/Loading', 'ui/Menu', 'ui/TopBar']);
@@ -152,5 +130,6 @@ requirejs(['Application', 'bootbox', 'ErrorHandler', 'Rewrite', 'ui/Loading'], f
     });
 
 });
+  
 
 

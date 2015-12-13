@@ -42,7 +42,7 @@ export = function (page: chitu.Page) {
         },
         sendVerifyCode: function () {
             var obj = { mobile: model.user.mobile };
-            var mobile_val = ko.validation.group(obj);
+            var mobile_val = ko_val.group(obj);
             if (!obj['isValid']()) {
                 mobile_val.showAllMessages();
                 return $.Deferred().resolve();

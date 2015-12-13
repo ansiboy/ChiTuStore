@@ -1,4 +1,4 @@
-define(["require", "exports", 'Site', 'jquery'], function (require, exports, site, $) {
+define(["require", "exports", 'Site'], function (require, exports, site) {
     chitu.Page.animationTime = site.config.pageAnimationTime;
     var app = new chitu.Application({
         container: function () { return document.getElementById('main'); },

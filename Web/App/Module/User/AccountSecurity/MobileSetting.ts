@@ -2,7 +2,7 @@
 import member = require('Services/Member');
 //import registerVerifyCodeButton = require('UI/VerifyCodeButton');
 import c = require('ui/ScrollLoad');
-
+import ko_val = require('knockout.validation');
 
 
 export = function (page: chitu.Page) {
@@ -11,7 +11,7 @@ export = function (page: chitu.Page) {
         mobile: ko.observable<string>(),
         verifyCode: ko.observable<string>(),
         submit: () => {
-            var val = ko.validation.group(model);
+            var val = ko_val.group(model);
             if (!model['isValid']()) {
                 val.showAllMessages();
                 return;

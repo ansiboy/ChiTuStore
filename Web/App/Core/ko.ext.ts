@@ -156,21 +156,6 @@ ko.bindingHandlers['href'] = {
         href(element, valueAccessor);
     }
 };
-
-var text = function (element, valueAccessor) {
-    var value = valueAccessor();
-    var str = $.isArray(value) ? formatString(true, value) : value;
-    ko.utils['setTextContent'](element, str);
-}
-ko.bindingHandlers.text = {
-    init: function (element, valueAccessor) {
-        return text(element, valueAccessor);
-    },
-    update: function (element, valueAccessor) {
-        return text(element, valueAccessor);
-    }
-};
-
 function getConfig(element, name) {
     var dlg = $(element).attr(name);
 
