@@ -1,0 +1,138 @@
+﻿@import "../Source/bootstrap-3.3.5/less/variables.less";
+@header-zindex: 100;
+@footer-zindex: 100;
+@bg-color: white;
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.page-node .page-header {
+    width: 100%;
+    margin: 0px;
+    padding: 0;
+    border-bottom: none;
+}
+
+
+
+/* ---------- IScroll 样式 ---------- */
+.page-node.ios {
+    width: 100%;
+    height: 100%;
+    background-color: @bg-color;
+    position: absolute;
+    z-index: 100;
+}
+
+.page-node.ios .page-body {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.page-node.ios .page-content {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    z-index: 80;
+}
+
+.page-node.ios .page-loading {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: center;
+}
+
+.page-node.ios .page-header {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+}
+
+.page-node.ios .page-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: @footer-zindex;
+}
+/*---------------------------------*/
+/* DIV Fixed 样式*/
+.page-node.div {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow-y: hidden;
+    z-index: 100;
+}
+
+.page-node.div .page-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: @header-zindex;
+    margin: 0px;
+    padding: 0;
+    border-bottom: none;
+}
+
+
+
+.page-node.div .page-body {
+    width: 100%;
+    height: 100%;
+    background-color: @bg-color;
+    position: absolute;
+    overflow-y: auto;
+}
+
+.page-node.div .page-loading {
+    width: 100%;
+    height: 100%;
+    background-color: @bg-color;
+    font-size: 100px;
+    text-align: center;
+}
+
+.page-node.div .page-footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: @footer-zindex;
+}
+
+/*---------------------------------*/
+.page-node.doc {
+    width: 100%;
+    min-height: 100%;
+}
+
+.page-node.doc .page-body {
+    min-height: 100%;
+}
+
+.page-node.doc .page-header {
+    position: fixed;
+    top: 0;
+    z-index: @header-zindex;
+}
+
+.page-node.doc .page-loading {
+    width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: center;
+}
+
+.page-node.doc .page-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: @footer-zindex;
+}

@@ -243,12 +243,6 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
         }
         var scroll_config = { pullDown: {} };
         var model = _model = new Model(page);
-        function setPageSize() {
-            page.nodes().footer.style.position = 'absolute';
-            page.nodes().footer.style.top = ($(window).height() - 100) + 'px';
-        }
-        setPageSize();
-        $(window).on('resize', setPageSize);
         page.load.add(function (sender) {
             return model.loadItems();
         });

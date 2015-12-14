@@ -88,8 +88,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
             });
         });
         page.viewChanged.add(function () {
-            var node = page.nodes().header.querySelectorAll('.topbar')[0];
-            node.remove();
+            $(page.nodes().header).find('.topbar').first().remove();
             requirejs(['swiper'], function (Swiper) {
                 var mySwiper = new Swiper($(page.node()).find('[name="productImages"]')[0], {
                     pagination: $(page.node()).find('[name="productImages-pagination"]')[0],

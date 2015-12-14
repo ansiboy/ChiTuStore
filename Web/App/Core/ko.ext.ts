@@ -137,7 +137,21 @@ ko.bindingHandlers['money'] = {
         money(element, valueAccessor);
     }
 };
-
+var text = function (element: HTMLElement, valueAccessor) {
+    var value = valueAccessor();
+    var str = $.isArray(value) ? formatString(true, value) : ko.unwrap(value);
+    //debugger;
+    element.innerText = str;
+    //ko.utils.setTextContent(element, str);
+}
+ko.bindingHandlers.text = {
+    init: function (element, valueAccessor) {
+        return text(element, valueAccessor);
+    },
+    update: function (element, valueAccessor) {
+        return text(element, valueAccessor);
+    }
+};
 var href = function (element, valueAccessor) {
     var value = valueAccessor();
     if ($.isArray(value)) {

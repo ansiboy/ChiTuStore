@@ -62,10 +62,6 @@
     <Content Include="App\Core\bootbox.min.js">
       <DependentUpon>bootbox.js</DependentUpon>
     </Content>
-    <Content Include="App\Core\prequire.js" />
-    <Content Include="App\Core\prequire.min.js">
-      <DependentUpon>prequire.js</DependentUpon>
-    </Content>
     <Content Include="App\Module\Error\ConnectFail.html" />
     <Content Include="App\Module\Home\Brand.html" />
     <Content Include="App\Module\Home\Brand.js" />
@@ -168,7 +164,12 @@
     <TypeScriptCompile Include="App\UI\CouponListItem.ts" />
     <TypeScriptCompile Include="App\UI\ImagePreview.ts" />
     <TypeScriptCompile Include="App\UI\Promotion.ts" />
-    <Content Include="Content\chitu.css" />
+    <Content Include="Content\chitu.css">
+      <DependentUpon>chitu.less</DependentUpon>
+    </Content>
+    <Content Include="Content\chitu.min.css">
+      <DependentUpon>chitu.css</DependentUpon>
+    </Content>
     <Content Include="Content\css\bootstrap-theme.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
@@ -215,6 +216,10 @@
     <Content Include="Content\font\fontdiao.woff" />
     <Content Include="App\Core\bootbox.min.js.map">
       <DependentUpon>bootbox.min.js</DependentUpon>
+    </Content>
+    <Content Include="Content\chitu.less" />
+    <Content Include="Content\chitu.css.map">
+      <DependentUpon>chitu.css</DependentUpon>
     </Content>
     <None Include="Content\Home\Product.less" />
     <Content Include="Content\Home\Product.css">
@@ -610,9 +615,6 @@
     <Content Include="Content\Home\NewsList.less" />
     <Content Include="Content\Home\NewsList.css.map">
       <DependentUpon>NewsList.css</DependentUpon>
-    </Content>
-    <Content Include="App\Core\prequire.min.js.map">
-      <DependentUpon>prequire.min.js</DependentUpon>
     </Content>
     <Content Include="Content\Home\Class.less" />
     <Content Include="Content\Home\Class.css.map">

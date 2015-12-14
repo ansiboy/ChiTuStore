@@ -127,8 +127,7 @@ export = function (page: chitu.Page) {
     page.viewChanged.add(() => {
         //=============================================
         // 移除掉原来的 TopBar
-        var node = page.nodes().header.querySelectorAll('.topbar')[0];
-        (<HTMLElement>node).remove();
+        $(page.nodes().header).find('.topbar').first().remove();
         //=============================================
 
         requirejs(['swiper'], function (Swiper) {
