@@ -143,6 +143,22 @@ class ProductPanel {
         $wrapper.height($(window).height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT);
 
         var iscroll = new IScroll($wrapper[0], { tap: true });
+        //=====================================================
+        if (site.env.isIOS) {
+            var $input = $(this.node).find('input[type="text"]');
+            $input.focusout(function () {
+                console.log('input focusout');
+                $(document).scrollTop(0);
+                $(document).scrollLeft(0);
+            });
+            $input.focus(function () {
+                //window.setTimeout(() => {
+                //    $(document).scrollTop(-200);
+                //    $(document).scrollLeft(0);
+                //}, 100);
+            });
+        }
+        //=====================================================
     }
 
     private page_closed = () => {

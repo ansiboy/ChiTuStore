@@ -92,7 +92,7 @@ export = function (page: chitu.Page) {
     page.load.add(function (sender, args) {
         var productId = args.id;
         auth.whenLogin(() => shopping.isFavored(productId).done((value) => model.isFavored(value)));
-
+        //page['iscroller'].disable()
         return $.when(shopping.getProduct(productId), services.shopping.getProductStock(productId),
             shopping.getProductComments(args.id, 4))
             .done(function (product: any, stock, comments) {

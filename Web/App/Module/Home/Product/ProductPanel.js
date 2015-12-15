@@ -82,6 +82,16 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                 var $wrapper = $(_this.node).find('.modal-body');
                 $wrapper.height($(window).height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT);
                 var iscroll = new IScroll($wrapper[0], { tap: true });
+                if (site.env.isIOS) {
+                    var $input = $(_this.node).find('input[type="text"]');
+                    $input.focusout(function () {
+                        console.log('input focusout');
+                        $(document).scrollTop(0);
+                        $(document).scrollLeft(0);
+                    });
+                    $input.focus(function () {
+                    });
+                }
             };
             this.page_closed = function () {
                 console.log('page_closed, remove node.');

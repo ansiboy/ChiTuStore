@@ -23,6 +23,7 @@ declare class IScroll {
     refresh()
     scrollerHeight: number
     scrollTo: (x: number, y: number, time: number, easing: any) => {}
+    scrollToElement: (el: any, time?: number, offsetX?: number, offsetY?: number, easing?) => void
     startY: number
     wrapperHeight: number
     handleEvent(e: any)
