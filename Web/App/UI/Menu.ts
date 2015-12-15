@@ -14,6 +14,10 @@ class Menu {
         this.node = document.createElement('div');
         page.nodes().footer.appendChild(this.node);
 
+        var model = {
+            productsCount: shoppingCart.info.itemsCount
+        }
+
         this.loadHTML().done((html) => {
             this.node.innerHTML = html;
             var args = page.routeData.values();
@@ -22,7 +26,7 @@ class Menu {
                 //$menu.find('a').removeClass('active');
                 $tab.addClass('active');
             }
-
+            ko.applyBindings(model, this.node);
         });
     }
 

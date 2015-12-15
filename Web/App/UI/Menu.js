@@ -1,10 +1,13 @@
-define(["require", "exports", 'Application'], function (require, exports, app) {
+define(["require", "exports", 'Application', 'Services/ShoppingCart', 'knockout'], function (require, exports, app, shoppingCart, ko) {
     var menu_html;
     var Menu = (function () {
         function Menu(page) {
             var _this = this;
             this.node = document.createElement('div');
             page.nodes().footer.appendChild(this.node);
+            var model = {
+                productsCount: shoppingCart.info.itemsCount
+            };
             this.loadHTML().done(function (html) {
                 _this.node.innerHTML = html;
                 var args = page.routeData.values();
@@ -12,6 +15,7 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
                 if ($tab.length > 0) {
                     $tab.addClass('active');
                 }
+                ko.applyBindings(model, _this.node);
             });
         }
         Menu.prototype.loadHTML = function () {

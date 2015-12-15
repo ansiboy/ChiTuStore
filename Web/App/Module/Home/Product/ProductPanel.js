@@ -89,8 +89,6 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                         $(document).scrollTop(0);
                         $(document).scrollLeft(0);
                     });
-                    $input.focus(function () {
-                    });
                 }
             };
             this.page_closed = function () {

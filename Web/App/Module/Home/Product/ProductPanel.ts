@@ -151,12 +151,6 @@ class ProductPanel {
                 $(document).scrollTop(0);
                 $(document).scrollLeft(0);
             });
-            $input.focus(function () {
-                //window.setTimeout(() => {
-                //    $(document).scrollTop(-200);
-                //    $(document).scrollLeft(0);
-                //}, 100);
-            });
         }
         //=====================================================
     }

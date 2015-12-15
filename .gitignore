@@ -1,2 +1,5 @@
 /Web/bin
 /Web/obj
+/Web/.settings
+/Web/.idea
+/Web/.vscode
