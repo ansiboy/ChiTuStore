@@ -14,9 +14,17 @@ class Menu {
         this.node = document.createElement('div');
         page.nodes().footer.appendChild(this.node);
 
-        var model = {
-            productsCount: shoppingCart.info.itemsCount
+        var updateProductsCount = () => {
+            var $products_count = $(this.node).find('[name="products-count"]');
+            if (shoppingCart.info.itemsCount() == 0) {
+                $products_count.hide();
+            }
+            else {
+                $products_count.show();
+            }
+            $products_count.text(shoppingCart.info.itemsCount());
         }
+        shoppingCart.info.itemsCount.subscribe(updateProductsCount);
 
         this.loadHTML().done((html) => {
             this.node.innerHTML = html;
@@ -26,7 +34,9 @@ class Menu {
                 //$menu.find('a').removeClass('active');
                 $tab.addClass('active');
             }
-            ko.applyBindings(model, this.node);
+            updateProductsCount();
+
+            //ko.applyBindings(model, this.node);
         });
     }
 
