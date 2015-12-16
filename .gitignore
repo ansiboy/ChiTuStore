@@ -3,3 +3,5 @@
 /Web/.settings
 /Web/.idea
 /Web/.vscode
+/*.suo
+/packages
