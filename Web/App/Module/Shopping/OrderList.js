@@ -1,7 +1,7 @@
 define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Application', 'knockout.mapping', 'Site', 'Services/Service'], function (require, exports, account, shopping, app, mapping, site, services) {
     var weixin = services['weixin'];
     requirejs(['css!content/Shopping/OrderList']);
-    var page_args;
+    var page_args = { loadType: chitu.PageLoadType.scroll };
     var Model = (function () {
         function Model(page) {
             var _this = this;

@@ -84,8 +84,8 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                 var iscroll = new IScroll($wrapper[0], { tap: true });
                 if (site.env.isIOS) {
                     var $input = $(_this.node).find('input[type="text"]');
-                    $input.focusout(function () {
-                        console.log('input focusout');
+                    $input.focus(function () {
+                        console.log('input focus');
                         $(document).scrollTop(0);
                         $(document).scrollLeft(0);
                     });

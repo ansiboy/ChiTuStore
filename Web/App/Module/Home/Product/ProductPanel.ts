@@ -146,8 +146,8 @@ class ProductPanel {
         //=====================================================
         if (site.env.isIOS) {
             var $input = $(this.node).find('input[type="text"]');
-            $input.focusout(function () {
-                console.log('input focusout');
+            $input.focus(function () {
+                console.log('input focus');
                 $(document).scrollTop(0);
                 $(document).scrollLeft(0);
             });

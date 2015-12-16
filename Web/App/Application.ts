@@ -81,7 +81,14 @@ app.pageCreated.add(function (sender: chitu.Application, page: chitu.Page) {
         }
     }
     //=======================================================================
-
+    //说明：一定要的，否则会因为 document 对象的偏移，使得顶栏消失
+    page.shown.add(() => {
+        if (site.env.isIOS) {
+            $(document).scrollTop(0);
+            $(document).scrollLeft(0);
+        }
+    });
+    //=======================================================================
 })
 //}
 

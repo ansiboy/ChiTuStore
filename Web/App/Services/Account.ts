@@ -375,7 +375,6 @@ class AccountService {
             this.orderInfo.evaluateCount(count - 1);
         })
         return result;
-
     }
     getSquareCode = () => {
         var deferred = $.Deferred();

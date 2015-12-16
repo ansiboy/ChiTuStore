@@ -15,7 +15,7 @@ requirejs(['css!content/Shopping/OrderList']);
 import CreateOrderDetailPage = require('Module/Shopping/OrderDetail');
 //import CreateImagePreview = require('UI/ImagePreview')
 
-var page_args: chitu.PageLoadArguments
+var page_args: chitu.PageLoadArguments = { loadType: chitu.PageLoadType.scroll };
 class Model {
     constructor(page: chitu.Page) {
         this.page = page;

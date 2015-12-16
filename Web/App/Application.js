@@ -59,6 +59,12 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
                 });
             }
         }
+        page.shown.add(function () {
+            if (site.env.isIOS) {
+                $(document).scrollTop(0);
+                $(document).scrollLeft(0);
+            }
+        });
     });
     var viewPath = '../App/Module/{controller}/{action}.html';
     var actionPath = '../App/Module/{controller}/{action}';

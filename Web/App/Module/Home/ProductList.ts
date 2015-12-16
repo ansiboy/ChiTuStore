@@ -110,14 +110,15 @@ export var func = function (page: chitu.Page) {
             page['topbar']['title'](value);
     };
 
+    model.queryArguments.categoryId = (<any>page.routeData.values()).name;
+    model.isFilteByCategory(true);
+    shopping.getCategory(model.queryArguments.categoryId).done(function (data) {
+        page['title'](data.Name);
+    });
+
     page.load.add((sender: chitu.Page, args: chitu.PageLoadArguments) => {
         if (args.loadType == chitu.PageLoadType.open) {
-            model.queryArguments.categoryId = (<any>args).name;
-            model.isFilteByCategory(true);
-            shopping.getCategory(model.queryArguments.categoryId).done(function (data) {
-                page['title'](data.Name);
-            });
-            model.queryArguments.sort((<any>args).sort || '');
+
         }
 
         return loadRecords().done((items) => {

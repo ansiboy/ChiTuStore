@@ -92,14 +92,13 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
             if (page['topbar'])
                 page['topbar']['title'](value);
         };
+        model.queryArguments.categoryId = page.routeData.values().name;
+        model.isFilteByCategory(true);
+        shopping.getCategory(model.queryArguments.categoryId).done(function (data) {
+            page['title'](data.Name);
+        });
         page.load.add(function (sender, args) {
             if (args.loadType == chitu.PageLoadType.open) {
-                model.queryArguments.categoryId = args.name;
-                model.isFilteByCategory(true);
-                shopping.getCategory(model.queryArguments.categoryId).done(function (data) {
-                    page['title'](data.Name);
-                });
-                model.queryArguments.sort(args.sort || '');
             }
             return loadRecords().done(function (items) {
                 sender.enableScrollLoad = items.length == site.config.pageSize;
