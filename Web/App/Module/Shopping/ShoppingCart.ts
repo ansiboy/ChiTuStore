@@ -107,7 +107,6 @@ class Model {
     }
 
     increaseCount = (item) => {
-        /// <param name="item" type="models.orderDetail"/>
         if (status == Status.updating)
             return;
 
@@ -212,9 +211,7 @@ class Model {
 
             status = Status.done;
             this.dialog.status(DialogStaus.success);
-            if (this._page['iscroller']) {
-                setTimeout(() => this._page['iscroller'].refresh());
-            }
+            this.page.refreshUI();
 
         }).fail(() => {
             this.dialog.status(DialogStaus.fail);

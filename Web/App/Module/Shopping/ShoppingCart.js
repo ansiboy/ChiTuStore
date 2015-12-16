@@ -102,9 +102,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                     mapping.fromJS(items, _this.map_conf, _this.shoppingCartItems);
                     status = Status.done;
                     _this.dialog.status(DialogStaus.success);
-                    if (_this._page['iscroller']) {
-                        setTimeout(function () { return _this._page['iscroller'].refresh(); });
-                    }
+                    _this.page.refreshUI();
                 }).fail(function () {
                     _this.dialog.status(DialogStaus.fail);
                 });
