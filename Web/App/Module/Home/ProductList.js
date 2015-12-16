@@ -98,13 +98,6 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
             page['title'](data.Name);
         });
         page.load.add(function (sender, args) {
-            if (args.loadType == chitu.PageLoadType.open) {
-            }
-            return loadRecords().done(function (items) {
-                sender.enableScrollLoad = items.length == site.config.pageSize;
-            });
-        });
-        function loadRecords() {
             model.isLoading(true);
             return model.loadProducts(false).done(function (items, filter) {
                 model.isLoading(false);
@@ -113,8 +106,8 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
                     model.brands(filter.Brands);
                 }
                 model.queryArguments.pageIndex = model.queryArguments.pageIndex + 1;
+                sender.enableScrollLoad = items.length == site.config.pageSize;
             });
-        }
-        ;
+        });
     };
 });

@@ -117,28 +117,8 @@ export var func = function (page: chitu.Page) {
     });
 
     page.load.add((sender: chitu.Page, args: chitu.PageLoadArguments) => {
-        if (args.loadType == chitu.PageLoadType.open) {
-
-        }
-
-        return loadRecords().done((items) => {
-            sender.enableScrollLoad = items.length == site.config.pageSize;
-
-        });
-    });
-
-    //============================================================
-    // 这个样式不能放在样式文件中，否则在显示商品列表的时候，会让商品类别页面
-    // 会产生跳动。
-    //page.shown.add(() => {
-    //    window.setTimeout(() => page.nodes().content.style.marginTop = '-50px', 100);
-    //});
-    //============================================================
-
-    function loadRecords(): JQueryPromise<Array<any>> {
-
         model.isLoading(true);
-        return model.loadProducts(false).done((items, filter) => {
+        return model.loadProducts(false).done((items: Array<any>, filter) => {
             model.isLoading(false);
             if (model.queryArguments.filter().indexOf('BrandId') < 0) {
                 filter.Brands.unshift({ Id: '', Name: BRAND_NONE_NAME });
@@ -146,8 +126,10 @@ export var func = function (page: chitu.Page) {
             }
 
             model.queryArguments.pageIndex = model.queryArguments.pageIndex + 1;
+            sender.enableScrollLoad = items.length == site.config.pageSize;
         });
-    };
+    });
+
 
 
 
