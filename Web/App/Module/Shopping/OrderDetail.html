@@ -79,5 +79,7 @@
 </div>
 
 <div data-bind="with:order" class="container" style="padding-top:10px;padding-bottom:20px;">
-    <a data-bind="tap:$parent.cancelOrder, click:$parent.cancelOrder, visible:Status() == 'WaitingForPayment'" data-dialog='confirm:"你取消该定单吗？"' href="javascript:" class="btn btn-block btn-default">取消订单</a>
+    <a data-bind="tap:$parent.cancelOrder, click:$parent.cancelOrder, visible:Status() == 'WaitingForPayment'" 
+       data-dialog='confirm:"你取消该定单吗？"' href="javascript:" 
+       class="btn btn-block btn-default">取消订单</a>
 </div>

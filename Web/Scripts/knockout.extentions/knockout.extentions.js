@@ -215,24 +215,11 @@
                 var deferred = $.Deferred();
                 deferred.resolve();
 
-
-                //if (dlg_config) {
                 var config = getConfig(element, 'data-dialog');
-                //var content = config.content;
-                var dialog_type;
-                if ($.isFunction(config.type) && config.type.name != null) {
-                    dialog_type = config.type.name;
-                }
-                else {
-                    dialog_type = config.type;
-                }
-
                 if (config.confirm) {
                     var content = config.confirm;
                     deferred = deferred.pipe(function () {
                         var result = $.Deferred();
-
-                        //require(['text!ko.ext/ComfirmDialog.html'], function (html) {
                         var html = ComfirmDialogHtml;
                         var node = $(html).appendTo(document.body).modal()[0];
 
@@ -248,12 +235,9 @@
                         }
 
                         ko.applyBindings(model, node);
-                        //});
-
                         return result;
                     });
                 }
-                //}
 
                 deferred = deferred.pipe(function () {
                     var result = $.isFunction(value) ? value(viewModel, event) : value;
@@ -278,7 +262,6 @@
                         result.done(function () {
                             if (config.toast) {
                                 var content = config.toast;
-                                //require(['text!ko.ext/ToastDialog.html'], function (html) 
                                 var html = ToastDialogHtml;
                                 var node = $(html).appendTo(document.body).modal()[0];
 
@@ -292,7 +275,6 @@
                                 }, 1000);
 
                                 ko.applyBindings(model, node);
-                                //});
                             }
 
                         });
