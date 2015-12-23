@@ -46,7 +46,7 @@
             </div>
             <div data-bind="visible:ko.unwrap(Status) == 'Send'">
                 <!---->
-                <button data-bind="tap:$parent.confirmReceived,click:$parent.confirmReceived" data-dialog="type:confirm,content:'你确定收到货了吗？'" class="btn btn-primary btn-block">确认收货</button>
+                <button data-bind="tap:$parent.confirmReceived,click:$parent.confirmReceived" data-dialog="confirm:'你确定收到货了吗？'" class="btn btn-primary btn-block">确认收货</button>
             </div>
         </div>
     </div>
@@ -79,5 +79,5 @@
 </div>
 
 <div data-bind="with:order" class="container" style="padding-top:10px;padding-bottom:20px;">
-    <a data-bind="tap:$parent.cancelOrder, click:$parent.cancelOrder, visible:Status() == 'WaitingForPayment'" data-dialog='type:"confirm",content:"你取消该定单吗？"' href="javascript:" class="btn btn-block btn-default">取消订单</a>
+    <a data-bind="tap:$parent.cancelOrder, click:$parent.cancelOrder, visible:Status() == 'WaitingForPayment'" data-dialog='confirm:"你取消该定单吗？"' href="javascript:" class="btn btn-block btn-default">取消订单</a>
 </div>

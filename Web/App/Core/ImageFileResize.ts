@@ -63,7 +63,7 @@ class ImageFileResize {
 
     imageResized: ImageFileResizeCallback
 
-    private processfile = (file: File, index, max_width: number, max_height: number): JQueryPromise<FileData> => {
+    private processfile(file: File, index, max_width: number, max_height: number): JQueryPromise<FileData> {
 
         var result = $.Deferred<FileData>();
 
@@ -84,7 +84,6 @@ class ImageFileResize {
             image.onload = () => {
                 var url = this.resizeMe(image, max_width, max_height);
                 var thumb = this.resizeMe(image, this.thumb2.maxWidth, this.thumb2.maxHeight);
-                //var img_base64 = url.split(';')[1].split(',')[1];
                 result.resolve({ index: index, url: url, data: url, thumb: thumb });
             }
         }
@@ -92,7 +91,7 @@ class ImageFileResize {
         return result;
     }
 
-    resizeMe = (img: HTMLImageElement, max_width: number, max_height: number) => {
+    private resizeMe(img: HTMLImageElement, max_width: number, max_height: number): string {
 
         var canvas = document.createElement('canvas');
 
@@ -102,25 +101,22 @@ class ImageFileResize {
         // calculate the width and height, constraining the proportions
         if (width > height) {
             if (width > max_width) {
-                //height *= max_width / width;
                 height = Math.round(height *= max_width / width);
                 width = max_width;
             }
         } else {
             if (height > max_height) {
-                //width *= max_height / height;
                 width = Math.round(width *= max_height / height);
                 height = max_height;
             }
         }
 
-        // resize the canvas and draw the image data into it
         canvas.width = width;
         canvas.height = height;
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, width, height);
 
-        return canvas.toDataURL("image/jpeg", 0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+        return canvas.toDataURL("image/jpeg", 0.7);
 
     }
 }

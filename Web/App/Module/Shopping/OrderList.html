@@ -58,7 +58,7 @@
                 <div class="pull-right">
                     <a data-bind="visible:ko.unwrap(Status)=='WaitingForPayment',tap:$parent.pay,click:$parent.pay" class="btn btn-small btn-primary pull-right">立即付款</a>
                     <a data-bind="visible:ko.unwrap(Status)=='Send',tap:$parent.confirmReceived,click:$parent.confirmReceived"
-                       data-dialog="type:confirm,content:'你确定收到货了吗？'"
+                       data-dialog="confirm:'你确定收到货了吗？'"
                        class="btn btn-small btn-primary pull-right">确认收货</a>
                     <a data-bind="visible:ko.unwrap(Status)=='ToEvaluate',tap:$parent.evaluate,click:$parent.evaluate"
                        class="btn btn-small btn-primary pull-right">评价晒单</a>

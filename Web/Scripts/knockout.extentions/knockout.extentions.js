@@ -218,7 +218,7 @@
 
                 //if (dlg_config) {
                 var config = getConfig(element, 'data-dialog');
-                var content = config.content;
+                //var content = config.content;
                 var dialog_type;
                 if ($.isFunction(config.type) && config.type.name != null) {
                     dialog_type = config.type.name;
@@ -227,7 +227,8 @@
                     dialog_type = config.type;
                 }
 
-                if (dialog_type == 'confirm') {
+                if (config.confirm) {
+                    var content = config.confirm;
                     deferred = deferred.pipe(function () {
                         var result = $.Deferred();
 
@@ -275,7 +276,8 @@
                         //===============================================
 
                         result.done(function () {
-                            if (config && dialog_type == 'toast') {
+                            if (config.toast) {
+                                var content = config.toast;
                                 //require(['text!ko.ext/ToastDialog.html'], function (html) 
                                 var html = ToastDialogHtml;
                                 var node = $(html).appendTo(document.body).modal()[0];

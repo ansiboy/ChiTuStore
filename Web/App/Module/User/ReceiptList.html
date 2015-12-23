@@ -20,7 +20,7 @@
                         <span class="icon-pencil" style="font-size:20px;"></span>
                         <span style="margin-left:4px;">编辑</span>
                     </a>
-                    <a data-bind="tap:$parent.deleteReceipt,click:$parent.deleteReceipt" data-dialog='type:"confirm",content:"你删除该收货地址吗？"' href="javascript:" style="margin-left:12px;">
+                    <a data-bind="tap:$parent.deleteReceipt,click:$parent.deleteReceipt" data-dialog='confirm:"你删除该收货地址吗？"' href="javascript:" style="margin-left:12px;">
                         <span class="icon-remove" style="font-size:20px;"></span>
                         <span style="margin-left:4px;">删除</span>
                     </a>
@@ -47,7 +47,7 @@
             <a href="javascript:" data-bind="click:$root.modifyReceipt" class="edit">
                 <i class="icon-pencil" style="color: blue"></i>
             </a>
-            <a href="javascript:" data-bind="click:$root.deleteReceipt" data-dialog="type:'confirm',content:'你确认需要删除吗？'" class="remove">
+            <a href="javascript:" data-bind="click:$root.deleteReceipt" data-dialog="confirm:'你确认需要删除吗？'" class="remove">
                 <i class="icon-remove" style="color: blue"></i>
             </a>
         </div>

@@ -3,28 +3,9 @@ import app = require('Application');
 import services = require('Services/Service');
 import home = require('Services/Home');
 
-//import c = require('ui/ScrollLoad');
+requirejs(['css!sc/Home/Index']);
 
-
-
-export var func = function (page: chitu.Page) {
-    /// <param name="page" type="chitu.Page"/>
-
-    //var scroll_config = {
-    //    pullDown: {
-    //statusText: {
-    //    init: '下拉可以刷新',
-    //    ready: '松开后刷新',
-    //    doing: '<div><i class="icon-spinner icon-spin"></i><span>&nbsp;正在更新中</span></div>',
-    //    done: '更新完毕',
-    //},
-    //element: page.nodes().content.querySelector('.pull-down'),
-    //text: function (status) {
-    //    var node: HTMLElement = <HTMLElement>(<HTMLElement>this.element).querySelector('[name="status-text"]');
-    //    node.innerHTML = this.statusText[status];
-    //}
-    //}
-    //};
+export = function (page: chitu.Page) {
 
     var homeProductQueryArguments = {
         pageIndex: 0
@@ -59,12 +40,10 @@ export var func = function (page: chitu.Page) {
             homeProductQueryArguments.pageIndex++;
             sender.enableScrollLoad = homeProducts.length == services.defaultPageSize;
         });
-
-
     });
 
     var viewDeferred = page.view;
-    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['css!sc/Home/Index', 'ui/PromotionLabel']));
+    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['ui/PromotionLabel']));
     page.viewChanged.add(() => ko.applyBindings(model, page.nodes().content));
 
     page.loadCompleted.add(() => {

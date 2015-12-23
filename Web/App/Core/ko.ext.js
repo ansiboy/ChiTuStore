@@ -8,7 +8,7 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
         </div> \
     </div> \
 </div>';
-    var ComfirmDialogHtml = '<div class="modal fade"> \
+    var ConfirmDialogHtml = '<div class="modal fade"> \
     <div class="modal-dialog"> \
         <div class="modal-content"> \
             <div class="modal-body"> \
@@ -149,7 +149,7 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
             href(element, valueAccessor);
         }
     };
-    function getConfig(element, name) {
+    function getDialogConfig(element, name) {
         var dlg = $(element).attr(name);
         var config;
         if (dlg) {
@@ -174,19 +174,12 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
             var value = this._value;
             return function (viewModel) {
                 var deferred = $.Deferred().resolve();
-                var config = getConfig(element, 'data-dialog');
-                var content = config.content;
-                var dialog_type;
-                if ($.isFunction(config.type) && config.type.name != null) {
-                    dialog_type = config.type.name;
-                }
-                else {
-                    dialog_type = config.type;
-                }
-                if (dialog_type == 'confirm') {
+                var dialog_config = getDialogConfig(element, 'data-dialog');
+                if (dialog_config.confirm) {
+                    var content = dialog_config.confirm;
                     deferred = deferred.pipe(function () {
                         var result = $.Deferred();
-                        var html = ComfirmDialogHtml;
+                        var html = ConfirmDialogHtml;
                         var node = $(html).appendTo(document.body)['modal']()[0];
                         var model = {
                             text: content,
@@ -217,7 +210,8 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
                             $(this._element).removeClass('disabled');
                         }, { _element: element }), 1000 * 20);
                         result.done(function () {
-                            if (config && dialog_type == 'toast') {
+                            if (dialog_config.toast) {
+                                var content = dialog_config.toast;
                                 var html = ToastDialogHtml;
                                 var node = $(html).appendTo(document.body)['modal']()[0];
                                 var model = {
@@ -283,7 +277,7 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
             imageLoaded: imageLoaded
         };
     })();
-    function getLogoImage(img_width, img_height) {
+    function getPreviewImage(img_width, img_height) {
         var scale = (img_height / img_width).toFixed(2);
         var img_name = 'img_log' + scale;
         var img_src = localStorage.getItem(img_name);
@@ -311,7 +305,6 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
         return {
             'update': function (element, valueAccessor, allBindings) {
                 if (element.tagName == 'IMG') {
-                    var config = getConfig(element, 'data-image');
                     var value = ko.utils.unwrapObservable(valueAccessor()) || {};
                     ko.utils['objectForEach'](value, function (attrName, attrValue) {
                         var src = ko.unwrap(attrValue);
@@ -325,8 +318,7 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
                             $(element).attr('width', img_width + 'px');
                             $(element).attr('height', img_height + 'px');
                             var src_replace;
-                            if (config.showLogo == null || config.showLogo == true)
-                                src_replace = getLogoImage(img_width, img_height);
+                            src_replace = getPreviewImage(img_width, img_height);
                             valueAccessor = $.proxy(function () {
                                 var obj = ko.utils.unwrapObservable(this._source());
                                 var src = ko.unwrap(obj.src);
@@ -367,7 +359,7 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
                     var img_height = new Number(arr[2]).valueOf();
                     $(this).attr('width', img_width + 'px');
                     $(this).attr('height', img_height + 'px');
-                    var src_replace = getLogoImage(img_width, img_height);
+                    var src_replace = getPreviewImage(img_width, img_height);
                     $(this).attr('src', src_replace);
                     var image = new Image();
                     image['element'] = this;

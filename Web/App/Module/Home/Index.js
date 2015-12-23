@@ -1,6 +1,6 @@
 define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home'], function (require, exports, ko, services, home) {
-    exports.func = function (page) {
-        /// <param name="page" type="chitu.Page"/>
+    requirejs(['css!sc/Home/Index']);
+    return function (page) {
         var homeProductQueryArguments = {
             pageIndex: 0
         };
@@ -31,7 +31,7 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home'], 
             });
         });
         var viewDeferred = page.view;
-        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['css!sc/Home/Index', 'ui/PromotionLabel']));
+        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['ui/PromotionLabel']));
         page.viewChanged.add(function () { return ko.applyBindings(model, page.nodes().content); });
         page.loadCompleted.add(function () {
             requirejs(['swiper'], function (Swiper) {

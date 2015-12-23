@@ -12,7 +12,7 @@ var ToastDialogHtml =
         </div> \
     </div> \
 </div>';
-var ComfirmDialogHtml =
+var ConfirmDialogHtml =
     '<div class="modal fade"> \
     <div class="modal-dialog"> \
         <div class="modal-content"> \
@@ -170,7 +170,7 @@ ko.bindingHandlers['href'] = {
         href(element, valueAccessor);
     }
 };
-function getConfig(element, name) {
+function getDialogConfig(element, name) {
     var dlg = $(element).attr(name);
 
     var config;
@@ -203,23 +203,13 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
 
             var deferred: JQueryPromise<any> = $.Deferred<any>().resolve();
 
-            //if (dlg_config) {
-            var config = getConfig(element, 'data-dialog');
-            var content = config.content;
-            var dialog_type;
-            if ($.isFunction(config.type) && config.type.name != null) {
-                dialog_type = config.type.name;
-            }
-            else {
-                dialog_type = config.type;
-            }
-
-            if (dialog_type == 'confirm') {
+            var dialog_config = getDialogConfig(element, 'data-dialog');
+            if (dialog_config.confirm) {
+                var content = dialog_config.confirm;
                 deferred = deferred.pipe(function () {
                     var result = $.Deferred();
 
-                    //require(['text!ko.ext/ComfirmDialog.html'], function (html) {
-                    var html = ComfirmDialogHtml;
+                    var html = ConfirmDialogHtml;
                     var node = $(html).appendTo(document.body)['modal']()[0];
 
                     var model = {
@@ -234,8 +224,6 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
                     }
 
                     ko.applyBindings(model, node);
-                    //});
-
                     return result;
                 });
             }
@@ -262,8 +250,8 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
                     //===============================================
 
                     result.done(function () {
-                        if (config && dialog_type == 'toast') {
-                            //require(['text!ko.ext/ToastDialog.html'], function (html) 
+                        if (dialog_config.toast) {
+                            var content = dialog_config.toast;
                             var html = ToastDialogHtml;
                             var node = $(html).appendTo(document.body)['modal']()[0];
 
@@ -277,7 +265,6 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
                             }, 1000);
 
                             ko.applyBindings(model, node);
-                            //});
                         }
 
                     });
@@ -296,10 +283,7 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
 var _click = ko.bindingHandlers.click;
 ko.bindingHandlers.click = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        //var value = ko.unwrap(valueAccessor());
-        //if (value != null) {
         valueAccessor = translateClickAccessor(element, valueAccessor, allBindings, viewModel, bindingContext);
-        //}
         return _click.init(element, valueAccessor, allBindings, viewModel, bindingContext);
     }
 };
@@ -365,7 +349,7 @@ var ImageLoader = (function () {
     };
 })();
 
-function getLogoImage(img_width, img_height) {
+function getPreviewImage(img_width, img_height) {
 
     var scale = (img_height / img_width).toFixed(2);
     var img_name = 'img_log' + scale;
@@ -405,8 +389,6 @@ ko.bindingHandlers.attr = (function () {
         'update': function (element, valueAccessor, allBindings) {
             if (element.tagName == 'IMG') {
 
-                var config = getConfig(element, 'data-image');
-
                 var value = ko.utils.unwrapObservable(valueAccessor()) || {};
                 ko.utils['objectForEach'](value, function (attrName, attrValue) {
                     var src = ko.unwrap(attrValue);
@@ -425,8 +407,7 @@ ko.bindingHandlers.attr = (function () {
                         $(element).attr('height', img_height + 'px');
 
                         var src_replace
-                        if (config.showLogo == null || config.showLogo == true)
-                            src_replace = getLogoImage(img_width, img_height);
+                        src_replace = getPreviewImage(img_width, img_height);
 
                         valueAccessor = $.proxy(function () {
                             var obj = ko.utils.unwrapObservable(this._source());
@@ -478,7 +459,7 @@ ko.bindingHandlers.html = {
                 $(this).attr('width', img_width + 'px');
                 $(this).attr('height', img_height + 'px');
 
-                var src_replace = getLogoImage(img_width, img_height);
+                var src_replace = getPreviewImage(img_width, img_height);
                 $(this).attr('src', src_replace);
 
                 var image = new Image();
