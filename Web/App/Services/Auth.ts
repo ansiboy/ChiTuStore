@@ -50,12 +50,10 @@ class AuthService {
         return result;
     }
     isLogined(): JQueryPromise<boolean> {
-        /// <returns type="jQuery.Deferred"/>
         var result = $.Deferred();
-        //site.ready(() => {
         var value = site.cookies.token() != null && site.cookies.token() != '';
         result.resolve(value);
-        //})
+
         return result;
     }
     getMember(): JQueryPromise<any> {

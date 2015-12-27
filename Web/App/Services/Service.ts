@@ -12,9 +12,7 @@ class ServiceConfig {
 
 
 class Services {
-    //constructor() {
-    //    this.loadConfig();
-    //}
+
     private _config: ServiceConfig;
     get defaultPageSize(): number {
         return site.config.pageSize;
@@ -25,50 +23,6 @@ class Services {
 
         return this._config;
     }
-    //private is_config: boolean = false
-    
-    //loadConfig = () => {
-    //    //======================================================================================
-    //    // 这段和 Site 相关的代码，貌似只能放在这里，Rewrite 文件依赖 Site 文件，放在 Site 文件没办法
-    //    // 处理连接错误 
-    //    var getSiteConfig: JQueryPromise<any>
-    //    if (window['plus']) {
-    //        getSiteConfig = $.ajax({ url: 'App_Data/SiteConfig.json', dataType: 'json', method: 'post' }).pipe(function (data) {
-    //            return $.ajax({
-    //                url: data.MemberServiceUrl + 'Auth/GetAppToken',
-    //                data: { appId: data.appId, appSecret: data.appSecret },
-    //                dataType: 'json'
-    //            }).then(function (tokenData) {
-    //                $.extend(data, tokenData);
-    //                return data;
-    //            });
-    //        });
-    //    }
-    //    else {
-    //        getSiteConfig = $.ajax({ url: 'Home/GetSiteConfig', dataType: 'json', method: 'post' });
-    //    }
-
-    //    return getSiteConfig.done((config) => {
-    //        console.log('config:' + config);
-    //        console.log('ShopServiceUrl:' + config.ShopServiceUrl);
-
-    //        site.set_config(config);
-    //        if (config.AppToken)
-    //            site.cookies.appToken(config.AppToken);
-
-    //        this.is_config = true;
-
-    //    });
-    //    //======================================================================================
-    //}
-
-    //checkedConfig = (): JQueryPromise<any> => {
-    //    if (!this.is_config)
-    //        return this.loadConfig();
-
-    //    return $.Deferred().resolve();
-    //}
-
     error = $.Callbacks()
     callMethod = (serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<any> => {
 
@@ -79,13 +33,7 @@ class Services {
                 throw new Error('The service url is not setted.');
 
             var ajax: JQueryXHR;
-            //var result = service.checkedConfig()
-            //    .pipe(() => {
 
-            //    });
-
-
-            //return result;
             var url = serviceUrl + method;
             data = $.extend({
                 '$token': site.cookies.token(),

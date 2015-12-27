@@ -2,11 +2,6 @@
 import app = require('Application');
 import site = require('Site');
 
-//=======================================
-// 确保 app 已经处于运行状态
-//app.run();
-//=======================================
-
 services.error.add(function (error) {
     if (error.Code == 'NotLogin' || error.Code == 'TokenRequired') {
         var return_url = '';
