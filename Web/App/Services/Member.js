@@ -1,8 +1,8 @@
-define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Services/Auth', 'knockout.mapping'], function (require, exports, site, service, ko, CryptoJS, auth, mapping) {
+define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Services/Auth', 'knockout.mapping'], function (require, exports, site, services, ko, CryptoJS, auth, mapping) {
     function call(method, data) {
         /// <returns type="jQuery.Deferred"/>
         if (data === void 0) { data = undefined; }
-        return service.callMethod(site.config.memberServiceUrl, method, data);
+        return services.callMethod(services.config.memberServiceUrl, method, data);
     }
     ;
     var token_name = 'token';

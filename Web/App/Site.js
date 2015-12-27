@@ -87,13 +87,8 @@ define(["require", "exports"], function (require, exports) {
             this.defaultUrl = 'Index';
             this.baseUrl = 'u.alinq.cn/test/Index.html';
             this.purchaseUrlFormat = 'pay/Purchase.html#{0}';
-            this.cookiePrefix = '';
-            this.serviceUrl = '';
-            this.siteServiceUrl = '';
-            this.memberServiceUrl = '';
-            this.weixinServiceUrl = '';
-            this.accountServiceUrl = '';
-            this.imageBaseUrl = '';
+            this.cookiePrefix = 'lsyy';
+            this.imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop';
             this.pageAnimationTime = 500;
             this.panelWithRate = 0.9;
             this.imageDataSpliter = '#';
@@ -186,7 +181,6 @@ define(["require", "exports"], function (require, exports) {
     })();
     var Site = (function () {
         function Site() {
-            this.error = $.Callbacks();
             this.ready_funcs = [];
             this.is_ready = false;
             this.config = new SiteConfig();
@@ -199,11 +193,6 @@ define(["require", "exports"], function (require, exports) {
         };
         Site.prototype.set_config = function (config) {
             site.config.cookiePrefix = config.CookiePrefix;
-            site.config.serviceUrl = config.ShopServiceUrl;
-            site.config.memberServiceUrl = config.MemberServiceUrl;
-            site.config.weixinServiceUrl = config.WeixinServiceUrl;
-            site.config.siteServiceUrl = config.SiteServiceUrl;
-            site.config.accountServiceUrl = config.AccountServiceUrl;
             site.config.imageBaseUrl = config.ImageBaseUrl;
             site.cookies.appToken(config.AppToken);
             this.is_ready = true;

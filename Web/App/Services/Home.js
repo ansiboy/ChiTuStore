@@ -6,15 +6,15 @@ define(["require", "exports", 'Services/Service', 'Site'], function (require, ex
             /// <summary>
             /// 获取系统设置的菜单
             /// </summary>
-            var result = services.callMethod(site.config.siteServiceUrl, 'UI/GetMenus');
+            var result = services.callMethod(services.config.siteServiceUrl, 'UI/GetMenus');
             return result;
         };
         HomeService.prototype.advertItems = function () {
-            var result = services.callMethod(site.config.siteServiceUrl, 'Home/GetAdvertItems');
+            var result = services.callMethod(services.config.siteServiceUrl, 'Home/GetAdvertItems');
             return result;
         };
         HomeService.prototype.homeProducts = function (pageIndex) {
-            var result = services.callMethod(site.config.siteServiceUrl, 'Home/GetHomeProducts', { pageIndex: pageIndex });
+            var result = services.callMethod(services.config.siteServiceUrl, 'Home/GetHomeProducts', { pageIndex: pageIndex });
             result.then(function (data) {
                 if (data.length < site.config.pageSize)
                     result['loadCompleted'] = true;

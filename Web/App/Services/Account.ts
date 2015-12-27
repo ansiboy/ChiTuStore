@@ -226,7 +226,7 @@ class AccountService {
         obj.RegionId = receiptInfo.CountyId();
 
         var self = this;
-        var result = services.callMethod(site.config.serviceUrl, 'Address/SaveReceiptInfo', obj)
+        var result = services.callMethod(services.config.serviceUrl, 'Address/SaveReceiptInfo', obj)
             .done(function (data) {
                 receiptInfo.Id(data.Id);
                 receiptInfo.IsDefault(data.IsDefault);
@@ -329,7 +329,7 @@ class AccountService {
     confirmReceived = (orderId: string): JQueryPromise<any>=> {
         /// <summary>确认已收到货</summary>
         /// <param name="orderId" type="String"/>
-        var result = services.callMethod(site.config.serviceUrl, 'Order/ConfirmReceived', { orderId: orderId })
+        var result = services.callMethod(services.config.serviceUrl, 'Order/ConfirmReceived', { orderId: orderId })
             .then((data) => {
                 this.orderStatusChanged('Send', data.Status);
                 return data;
@@ -350,7 +350,7 @@ class AccountService {
     purchaseOrder = (orderId: string, amount: number): JQueryPromise<any> => {
         var weixin = services['weixin'];
         var openid = weixin.openid();
-        var notify_url = site.config.weixinServiceUrl + 'WeiXin/OrderPurchase/' + site.cookies.appToken();
+        var notify_url = services.config.weixinServiceUrl + 'WeiXin/OrderPurchase/' + site.cookies.appToken();
         var out_trade_no = ko.unwrap(orderId).replace(/\-/g, '');
         return weixin.pay(openid, notify_url, out_trade_no, site.config.storeName, amount)
             .done(() => {
@@ -370,7 +370,7 @@ class AccountService {
     /// </summary>
     evaluateProduct = (orderDetailId: string, score: number, evaluation: string, anonymous: boolean, imageDatas: string, imageThumbs: string) => {
         var data = { orderDetailId, evaluation, imageDatas, score, imageThumbs, anonymous };
-        var result = services.callMethod(site.config.serviceUrl, 'Product/EvaluateProduct', data).done(() => {
+        var result = services.callMethod(services.config.serviceUrl, 'Product/EvaluateProduct', data).done(() => {
             var count = this.orderInfo.evaluateCount();
             this.orderInfo.evaluateCount(count - 1);
         })
@@ -414,7 +414,7 @@ class AccountService {
         });
     }
     getBalance = () => {
-        return services.callMethod(site.config.accountServiceUrl, 'Account/GetAccount').then(function (data) {
+        return services.callMethod(services.config.accountServiceUrl, 'Account/GetAccount').then(function (data) {
             return (new Number(data.Balance)).valueOf();
         });
     }
@@ -424,28 +424,28 @@ class AccountService {
     }
     orderInfo = new OrderInfo()
     getToCommentProducts(): LoadListPromise<any> {
-        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(site.config.serviceUrl, 'Product/GetToCommentProducts')
+        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(services.config.serviceUrl, 'Product/GetToCommentProducts')
             .done(() => {
                 result.loadCompleted = true
             });
         return result;
     }
     getCommentedProducts(): LoadListPromise<any> {
-        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(site.config.serviceUrl, 'Product/GetCommentedProducts')
+        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(services.config.serviceUrl, 'Product/GetCommentedProducts')
             .done(() => {
                 result.loadCompleted = true
             });
         return result;
     }
     getScoreDetails(): LoadListPromise<any> {
-        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(site.config.accountServiceUrl, 'Account/GetScoreDetails')
+        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(services.config.accountServiceUrl, 'Account/GetScoreDetails')
             .done(() => {
                 result.loadCompleted = true;
             });
         return result;
     }
     getBalanceDetails(): LoadListPromise<any> {
-        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(site.config.accountServiceUrl, 'Account/GetBalanceDetails')
+        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(services.config.accountServiceUrl, 'Account/GetBalanceDetails')
             .done(() => {
                 result.loadCompleted = true;
             });

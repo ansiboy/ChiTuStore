@@ -98,13 +98,13 @@ class SiteConfig {
     baseUrl = 'u.alinq.cn/test/Index.html'
     purchaseUrlFormat = 'pay/Purchase.html#{0}'
 
-    cookiePrefix = ''//该值需要设置
-    serviceUrl = ''
-    siteServiceUrl = ''
-    memberServiceUrl = ''
-    weixinServiceUrl = ''
-    accountServiceUrl = ''
-    imageBaseUrl = ''
+    cookiePrefix = 'lsyy'//该值需要设置
+    //serviceUrl = ''
+    //siteServiceUrl = ''
+    //memberServiceUrl = ''
+    //weixinServiceUrl = ''
+    //accountServiceUrl = ''
+    imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop'
 
     pageAnimationTime = 500
     get animationSpeed() {
@@ -189,7 +189,7 @@ class Site {
     env: SiteEnvironment
     //ready: JQueryDeferred<any>;
     //browser = new Browser(navigator.userAgent);
-    error = $.Callbacks()
+    //error = $.Callbacks()
 
     private ready_funcs: Function[] = []
     private is_ready = false;
@@ -209,11 +209,11 @@ class Site {
 
     set_config(config) {
         site.config.cookiePrefix = config.CookiePrefix;
-        site.config.serviceUrl = config.ShopServiceUrl;
-        site.config.memberServiceUrl = config.MemberServiceUrl;
-        site.config.weixinServiceUrl = config.WeixinServiceUrl;
-        site.config.siteServiceUrl = config.SiteServiceUrl;
-        site.config.accountServiceUrl = config.AccountServiceUrl;
+        //site.config.serviceUrl = config.ShopServiceUrl;
+        //site.config.memberServiceUrl = config.MemberServiceUrl;
+        //site.config.weixinServiceUrl = config.WeixinServiceUrl;
+        //site.config.siteServiceUrl = config.SiteServiceUrl;
+        //site.config.accountServiceUrl = config.AccountServiceUrl;
         site.config.imageBaseUrl = config.ImageBaseUrl;
         site.cookies.appToken(config.AppToken);
 

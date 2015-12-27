@@ -3,7 +3,7 @@ define(["require", "exports", 'Services/Service', 'Site'], function (require, ex
         function InfoService() {
         }
         InfoService.prototype.getArticles = function (args) {
-            var result = services.callMethod(site.config.siteServiceUrl, 'Info/GetNewsList', args);
+            var result = services.callMethod(services.config.siteServiceUrl, 'Info/GetNewsList', args);
             result.done($.proxy(function (items) {
                 this.loadCompleted = items.length < site.config.pageSize;
                 return items;
@@ -11,7 +11,7 @@ define(["require", "exports", 'Services/Service', 'Site'], function (require, ex
             return result;
         };
         InfoService.prototype.getArticleById = function (newsId) {
-            var result = services.callMethod(site.config.siteServiceUrl, 'Info/GetNews', { newsId: newsId });
+            var result = services.callMethod(services.config.siteServiceUrl, 'Info/GetNews', { newsId: newsId });
             return result;
         };
         return InfoService;

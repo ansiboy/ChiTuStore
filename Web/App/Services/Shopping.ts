@@ -99,11 +99,11 @@ class ShoppingService {
         return result;
     }
     getProductsByBrand = (brand): JQueryPromise<any> => {
-        var result = services.callMethod(site.config.serviceUrl, 'Product/GetProducts', { brand: brand });
+        var result = services.callMethod(services.config.serviceUrl, 'Product/GetProducts', { brand: brand });
         return result;
     }
     getProduct = (productId): JQueryPromise<any>=> {
-        var result = services.callMethod(site.config.serviceUrl, 'Product/GetProduct', { productId: productId })
+        var result = services.callMethod(services.config.serviceUrl, 'Product/GetProduct', { productId: productId })
             .then(translateProductData);
         return result;
     }
@@ -132,7 +132,7 @@ class ShoppingService {
         return result;
     }
     getProductIntroduce = (productId) => {
-        return services.callMethod(site.config.serviceUrl, 'Product/GetProductIntroduce', { productId: productId });
+        return services.callMethod(services.config.serviceUrl, 'Product/GetProductIntroduce', { productId: productId });
     }
     findProductsByName = (name) => {
         var result = services.callRemoteMethod('Product/FindProducts', { name: name });
@@ -270,16 +270,16 @@ class ShoppingService {
         return services.callRemoteMethod('Order/BalancePay', { orderId: orderId, amount: amount });
     }
     getProductCustomProperties = (productId: string): JQueryPromise<any> => {
-        return services.callMethod(site.config.serviceUrl, 'Product/GetCustomProperties', { productId: productId });
+        return services.callMethod(services.config.serviceUrl, 'Product/GetCustomProperties', { productId: productId });
     }
     getProductByNumberValues = (groupId, data): JQueryPromise<any>=> {
         var d = $.extend({ groupId: groupId }, data);
-        return services.callMethod(site.config.serviceUrl, 'Product/GetProductByNumberValues', d)
+        return services.callMethod(services.config.serviceUrl, 'Product/GetProductByNumberValues', d)
             .then(translateProductData);
     }
     getProductComments(productId: string, pageSize: number): JQueryPromise<Array<any>> {
         var data = { productId, pageSize };
-        return services.callMethod(site.config.serviceUrl, 'Product/GetProductCommentList', data).then((datas) => {
+        return services.callMethod(services.config.serviceUrl, 'Product/GetProductCommentList', data).then((datas) => {
             for (var i = 0; i < datas.length; i++) {
                 datas[i] = translateComment(datas[i]);
             }
@@ -288,22 +288,22 @@ class ShoppingService {
     }
     favorProduct(productId: string, productName: string): JQueryPromise<any> {
         var data = { productId, productName };
-        return services.callMethod(site.config.serviceUrl, 'Product/FavorProduct', data);
+        return services.callMethod(services.config.serviceUrl, 'Product/FavorProduct', data);
     }
     isFavored(productId: string): JQueryPromise<boolean> {
         if (!site.cookies.token()) {
             return $.Deferred<boolean>().resolve(false);
         }
         var data = { productId };
-        return services.callMethod(site.config.serviceUrl, 'Product/IsFavored', data);
+        return services.callMethod(services.config.serviceUrl, 'Product/IsFavored', data);
     }
     getFavorProducts(): LoadListPromise<any> {
-        var result = <LoadListPromise<any>>services.callMethod(site.config.serviceUrl, 'Product/GetFavorProducts');
+        var result = <LoadListPromise<any>>services.callMethod(services.config.serviceUrl, 'Product/GetFavorProducts');
         result.done((data) => result.loadCompleted = data.length < site.config.pageSize);
         return result;
     }
     unFavorProduct(productId: string) {
-        return services.callMethod(site.config.serviceUrl, 'Product/UnFavorProduct', { productId });
+        return services.callMethod(services.config.serviceUrl, 'Product/UnFavorProduct', { productId });
     }
 }
 

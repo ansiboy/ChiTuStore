@@ -4,7 +4,7 @@ var require_config = {
     urlArgs: "bust=46",
     shim: {
         chitu: {
-            deps: ['jquery', 'crossroads']
+            deps: ['jquery']
         },
         bootbox: {
             deps: ['jquery']
@@ -38,7 +38,7 @@ var require_config = {
             deps: ['jquery.cookie', 'jquery']
         },
         ErrorHandler: {
-            deps: ['Rewrite']
+            //deps: ['Rewrite']
         },
         'Module/Home/ProductList': {
             deps: ['ui/ScrollLoad']
@@ -60,7 +60,7 @@ var require_config = {
         text: '../Scripts/text.min',
         crossroads: '../Scripts/crossroads.min',
         iscroll: '../Scripts/iscroll-lite.min',
-        jquery: '../Scripts/jquery-2.1.0.min', 
+        jquery: '../Scripts/jquery-2.1.0.min',
         'jquery.cookie': '../Scripts/jquery.cookie.min',
         'jquery.event.swipe': '../Scripts/jquery.event.swipe.min',
         'jquery.event.move': '../Scripts/jquery.event.move.min',
@@ -87,49 +87,49 @@ var require_config = {
 requirejs.config(require_config);
 
 
-requirejs(['Application', 'bootbox', 'ErrorHandler', 'Rewrite', 'ui/Loading'], function () {//, ]
-    site.ready(function () {
-        //====================================================
-        // 说明：如果是微信环境，则加载微信模块
-        var weiXinChecked = $.Deferred();
-        var ua = navigator.userAgent.toLowerCase();
-        if (site.env.isWeiXin) { //(ua.match(/MicroMessenger/i) == 'micromessenger') {
-            requirejs(['sv/WeiXin', 'WXShare'], function () {//, 'WXShare'
-                weiXinChecked.resolve();
-            });
-        }
-        else {
+requirejs(['Application', 'bootbox', 'ErrorHandler', 'ui/Loading'], function () {//, ]
+    //site.ready(function () {
+    //====================================================
+    // 说明：如果是微信环境，则加载微信模块
+    var weiXinChecked = $.Deferred();
+    var ua = navigator.userAgent.toLowerCase();
+    if (site.env.isWeiXin) { //(ua.match(/MicroMessenger/i) == 'micromessenger') {
+        requirejs(['sv/WeiXin', 'WXShare'], function () {//, 'WXShare'
             weiXinChecked.resolve();
-        }
-        //return weiXinChecked;
+        });
+    }
+    else {
+        weiXinChecked.resolve();
+    }
+    //return weiXinChecked;
 
 
 
-        weiXinChecked.done(function () {
-            //==================================================
-            app.run();
-            if (!location.hash)
-                location.hash = 'Home_Index';
-           console.log('Home_Index');
-            //==================================================
+    weiXinChecked.done(function () {
+        //==================================================
+        app.run();
+        if (!location.hash)
+            location.hash = 'Home_Index';
+        console.log('Home_Index');
+        //==================================================
 
-            require(['ui/ScrollLoad', 'ui/Loading', 'ui/Menu', 'ui/TopBar']);
+        require(['ui/ScrollLoad', 'ui/Loading', 'ui/Menu', 'ui/TopBar']);
 
-            //==================================================
-            // 非必要的模块（用于增强用户体验），延后加载
-            window.setTimeout(function () {
-                require(['move'], function (move) {
-                    window['move'] = move;
-                });
+        //==================================================
+        // 非必要的模块（用于增强用户体验），延后加载
+        window.setTimeout(function () {
+            require(['move'], function (move) {
+                window['move'] = move;
+            });
 
-                require(['jquery.event.swipe'], function () { });
-            }, 2000);
-            //==================================================
-        })
+            require(['jquery.event.swipe'], function () { });
+        }, 2000);
+        //==================================================
+    })
 
-    });
+    //});
 
 });
-  
+
 
 

@@ -1,5 +1,5 @@
 ﻿import site = require('Site');
-import service = require('Services/Service');
+import services = require('Services/Service');
 import ko = require('knockout');
 import $ = require('jquery');
 import CryptoJS = require('md5');
@@ -20,7 +20,7 @@ function call(method, data = undefined) {
     //    dataType: 'json'
     //});
 
-    return service.callMethod(site.config.memberServiceUrl, method, data);
+    return services.callMethod(services.config.memberServiceUrl, method, data);
 };
 
 

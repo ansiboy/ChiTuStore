@@ -1,4 +1,4 @@
-define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], function (require, exports, site, service, CryptoJS, ko) {
+define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], function (require, exports, site, services, CryptoJS, ko) {
     var AuthService = (function () {
         function AuthService() {
             var _this = this;
@@ -28,7 +28,7 @@ define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], fu
         };
         AuthService.prototype.login = function (username, password) {
             password = CryptoJS.MD5(password).toString();
-            var result = service.callMethod(site.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
+            var result = services.callMethod(services.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
             var member = this;
             result.then(function (data) {
                 site.cookies.token(data.UserToken);
@@ -48,7 +48,7 @@ define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], fu
             return result;
         };
         AuthService.prototype.getMember = function () {
-            return service.callMethod(site.config.memberServiceUrl, 'Member/GetMember');
+            return services.callMethod(services.config.memberServiceUrl, 'Member/GetMember');
         };
         return AuthService;
     })();

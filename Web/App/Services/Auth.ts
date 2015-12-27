@@ -1,5 +1,5 @@
 ﻿import site = require('Site');
-import service = require('Services/Service');
+import services = require('Services/Service');
 import CryptoJS = require('md5');
 import ko = require('knockout');
 
@@ -34,7 +34,7 @@ class AuthService {
     logined = $.Callbacks()
     login(username: string, password: string): JQueryPromise<any> {
         password = CryptoJS.MD5(password).toString();
-        var result = service.callMethod(site.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
+        var result = services.callMethod(services.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
 
         var member = this;
         result.then(function (data) {
@@ -59,7 +59,7 @@ class AuthService {
         return result;
     }
     getMember(): JQueryPromise<any> {
-        return service.callMethod(site.config.memberServiceUrl, 'Member/GetMember');
+        return services.callMethod(services.config.memberServiceUrl, 'Member/GetMember');
     }
 
 }

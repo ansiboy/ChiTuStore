@@ -1,16 +1,16 @@
-﻿import service = require('Services/Service');
+﻿import services = require('Services/Service');
 import site = require('Site');
 
 class SiteService {
     searchProducts = (searchText: string, pageIndex: number = 0): JQueryPromise<any> => {
         var data = { searchText: searchText, pageIndex: pageIndex };
-        return service.callMethod(site.config.siteServiceUrl, 'Home/SearchProduct', data);
+        return services.callMethod(services.config.siteServiceUrl, 'Home/SearchProduct', data);
     }
     hotKeywords = (): JQueryPromise<string[]> => {
-        return service.callMethod(site.config.siteServiceUrl, 'Home/GetSearchKeywords');
+        return services.callMethod(services.config.siteServiceUrl, 'Home/GetSearchKeywords');
     }
     historyKeyword = (): JQueryPromise<string[]>=> {
-        return service.callMethod(site.config.siteServiceUrl, 'Home/GetHistoryKeywords');
+        return services.callMethod(services.config.siteServiceUrl, 'Home/GetHistoryKeywords');
     }
 }
 

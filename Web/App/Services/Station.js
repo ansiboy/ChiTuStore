@@ -1,16 +1,16 @@
-define(["require", "exports", 'Services/Service', 'Site'], function (require, exports, service, site) {
+define(["require", "exports", 'Services/Service'], function (require, exports, services) {
     var SiteService = (function () {
         function SiteService() {
             this.searchProducts = function (searchText, pageIndex) {
                 if (pageIndex === void 0) { pageIndex = 0; }
                 var data = { searchText: searchText, pageIndex: pageIndex };
-                return service.callMethod(site.config.siteServiceUrl, 'Home/SearchProduct', data);
+                return services.callMethod(services.config.siteServiceUrl, 'Home/SearchProduct', data);
             };
             this.hotKeywords = function () {
-                return service.callMethod(site.config.siteServiceUrl, 'Home/GetSearchKeywords');
+                return services.callMethod(services.config.siteServiceUrl, 'Home/GetSearchKeywords');
             };
             this.historyKeyword = function () {
-                return service.callMethod(site.config.siteServiceUrl, 'Home/GetHistoryKeywords');
+                return services.callMethod(services.config.siteServiceUrl, 'Home/GetHistoryKeywords');
             };
         }
         return SiteService;

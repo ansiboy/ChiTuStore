@@ -5,7 +5,7 @@ define(["require", "exports", 'Services/Service', 'Site'], function (require, ex
             this.call = function (method, data) {
                 if (data === void 0) { data = undefined; }
                 data = data || {};
-                var url = site.config.weixinServiceUrl + method;
+                var url = services.config.weixinServiceUrl + method;
                 data.$appToken = site.cookies.appToken();
                 return $.ajax({
                     url: url,

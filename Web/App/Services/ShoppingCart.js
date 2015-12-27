@@ -1,4 +1,4 @@
-define(["require", "exports", 'Services/Service', 'Services/Auth', 'Site', 'knockout'], function (require, exports, services, auth, site, ko) {
+define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], function (require, exports, services, auth, ko) {
     var ShoppingCartInfo = (function () {
         function ShoppingCartInfo() {
             this.itemsCount = ko.observable(0);
@@ -73,7 +73,7 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'Site', 'knoc
             this.removeItems = function (productIds) {
                 debugger;
                 var self = _this;
-                var result = services.callMethod(site.config.serviceUrl, 'ShoppingCart/RemoveItems', { productIds: productIds })
+                var result = services.callMethod(services.config.serviceUrl, 'ShoppingCart/RemoveItems', { productIds: productIds })
                     .then(function (data) { return _this.processData(data); });
                 result.done(function () { return _this.upateProductsCount(); });
                 return result;
@@ -97,14 +97,14 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'Site', 'knoc
                 /// <summary>
                 /// 获取购物车中产品的总数
                 /// </summary>
-                return services.callMethod(site.config.serviceUrl, 'ShoppingCart/GetProductsCount');
+                return services.callMethod(services.config.serviceUrl, 'ShoppingCart/GetProductsCount');
             };
             this.selectAll = function () {
-                return services.callMethod(site.config.serviceUrl, 'ShoppingCart/SelectAll')
+                return services.callMethod(services.config.serviceUrl, 'ShoppingCart/SelectAll')
                     .then(function (data) { return _this.processData(data); });
             };
             this.unselectAll = function () {
-                return services.callMethod(site.config.serviceUrl, 'ShoppingCart/UnselectAll')
+                return services.callMethod(services.config.serviceUrl, 'ShoppingCart/UnselectAll')
                     .then(function (data) { return _this.processData(data); });
             };
             auth.whenLogin(function () { return _this.upateProductsCount(); });

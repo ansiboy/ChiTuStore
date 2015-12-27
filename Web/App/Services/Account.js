@@ -190,7 +190,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 var obj = mapping.toJS(receiptInfo);
                 obj.RegionId = receiptInfo.CountyId();
                 var self = _this;
-                var result = services.callMethod(site.config.serviceUrl, 'Address/SaveReceiptInfo', obj)
+                var result = services.callMethod(services.config.serviceUrl, 'Address/SaveReceiptInfo', obj)
                     .done(function (data) {
                     receiptInfo.Id(data.Id);
                     receiptInfo.IsDefault(data.IsDefault);
@@ -269,7 +269,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 return result;
             };
             this.confirmReceived = function (orderId) {
-                var result = services.callMethod(site.config.serviceUrl, 'Order/ConfirmReceived', { orderId: orderId })
+                var result = services.callMethod(services.config.serviceUrl, 'Order/ConfirmReceived', { orderId: orderId })
                     .then(function (data) {
                     _this.orderStatusChanged('Send', data.Status);
                     return data;
@@ -287,7 +287,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
             this.purchaseOrder = function (orderId, amount) {
                 var weixin = services['weixin'];
                 var openid = weixin.openid();
-                var notify_url = site.config.weixinServiceUrl + 'WeiXin/OrderPurchase/' + site.cookies.appToken();
+                var notify_url = services.config.weixinServiceUrl + 'WeiXin/OrderPurchase/' + site.cookies.appToken();
                 var out_trade_no = ko.unwrap(orderId).replace(/\-/g, '');
                 return weixin.pay(openid, notify_url, out_trade_no, site.config.storeName, amount)
                     .done(function () {
@@ -296,7 +296,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
             };
             this.evaluateProduct = function (orderDetailId, score, evaluation, anonymous, imageDatas, imageThumbs) {
                 var data = { orderDetailId: orderDetailId, evaluation: evaluation, imageDatas: imageDatas, score: score, imageThumbs: imageThumbs, anonymous: anonymous };
-                var result = services.callMethod(site.config.serviceUrl, 'Product/EvaluateProduct', data).done(function () {
+                var result = services.callMethod(services.config.serviceUrl, 'Product/EvaluateProduct', data).done(function () {
                     var count = _this.orderInfo.evaluateCount();
                     _this.orderInfo.evaluateCount(count - 1);
                 });
@@ -333,7 +333,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 });
             };
             this.getBalance = function () {
-                return services.callMethod(site.config.accountServiceUrl, 'Account/GetAccount').then(function (data) {
+                return services.callMethod(services.config.accountServiceUrl, 'Account/GetAccount').then(function (data) {
                     return (new Number(data.Balance)).valueOf();
                 });
             };
@@ -343,28 +343,28 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
             this.orderInfo = new OrderInfo();
         }
         AccountService.prototype.getToCommentProducts = function () {
-            var result = services.callMethod(site.config.serviceUrl, 'Product/GetToCommentProducts')
+            var result = services.callMethod(services.config.serviceUrl, 'Product/GetToCommentProducts')
                 .done(function () {
                 result.loadCompleted = true;
             });
             return result;
         };
         AccountService.prototype.getCommentedProducts = function () {
-            var result = services.callMethod(site.config.serviceUrl, 'Product/GetCommentedProducts')
+            var result = services.callMethod(services.config.serviceUrl, 'Product/GetCommentedProducts')
                 .done(function () {
                 result.loadCompleted = true;
             });
             return result;
         };
         AccountService.prototype.getScoreDetails = function () {
-            var result = services.callMethod(site.config.accountServiceUrl, 'Account/GetScoreDetails')
+            var result = services.callMethod(services.config.accountServiceUrl, 'Account/GetScoreDetails')
                 .done(function () {
                 result.loadCompleted = true;
             });
             return result;
         };
         AccountService.prototype.getBalanceDetails = function () {
-            var result = services.callMethod(site.config.accountServiceUrl, 'Account/GetBalanceDetails')
+            var result = services.callMethod(services.config.accountServiceUrl, 'Account/GetBalanceDetails')
                 .done(function () {
                 result.loadCompleted = true;
             });

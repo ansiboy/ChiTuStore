@@ -1,49 +1,18 @@
 define(["require", "exports", 'Site', 'jquery'], function (require, exports, site, $) {
     var ServiceConfig = (function () {
         function ServiceConfig() {
-            this.serviceUrl = '';
-            this.siteServiceUrl = '';
-            this.memberServiceUrl = '';
-            this.weixinServiceUrl = '';
+            this.serviceUrl = 'http://shop.alinq.cn/UserServices/Shop/';
+            this.siteServiceUrl = 'http://shop.alinq.cn/UserServices/Site/';
+            this.memberServiceUrl = 'http://shop.alinq.cn/UserServices/Member/';
+            this.weixinServiceUrl = 'http://shop.alinq.cn/UserServices/WeiXin/';
+            this.accountServiceUrl = 'http://shop.alinq.cn/UserServices/Account/';
         }
         return ServiceConfig;
     })();
     var Services = (function () {
         function Services() {
             var _this = this;
-            this.is_config = false;
-            this.loadConfig = function () {
-                var getSiteConfig;
-                if (window['plus']) {
-                    getSiteConfig = $.ajax({ url: 'App_Data/SiteConfig.json', dataType: 'json', method: 'post' }).pipe(function (data) {
-                        return $.ajax({
-                            url: data.MemberServiceUrl + 'Auth/GetAppToken',
-                            data: { appId: data.appId, appSecret: data.appSecret },
-                            dataType: 'json'
-                        }).then(function (tokenData) {
-                            $.extend(data, tokenData);
-                            return data;
-                        });
-                    });
-                }
-                else {
-                    getSiteConfig = $.ajax({ url: 'Home/GetSiteConfig', dataType: 'json', method: 'post' });
-                }
-                return getSiteConfig.done(function (config) {
-                    console.log('config:' + config);
-                    console.log('ShopServiceUrl:' + config.ShopServiceUrl);
-                    site.set_config(config);
-                    if (config.AppToken)
-                        site.cookies.appToken(config.AppToken);
-                    _this.is_config = true;
-                });
-            };
-            this.checkedConfig = function () {
-                if (!_this.is_config)
-                    return _this.loadConfig();
-                return $.Deferred().resolve();
-            };
-            this.error = site.error;
+            this.error = $.Callbacks();
             this.callMethod = function (serviceUrl, method, data) {
                 if (data === void 0) { data = undefined; }
                 return (function (service, serviceUrl, method, data) {
@@ -52,38 +21,43 @@ define(["require", "exports", 'Site', 'jquery'], function (require, exports, sit
                     if (serviceUrl == null)
                         throw new Error('The service url is not setted.');
                     var ajax;
-                    var result = service.checkedConfig()
-                        .pipe(function () {
-                        var url = serviceUrl + method;
-                        data = $.extend({
-                            '$token': site.cookies.token(),
-                            '$appToken': site.cookies.appToken(),
-                        }, data);
-                        var options = {
-                            url: url,
-                            data: data,
-                            method: 'post',
-                            dataType: 'json',
-                            traditional: true
-                        };
-                        ajax = $.ajax(options);
-                        ajax['element'] = function () {
-                            return result['element'];
-                        };
-                        return ajax;
-                    });
-                    return result;
+                    var url = serviceUrl + method;
+                    data = $.extend({
+                        '$token': site.cookies.token(),
+                        '$appToken': site.cookies.appToken(),
+                    }, data);
+                    var options = {
+                        url: url,
+                        data: data,
+                        method: 'post',
+                        dataType: 'json',
+                        traditional: true
+                    };
+                    ajax = $.ajax(options);
+                    var element = ajax['element'];
+                    ajax['element'] = function () {
+                        return element;
+                    };
+                    return ajax;
                 })(_this, serviceUrl, method, data);
             };
             this.callRemoteMethod = function (method, data) {
                 if (data === void 0) { data = undefined; }
-                return _this.callMethod(site.config.serviceUrl, method, data);
+                return _this.callMethod(services.config.serviceUrl, method, data);
             };
-            this.loadConfig();
         }
         Object.defineProperty(Services.prototype, "defaultPageSize", {
             get: function () {
                 return site.config.pageSize;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Services.prototype, "config", {
+            get: function () {
+                if (!this._config)
+                    this._config = new ServiceConfig();
+                return this._config;
             },
             enumerable: true,
             configurable: true
@@ -102,6 +76,82 @@ define(["require", "exports", 'Site', 'jquery'], function (require, exports, sit
         };
         return Services;
     })();
-    window['services'] = window['services'] || new Services();
+    if (!window['services']) {
+        var services = window['services'] = new Services();
+        var _ajax = $.ajax;
+        $.extend($, {
+            ajax: function (options) {
+                options.data = options.data || {};
+                var result = $.Deferred();
+                _ajax(options).done($.proxy(function (data, textStatus, jqXHR) {
+                    if (data.Type == 'ErrorObject') {
+                        if (data.Code == 'Success') {
+                            this._result.resolve(data, textStatus, jqXHR);
+                            return;
+                        }
+                        if ($.isFunction(this._result.element)) {
+                            data.element = this._result.element();
+                        }
+                        services.error.fire(data, textStatus, jqXHR);
+                        this._result.reject(data, textStatus, jqXHR);
+                        return;
+                    }
+                    this._result.resolve(data, textStatus, jqXHR);
+                }, { _result: result }))
+                    .fail($.proxy(function (jqXHR, textStatus) {
+                    var err = { Code: textStatus, status: jqXHR.status, Message: jqXHR.statusText };
+                    if ($.isFunction(this._result.element)) {
+                        err['element'] = this._result.element();
+                    }
+                    services.error.fire(err);
+                    this._result.reject(err);
+                }, { _result: result }));
+                return result;
+            }
+        });
+        (function () {
+            var prefix = '/Date(';
+            function parseStringToDate(value) {
+                var star = prefix.length;
+                var len = value.length - prefix.length - ')/'.length;
+                var str = value.substr(star, len);
+                var num = parseInt(str);
+                var date = new Date(num);
+                return date;
+            }
+            $.ajaxSettings.converters['text json'] = function (json) {
+                var result = $.parseJSON(json);
+                if (typeof result === 'string') {
+                    if (result.substr(0, prefix.length) == prefix)
+                        result = parseStringToDate(result);
+                    return result;
+                }
+                var stack = new Array();
+                stack.push(result);
+                while (stack.length > 0) {
+                    var item = stack.pop();
+                    for (var key in item) {
+                        var value = item[key];
+                        if (value == null)
+                            continue;
+                        if ($.isArray(value)) {
+                            for (var i = 0; i < value.length; i++) {
+                                stack.push(value[i]);
+                            }
+                            continue;
+                        }
+                        if ($.isPlainObject(value)) {
+                            stack.push(value);
+                            continue;
+                        }
+                        if (typeof value == 'string' && value.substr(0, prefix.length) == prefix) {
+                            item[key] = parseStringToDate(value);
+                        }
+                    }
+                }
+                return result;
+            };
+        })();
+    }
     return window['services'];
 });

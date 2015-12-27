@@ -7,7 +7,7 @@ class WeiXinService {
     private call = (method: string, data = undefined) => {
         /// <returns type="jQuery.Deferred"/>
         data = data || {};
-        var url = site.config.weixinServiceUrl + method
+        var url = services.config.weixinServiceUrl + method
         //return site.cookies.getAppToken().pipe($.proxy(function (appToken) {
         //
         data.$appToken = site.cookies.appToken();

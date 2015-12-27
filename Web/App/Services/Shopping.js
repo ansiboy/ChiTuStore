@@ -82,11 +82,11 @@ define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], f
                 return result;
             };
             this.getProductsByBrand = function (brand) {
-                var result = services.callMethod(site.config.serviceUrl, 'Product/GetProducts', { brand: brand });
+                var result = services.callMethod(services.config.serviceUrl, 'Product/GetProducts', { brand: brand });
                 return result;
             };
             this.getProduct = function (productId) {
-                var result = services.callMethod(site.config.serviceUrl, 'Product/GetProduct', { productId: productId })
+                var result = services.callMethod(services.config.serviceUrl, 'Product/GetProduct', { productId: productId })
                     .then(translateProductData);
                 return result;
             };
@@ -107,7 +107,7 @@ define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], f
                 return result;
             };
             this.getProductIntroduce = function (productId) {
-                return services.callMethod(site.config.serviceUrl, 'Product/GetProductIntroduce', { productId: productId });
+                return services.callMethod(services.config.serviceUrl, 'Product/GetProductIntroduce', { productId: productId });
             };
             this.findProductsByName = function (name) {
                 var result = services.callRemoteMethod('Product/FindProducts', { name: name });
@@ -216,17 +216,17 @@ define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], f
                 return services.callRemoteMethod('Order/BalancePay', { orderId: orderId, amount: amount });
             };
             this.getProductCustomProperties = function (productId) {
-                return services.callMethod(site.config.serviceUrl, 'Product/GetCustomProperties', { productId: productId });
+                return services.callMethod(services.config.serviceUrl, 'Product/GetCustomProperties', { productId: productId });
             };
             this.getProductByNumberValues = function (groupId, data) {
                 var d = $.extend({ groupId: groupId }, data);
-                return services.callMethod(site.config.serviceUrl, 'Product/GetProductByNumberValues', d)
+                return services.callMethod(services.config.serviceUrl, 'Product/GetProductByNumberValues', d)
                     .then(translateProductData);
             };
         }
         ShoppingService.prototype.getProductComments = function (productId, pageSize) {
             var data = { productId: productId, pageSize: pageSize };
-            return services.callMethod(site.config.serviceUrl, 'Product/GetProductCommentList', data).then(function (datas) {
+            return services.callMethod(services.config.serviceUrl, 'Product/GetProductCommentList', data).then(function (datas) {
                 for (var i = 0; i < datas.length; i++) {
                     datas[i] = translateComment(datas[i]);
                 }
@@ -235,22 +235,22 @@ define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], f
         };
         ShoppingService.prototype.favorProduct = function (productId, productName) {
             var data = { productId: productId, productName: productName };
-            return services.callMethod(site.config.serviceUrl, 'Product/FavorProduct', data);
+            return services.callMethod(services.config.serviceUrl, 'Product/FavorProduct', data);
         };
         ShoppingService.prototype.isFavored = function (productId) {
             if (!site.cookies.token()) {
                 return $.Deferred().resolve(false);
             }
             var data = { productId: productId };
-            return services.callMethod(site.config.serviceUrl, 'Product/IsFavored', data);
+            return services.callMethod(services.config.serviceUrl, 'Product/IsFavored', data);
         };
         ShoppingService.prototype.getFavorProducts = function () {
-            var result = services.callMethod(site.config.serviceUrl, 'Product/GetFavorProducts');
+            var result = services.callMethod(services.config.serviceUrl, 'Product/GetFavorProducts');
             result.done(function (data) { return result.loadCompleted = data.length < site.config.pageSize; });
             return result;
         };
         ShoppingService.prototype.unFavorProduct = function (productId) {
-            return services.callMethod(site.config.serviceUrl, 'Product/UnFavorProduct', { productId: productId });
+            return services.callMethod(services.config.serviceUrl, 'Product/UnFavorProduct', { productId: productId });
         };
         return ShoppingService;
     })();
