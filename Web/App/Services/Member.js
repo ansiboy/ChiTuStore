@@ -13,6 +13,12 @@ define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Se
             //site.ready(() => {
             //    site_ready.resolve();
             //})
+            //debugger;
+            //this.isLogined().done((login_result) => {
+            //    if (login_result) {
+            //        this.logined.fire();
+            //    }
+            //});
             var _this = this;
             this._userInfo = {};
             this.currentUserInfo = {
@@ -25,6 +31,7 @@ define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Se
             };
             auth.whenLogin(function () {
                 _this.getUserInfo().done(function (userInfo) {
+                    debugger;
                     mapping.fromJS(userInfo, {}, _this.currentUserInfo);
                 });
             });

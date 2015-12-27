@@ -10,6 +10,7 @@ define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], fu
             this.logouted = $.Callbacks();
             this.logined = $.Callbacks();
             this.whenLogin(function () {
+                debugger;
                 _this.getMember().done(function (data) {
                     _this.currentMember.mobile(data.Mobile);
                     _this.currentMember.passwordSetted(data.PasswordSetted);
@@ -41,10 +42,8 @@ define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], fu
         };
         AuthService.prototype.isLogined = function () {
             var result = $.Deferred();
-            site.ready(function () {
-                var value = site.cookies.token() != null && site.cookies.token() != '';
-                result.resolve(value);
-            });
+            var value = site.cookies.token() != null && site.cookies.token() != '';
+            result.resolve(value);
             return result;
         };
         AuthService.prototype.getMember = function () {

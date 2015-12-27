@@ -71,7 +71,7 @@ export = function (page: chitu.Page) {
                     HeadImageUrl: data.HeadImgUrl,
                     NickName: data.NickName
                 };
-
+           
                 mapping.fromJS(userInfo, {}, model.userInfo);
                 member.setUserInfo(userInfo);
             });

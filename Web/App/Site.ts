@@ -223,18 +223,18 @@ class Site {
         }
     }
 
-    ready(func: Function) {
+    //ready(func: Function) {
 
-        if (func == null)
-            throw new Error('Argument func is null');
+    //    if (func == null)
+    //        throw new Error('Argument func is null');
 
-        if (this.is_ready) {
-            this.invokeReadyFunc(func);
-            return;
-        }
+    //    if (this.is_ready) {
+    //        this.invokeReadyFunc(func);
+    //        return;
+    //    }
 
-        this.ready_funcs.push(func);
-    }
+    //    this.ready_funcs.push(func);
+    //}
 }
 
 var site: Site = window['site'] = window['site'] || new Site();

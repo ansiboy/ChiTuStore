@@ -44,8 +44,8 @@ class MemberService {
         //site.ready(() => {
         //    site_ready.resolve();
         //})
-
-        //$.when(this.isLogined(), site_ready).done((login_result) => {
+        //debugger;
+        //this.isLogined().done((login_result) => {
         //    if (login_result) {
         //        this.logined.fire();
         //    }
@@ -60,7 +60,7 @@ class MemberService {
 
         auth.whenLogin(() => {
             this.getUserInfo().done((userInfo) => {
-                //debugger;
+                debugger;
                 mapping.fromJS(userInfo, {}, this.currentUserInfo);
             })
         });

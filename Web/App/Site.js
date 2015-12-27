@@ -200,15 +200,6 @@ define(["require", "exports"], function (require, exports) {
                 this.invokeReadyFunc(this.ready_funcs[i]);
             }
         };
-        Site.prototype.ready = function (func) {
-            if (func == null)
-                throw new Error('Argument func is null');
-            if (this.is_ready) {
-                this.invokeReadyFunc(func);
-                return;
-            }
-            this.ready_funcs.push(func);
-        };
         return Site;
     })();
     var site = window['site'] = window['site'] || new Site();
