@@ -4,12 +4,16 @@ chitu.Page.animationTime = site.config.pageAnimationTime;
 
 var app = new chitu.Application({
     container: () => document.getElementById('main'),
-    scrollType: () => {
+    scrollType: (routeData: chitu.RouteData) => {
         if (site.env.isDegrade)
             return chitu.ScrollType.Document;
 
-        if (site.env.isIOS)
+        if (site.env.isIOS) {
+            //if (routeData.values().controller == 'Home' && routeData.values().action == 'Product') {
+            //    return chitu.ScrollType.Document;
+            //}
             return chitu.ScrollType.IScroll;
+        }
 
         if (site.env.isAndroid)
             return chitu.ScrollType.Div;
@@ -26,6 +30,10 @@ var app = new chitu.Application({
         if (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
             name == 'Home.NewsList' || name == 'User.Index')
             return chitu.SwipeDirection.None;
+
+        //if (routeData.values().controller == 'Home' && routeData.values().action == 'Product') {
+        //    return chitu.SwipeDirection.None;
+        //}
 
         if (name == 'Home.ProductDetail')
             return chitu.SwipeDirection.Up;
@@ -77,7 +85,7 @@ app.pageCreated.add(function (sender: chitu.Application, page: chitu.Page) {
                     }
                 });
 
-          
+
         }
     }
    

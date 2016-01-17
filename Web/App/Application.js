@@ -2,11 +2,12 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
     chitu.Page.animationTime = site.config.pageAnimationTime;
     var app = new chitu.Application({
         container: function () { return document.getElementById('main'); },
-        scrollType: function () {
+        scrollType: function (routeData) {
             if (site.env.isDegrade)
                 return chitu.ScrollType.Document;
-            if (site.env.isIOS)
+            if (site.env.isIOS) {
                 return chitu.ScrollType.IScroll;
+            }
             if (site.env.isAndroid)
                 return chitu.ScrollType.Div;
             return chitu.ScrollType.Div;
