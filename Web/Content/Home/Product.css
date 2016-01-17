@@ -94,16 +94,25 @@
   right: 0px;
   width: 100%;
   background-color: white;
-  /*padding: unset;*/
+  padding-bottom: 110px;
 }
 .product-panel .modal-dialog {
   background-color: white;
+  margin: 0px;
+  top: 0px;
+  bottom: -100px;
+  right: 0;
+  position: fixed;
+  border: none;
 }
 .product-panel .wrapper {
   top: 0px;
 }
 .product-panel .modal-backdrop.in {
   opacity: 0.5;
+}
+.product-panel .modal {
+  bottom: -100px;
 }
 .product-detail {
   background-color: white;

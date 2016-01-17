@@ -1,4 +1,11 @@
 define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', 'iscroll', 'knockout.mapping'], function (require, exports, move, site, ko, shopping, IScroll, mapping) {
+    var product_number_input_html = '<div style="width:100%;height:100%;z-index:2000;display:none;"> \
+    <div style= "position:fixed;width:100%;z-index:2000;bottom:0px;" class="container" > \
+        <input name="product_number_input" type= "number" class="form-control"/> \
+    </div> \
+    <div class="modal-backdrop" style= "opacity:0"> \
+    </div> \
+</div>';
     var ProductPanelModel = (function () {
         function ProductPanelModel(panel, parent_model) {
             var _this = this;
@@ -54,9 +61,22 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                     _this.panel.close();
                 });
             };
+            this.showProdutNumberInput = function () {
+                _this.panel.hide();
+                _this.produtNumberInput.show();
+                _this.produtNumberInput.find('input[name="product_number_input"]').focus();
+                console.log('produtNumberInput focus');
+            };
+            this.hideProdutNumberInput = function () {
+                _this.panel.show();
+                _this.produtNumberInput.hide();
+            };
             this.panel = panel;
             this.product = parent_model.product;
             this.parent_model = parent_model;
+            this.produtNumberInput = $(product_number_input_html).appendTo(document.body);
+            this.produtNumberInput.on('touck,click', this.hideProdutNumberInput);
+            this.produtNumberInput.find('input').focusout(this.hideProdutNumberInput);
         }
         return ProductPanelModel;
     })();
@@ -84,16 +104,14 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                 var iscroll = new IScroll($wrapper[0], { tap: true });
                 if (site.env.isIOS) {
                     var $input = $(_this.node).find('input[type="text"]');
-                    $input.focus(function () {
-                        console.log('input focus');
+                    var fix_doc_pos = function () {
                         $(document).scrollTop(0);
                         $(document).scrollLeft(0);
-                    });
+                    };
+                    $input.focus(fix_doc_pos);
+                    $input.focusout(fix_doc_pos);
                 }
-                debugger;
-                $(_this.node).on('touchmove', function (e) {
-                    e.preventDefault();
-                });
+                $(_this.node).on('touchmove', function (e) { return e.preventDefault(); });
             };
             this.page_closed = function () {
                 console.log('page_closed, remove node.');
@@ -155,6 +173,14 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
             enumerable: true,
             configurable: true
         });
+        ProductPanel.prototype.hide = function () {
+            this.node.style.display = 'none';
+            this.page.nodes().container.style.display = 'none';
+        };
+        ProductPanel.prototype.show = function () {
+            this.node.style.display = 'block';
+            this.page.nodes().container.style.display = 'block';
+        };
         return ProductPanel;
     })();
     return ProductPanel;

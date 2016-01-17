@@ -24,6 +24,15 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
                 console.log('showPanel');
                 _this.panel.open();
             };
+            this.favor = function () {
+                if (_this.product == null)
+                    return;
+                if (_this.isFavored()) {
+                    shopping.unFavorProduct(ko.unwrap(_this.product.Id));
+                    return;
+                }
+                shopping.favorProduct(ko.unwrap(_this.product.Id), ko.unwrap(_this.product.Name));
+            };
             this.page = page;
         }
         Object.defineProperty(ProductModel.prototype, "panel", {

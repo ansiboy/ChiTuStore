@@ -20,7 +20,7 @@ class Model {
         return recharge.createRechargeRecord(this.amount()).done(function (args) {
             var openid = services['weixin'].openid();
 
-            var notify_url = services.config.weixinServiceUrl + 'WeiXin/RechargePurchase/' + site.cookies.appToken();
+            var notify_url = services.config.weixinServiceUrl + 'WeiXin/RechargePurchase/' + services.config.appToken;
             var out_trade_no = args.Id.replace(/\-/g, '');
             return services['weixin'].pay(openid, notify_url, out_trade_no, site.config.storeName, args.Amount).done(function () {
                 app.back();

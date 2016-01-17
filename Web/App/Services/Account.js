@@ -287,7 +287,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
             this.purchaseOrder = function (orderId, amount) {
                 var weixin = services['weixin'];
                 var openid = weixin.openid();
-                var notify_url = services.config.weixinServiceUrl + 'WeiXin/OrderPurchase/' + site.cookies.appToken();
+                var notify_url = services.config.weixinServiceUrl + 'WeiXin/OrderPurchase/' + services.config.appToken;
                 var out_trade_no = ko.unwrap(orderId).replace(/\-/g, '');
                 return weixin.pay(openid, notify_url, out_trade_no, site.config.storeName, amount)
                     .done(function () {

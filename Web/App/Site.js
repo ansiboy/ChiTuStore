@@ -22,14 +22,6 @@ define(["require", "exports"], function (require, exports) {
                 return site.cookies.get_value(name);
             site.cookies.set_value(name, value);
         };
-        SiteCookies.prototype.appToken = function (value) {
-            if (value === void 0) { value = undefined; }
-            var name = 'appToken';
-            if (value === undefined)
-                return site.cookies.get_value(name);
-            $.cookie(name, value);
-            site.cookies.set_value(name, value);
-        };
         SiteCookies.prototype.token = function (value) {
             if (value === void 0) { value = undefined; }
             var name = 'token';
@@ -188,18 +180,6 @@ define(["require", "exports"], function (require, exports) {
             this.storage = new SiteStorage();
             this.env = new SiteEnvironment();
         }
-        Site.prototype.invokeReadyFunc = function (func) {
-            func();
-        };
-        Site.prototype.set_config = function (config) {
-            site.config.cookiePrefix = config.CookiePrefix;
-            site.config.imageBaseUrl = config.ImageBaseUrl;
-            site.cookies.appToken(config.AppToken);
-            this.is_ready = true;
-            for (var i = 0; i < this.ready_funcs.length; i++) {
-                this.invokeReadyFunc(this.ready_funcs[i]);
-            }
-        };
         return Site;
     })();
     var site = window['site'] = window['site'] || new Site();

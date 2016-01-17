@@ -1,5 +1,6 @@
 ﻿<div ch-part="header" class="bg-primary topbar" style="width:100%;">
-    <a href="javascript:" class="rightButton" style="padding-right:20px;padding-left:20px;margin-right:-20px;">
+    <a href="javascript:" class="rightButton" style="padding-right:20px;padding-left:20px;margin-right:-20px;"
+       data-bind="click:favor,tap:favor">
         <i data-bind="visible:!isFavored()" class="icon-heart-empty" style="font-weight: 800; font-size: 20px;display:none;"></i>
         <i data-bind="visible:isFavored" class="icon-heart" style="display:none;"></i>
     </a>

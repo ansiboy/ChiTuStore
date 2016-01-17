@@ -24,15 +24,15 @@ class SiteCookies {
 
         site.cookies.set_value(name, value);
     }
-    appToken(value: string = undefined): string {
-        //只读，数据由服务端写入
-        var name = 'appToken';
-        if (value === undefined)
-            return site.cookies.get_value(name);
+    //appToken(value: string = undefined): string {
+    //    //只读，数据由服务端写入
+    //    var name = 'appToken';
+    //    if (value === undefined)
+    //        return site.cookies.get_value(name);
 
-        $.cookie(name, value);
-        site.cookies.set_value(name, value);
-    }
+    //    $.cookie(name, value);
+    //    site.cookies.set_value(name, value);
+    //}
     token(value: string = undefined) {
         var name = 'token';
         if (value === undefined)
@@ -203,25 +203,25 @@ class Site {
         this.env = new SiteEnvironment()
     }
 
-    private invokeReadyFunc(func: Function) {
-        func();
-    }
+    //private invokeReadyFunc(func: Function) {
+    //    func();
+    //}
 
-    set_config(config) {
-        site.config.cookiePrefix = config.CookiePrefix;
-        //site.config.serviceUrl = config.ShopServiceUrl;
-        //site.config.memberServiceUrl = config.MemberServiceUrl;
-        //site.config.weixinServiceUrl = config.WeixinServiceUrl;
-        //site.config.siteServiceUrl = config.SiteServiceUrl;
-        //site.config.accountServiceUrl = config.AccountServiceUrl;
-        site.config.imageBaseUrl = config.ImageBaseUrl;
-        site.cookies.appToken(config.AppToken);
+    //set_config(config) {
+    //    site.config.cookiePrefix = config.CookiePrefix;
+    //    //site.config.serviceUrl = config.ShopServiceUrl;
+    //    //site.config.memberServiceUrl = config.MemberServiceUrl;
+    //    //site.config.weixinServiceUrl = config.WeixinServiceUrl;
+    //    //site.config.siteServiceUrl = config.SiteServiceUrl;
+    //    //site.config.accountServiceUrl = config.AccountServiceUrl;
+    //    site.config.imageBaseUrl = config.ImageBaseUrl;
+    //    //site.cookies.appToken(config.AppToken);
 
-        this.is_ready = true;
-        for (var i = 0; i < this.ready_funcs.length; i++) {
-            this.invokeReadyFunc(this.ready_funcs[i]);
-        }
-    }
+    //    this.is_ready = true;
+    //    for (var i = 0; i < this.ready_funcs.length; i++) {
+    //        this.invokeReadyFunc(this.ready_funcs[i]);
+    //    }
+    //}
 
     //ready(func: Function) {
 

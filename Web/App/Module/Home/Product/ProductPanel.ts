@@ -7,16 +7,31 @@ import Hammer = require('hammer');
 import mapping = require('knockout.mapping');
 
 //var v = site.config.dialogAnimationTime;
+var product_number_input_html =
+    '<div style="width:100%;height:100%;z-index:2000;display:none;"> \
+    <div style= "position:fixed;width:100%;z-index:2000;bottom:0px;" class="container" > \
+        <input name="product_number_input" type= "number" class="form-control"/> \
+    </div> \
+    <div class="modal-backdrop" style= "opacity:0"> \
+    </div> \
+</div>';
 
 class ProductPanelModel {
     private panel: ProductPanel
     private product: any
     private parent_model: any
+    private produtNumberInput: JQuery
 
     constructor(panel: ProductPanel, parent_model: any) {
         this.panel = panel;
         this.product = parent_model.product;
         this.parent_model = parent_model;
+        this.produtNumberInput = $(product_number_input_html).appendTo(document.body);
+        //this.produtNumberInput.css('z-index', 2000);
+        //this.produtNumberInput.hide();
+
+        this.produtNumberInput.on('touck,click', this.hideProdutNumberInput);
+        this.produtNumberInput.find('input').focusout(this.hideProdutNumberInput);
     }
 
     increaseCount = () => {
@@ -81,6 +96,28 @@ class ProductPanelModel {
             this.panel.close()
         });
     }
+
+    showProdutNumberInput = () => {
+        this.panel.hide();
+        this.produtNumberInput.show();
+
+        //window.setTimeout(() => {
+        //    debugger;
+        //    //this.produtNumberInput.scrollTop(40);
+        //    //console.log('scrollTop:' + this.produtNumberInput.scrollTop());
+        //    var input = this.produtNumberInput.find('input[name="product_number_input"]');
+        //    //console.log('input lenght', input.length);
+        //    input.parent().css('bottom', '0px');
+        //}, 300);
+
+        this.produtNumberInput.find('input[name="product_number_input"]').focus();
+        console.log('produtNumberInput focus');
+    }
+
+    hideProdutNumberInput = () => {
+        this.panel.show();
+        this.produtNumberInput.hide();
+    }
 }
 
 class ProductPanel {
@@ -143,21 +180,23 @@ class ProductPanel {
         $wrapper.height($(window).height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT);
 
         var iscroll = new IScroll($wrapper[0], { tap: true });
-        //=====================================================
         if (site.env.isIOS) {
+            //=====================================================
+            // 修正弹出键盘时，document 位置发生偏移。
             var $input = $(this.node).find('input[type="text"]');
-            $input.focus(function () {
-                console.log('input focus');
+            var fix_doc_pos = () => {
                 $(document).scrollTop(0);
                 $(document).scrollLeft(0);
-            });
+            };
+
+            $input.focus(fix_doc_pos);
+            $input.focusout(fix_doc_pos);
+            //=================================================
         }
+
         //=====================================================
-        debugger;
-        $(this.node).on('touchmove', (e) => {
-            //console.log('touchmove');
-            e.preventDefault();
-        });
+        // 禁用滑动，防止在弹出面板时，可以滑动底页面。
+        $(this.node).on('touchmove', (e) => e.preventDefault());
     }
 
     private page_closed = () => {
@@ -204,6 +243,16 @@ class ProductPanel {
                 this.node.style.display = 'none';
                 this.is_doing = false;
             });
+    }
+
+    hide() {
+        this.node.style.display = 'none';
+        this.page.nodes().container.style.display = 'none';
+    }
+
+    show() {
+        this.node.style.display = 'block';
+        this.page.nodes().container.style.display = 'block';
     }
 }
 

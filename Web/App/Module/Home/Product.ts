@@ -58,13 +58,25 @@ class ProductModel {
         console.log('showPanel');
         this.panel.open();
     }
+    favor = () => {
+        if (this.product == null)
+            return;
 
+        if (this.isFavored()) {
+            shopping.unFavorProduct(ko.unwrap(this.product.Id));
+            return;
+        }
+
+        shopping.favorProduct(ko.unwrap(this.product.Id), ko.unwrap(this.product.Name));
+    }
     get product() {
         return this._product;
     }
     set product(value) {
         this._product = value;
     }
+
+
 }
 
 export = function (page: chitu.Page) {
