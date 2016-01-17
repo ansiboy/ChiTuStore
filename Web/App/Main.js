@@ -122,7 +122,7 @@ requirejs(['Application', 'bootbox', 'ErrorHandler', 'ui/Loading'], function () 
                 window['move'] = move;
             });
 
-            require(['jquery.event.swipe'], function () { });
+            //require(['jquery.event.swipe'], function () { });
         }, 2000);
         //==================================================
     })

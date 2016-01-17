@@ -90,6 +90,10 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                         $(document).scrollLeft(0);
                     });
                 }
+                debugger;
+                $(_this.node).on('touchmove', function (e) {
+                    e.preventDefault();
+                });
             };
             this.page_closed = function () {
                 console.log('page_closed, remove node.');

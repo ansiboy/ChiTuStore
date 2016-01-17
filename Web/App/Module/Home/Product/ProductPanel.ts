@@ -153,6 +153,11 @@ class ProductPanel {
             });
         }
         //=====================================================
+        debugger;
+        $(this.node).on('touchmove', (e) => {
+            //console.log('touchmove');
+            e.preventDefault();
+        });
     }
 
     private page_closed = () => {

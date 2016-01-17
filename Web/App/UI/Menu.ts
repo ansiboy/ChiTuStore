@@ -38,6 +38,8 @@ class Menu {
 
             //ko.applyBindings(model, this.node);
         });
+
+
     }
 
     private loadHTML(): JQueryPromise<string> {
