@@ -38,7 +38,7 @@ export = function (page: chitu.Page) {
             }
 
             homeProductQueryArguments.pageIndex++;
-            sender.enableScrollLoad = homeProducts.length == services.defaultPageSize;
+            args.enableScrollLoad = (homeProducts.length == services.defaultPageSize);
         });
     });
 
@@ -50,13 +50,13 @@ export = function (page: chitu.Page) {
         requirejs(['swiper'], function (Swiper) {
             var mySwiper = new Swiper($(page.node()).find('[name="ad-swiper"]')[0], {
                 //direction: 'vertical',
-                loop: false,
+                loop: true,
                 autoplay: 5000,
                 pagination: $(page.node()).find('[name="ad-pagination"]')[0],
-                onTap: function (swiper, event) {
-                    var url = $(swiper.slides[swiper.activeIndex]).attr('url');
-                    window.location.href = url;
-                }
+                //onTap: function (swiper, event) {
+                //    var url = $(swiper.slides[swiper.activeIndex]).attr('url');
+                //    window.location.href = url;
+                //}
             });
         });
     });

@@ -180,23 +180,32 @@ class ProductPanel {
         $wrapper.height($(window).height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT);
 
         var iscroll = new IScroll($wrapper[0], { tap: true });
-        if (site.env.isIOS) {
+        if (this.page.scrollType == chitu.ScrollType.IScroll) {
             //=====================================================
             // 修正弹出键盘时，document 位置发生偏移。
-            var $input = $(this.node).find('input[type="text"]');
+            var $input = $(this.node).find('input');
             var fix_doc_pos = () => {
                 $(document).scrollTop(0);
                 $(document).scrollLeft(0);
             };
 
-            $input.focus(fix_doc_pos);
-            $input.focusout(fix_doc_pos);
-            //=================================================
+            $input.focus(() => {
+                console.log('focus');
+                fix_doc_pos();
+            });
+            $input.focusout(() => {
+                console.log('focusout');
+                fix_doc_pos();
+            });
+
         }
 
-        //=====================================================
-        // 禁用滑动，防止在弹出面板时，可以滑动底页面。
-        $(this.node).on('touchmove', (e) => e.preventDefault());
+        if (site.env.isIOS) {
+            //=================================================
+            // 禁用滑动，防止在弹出面板时，可以滑动底页面。(在 IOS 下出现)
+            $(this.node).on('touchmove', (e) => e.preventDefault());
+        }
+
     }
 
     private page_closed = () => {

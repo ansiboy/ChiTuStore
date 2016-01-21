@@ -1,82 +1,74 @@
 ﻿<div class="container">
     <div class="list-group">
-        <div class="list-group-item">
-            <div class="row">
-                <div class="col-xs-3">
-                    <label style="position:relative;top:30px;">
-                        头像
-                    </label>
+        <div class="list-group-item row">
+            <div class="col-xs-3">
+                <label style="position:relative;top:30px;">
+                    头像
+                </label>
+            </div>
+            <div class="col-xs-9">
+                <div class="pull-right" style="padding-left:10px;position:relative;top:30px;">
+                    <i class="icon-chevron-right"></i>
                 </div>
-                <div class="col-xs-9">
-                    <div class="pull-right" style="padding-left:10px;position:relative;top:30px;">
-                        <i class="icon-chevron-right"></i>
-                    </div>
-                    <!--<img class="img-circle pull-right" style="width:70px;height:70px;" src="http://wx.qlogo.cn/mmopen/Xewa2JUmZ1rhIvib4SMBezTck1eaecmnXOkPWuQ0m7aviclZEDkmbef367RUrk2FDYA94b56sD3BIDbNY3zEBNzg/0">-->
-                    <img data-bind="attr:{src:userInfo.HeadImageUrl}" class="img-circle pull-right" style="width:70px;height:70px;">
-                    <input type="file" style="position:absolute;top:0px;left:0px;opacity:0;width:100%;height:90px;" accept="image/*">
-                    <!--<div class="clearfix"></div>-->
-                    <!--<div class="clearfix">
+                <!--<img class="img-circle pull-right" style="width:70px;height:70px;" src="http://wx.qlogo.cn/mmopen/Xewa2JUmZ1rhIvib4SMBezTck1eaecmnXOkPWuQ0m7aviclZEDkmbef367RUrk2FDYA94b56sD3BIDbNY3zEBNzg/0">-->
+                <img data-bind="attr:{src:userInfo.HeadImageUrl}" class="img-circle pull-right" style="width:70px;height:70px;">
+                <input type="file" style="position:absolute;top:0px;left:0px;opacity:0;width:100%;height:90px;" accept="image/*">
+                <!--<div class="clearfix"></div>-->
+                <!--<div class="clearfix">
 
-                    </div>-->
-                </div>
-            </div>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <label class="col-xs-3">
-                    昵称
-                </label>
-                <div data-bind="click:$root.edit('NickName'),tap:$root.edit('NickName')" class="col-xs-9" style="padding-left:0px;">
-                    <!--<input data-bind="value:NickName" type="text" class="form-control" />-->
-                    <div class="pull-right" style="padding-left:10px;">
-                        <i class="icon-chevron-right"></i>
-                    </div>
-                    <div data-bind="text:userInfo.NickName,visible:userInfo.NickName" class="pull-right"></div>
-                    <div data-bind="visible:!ko.unwrap(userInfo.NickName)" class="pull-right text-danger">未填写</div>
-                </div>
-            </div>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <label class="col-xs-3">
-                    性别
-                </label>
-                <div data-bind="click:$root.edit('Gender'),tap:$root.edit('Gender')" class="col-xs-9" style="padding-left:0px;">
-                    <!--<label class="radio-inline">
-                        <input data-bind="checked:Gender" type="radio" name="sex" value="Male">男
-                    </label>
-                    <label class="radio-inline">
-                        <input data-bind="checked:Gender" type="radio" name="sex" value="Female">女
-                    </label>-->
-                    <div class="pull-right" style="padding-left:10px;">
-                        <i class="icon-chevron-right"></i>
-                    </div>
-                    <div data-bind="text:ko.unwrap(userInfo.Gender)=='Male'?'男':'女',visible:ko.unwrap(userInfo.Gender)=='Male'||ko.unwrap(userInfo.Gender)=='Female'" class="pull-right"></div>
-                    <div data-bind="visible:ko.unwrap(userInfo.Gender)=='None'" class="pull-right text-danger">未填写</div>
-
-                </div>
-            </div>
-        </div>
-        <div class="list-group-item">
-            <div class="row">
-                <label class="col-xs-3">
-                    地区
-                </label>
-                <div data-bind="click:$root.edit('Region'),tap:$root.edit('Region')" class="col-xs-9" style="padding-left:0px;">
-                    <div class="pull-right" style="padding-left:10px;">
-                        <i class="icon-chevron-right"></i>
-                    </div>
-                    <div data-bind="text:ko.unwrap(userInfo.Region),visible:userInfo.Region" class="pull-right"></div>
-                    <div data-bind="visible:!ko.unwrap(userInfo.Region)" class="pull-right text-danger pull-right">未填写</div>
-                </div>
-                <!--<div class="col-xs-4" style="padding:0px;">
-                    <select data-bind="options:$parent.provinces,optionsName:'Name', optionsText:'Name',optionsValue:'Value',value:Province" class="form-control" />
-                </div>
-                <div class="col-xs-5">
-                    <select data-bind="options:$parent.cities,optionsName:'Name',optionsText:'Name',optionsValue:'Value',value:City,enable:Province" class="form-control" />
                 </div>-->
+            </div>
+        </div>
+        <div class="list-group-item row">
+            <label class="col-xs-3">
+                昵称
+            </label>
+            <div data-bind="click:$root.edit('NickName'),tap:$root.edit('NickName')" class="col-xs-9" style="padding-left:0px;">
+                <!--<input data-bind="value:NickName" type="text" class="form-control" />-->
+                <div class="pull-right" style="padding-left:10px;">
+                    <i class="icon-chevron-right"></i>
+                </div>
+                <div data-bind="text:userInfo.NickName,visible:userInfo.NickName" class="pull-right"></div>
+                <div data-bind="visible:!ko.unwrap(userInfo.NickName)" class="pull-right text-danger">未填写</div>
+            </div>
+        </div>
+        <div class="list-group-item row">
+            <label class="col-xs-3">
+                性别
+            </label>
+            <div data-bind="click:$root.edit('Gender'),tap:$root.edit('Gender')" class="col-xs-9" style="padding-left:0px;">
+                <!--<label class="radio-inline">
+                    <input data-bind="checked:Gender" type="radio" name="sex" value="Male">男
+                </label>
+                <label class="radio-inline">
+                    <input data-bind="checked:Gender" type="radio" name="sex" value="Female">女
+                </label>-->
+                <div class="pull-right" style="padding-left:10px;">
+                    <i class="icon-chevron-right"></i>
+                </div>
+                <div data-bind="text:ko.unwrap(userInfo.Gender)=='Male'?'男':'女',visible:ko.unwrap(userInfo.Gender)=='Male'||ko.unwrap(userInfo.Gender)=='Female'" class="pull-right"></div>
+                <div data-bind="visible:ko.unwrap(userInfo.Gender)=='None'" class="pull-right text-danger">未填写</div>
 
             </div>
+        </div>
+        <div class="list-group-item row">
+            <label class="col-xs-3">
+                地区
+            </label>
+            <div data-bind="click:$root.edit('Region'),tap:$root.edit('Region')" class="col-xs-9" style="padding-left:0px;">
+                <div class="pull-right" style="padding-left:10px;">
+                    <i class="icon-chevron-right"></i>
+                </div>
+                <div data-bind="text:ko.unwrap(userInfo.Region),visible:userInfo.Region" class="pull-right"></div>
+                <div data-bind="visible:!ko.unwrap(userInfo.Region)" class="pull-right text-danger pull-right">未填写</div>
+            </div>
+            <!--<div class="col-xs-4" style="padding:0px;">
+                <select data-bind="options:$parent.provinces,optionsName:'Name', optionsText:'Name',optionsValue:'Value',value:Province" class="form-control" />
+            </div>
+            <div class="col-xs-5">
+                <select data-bind="options:$parent.cities,optionsName:'Name',optionsText:'Name',optionsValue:'Value',value:City,enable:Province" class="form-control" />
+            </div>-->
+
         </div>
     </div>
 </div>

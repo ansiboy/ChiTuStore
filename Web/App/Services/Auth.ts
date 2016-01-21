@@ -5,7 +5,7 @@ import ko = require('knockout');
 
 class AuthService {
     constructor() {
-        this.whenLogin(() => {
+        this.whenLogin((data) => {
             this.getMember().done((data) => {
                 this.currentMember.mobile(data.Mobile)
                 this.currentMember.passwordSetted(data.PasswordSetted)
@@ -37,13 +37,14 @@ class AuthService {
         var result = services.callMethod(services.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
 
         var member = this;
-        result.then(function (data) {
-            site.cookies.token(data.UserToken);
+        result.then((data) => {
+            //site.cookies.token(data.UserToken);
+            site.storage.token = data.UserToken;
             return data;
 
         }).done($.proxy(function (data) {
             $.extend(data, { UserName: this._username, Password: this._password });
-            member.logined.fire();
+            member.logined.fire(data);
 
         }, { _username: username, _password: password }));
 
@@ -51,7 +52,7 @@ class AuthService {
     }
     isLogined(): JQueryPromise<boolean> {
         var result = $.Deferred();
-        var value = site.cookies.token() != null && site.cookies.token() != '';
+        var value = site.storage.token != null && site.storage.token != ''; //site.cookies.token() != null && site.cookies.token() != '';
         result.resolve(value);
 
         return result;

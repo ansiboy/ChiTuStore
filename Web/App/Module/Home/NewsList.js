@@ -13,7 +13,7 @@ define(["require", "exports", 'Services/Info', 'Site'], function (require, expor
                     model.articles.push(items[i]);
                 }
                 select_args.pageIndex = select_args.pageIndex + 1;
-                sender.enableScrollLoad = items.length == site.config.pageSize;
+                args.enableScrollLoad = items.length == site.config.pageSize;
             });
         });
         page.viewChanged.add(function () { return ko.applyBindings(model, page.nodes().content); });

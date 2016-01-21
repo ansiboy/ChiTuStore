@@ -97,7 +97,6 @@ class WeiXinService {
             .pipe((prepayId) => this.weixinPay(prepayId));
     }
     openid = (value = undefined) => {
-        //return null;
         //site.cookies.set_value('openId', 'oOjaNt51NI4srmUm8FTPkr-ywjc0');
         if (value === undefined)
             return site.cookies.get_value('openId');
@@ -114,11 +113,9 @@ class WeiXinService {
 var weixin = services['weixin'] = services['weixin'] || new WeiXinService()
 export = <WeiXinService>weixin
 
-if (!weixin.openid() || !site.cookies.token()) {
+if (!weixin.openid() || !site.storage.token) {
     site.cookies.returnUrl(window.location.href);
     window.location.href = 'WeiXin/LoadOpenId/?openIdCookieName=' + site.cookies.get_cookieName('openId') + '&returnUrlCookieName=' + site.cookies.get_cookieName('returnUrl') +
     '&tokenCookieName=' + site.cookies.get_cookieName('token');
 }
 
-//alert(weixin.openid());
-//alert(site.cookies.token());

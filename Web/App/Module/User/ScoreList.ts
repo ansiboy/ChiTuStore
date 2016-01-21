@@ -51,7 +51,7 @@ export = function (page: chitu.Page) {
             }
             model.scoreRecords(data);
             model.loading(false);
-            sender.enableScrollLoad = data.length == site.config.pageSize;
+            args.enableScrollLoad = data.length == site.config.pageSize;
         })
     });
 } 

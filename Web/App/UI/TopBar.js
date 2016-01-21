@@ -124,9 +124,5 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
     app.pageCreated.add(page_created);
     if (app.currentPage() != null)
         page_created(app, app.currentPage());
-    if (window['plus']) {
-        window['plus'].navigator.setStatusBarStyle('UIStatusBarStyleBlackOpaque');
-        window['plus'].navigator.setStatusBarBackground('#bf0705');
-    }
     return TopBar;
 });

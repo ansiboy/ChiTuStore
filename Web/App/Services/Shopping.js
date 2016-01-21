@@ -238,7 +238,7 @@ define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], f
             return services.callMethod(services.config.serviceUrl, 'Product/FavorProduct', data);
         };
         ShoppingService.prototype.isFavored = function (productId) {
-            if (!site.cookies.token()) {
+            if (!site.storage.token) {
                 return $.Deferred().resolve(false);
             }
             var data = { productId: productId };

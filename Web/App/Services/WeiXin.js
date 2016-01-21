@@ -93,7 +93,7 @@ define(["require", "exports", 'Services/Service', 'Site'], function (require, ex
         return WeiXinService;
     })();
     var weixin = services['weixin'] = services['weixin'] || new WeiXinService();
-    if (!weixin.openid() || !site.cookies.token()) {
+    if (!weixin.openid() || !site.storage.token) {
         site.cookies.returnUrl(window.location.href);
         window.location.href = 'WeiXin/LoadOpenId/?openIdCookieName=' + site.cookies.get_cookieName('openId') + '&returnUrlCookieName=' + site.cookies.get_cookieName('returnUrl') +
             '&tokenCookieName=' + site.cookies.get_cookieName('token');

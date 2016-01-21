@@ -4,9 +4,7 @@ import mapping = require('knockout.mapping');
 import ko = require('knockout');
 import site = require('Site');
 
-requirejs(['css!content/Home/ProductList']);
-
-export var func = function (page: chitu.Page) {
+export = function (page: chitu.Page) {
     /// <param name="page" type="chitu.Page"/>
         
     var node;
@@ -101,9 +99,9 @@ export var func = function (page: chitu.Page) {
         });
     });
 
-    requirejs(['ui/PromotionLabel'], () => {
-        ko.applyBindings(model, page.node());
-    });
+    var page_view = page.view;
+    page.view = $.when(page_view, chitu.Utility.loadjs(['ui/PromotionLabel', 'css!content/Home/ProductList']));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
 
     page['title'] = function (value) {
         if (page['topbar'])
@@ -126,7 +124,7 @@ export var func = function (page: chitu.Page) {
             }
 
             model.queryArguments.pageIndex = model.queryArguments.pageIndex + 1;
-            sender.enableScrollLoad = items.length == site.config.pageSize;
+            args.enableScrollLoad = items.length == site.config.pageSize;
         });
     });
 

@@ -54,9 +54,9 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Servi
     return function (page) {
         var model = new Model(page);
         page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
-        page.load.add(function () {
+        page.load.add(function (sender, args) {
             return model.loadProducts().done(function (items) {
-                page.enableScrollLoad = items.length < services.defaultPageSize;
+                args.enableScrollLoad = items.length < services.defaultPageSize;
             });
         });
     };

@@ -1527,3 +1527,23 @@ System
    at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
    at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass25.<>c__DisplayClass2a.<BeginInvokeAction>b__20()
    at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass25.<BeginInvokeAction>b__22(IAsyncResult asyncResult)
+LoadOpenId 2016-01-20 00:42
+appid:wxf0bb634c8352c4f3
+secret:e6ce53f5054c4d6c0dacd2360996a98b
+Go to WeiXin Auth Page:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf0bb634c8352c4f3&redirect_uri=http%3a%2f%2flocalhost%3a16540%2fUserClient%2fWeiXin%2fLoadOpenId%2f%3fopenIdCookieName%3dlsyy_openId%26returnUrlCookieName%3dlsyy_returnUrl%26tokenCookieName%3dlsyy_token&response_type=code&scope=snsapi_base#wechat_redirect
+LoadOpenId 2016-01-20 00:44
+appid:wxf0bb634c8352c4f3
+secret:e6ce53f5054c4d6c0dacd2360996a98b
+Go to WeiXin Auth Page:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf0bb634c8352c4f3&redirect_uri=http%3a%2f%2flocalhost%3a16540%2fUserClient%2fWeiXin%2fLoadOpenId%2f%3fopenIdCookieName%3dlsyy_openId%26returnUrlCookieName%3dlsyy_returnUrl%26tokenCookieName%3dlsyy_token&response_type=code&scope=snsapi_base#wechat_redirect
+LoadOpenId 2016-01-20 00:44
+appid:wxf0bb634c8352c4f3
+secret:e6ce53f5054c4d6c0dacd2360996a98b
+Go to WeiXin Auth Page:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf0bb634c8352c4f3&redirect_uri=http%3a%2f%2flocalhost%3a16540%2fUserClient%2fWeiXin%2fLoadOpenId%2f%3fopenIdCookieName%3dlsyy_openId%26returnUrlCookieName%3dlsyy_returnUrl%26tokenCookieName%3dlsyy_token&response_type=code&scope=snsapi_base#wechat_redirect
+LoadOpenId 2016-01-20 00:45
+appid:wxf0bb634c8352c4f3
+secret:e6ce53f5054c4d6c0dacd2360996a98b
+Go to WeiXin Auth Page:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf0bb634c8352c4f3&redirect_uri=http%3a%2f%2flocalhost%3a16540%2fUserClient%2fWeiXin%2fLoadOpenId%2f%3fopenIdCookieName%3dlsyy_openId%26returnUrlCookieName%3dlsyy_returnUrl%26tokenCookieName%3dlsyy_token&response_type=code&scope=snsapi_base#wechat_redirect
+LoadOpenId 2016-01-20 00:45
+appid:wxf0bb634c8352c4f3
+secret:e6ce53f5054c4d6c0dacd2360996a98b
+Go to WeiXin Auth Page:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf0bb634c8352c4f3&redirect_uri=http%3a%2f%2flocalhost%3a16540%2fUserClient%2fWeiXin%2fLoadOpenId%2f%3fopenIdCookieName%3dlsyy_openId%26returnUrlCookieName%3dlsyy_returnUrl%26tokenCookieName%3dlsyy_token&response_type=code&scope=snsapi_base#wechat_redirect

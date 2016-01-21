@@ -24,7 +24,7 @@ define(["require", "exports", 'Site', 'jquery'], function (require, exports, sit
                     var ajax;
                     var url = serviceUrl + method;
                     data = $.extend({
-                        '$token': site.cookies.token(),
+                        '$token': site.storage.token,
                         '$appToken': services.config.appToken,
                     }, data);
                     var options = {

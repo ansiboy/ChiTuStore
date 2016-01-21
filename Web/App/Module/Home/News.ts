@@ -1,15 +1,10 @@
 ﻿import info = require('Services/Info');
-//import chitu = require('chitu');
+import site = require('Site');
 import app = require('Application');
 import mapping = require('knockout.mapping');
-//import c = require('ui/ScrollLoad');
+
 requirejs(['css!content/Home/News']);
-
 export = function (page: chitu.Page) {
-    /// <param name="page" type="chitu.Page"/>
-
-    //c.scrollLoad(page, { recordPosition: false });
-
     var model = {
         news: null,
         back: function () {
@@ -21,11 +16,8 @@ export = function (page: chitu.Page) {
     };
 
     page.load.add(function (sender, args) {
-        //page.key(args.id);
-
         var id = args.id;
         return info.getArticleById(id).done(function (news) {
-            //alert('load');
             if (model.news == null) {
                 model.news = mapping.fromJS(news);
                 ko.applyBindings(model, page.nodes().content);
@@ -36,8 +28,12 @@ export = function (page: chitu.Page) {
         });
     });
 
-    page.scrollEnd.add(() => {
-        page.refreshUI();
-    });
+    //===========================================
+    // 由于个别文章的图片，没有按指定的名称命名，不能预设大小
+    if (page.scrollType == chitu.ScrollType.IScroll) {
+        page.scrollEnd.add(() => {
+            page.refreshUI();
+        });
+    }
+    //===========================================
 }
-//});

@@ -79,9 +79,9 @@ export = function (page: chitu.Page) {
     var model = new Model(page);
     page.viewChanged.add(() => ko.applyBindings(model, page.node()));
 
-    page.load.add(() => {
+    page.load.add((sender:chitu.Page,args:chitu.PageLoadArguments) => {
         return model.loadProducts().done((items) => {
-            page.enableScrollLoad = items.length < services.defaultPageSize;
+            args.enableScrollLoad = items.length < services.defaultPageSize;
         });
     });
 

@@ -75,7 +75,7 @@ var require_config = {
         ui: 'UI',
         mod: '../App/Module',
         scr: '../Scripts',
-        swiper: '../Scripts/swiper.jquery.min',
+        swiper: '../Scripts/swiper.jquery',
         move: '../Scripts/move.min',
         md5: '../Scripts/CryptoJS/md5.min',
         content: '../Content',
@@ -94,23 +94,30 @@ requirejs(['Application', 'bootbox', 'ErrorHandler', 'ui/Loading'], function () 
     var weiXinChecked = $.Deferred();
     var ua = navigator.userAgent.toLowerCase();
     if (site.env.isWeiXin) { //(ua.match(/MicroMessenger/i) == 'micromessenger') {
-        requirejs(['sv/WeiXin', 'WXShare'], function () {//, 'WXShare'
+        requirejs(['sv/WeiXin', 'WXShare'], function () {
             weiXinChecked.resolve();
         });
     }
     else {
         weiXinChecked.resolve();
     }
-    //return weiXinChecked;
-
 
 
     weiXinChecked.done(function () {
         //==================================================
         app.run();
-        if (!location.hash)
+        if (!location.hash) {
             location.hash = 'Home_Index';
-        console.log('Home_Index');
+            //=====================================
+            // 说明：将引导页关闭
+            if (site.env.isApp) {
+                window.setTimeout(function(){
+                	plus.webview.currentWebview().close();
+                },1000);
+            }
+            //=====================================
+        }
+
         //==================================================
 
         require(['ui/ScrollLoad', 'ui/Loading', 'ui/Menu', 'ui/TopBar']);
@@ -127,7 +134,15 @@ requirejs(['Application', 'bootbox', 'ErrorHandler', 'ui/Loading'], function () 
         //==================================================
     })
 
-    //});
+    function plusReady() {
+        requirejs(['Device']);
+    }
+    if (window['plus']) {
+        plusReady();
+    }
+    else {
+        document.addEventListener("plusready", plusReady, false);
+    }
 
 });
 

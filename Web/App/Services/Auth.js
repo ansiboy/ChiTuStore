@@ -9,7 +9,7 @@ define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], fu
             };
             this.logouted = $.Callbacks();
             this.logined = $.Callbacks();
-            this.whenLogin(function () {
+            this.whenLogin(function (data) {
                 _this.getMember().done(function (data) {
                     _this.currentMember.mobile(data.Mobile);
                     _this.currentMember.passwordSetted(data.PasswordSetted);
@@ -31,17 +31,17 @@ define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], fu
             var result = services.callMethod(services.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
             var member = this;
             result.then(function (data) {
-                site.cookies.token(data.UserToken);
+                site.storage.token = data.UserToken;
                 return data;
             }).done($.proxy(function (data) {
                 $.extend(data, { UserName: this._username, Password: this._password });
-                member.logined.fire();
+                member.logined.fire(data);
             }, { _username: username, _password: password }));
             return result;
         };
         AuthService.prototype.isLogined = function () {
             var result = $.Deferred();
-            var value = site.cookies.token() != null && site.cookies.token() != '';
+            var value = site.storage.token != null && site.storage.token != '';
             result.resolve(value);
             return result;
         };

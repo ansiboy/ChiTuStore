@@ -1,8 +1,8 @@
-﻿enum EnvironmentType {
+﻿
+enum OS {
     ios,
     android,
-    low,
-    pc
+    other
 }
 
 class SiteCookies {
@@ -33,13 +33,13 @@ class SiteCookies {
     //    $.cookie(name, value);
     //    site.cookies.set_value(name, value);
     //}
-    token(value: string = undefined) {
-        var name = 'token';
-        if (value === undefined)
-            return site.cookies.get_value(name);
+    //token(value: string = undefined) {
+    //    var name = 'token';
+    //    if (value === undefined)
+    //        return site.cookies.get_value(name);
 
-        site.cookies.set_value(name, value);
-    }
+    //    site.cookies.set_value(name, value);
+    //}
     set_value(name: string, value: string, expires: number = 7) {
         var cookieName = site.cookies.get_cookieName(name);
         $.cookie(cookieName, value, { expires });
@@ -69,14 +69,19 @@ class SiteCookies {
 }
 
 class SiteStorage {
+    private get_itemName(name) {
+        return site.config.cookiePrefix + "_" + name;
+    }
     get_item<T>(name: string) {
-        var str = window.localStorage.getItem(name);
+        var item_name = this.get_itemName(name);
+        var str = window.localStorage.getItem(item_name);
         var obj = JSON.parse(str);
         return obj;
     }
     set_item<T>(name: string, value: T) {
+        var item_name = this.get_itemName(name);
         var str = JSON.stringify(value);
-        window.localStorage.setItem(name, str);
+        window.localStorage.setItem(item_name, str);
     }
     get historyKeywords(): string[] {
         var result = this.get_item('historyKeywords');
@@ -88,6 +93,12 @@ class SiteStorage {
     }
     set historyKeywords(value: string[]) {
         this.set_item('historyKeywords', value);
+    }
+    get token(): string {
+        return this.get_item('token');
+    }
+    set token(value: string) {
+        this.set_item('token', value);
     }
 }
 
@@ -117,53 +128,57 @@ class SiteConfig {
 class SiteEnvironment {
     private _environmentType;
     private _isIIS: boolean;
+    private _os: OS;
+    private _version: number;
 
-    static isIOS(userAgent) {
-        //return true;
-        return userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('iPad') > 0;
-    }
-
-    static isAndroid(userAgent): number {
-        var ua = userAgent.toLowerCase();
-        var android_major_version = 0;
-        var match = ua.match(/android\s([0-9\.]*)/);
-        if (match)
-            android_major_version = parseInt(match[1], 10);
-
-        return android_major_version;
-    }
-
-    private 'type'(): EnvironmentType {
-        if (this._environmentType == null) {
-            var andriod_version = SiteEnvironment.isAndroid(navigator.userAgent);
-            if (andriod_version) {
-                if (andriod_version < 4) {
-                    this._environmentType = EnvironmentType.low;
-                }
-                else {
-                    this._environmentType = EnvironmentType.android;
-                }
-            }
-            else if (SiteEnvironment.isIOS(navigator.userAgent)) {
-                this._environmentType = EnvironmentType.ios;
-            }
-            else {
-                this._environmentType = EnvironmentType.pc;
+    constructor() {
+        var userAgent = navigator.userAgent;
+        if (userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('iPad') > 0) {
+            this._os = OS.ios;
+            var match = userAgent.match(/iPhone OS\s([0-9\-]*)/);
+            if (match) {
+                var major_version = parseInt(match[1], 10);
+                this._version = major_version;
             }
         }
-        return this._environmentType;
+        else if (userAgent.indexOf('Android') > 0) {
+            this._os = OS.android;
+
+            var match = userAgent.match(/Android\s([0-9\.]*)/);
+            if (match) {
+                var major_version = parseInt(match[1], 10);
+                this._version = major_version;
+            }
+        }
+        else {
+            this._os = OS.other;
+        }
     }
+    get version(): number {
+        return this._version;
+    }
+
+    get os(): OS {
+        return this._os;
+    }
+
     get isIOS() {
-        return site.env.type() == EnvironmentType.ios;
+        return this.os == OS.ios;
     }
     get isAndroid() {
-        return site.env.type() == EnvironmentType.android;
+        return this.os == OS.android;
+    }
+    /// <summary>
+    /// 判断是否为 APP
+    /// </summary>
+    get isApp() {
+        return window['plus'] != null;
     }
     /// <summary>
     /// 是否需要降级
     /// </summary>
     get isDegrade(): boolean {
-        if (this.isWeiXin && this.isAndroid)
+        if ((this.isWeiXin || this.version <= 4) && this.isAndroid)
             return true;
 
         if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {

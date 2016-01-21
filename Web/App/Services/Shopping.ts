@@ -291,7 +291,7 @@ class ShoppingService {
         return services.callMethod(services.config.serviceUrl, 'Product/FavorProduct', data);
     }
     isFavored(productId: string): JQueryPromise<boolean> {
-        if (!site.cookies.token()) {
+        if (!site.storage.token) {
             return $.Deferred<boolean>().resolve(false);
         }
         var data = { productId };

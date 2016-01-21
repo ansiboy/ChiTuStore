@@ -31,7 +31,6 @@ define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Se
             };
             auth.whenLogin(function () {
                 _this.getUserInfo().done(function (userInfo) {
-                    debugger;
                     mapping.fromJS(userInfo, {}, _this.currentUserInfo);
                 });
             });
@@ -114,7 +113,7 @@ define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Se
             return call('Member/CheckVerifyCode', { smsId: smsId, verifyCode: verifyCode, mobile: mobile });
         };
         MemberService.prototype.logout = function () {
-            site.cookies.token('');
+            site.storage.token = '';
         };
         MemberService.prototype.resetPassword = function (smsId, verifyCode, mobile, password) {
             password = CryptoJS.MD5(password).toString();

@@ -1,5 +1,4 @@
 define(["require", "exports", 'Services/Shopping'], function (require, exports, shopping) {
-    requirejs(['css!content/Home/Class']);
     return function (page) {
         var model = {
             categories: ko.observableArray(),
@@ -14,6 +13,8 @@ define(["require", "exports", 'Services/Shopping'], function (require, exports, 
                 model.categories(items);
             });
         });
+        var page_view = page.view;
+        page.view = $.when(page_view, chitu.Utility.loadjs(['css!content/Home/Class']));
         page.viewChanged.add(function () { return ko.applyBindings(model, page.nodes().content); });
     };
 });

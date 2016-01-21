@@ -36,7 +36,7 @@ define(["require", "exports", 'Services/Account', 'Site'], function (require, ex
                 }
                 model.scoreRecords(data);
                 model.loading(false);
-                sender.enableScrollLoad = data.length == site.config.pageSize;
+                args.enableScrollLoad = data.length == site.config.pageSize;
             });
         });
     };

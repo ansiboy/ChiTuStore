@@ -102,16 +102,24 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                 var $wrapper = $(_this.node).find('.modal-body');
                 $wrapper.height($(window).height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT);
                 var iscroll = new IScroll($wrapper[0], { tap: true });
-                if (site.env.isIOS) {
-                    var $input = $(_this.node).find('input[type="text"]');
+                if (_this.page.scrollType == chitu.ScrollType.IScroll) {
+                    var $input = $(_this.node).find('input');
                     var fix_doc_pos = function () {
                         $(document).scrollTop(0);
                         $(document).scrollLeft(0);
                     };
-                    $input.focus(fix_doc_pos);
-                    $input.focusout(fix_doc_pos);
+                    $input.focus(function () {
+                        console.log('focus');
+                        fix_doc_pos();
+                    });
+                    $input.focusout(function () {
+                        console.log('focusout');
+                        fix_doc_pos();
+                    });
                 }
-                $(_this.node).on('touchmove', function (e) { return e.preventDefault(); });
+                if (site.env.isIOS) {
+                    $(_this.node).on('touchmove', function (e) { return e.preventDefault(); });
+                }
             };
             this.page_closed = function () {
                 console.log('page_closed, remove node.');

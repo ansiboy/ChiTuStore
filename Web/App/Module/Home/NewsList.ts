@@ -20,7 +20,7 @@ export = function (page: chitu.Page) {
                 model.articles.push(items[i]);
             }
             select_args.pageIndex = select_args.pageIndex + 1;
-            sender.enableScrollLoad = items.length == site.config.pageSize;
+            args.enableScrollLoad = items.length == site.config.pageSize;
         });
     })
 

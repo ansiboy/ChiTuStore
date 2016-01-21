@@ -1,7 +1,6 @@
 define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Application', 'knockout.mapping', 'Site', 'Services/Service'], function (require, exports, account, shopping, app, mapping, site, services) {
     var weixin = services['weixin'];
     requirejs(['css!content/Shopping/OrderList']);
-    var page_args = { loadType: chitu.PageLoadType.scroll };
     var Model = (function () {
         function Model(page) {
             var _this = this;
@@ -56,7 +55,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
                     _this.pageIndex = 0;
                     _this.lastDateTime = null;
                     _this.orders.removeAll();
-                    return _this.page.on_load(page_args);
+                    return _this.page.on_load({ loadType: chitu.PageLoadType.scroll });
                 };
             };
             this.isLoading = ko.observable(false);

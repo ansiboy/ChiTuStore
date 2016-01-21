@@ -128,6 +128,7 @@
     <TypeScriptCompile Include="App\Core\ko.ext.ts" />
     <TypeScriptCompile Include="App\Core\Page.ts" />
     <TypeScriptCompile Include="App\Core\Panel.ts" />
+    <TypeScriptCompile Include="App\Device.ts" />
     <TypeScriptCompile Include="App\Module\Error\ConnectFail.ts" />
     <TypeScriptCompile Include="App\Module\Home\NewsList.ts" />
     <TypeScriptCompile Include="App\Module\Home\ProductDetail.ts" />
@@ -480,6 +481,7 @@
     <Content Include="Images\logo_144.png" />
     <Content Include="Images\logo_57.png" />
     <Content Include="Images\logo_72.png" />
+    <Content Include="Page.html" />
     <Content Include="Index.html" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />

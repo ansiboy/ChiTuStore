@@ -1,7 +1,6 @@
 define(["require", "exports", 'Services/Info', 'Application', 'knockout.mapping'], function (require, exports, info, app, mapping) {
     requirejs(['css!content/Home/News']);
     return function (page) {
-        /// <param name="page" type="chitu.Page"/>
         var model = {
             news: null,
             back: function () {
@@ -12,7 +11,6 @@ define(["require", "exports", 'Services/Info', 'Application', 'knockout.mapping'
             category: ko.observable()
         };
         page.load.add(function (sender, args) {
-            //page.key(args.id);
             var id = args.id;
             return info.getArticleById(id).done(function (news) {
                 if (model.news == null) {
@@ -24,8 +22,10 @@ define(["require", "exports", 'Services/Info', 'Application', 'knockout.mapping'
                 }
             });
         });
-        page.scrollEnd.add(function () {
-            page.refreshUI();
-        });
+        if (page.scrollType == chitu.ScrollType.IScroll) {
+            page.scrollEnd.add(function () {
+                page.refreshUI();
+            });
+        }
     };
 });

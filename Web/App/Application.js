@@ -1,6 +1,49 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Site'], function (require, exports, site) {
     chitu.Page.animationTime = site.config.pageAnimationTime;
-    var app = new chitu.Application({
+    var SiteApplication = (function (_super) {
+        __extends(SiteApplication, _super);
+        function SiteApplication() {
+            _super.apply(this, arguments);
+        }
+        SiteApplication.prototype.run = function () {
+            $(window).bind('hashchange', $.proxy(this.hashchange, this));
+            var hash = window.location.hash;
+            if (!hash) {
+                return;
+            }
+            var args = window.location['arguments'] || {};
+            window.location['arguments'] = null;
+            this.showPage(hash.substr(1), args);
+        };
+        SiteApplication.prototype.hashchange = function () {
+            var plus = window['plus'];
+            var hash = window.location.hash;
+            if (!hash) {
+                return;
+            }
+            var currentWebView = plus.webview.currentWebview();
+            console.log('hashchange:' + hash);
+            console.log('currentWebviewID:' + currentWebView.id);
+            var webview_id = hash.substr(1);
+            plus.webview.open('Page.html' + hash, webview_id, {
+                popGesture: 'close'
+            }, 'slide-in-right');
+            location.hash = '';
+        };
+        SiteApplication.prototype.back = function (args) {
+            if (args === void 0) { args = undefined; }
+            var plus = window['plus'];
+            plus.webview.currentWebview().close();
+            return $.Deferred().resolve();
+        };
+        return SiteApplication;
+    })(chitu.Application);
+    var config = {
         container: function () { return document.getElementById('main'); },
         scrollType: function (routeData) {
             if (site.env.isDegrade)
@@ -38,7 +81,8 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
                 return chitu.SwipeDirection.Donw;
             return chitu.SwipeDirection.Right;
         }
-    });
+    };
+    var app = site.env.isApp ? new SiteApplication(config) : new chitu.Application(config);
     app.pageCreated.add(function (sender, page) {
         var route_values = page.routeData.values();
         var controller = route_values.controller;
@@ -60,13 +104,102 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
                 });
             }
         }
-        page.shown.add(function () {
-            if (site.env.isIOS) {
+        if (site.env.isIOS) {
+            page.shown.add(function () {
                 $(document).scrollTop(0);
                 $(document).scrollLeft(0);
-            }
+            });
+        }
+        page.load.add(function (sender, args) {
+            var enableScrollLoad = args.enableScrollLoad;
+            var descriptor = Object.getOwnPropertyDescriptor(chitu.PageLoadArguments.prototype, 'enableScrollLoad');
+            Object.defineProperty(args, "enableScrollLoad", {
+                set: function (value) {
+                    if (!(sender.bottomLoading instanceof PageBottomLoading))
+                        sender.bottomLoading = new PageBottomLoading(page);
+                    if (value == false) {
+                        sender.bottomLoading.status('complete');
+                    }
+                    descriptor.set.apply(this, [value]);
+                },
+                get: function () {
+                    return descriptor.get.apply(this);
+                },
+                configurable: descriptor.configurable,
+                enumerable: descriptor.enumerable
+            });
         });
     });
+    var PageBottomLoading = (function () {
+        function PageBottomLoading(page) {
+            this.LOADDING_HTML = '<i class="icon-spinner icon-spin"></i><span style="padding-left:10px;">数据正在加载中...</span>';
+            this.LOADCOMPLETE_HTML = '<span style="padding-left:10px;">数据已全部加载完</span>';
+            if (!page)
+                throw chitu.Errors.argumentNull('page');
+            this._page = page;
+            this._scrollLoad_loading_bar = document.createElement('div');
+            this._scrollLoad_loading_bar.innerHTML = '<div style="padding:10px 0px 10px 0px;"><h5 class="text-center"></h5></div>';
+            this._scrollLoad_loading_bar.style.display = 'block';
+            $(this._scrollLoad_loading_bar).find('h5').html(this.LOADDING_HTML);
+            page.nodes().content.appendChild(this._scrollLoad_loading_bar);
+            page.refreshUI();
+        }
+        PageBottomLoading.prototype.show = function () {
+            if (this._scrollLoad_loading_bar.style.display == 'block')
+                return;
+            this._scrollLoad_loading_bar.style.display = 'block';
+            this._page.refreshUI();
+        };
+        PageBottomLoading.prototype.hide = function () {
+        };
+        PageBottomLoading.prototype.status = function (value) {
+            if (value == 'complete') {
+                $(this._scrollLoad_loading_bar).find('h5').html(this.LOADCOMPLETE_HTML);
+            }
+        };
+        return PageBottomLoading;
+    })();
+    if (!site.env.isDegrade && site.env.isAndroid && !site.env.isApp) {
+        requirejs(['hammer'], function (hammer) {
+            console.log('hammer load');
+            window['Hammer'] = window['Hammer'] || hammer;
+            app.pageCreated.add(function (sender, page) {
+                var previous_page = page.previous;
+                if (previous_page == null)
+                    return;
+                var node = page.nodes().container;
+                var hammer = new Hammer(page.nodes().content);
+                hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL | Hammer.DIRECTION_VERTICAL });
+                hammer.on('panleft', function (e) {
+                    if (e.deltaX <= 0) {
+                        node.style.webkitTransform = 'translateX(' + 0 + 'px)';
+                        return;
+                    }
+                    console.log('e.deltaX:' + e.deltaX);
+                    node.style.webkitTransform = 'translateX(' + e.deltaX + 'px)';
+                    console.log('panleft');
+                    console.log(arguments);
+                });
+                hammer.on('panright', function (e) {
+                    node.style.webkitTransform = 'translateX(' + e.deltaX + 'px)';
+                    console.log('panright');
+                    console.log('velocityX:' + e.velocityX);
+                });
+                hammer.on('panstart', function () {
+                    previous_page.nodes().container.style.display = 'block';
+                });
+                hammer.on('panend', function (e) {
+                    if (e.deltaX > 100) {
+                        app.back();
+                        return;
+                    }
+                    previous_page.nodes().container.style.display = 'none';
+                    node.style.webkitTransform = 'translateX(' + 0 + 'px)';
+                    node.style.webkitTransitionDuration = '500';
+                });
+            });
+        });
+    }
     var viewPath = '../App/Module/{controller}/{action}.html';
     var actionPath = '../App/Module/{controller}/{action}';
     var guidRule = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;

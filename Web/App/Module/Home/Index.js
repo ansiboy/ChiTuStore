@@ -27,7 +27,7 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home'], 
                     model.homeProducts.push(homeProducts[i]);
                 }
                 homeProductQueryArguments.pageIndex++;
-                sender.enableScrollLoad = homeProducts.length == services.defaultPageSize;
+                args.enableScrollLoad = (homeProducts.length == services.defaultPageSize);
             });
         });
         var viewDeferred = page.view;
@@ -36,13 +36,9 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home'], 
         page.loadCompleted.add(function () {
             requirejs(['swiper'], function (Swiper) {
                 var mySwiper = new Swiper($(page.node()).find('[name="ad-swiper"]')[0], {
-                    loop: false,
+                    loop: true,
                     autoplay: 5000,
                     pagination: $(page.node()).find('[name="ad-pagination"]')[0],
-                    onTap: function (swiper, event) {
-                        var url = $(swiper.slides[swiper.activeIndex]).attr('url');
-                        window.location.href = url;
-                    }
                 });
             });
         });

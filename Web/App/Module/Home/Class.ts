@@ -1,8 +1,6 @@
 ﻿import shopping = require('Services/Shopping');
 import c = require('ui/ScrollLoad');
 
-requirejs(['css!content/Home/Class']);
-
 export = function (page: chitu.Page) {
 
     var model = {
@@ -21,6 +19,8 @@ export = function (page: chitu.Page) {
         });
     });
 
+    var page_view = page.view;
+    page.view = $.when(page_view, chitu.Utility.loadjs(['css!content/Home/Class']));
     page.viewChanged.add(() => ko.applyBindings(model, page.nodes().content));
 };
 

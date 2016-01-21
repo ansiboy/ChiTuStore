@@ -60,7 +60,6 @@ class MemberService {
 
         auth.whenLogin(() => {
             this.getUserInfo().done((userInfo) => {
-                debugger;
                 mapping.fromJS(userInfo, {}, this.currentUserInfo);
             })
         });
@@ -185,7 +184,8 @@ class MemberService {
         return call('Member/CheckVerifyCode', { smsId, verifyCode, mobile });
     }
     logout() {
-        site.cookies.token('');
+        //site.cookies.token('');
+        site.storage.token = '';
     }
     resetPassword(smsId: string, verifyCode: string, mobile: string, password: string) {
         password = CryptoJS.MD5(password).toString();

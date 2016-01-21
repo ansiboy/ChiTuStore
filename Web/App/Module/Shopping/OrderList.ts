@@ -15,7 +15,7 @@ requirejs(['css!content/Shopping/OrderList']);
 import CreateOrderDetailPage = require('Module/Shopping/OrderDetail');
 //import CreateImagePreview = require('UI/ImagePreview')
 
-var page_args: chitu.PageLoadArguments = { loadType: chitu.PageLoadType.scroll };
+//var page_args: chitu.PageLoadArguments = { loadType: chitu.PageLoadType.scroll };
 class Model {
     constructor(page: chitu.Page) {
         this.page = page;
@@ -89,8 +89,8 @@ class Model {
             this.pageIndex = 0;
             this.lastDateTime = null;
             this.orders.removeAll();
-
-            return this.page.on_load(page_args); //this.page['scrollLoad']();
+            
+            return this.page.on_load({ loadType: chitu.PageLoadType.scroll }); //this.page['scrollLoad']();
         }
     }
     isLoading = ko.observable(false)

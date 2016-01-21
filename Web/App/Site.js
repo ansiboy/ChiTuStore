@@ -1,11 +1,10 @@
 define(["require", "exports"], function (require, exports) {
-    var EnvironmentType;
-    (function (EnvironmentType) {
-        EnvironmentType[EnvironmentType["ios"] = 0] = "ios";
-        EnvironmentType[EnvironmentType["android"] = 1] = "android";
-        EnvironmentType[EnvironmentType["low"] = 2] = "low";
-        EnvironmentType[EnvironmentType["pc"] = 3] = "pc";
-    })(EnvironmentType || (EnvironmentType = {}));
+    var OS;
+    (function (OS) {
+        OS[OS["ios"] = 0] = "ios";
+        OS[OS["android"] = 1] = "android";
+        OS[OS["other"] = 2] = "other";
+    })(OS || (OS = {}));
     var SiteCookies = (function () {
         function SiteCookies() {
         }
@@ -18,13 +17,6 @@ define(["require", "exports"], function (require, exports) {
         };
         SiteCookies.prototype.returnUrl = function (value) {
             var name = 'returnUrl';
-            if (value === undefined)
-                return site.cookies.get_value(name);
-            site.cookies.set_value(name, value);
-        };
-        SiteCookies.prototype.token = function (value) {
-            if (value === void 0) { value = undefined; }
-            var name = 'token';
             if (value === undefined)
                 return site.cookies.get_value(name);
             site.cookies.set_value(name, value);
@@ -46,14 +38,19 @@ define(["require", "exports"], function (require, exports) {
     var SiteStorage = (function () {
         function SiteStorage() {
         }
+        SiteStorage.prototype.get_itemName = function (name) {
+            return site.config.cookiePrefix + "_" + name;
+        };
         SiteStorage.prototype.get_item = function (name) {
-            var str = window.localStorage.getItem(name);
+            var item_name = this.get_itemName(name);
+            var str = window.localStorage.getItem(item_name);
             var obj = JSON.parse(str);
             return obj;
         };
         SiteStorage.prototype.set_item = function (name, value) {
+            var item_name = this.get_itemName(name);
             var str = JSON.stringify(value);
-            window.localStorage.setItem(name, str);
+            window.localStorage.setItem(item_name, str);
         };
         Object.defineProperty(SiteStorage.prototype, "historyKeywords", {
             get: function () {
@@ -66,6 +63,16 @@ define(["require", "exports"], function (require, exports) {
             },
             set: function (value) {
                 this.set_item('historyKeywords', value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SiteStorage.prototype, "token", {
+            get: function () {
+                return this.get_item('token');
+            },
+            set: function (value) {
+                this.set_item('token', value);
             },
             enumerable: true,
             configurable: true
@@ -96,55 +103,65 @@ define(["require", "exports"], function (require, exports) {
     })();
     var SiteEnvironment = (function () {
         function SiteEnvironment() {
-        }
-        SiteEnvironment.isIOS = function (userAgent) {
-            return userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('iPad') > 0;
-        };
-        SiteEnvironment.isAndroid = function (userAgent) {
-            var ua = userAgent.toLowerCase();
-            var android_major_version = 0;
-            var match = ua.match(/android\s([0-9\.]*)/);
-            if (match)
-                android_major_version = parseInt(match[1], 10);
-            return android_major_version;
-        };
-        SiteEnvironment.prototype['type'] = function () {
-            if (this._environmentType == null) {
-                var andriod_version = SiteEnvironment.isAndroid(navigator.userAgent);
-                if (andriod_version) {
-                    if (andriod_version < 4) {
-                        this._environmentType = EnvironmentType.low;
-                    }
-                    else {
-                        this._environmentType = EnvironmentType.android;
-                    }
-                }
-                else if (SiteEnvironment.isIOS(navigator.userAgent)) {
-                    this._environmentType = EnvironmentType.ios;
-                }
-                else {
-                    this._environmentType = EnvironmentType.pc;
+            var userAgent = navigator.userAgent;
+            if (userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('iPad') > 0) {
+                this._os = OS.ios;
+                var match = userAgent.match(/iPhone OS\s([0-9\-]*)/);
+                if (match) {
+                    var major_version = parseInt(match[1], 10);
+                    this._version = major_version;
                 }
             }
-            return this._environmentType;
-        };
+            else if (userAgent.indexOf('Android') > 0) {
+                this._os = OS.android;
+                var match = userAgent.match(/Android\s([0-9\.]*)/);
+                if (match) {
+                    var major_version = parseInt(match[1], 10);
+                    this._version = major_version;
+                }
+            }
+            else {
+                this._os = OS.other;
+            }
+        }
+        Object.defineProperty(SiteEnvironment.prototype, "version", {
+            get: function () {
+                return this._version;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SiteEnvironment.prototype, "os", {
+            get: function () {
+                return this._os;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(SiteEnvironment.prototype, "isIOS", {
             get: function () {
-                return site.env.type() == EnvironmentType.ios;
+                return this.os == OS.ios;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(SiteEnvironment.prototype, "isAndroid", {
             get: function () {
-                return site.env.type() == EnvironmentType.android;
+                return this.os == OS.android;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SiteEnvironment.prototype, "isApp", {
+            get: function () {
+                return window['plus'] != null;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(SiteEnvironment.prototype, "isDegrade", {
             get: function () {
-                if (this.isWeiXin && this.isAndroid)
+                if ((this.isWeiXin || this.version <= 4) && this.isAndroid)
                     return true;
                 if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {
                     return true;

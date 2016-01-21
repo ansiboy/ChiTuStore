@@ -1,6 +1,5 @@
 define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapping', 'knockout', 'Site'], function (require, exports, app, shopping, mapping, ko, site) {
-    requirejs(['css!content/Home/ProductList']);
-    exports.func = function (page) {
+    return function (page) {
         /// <param name="page" type="chitu.Page"/>
         var node;
         var BRAND_NONE_NAME = '全部品牌';
@@ -85,9 +84,9 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
                 page.on_load({ loadType: chitu.PageLoadType.scroll });
             });
         });
-        requirejs(['ui/PromotionLabel'], function () {
-            ko.applyBindings(model, page.node());
-        });
+        var page_view = page.view;
+        page.view = $.when(page_view, chitu.Utility.loadjs(['ui/PromotionLabel', 'css!content/Home/ProductList']));
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
         page['title'] = function (value) {
             if (page['topbar'])
                 page['topbar']['title'](value);
@@ -106,7 +105,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
                     model.brands(filter.Brands);
                 }
                 model.queryArguments.pageIndex = model.queryArguments.pageIndex + 1;
-                sender.enableScrollLoad = items.length == site.config.pageSize;
+                args.enableScrollLoad = items.length == site.config.pageSize;
             });
         });
     };
