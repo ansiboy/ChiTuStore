@@ -42,10 +42,101 @@ class SiteApplication extends chitu.Application {
     }
 }
 
+class PageBottomLoading implements chitu.PageLoading {
+    private LOADDING_HTML = '<i class="icon-spinner icon-spin"></i><span style="padding-left:10px;">数据正在加载中...</span>';
+    private LOADCOMPLETE_HTML = '<span style="padding-left:10px;">数据已全部加载完</span>';
+    private _page: chitu.Page;
+    private _scrollLoad_loading_bar: HTMLElement;
+    private _status = 'loading';
+    private is_render = false;
+
+    private contents = {
+        loading: '<i class="icon-spinner icon-spin"></i><span style="padding-left:10px;">数据正在加载中...</span>',
+        complete: '<span style="padding-left:10px;">数据已全部加载完</span>'
+    }
+
+    constructor(page: chitu.Page) {
+        if (!page)
+            throw chitu.Errors.argumentNull('page');
+
+        this._page = page;
+
+
+    }
+    render() {
+        if (this.is_render)
+            return;
+
+        this._scrollLoad_loading_bar = document.createElement('div');
+        this._scrollLoad_loading_bar.innerHTML = '<div style="padding:10px 0px 10px 0px;"><h5 class="text-center"></h5></div>';
+        this._scrollLoad_loading_bar.style.display = 'block';
+        $(this._scrollLoad_loading_bar).find('h5').html(this.contents[this._status]);
+        this._page.nodes().content.appendChild(this._scrollLoad_loading_bar);
+        this._page.refreshUI();
+        this.is_render = true;
+    }
+    show() {
+        this.status('loading');
+    }
+    hide() {
+    }
+    status(value: string) {
+        if (this._status == value)
+            return;
+
+        debugger;
+        this._status = value;
+        if (this.is_render)
+            $(this._scrollLoad_loading_bar).find('h5').html(this.contents[this._status]);
+    }
+}
+
+function resetBottomLoading(page: chitu.Page) {
+    //===================================================================
+    // 购物车数据少，用原来的底栏即可
+    if (page.routeData.values().action == 'ShoppingCart')
+        return;
+    //===================================================================
+
+    var bottomLoading: PageBottomLoading = page.bottomLoading = new PageBottomLoading(page);
+
+    var enableScrollLoad_value_assinged = $.Deferred();
+    var viewChanged = $.Deferred();
+
+    page.viewChanged.add(() => viewChanged.resolve());
+
+    page.load.add(function (sender: chitu.Page, args: chitu.PageLoadArguments) {
+        if (sender.bottomLoading instanceof PageBottomLoading)
+            (<PageBottomLoading>sender.bottomLoading).status('loading');
+
+        var enableScrollLoad = args.enableScrollLoad;
+        var descriptor = Object.getOwnPropertyDescriptor(chitu.PageLoadArguments.prototype, 'enableScrollLoad');
+        Object.defineProperty(args, "enableScrollLoad", {
+            set: function (value) {
+                if (value == false) {
+                    (<PageBottomLoading>sender.bottomLoading).status('complete');
+                }
+                else {
+                    (<PageBottomLoading>sender.bottomLoading).status('loading');
+                }
+                enableScrollLoad_value_assinged.resolve();
+                descriptor.set.apply(this, [value]);
+            },
+            get: function () {
+                return descriptor.get.apply(this);
+            },
+            configurable: descriptor.configurable,
+            enumerable: descriptor.enumerable
+        });
+    });
+
+    $.when(viewChanged, enableScrollLoad_value_assinged).done(() => bottomLoading.render());
+}
+
 var config: chitu.ApplicationConfig = {
     container: () => document.getElementById('main'),
     scrollType: (routeData: chitu.RouteData) => {
-        if (site.env.isDegrade)//||site.env.isApp
+        if (site.env.isDegrade || (site.env.isApp && site.env.isAndroid))//||site.env.isApp
             return chitu.ScrollType.Document;
 
         if (site.env.isIOS) {
@@ -133,63 +224,10 @@ app.pageCreated.add(function (sender: chitu.Application, page: chitu.Page) {
     }
     //=======================================================================
 
-    page.load.add(function (sender: chitu.Page, args: chitu.PageLoadArguments) {
-        var enableScrollLoad = args.enableScrollLoad;
-        var descriptor = Object.getOwnPropertyDescriptor(chitu.PageLoadArguments.prototype, 'enableScrollLoad');
-        Object.defineProperty(args, "enableScrollLoad", {
-            set: function (value) {
-                if (!(sender.bottomLoading instanceof PageBottomLoading))
-                    sender.bottomLoading = new PageBottomLoading(page)
-
-                if (value == false) {
-                    (<PageBottomLoading>sender.bottomLoading).status('complete');
-                }
-
-                descriptor.set.apply(this, [value]);
-            },
-            get: function () {
-                return descriptor.get.apply(this);
-            },
-            configurable: descriptor.configurable,
-            enumerable: descriptor.enumerable
-        });
-    });
+    resetBottomLoading(page);
 })
 
-class PageBottomLoading implements chitu.PageLoading {
-    private LOADDING_HTML = '<i class="icon-spinner icon-spin"></i><span style="padding-left:10px;">数据正在加载中...</span>';
-    private LOADCOMPLETE_HTML = '<span style="padding-left:10px;">数据已全部加载完</span>';
-    private _page: chitu.Page;
-    private _scrollLoad_loading_bar: HTMLElement;
 
-    constructor(page: chitu.Page) {
-        if (!page)
-            throw chitu.Errors.argumentNull('page');
-
-        this._page = page;
-
-        this._scrollLoad_loading_bar = document.createElement('div');
-        this._scrollLoad_loading_bar.innerHTML = '<div style="padding:10px 0px 10px 0px;"><h5 class="text-center"></h5></div>';
-        this._scrollLoad_loading_bar.style.display = 'block';
-        $(this._scrollLoad_loading_bar).find('h5').html(this.LOADDING_HTML);
-        page.nodes().content.appendChild(this._scrollLoad_loading_bar);
-        page.refreshUI();
-    }
-    show() {
-        if (this._scrollLoad_loading_bar.style.display == 'block')
-            return;
-
-        this._scrollLoad_loading_bar.style.display = 'block';
-        this._page.refreshUI();
-    }
-    hide() {
-    }
-    status(value: string) {
-        if (value == 'complete') {
-            $(this._scrollLoad_loading_bar).find('h5').html(this.LOADCOMPLETE_HTML);
-        }
-    }
-}
 
 if (!site.env.isDegrade && site.env.isAndroid && !site.env.isApp) {
     requirejs(['hammer'], function (hammer) {

@@ -124,7 +124,7 @@ define(["require", "exports"], function (require, exports) {
                 this._os = OS.other;
             }
         }
-        Object.defineProperty(SiteEnvironment.prototype, "version", {
+        Object.defineProperty(SiteEnvironment.prototype, "osVersion", {
             get: function () {
                 return this._version;
             },
@@ -161,7 +161,7 @@ define(["require", "exports"], function (require, exports) {
         });
         Object.defineProperty(SiteEnvironment.prototype, "isDegrade", {
             get: function () {
-                if ((this.isWeiXin || this.version <= 4) && this.isAndroid)
+                if ((this.isWeiXin || this.osVersion <= 4) && this.isAndroid)
                     return true;
                 if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {
                     return true;

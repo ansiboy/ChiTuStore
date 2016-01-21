@@ -72,7 +72,7 @@
   background-color: white;
   position: absolute;
   overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  /*-webkit-overflow-scrolling: touch;*/
 }
 .page-node.div .page-loading {
   width: 100%;

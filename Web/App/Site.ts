@@ -154,7 +154,7 @@ class SiteEnvironment {
             this._os = OS.other;
         }
     }
-    get version(): number {
+    get osVersion(): number {
         return this._version;
     }
 
@@ -178,7 +178,7 @@ class SiteEnvironment {
     /// 是否需要降级
     /// </summary>
     get isDegrade(): boolean {
-        if ((this.isWeiXin || this.version <= 4) && this.isAndroid)
+        if ((this.isWeiXin || this.osVersion <= 4) && this.isAndroid)
             return true;
 
         if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {
