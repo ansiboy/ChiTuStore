@@ -1,0 +1,55 @@
+﻿@import "../../bootstrap-3.3.5/variables.less";
+@import "../Variables.less";
+
+.User-Favors {
+    &.norecords {
+        text-align: center;
+        padding-top: 40px;
+        width: 100%;
+    }
+
+    .page-pulldown {
+        height: @topbar-height;
+        width: 100%;
+    }
+
+    .page-content {
+        /*margin-top: 0 - @topbar-height;*/
+        padding-top: @topbar-height;
+    }
+
+    .item {
+        img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .name {
+            margin-left: 100px;
+            min-height: 60px;
+        }
+
+        a {
+            position: relative;
+            bottom: 10px;
+            border: 1px solid @brand-primary;
+            padding: 4px 12px 4px 12px;
+            border-radius: 4px;
+            color: @brand-primary;
+        }
+
+        label {
+            position: relative;
+            bottom: 4px;
+        }
+    }
+
+    .container {
+        padding-top: 10px;
+    }
+
+    hr {
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+}

@@ -1,4 +1,8 @@
-﻿import ko = require('knockout');
+﻿/// <reference path='../../Scripts/typings/jquery.d.ts' />
+/// <reference path='../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../Scripts/typings/knockout.validation.d.ts' />
+
+import ko = require('knockout');
 import member = require('Services/Member');
 import ko_val = require('knockout.validation');
 import site = require('Site');

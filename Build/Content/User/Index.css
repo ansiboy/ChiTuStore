@@ -1,0 +1,59 @@
+.User-Index {
+  /*&.low {
+      
+    }*/
+}
+.User-Index .container {
+  padding: 0;
+}
+.User-Index .page-content {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.User-Index .userInfo {
+  background-image: url(../../Images/APP/bg_user.png);
+  background-size: 100% 100%;
+  padding: 40px 20px 40px 20px;
+}
+.User-Index .userInfo .score {
+  color: white;
+  /*
+            .price {
+                position: relative;
+                right: -20px;
+            }
+
+            .icon-chevron-right {
+                position: relative;
+                right: -60px;
+            }*/
+}
+.User-Index .userInfo .score .name {
+  position: relative;
+  right: 8px;
+  top: 6px;
+}
+.User-Index .userInfo .score h5 {
+  text-align: right;
+}
+.User-Index .userInfo .blance {
+  color: white;
+}
+.User-Index .userInfo .blance .name {
+  position: relative;
+  right: 8px;
+  top: 6px;
+}
+.User-Index .list-group-item .value {
+  color: #BF0705;
+  font-weight: bold;
+}
+.User-Index .container .order-bar {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 12px;
+}
+.User-Index .container .order-bar .name {
+  margin-top: 6px;
+}

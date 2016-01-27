@@ -1,4 +1,5 @@
-﻿import Page = require('Core/Page');
+﻿
+import Page = require('Core/Page');
 import move = require('move');
 
 enum Direction {

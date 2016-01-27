@@ -1,4 +1,5 @@
-﻿import move = require('move');
+﻿
+import move = require('move');
 import site = require('Site');
 import ko = require('knockout');
 import shopping = require('Services/Shopping');

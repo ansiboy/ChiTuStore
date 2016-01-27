@@ -1,1 +1,0 @@
-define.amd = _amd;

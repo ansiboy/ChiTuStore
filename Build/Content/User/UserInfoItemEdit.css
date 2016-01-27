@@ -1,0 +1,18 @@
+.User-UserInfoItemEdit {
+  /*.page-node {
+        .page-body {
+            .page-content {
+                .ios .wrapper {
+                    position: unset;
+                }
+            }
+        }
+    }*/
+}
+.User-UserInfoItemEdit .page-content {
+  background-color: #eeeeee;
+  padding-top: 50px;
+}
+.User-UserInfoItemEdit div[name="region"] {
+  /*margin-top: @topbar-height;*/
+}

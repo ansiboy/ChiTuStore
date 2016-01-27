@@ -1,0 +1,181 @@
+.Home-Index {
+  /*padding-top: 50px;*/
+}
+.Home-Index .page-content {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.Home-Index nav {
+  border: none;
+  height: 50px;
+}
+.Home-Index .logo {
+  position: relative;
+  top: 2px;
+  left: 6px;
+  height: 42px;
+}
+.Home-Index .search-icon {
+  position: absolute;
+  top: 14px;
+  right: 60px;
+  font-size: 20px;
+  color: #98a0af;
+}
+.Home-Index .search {
+  position: relative;
+  top: -38px;
+  padding: 4px 52px 0px 52px;
+  left: 0px;
+  right: 0px;
+}
+.Home-Index .search [name="search_input"] {
+  background-color: white;
+  color: #777777;
+}
+.Home-Index .right-icon {
+  position: absolute;
+  top: -4px;
+  right: 8px;
+  text-align: center;
+  color: white;
+  font-size: 32px;
+}
+.Home-Index .right-icon div {
+  position: relative;
+  font-size: 10px;
+  /*padding-left:4px;*/
+  top: -10px;
+  left: -4px;
+}
+.Home-Index .right-icon .badge {
+  position: relative;
+  right: -50px;
+  color: #BF0705;
+  background-color: #fff;
+}
+.Home-Index .pull-down {
+  height: 120px;
+  margin-top: -70px;
+}
+.Home-Index .pull-down [name="slogan"] {
+  color: #BF0705;
+  bottom: -40px;
+  position: relative;
+  font-size: 18px;
+  font-family: STXingkai,STXinwei;
+  /*margin-top:-40px;*/
+}
+.Home-Index .pull-down [name="slogan"] img {
+  width: 240px;
+  margin-bottom: 8px;
+}
+.Home-Index .pull-down [name="status-text"] {
+  position: relative;
+  bottom: -55px;
+}
+.Home-Index .products .item {
+  padding-top: 16px;
+  padding-bottom: 10px;
+  /*&:nth-child(1) {
+                margin-top: 0px;
+            }*/
+}
+.Home-Index .products .item:nth-child(2n+1) {
+  border-bottom: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+  /*margin-top: 1px;*/
+}
+.Home-Index .products .item:nth-child(2n) {
+  border-left: 1px solid white;
+  border-bottom: 1px solid #eeeeee;
+}
+.Home-Index .products .item .bottom {
+  text-align: left;
+  padding-top: 8px;
+}
+.Home-Index .products .item .price {
+  font-size: 16px;
+  padding-top: 4px;
+}
+.Home-Index .products promotion-label {
+  padding-top: 2px;
+  /*position: relative;
+            display: block;
+            top: -24px;
+            left: 0px;
+            height: 20px;
+            min-height: 20px;
+            text-align: right;*/
+}
+.Home-Index .quickbar .text {
+  margin-top: 6px;
+  font-size: 12px;
+}
+.Home-Index .quickbar .col-xs-3 {
+  padding: 0px;
+}
+.Home-Index .quickbar :nth-child(1) .item {
+  position: relative;
+  left: -28px;
+  border-radius: 50%;
+  background-color: #F06292;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+}
+.Home-Index .quickbar :nth-child(1) .item i {
+  color: white;
+  font-size: 40px;
+  position: relative;
+  left: 0px;
+  top: 12px;
+}
+.Home-Index .quickbar :nth-child(2) .item {
+  position: relative;
+  left: -28px;
+  border-radius: 50%;
+  background-color: #4DD0E2;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+}
+.Home-Index .quickbar :nth-child(2) .item i {
+  color: white;
+  font-size: 36px;
+  position: relative;
+  left: 0px;
+  top: 14px;
+}
+.Home-Index .quickbar :nth-child(3) .item {
+  position: relative;
+  left: -28px;
+  border-radius: 50%;
+  background-color: #FF8A66;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+}
+.Home-Index .quickbar :nth-child(3) .item i {
+  color: white;
+  font-size: 36px;
+  position: relative;
+  left: 0px;
+  top: 12px;
+}
+.Home-Index .quickbar :nth-child(4) .item {
+  position: relative;
+  left: -28px;
+  border-radius: 50%;
+  background-color: #CF93D9;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+}
+.Home-Index .quickbar :nth-child(4) .item i {
+  color: white;
+  font-size: 40px;
+  position: relative;
+  left: 0px;
+  top: 10px;
+}

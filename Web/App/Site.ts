@@ -1,4 +1,5 @@
 ﻿
+
 enum OS {
     ios,
     android,
@@ -34,7 +35,7 @@ class SiteCookies {
     //    site.cookies.set_value(name, value);
     //}
     //token(value: string = undefined) {
-    //    var name = 'token';
+    //    var name $= 'token';
     //    if (value === undefined)
     //        return site.cookies.get_value(name);
 
@@ -255,6 +256,6 @@ class Site {
 var site: Site = window['site'] = window['site'] || new Site();
 
 
-export =site;
+export = site;
 
 

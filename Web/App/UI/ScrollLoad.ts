@@ -1,6 +1,6 @@
-﻿//var site = window['site'];
+﻿
 import site = require('Site');
-import menu = require('ui/Menu');
+import menu = require('UI/Menu');
 import move = require('move');
 import Hammer = require('hammer');
 

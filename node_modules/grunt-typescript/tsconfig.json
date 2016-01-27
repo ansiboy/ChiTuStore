@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "outDir": "tasks",
+        "target": "ES5",
+        "module": "commonjs",
+        "noEmitOnError": true,
+        "diagnostics": true,
+        "noLib": true,
+        "experimentalDecorators": true
+    },
+    "files": [
+        "src/index.ts",
+        "node_modules/typescript/lib/lib.core.d.ts",
+        "typings/lib.support.d.ts"
+    ]
+}

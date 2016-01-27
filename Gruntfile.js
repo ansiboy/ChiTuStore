@@ -1,4 +1,5 @@
-﻿module.exports = function (grunt) {
+﻿/*
+module.exports = function (grunt) {
     // 项目配置
     var output_dir = 'Web/App/Core/';
     var app_dir = 'Web/App/';
@@ -54,32 +55,76 @@
     // 默认任务
     grunt.registerTask('default', ['concat', 'uglify', 'cssmin']);//
 }
+*/
+var dest_root = 'Build';
+var js_files = [''];
+var ts_options = {
+    module: 'amd',
+    target: 'es5',
+    removeComments: true,
+    references: [
+        "Web/Scripts/typings/*.d.ts",
+        "Web/Scripts/typings/*.ts"
+    ]
+};
+module.exports = function (grunt) {
+    grunt.initConfig({
+        typescript: {
+            base: {
+                src: ['Web/App/**/*.ts'],
+                dest: 'Build',
+                options: ts_options
+            },
+            root_files: {
+                src: ['Web/App/*.ts'],
+                dest: 'Build',
+                options: ts_options
+            }
+        },
+        copy: {
+            main: {
+                files: [
+                    { expand: true, cwd: 'Web/', src: ['App/**/*.html'], dest: 'Build' },
+                    { expand: true, src: ['Web/*.html'], flatten: true, dest: 'Build' },
+                    { expand: true, cwd: 'Web/', src: ['Scripts/**/*.js'], dest: 'Build' },
+                    { expand: true, cwd: 'Web/', src: ['Content/css/*.css'], dest: 'Build' },
+                    { expand: true, cwd: 'Web/', src: ['Content/swiper.css'], dest: 'Build' },
+                    { expand: true, cwd: 'Web/', src: ['Content/font/*.*'], dest: 'Build' },
+                    { expand: true, cwd: 'Web/', src: ['Images/**/*.*'], dest: 'Build' },
+                ]
+            },
+            bootbox: {
+                files: [{ expand: true, cwd: 'Web', src: 'App/Core/bootbox.min.js', dest: 'Build' }]
+            }
+        },
+        less: {
+            app: {
+                files: [{
+                    expand: true,
+                    cwd: 'Web/Content/App',
+                    src: ['**/*.less'],
+                    dest: 'Build/Content/',
+                    ext: '.css'
+                }]
+            },
+            bootstrap: {
+                files: [{
+                    src: ['Web/Content/bootstrap-3.3.5/bootstrap.less'],
+                    dest: dest_root + '/Content/css/bootstrap.css'
+                }]
+            },
+            chitu:{
+                files: [{
+                    src: ['Web/Content/chitu.less'],
+                    dest: dest_root + '/Content/chitu.css'
+                }]
+            }
+        }
+    });
 
-// module.exports = function (grunt) {
-//     // 项目配置
-//     grunt.initConfig({
-//         pkg: grunt.file.readJSON('package.json'),
-//         concat: {
-//             //options: { separator: ';' },
-//             dist: {
-//                 src: ['Web/App/Application.js', 'Web/App/Site.js', 'Web/Scripts/knockout.extentions/knockout.extentions.js',
-//                       'Web/App/UI/Loading.js', 'Web/App/UI/Menu.js', 'Web/App/Rewrite.js', 'Web/App/ErrorHandler.js'],
-//                 dest: 'Build/prequire.js'
-//             }
-//         },
-//         uglify: {
-//             options: {
-//                 banner: '/*! Author: Shu Mai, Contact: ansiboy@163.com */\n'
-//             },
-//             build: {
-//                 src: 'Build/prequire.js',
-//                 dest: 'Build/prequire.min.js'
-//             }
-//         }
-//     });
-//     // 加载提供"uglify"任务的插件
-//     grunt.loadNpmTasks('grunt-contrib-concat');
-//     grunt.loadNpmTasks('grunt-contrib-uglify');
-//     // 默认任务
-//     grunt.registerTask('default', ['concat', 'uglify']);
-// }
+    grunt.loadNpmTasks('grunt-typescript');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.registerTask('default', ['typescript', 'copy', 'less']);
+
+};

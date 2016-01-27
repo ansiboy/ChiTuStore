@@ -1,0 +1,60 @@
+﻿<!--<div class="bg-primary topbar" style="width:100%;">
+    <a data-bind="click:back,tap:back" href="javascript:" class="leftButton" style="padding-right:20px;padding-left:20px;margin-left:-20px;">
+        <i class="icon-chevron-left"></i>
+    </a>
+    <h4>手机绑定</h4>
+</div>-->
+<div class="container">
+    <div class="step">
+        <div data-bind="attr:{'class':step()==0 ? 'step1 active': 'step1'}" class="" style="">
+            <span>1</span>
+            <div class="name">身份验证</div>
+        </div>
+        <div data-bind="attr:{'class':step()==1 ? 'step2 active': 'step2'}" class="step2" style="">
+            <span>2</span>
+            <div data-bind="text:stepTwoName" class="name"></div>
+        </div>
+        <hr />
+        <div class="clearfix"></div>
+    </div>
+    <hr class="row" />
+    <form name="stepOne" class="form-horizontal">
+        <div data-bind="visible:step()==0 && mobile()!=null">
+            <div class="form-group">
+                <div class="col-xs-12">你当前的手机号码是<span data-bind="text:mobile"></span></div>
+            </div>
+            <div data-bind="visible:step()==1" class="form-group">
+                <div class="col-xs-12">
+                    <input data-bind="value:mobile,textInput:mobile" class="form-control" type="text" name="Mobile" placeholder="请输入新的手机号码" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-6">
+                    <input data-bind="value:verifyCode,textInput:verifyCode" type="text" name="VerifyCode" class="form-control" placeholder="验证码" />
+                </div>
+                <div class="col-xs-6">
+                    <verify-code-button params="mobile:mobile,verifyCode:verifyCode,smsId:smsId,verifyType:'Binding'"></verify-code-button>
+                </div>
+            </div>
+            <div data-bind="visible:errorMessage" class="form-group">
+                <div class="col-xs-12">
+                    <div data-bind="text:errorMessage" class="alert alert-danger" role="alert"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <button data-bind="click:next,tap:next" type="button" class="btn btn-success btn-block">下一步</button>
+                </div>
+            </div>
+        </div>
+        <div data-bind="visible:!mobile()">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div class="alert alert-danger">需要绑定手机号码，才能进行设置，请先绑定手机号码。</div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form name="stepTwo" class="form-horizontal"></form>
+
+</div>

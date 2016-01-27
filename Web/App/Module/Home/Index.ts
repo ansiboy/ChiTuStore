@@ -1,4 +1,6 @@
-﻿import ko = require('knockout');
+﻿/// <reference path="../../../Scripts/typings/knockout.d.ts"/>
+
+import ko = require('knockout');
 import app = require('Application');
 import services = require('Services/Service');
 import home = require('Services/Home');

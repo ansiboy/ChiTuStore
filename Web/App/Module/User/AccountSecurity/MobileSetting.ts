@@ -1,6 +1,8 @@
-﻿import auth = require('Services/Auth');
+﻿/// <reference path='../../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
+
+import auth = require('Services/Auth');
 import member = require('Services/Member');
-//import registerVerifyCodeButton = require('UI/VerifyCodeButton');
 import c = require('ui/ScrollLoad');
 import ko_val = require('knockout.validation');
 

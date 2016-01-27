@@ -1,4 +1,5 @@
-﻿import site = require('Site');
+﻿
+import site = require('Site');
 
 chitu.Page.animationTime = site.config.pageAnimationTime;
 
@@ -16,7 +17,7 @@ class SiteApplication extends chitu.Application {
         window.location['arguments'] = null;
         this.showPage(hash.substr(1), args);
     }
-    hashchange() {
+    protected hashchange() {
         var plus = window['plus'];
         var hash = window.location.hash;
         if (!hash) {
@@ -105,14 +106,14 @@ function resetBottomLoading(page: chitu.Page) {
 
     page.viewChanged.add(() => viewChanged.resolve());
 
-    page.load.add(function (sender: chitu.Page, args: chitu.PageLoadArguments) {
+    page.load.add(function(sender: chitu.Page, args: chitu.PageLoadArguments) {
         if (sender.bottomLoading instanceof PageBottomLoading)
             (<PageBottomLoading>sender.bottomLoading).status('loading');
 
         var enableScrollLoad = args.enableScrollLoad;
-        var descriptor = Object.getOwnPropertyDescriptor(chitu.PageLoadArguments.prototype, 'enableScrollLoad');
+        var descriptor = Object.getOwnPropertyDescriptor((<any>chitu).PageLoadArguments.prototype, 'enableScrollLoad');
         Object.defineProperty(args, "enableScrollLoad", {
-            set: function (value) {
+            set: function(value) {
                 if (value == false) {
                     (<PageBottomLoading>sender.bottomLoading).status('complete');
                 }
@@ -122,7 +123,7 @@ function resetBottomLoading(page: chitu.Page) {
                 enableScrollLoad_value_assinged.resolve();
                 descriptor.set.apply(this, [value]);
             },
-            get: function () {
+            get: function() {
                 return descriptor.get.apply(this);
             },
             configurable: descriptor.configurable,
@@ -186,7 +187,7 @@ var app = site.env.isApp ? new SiteApplication(config) : new chitu.Application(c
 
 
 
-app.pageCreated.add(function (sender: chitu.Application, page: chitu.Page) {
+app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
 
     var route_values = page.routeData.values();
     var controller = route_values.controller;
@@ -203,10 +204,10 @@ app.pageCreated.add(function (sender: chitu.Application, page: chitu.Page) {
         // 实现滑动返回
         if ((<any>$).event.special.swipe) {
             $(page.node())
-                .on('swiperight', function () {
+                .on('swiperight', function() {
                     app.back();
                 })
-                .on('movestart', function (e: any) {
+                .on('movestart', function(e: any) {
                     if (Math.abs(e.distX) < Math.abs(e.distY)) {
                         e.preventDefault();
                     }
@@ -230,11 +231,11 @@ app.pageCreated.add(function (sender: chitu.Application, page: chitu.Page) {
 
 
 if (!site.env.isDegrade && site.env.isAndroid && !site.env.isApp) {
-    requirejs(['hammer'], function (hammer) {
+    requirejs(['hammer'], function(hammer) {
         console.log('hammer load');
         window['Hammer'] = window['Hammer'] || hammer;
 
-        app.pageCreated.add(function (sender: chitu.Application, page: chitu.Page) {
+        app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
             var previous_page = page.previous;
             if (previous_page == null)
                 return;
@@ -242,7 +243,7 @@ if (!site.env.isDegrade && site.env.isAndroid && !site.env.isApp) {
             var node = page.nodes().container;
             var hammer = new Hammer(page.nodes().content);
             hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL | Hammer.DIRECTION_VERTICAL });
-            hammer.on('panleft', function (e: PanEvent) {
+            hammer.on('panleft', function(e: PanEvent) {
                 if (e.deltaX <= 0) {
                     node.style.webkitTransform = 'translateX(' + 0 + 'px)';
                     return;
@@ -253,15 +254,15 @@ if (!site.env.isDegrade && site.env.isAndroid && !site.env.isApp) {
                 console.log('panleft');
                 console.log(arguments);
             });
-            hammer.on('panright', function (e: PanEvent) {
+            hammer.on('panright', function(e: PanEvent) {
                 node.style.webkitTransform = 'translateX(' + e.deltaX + 'px)';
                 console.log('panright');
                 console.log('velocityX:' + e.velocityX);
             });
-            hammer.on('panstart', function () {
+            hammer.on('panstart', function() {
                 previous_page.nodes().container.style.display = 'block';
             });
-            hammer.on('panend', function (e: PanEvent) {
+            hammer.on('panend', function(e: PanEvent) {
                 if (e.deltaX > 100) {
                     app.back();
                     return;
@@ -386,10 +387,6 @@ app.routes().mapRoute({
     viewPath: '../App/Module/User/{controller}/{action}.html',
     actionPath: '../App/Module/User/{controller}/{action}'
 });
-
-
-
-
 
 export = window['app'] = app;
 

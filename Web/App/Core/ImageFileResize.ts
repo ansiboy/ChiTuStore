@@ -1,4 +1,6 @@
-﻿class ImageFileResizeResult {
+﻿///<reference path='../../Scripts/typings/jquery.d.ts'/>
+
+class ImageFileResizeResult {
     ImageData: string
 }
 
@@ -18,7 +20,7 @@ interface ImageThumb {
     maxHeight: number
 }
 
-class ImageFileResize {
+ class ImageFileResize {
     //private THUMB_SIZE = 100;
     private thumb2: ImageThumb;
     constructor(fileUploadElement: HTMLInputElement, thumb1: ImageThumb, thumb2: ImageThumb = null) {

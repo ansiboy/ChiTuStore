@@ -1,4 +1,8 @@
-﻿import services = require('Services/Service');
+﻿///<reference path='../../Scripts/typings/jquery.d.ts'/>
+///<reference path='../../Scripts/typings/knockout.mapping.d.ts'/>
+///<reference path='../../Scripts/typings/Site.d.ts'/>
+
+import services = require('Services/Service');
 import site = require('Site');
 import mapping = require('knockout.mapping');
 

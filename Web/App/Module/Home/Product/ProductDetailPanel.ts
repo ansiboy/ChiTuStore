@@ -1,4 +1,5 @@
-﻿import move = require('move');
+﻿
+import move = require('move');
 import site = require('Site');
 import Hammer = require('hammer');
 import shopping = require('Services/Shopping');

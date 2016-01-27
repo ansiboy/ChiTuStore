@@ -1,4 +1,8 @@
-﻿import mapping = require('knockout.mapping');
+﻿/// <reference path="../../Scripts/typings/jquery.d.ts"/>
+/// <reference path="../../Scripts/typings/knockout.d.ts"/>
+/// <reference path="../../Scripts/typings/knockout.mapping.d.ts"/>
+
+import mapping = require('knockout.mapping');
 
 ko.components.register('coupon-list-item', {
     viewModel: function (params: any) {

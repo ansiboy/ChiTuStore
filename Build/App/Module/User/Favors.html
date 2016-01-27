@@ -1,0 +1,30 @@
+﻿<div class="container">
+    <div data-bind="visible:favors().length==0 && loading()==false" class="user-favors norecords">
+        <div class="icon">
+            <i class="icon-heart-empty">
+
+            </i>
+        </div>
+        <h4 class="text">你还没有添加收藏哦</h4>
+    </div>
+    <div data-bind="foreach:favors">
+        <div class="item">
+            <div data-bind="click:$parent.showProduct,tap:$parent.showProduct" class=" pull-left">
+                <img data-bind="attr:{src:ImageUrl}" />
+            </div>
+            <div data-bind="click:$parent.showProduct,tap:$parent.showProduct" class="name">
+                <div data-bind="text:ProductName"></div>
+            </div>
+            <a data-bind="visible:Status()=='Favor',click:$parent.unfavor,tap:$parent.unfavor,clickBubble:false" data-dialog="confirm:'确定要取消收藏吗'" class="pull-right">
+                <i class="icon-heart"></i>
+                取消收藏
+            </a>
+            <label data-bind="visible:Status()=='UnFavor'" class="pull-right">
+                已取消
+            </label>
+            <div class="clearfix"></div>
+        </div>
+        <hr class="row" />
+    </div>
+</div>
+

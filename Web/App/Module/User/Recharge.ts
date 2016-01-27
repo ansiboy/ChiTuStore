@@ -1,4 +1,7 @@
-﻿import app = require('Application')
+﻿/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+
+import app = require('Application')
 import recharge = require('Services/Recharge')
 import services = require('Services/Service')
 import ko_val = require('knockout.validation');
