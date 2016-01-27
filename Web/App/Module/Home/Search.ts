@@ -1,6 +1,6 @@
 ﻿import site = require('Site');
 import station = require('Services/Station');
-import c = require('ui/ScrollLoad');
+
 
 requirejs(['css!content/Home/Search']);
 

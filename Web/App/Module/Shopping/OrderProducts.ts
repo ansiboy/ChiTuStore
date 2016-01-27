@@ -4,7 +4,7 @@ import site = require('Site');
 import shopping = require('Services/Shopping');
 import shoppingCart = require('Services/ShoppingCart');
 import coupon = require('Services/Coupon');
-import c = require('ui/ScrollLoad');
+
 import ko_val = require('knockout.validation');
 import mapping = require('knockout.mapping');
 import AvalibleCoupons = require('Module/Shopping/OrderProduct/Coupons');
@@ -86,8 +86,6 @@ class Model {
 
 export = function (page) {
     /// <param name="page" type="chitu.Page"/>
-
-    //c.scrollLoad(page)
 
     var validation;
     var model = new Model(page);

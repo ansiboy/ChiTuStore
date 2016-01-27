@@ -1,5 +1,5 @@
 define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/ShoppingCart', 'Services/Shopping', 'Application'], function (require, exports, ko, mapping, shoppingCart, shopping, app) {
-    requirejs(['css!content/Shopping/ShoppingCart', 'ui/PromotionLabel']);
+    requirejs(['css!content/Shopping/ShoppingCart', 'UI/PromotionLabel']);
     var DialogStaus;
     (function (DialogStaus) {
         DialogStaus[DialogStaus["update"] = 0] = "update";

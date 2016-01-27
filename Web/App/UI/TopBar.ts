@@ -1,6 +1,6 @@
 ﻿import app = require('Application');
 import site = require('Site');
-import menu = require('ui/Menu');
+import menu = require('UI/Menu');
 
 class TopBar {
     public element: HTMLElement

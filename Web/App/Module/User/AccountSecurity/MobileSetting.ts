@@ -1,9 +1,7 @@
-﻿/// <reference path='../../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
-
+﻿
 import auth = require('Services/Auth');
 import member = require('Services/Member');
-import c = require('ui/ScrollLoad');
+
 import ko_val = require('knockout.validation');
 
 
@@ -38,8 +36,6 @@ export = function (page: chitu.Page) {
         },
         smsId: ko.observable<string>()
     };
-
-    //c.scrollLoad(page);
 
     requirejs(['UI/VerifyCodeButton'], function () {
         ko.applyBindings(model, page.node());

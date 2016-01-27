@@ -1,9 +1,6 @@
 define(["require", "exports", 'Services/Account', 'Services/Shopping', 'knockout.mapping', 'Application'], function (require, exports, account, shopping, mapping, app) {
     requirejs(['css!content/User/ReceiptList']);
     var func = function (page) {
-        //requirejs(['ui/ScrollLoad'], function (c) {
-        //c.scrollLoad(page);
-        //});
         var status_none = 'none';
         var status_modify = 'modify';
         var status_new = 'new';

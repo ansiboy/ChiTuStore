@@ -1,8 +1,6 @@
 define(["require", "exports", 'Application'], function (require, exports, app) {
     requirejs(['css!sc/Error/ConnectFail']);
     return function (page) {
-        //c.scrollLoad(page);
-        console.log('scrollload');
         page.load.add(function (sender, args) {
             page['return_url'] = args.hash;
         });

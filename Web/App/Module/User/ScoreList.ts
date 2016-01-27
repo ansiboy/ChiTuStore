@@ -1,5 +1,5 @@
 ﻿import account = require('Services/Account');
-import c = require('ui/ScrollLoad');
+
 import site = require('Site');
 
 requirejs(['css!content/User/ScoreList']);

@@ -68,7 +68,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
     })();
     return function (page) {
         var viewDeferred = page.view;
-        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['ui/Promotion']));
+        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/Promotion']));
         var model = new ProductModel(page);
         page.load.add(function (sender, args) {
             var productId = args.id;

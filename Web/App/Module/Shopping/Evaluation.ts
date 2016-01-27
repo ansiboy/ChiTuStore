@@ -1,6 +1,6 @@
 ﻿import account = require('Services/Account');
 import shopping = require('Services/Shopping');
-import c = require('ui/ScrollLoad');
+
 import Page = require('Core/Page');
 import ProductEvaluatePage = require('Module/Shopping/ProductEvaluate');
 import app = require('Application');
@@ -85,10 +85,4 @@ export = function (page: chitu.Page) {
         });
     });
 
-    //c.scrollLoad(page, {}, model.loadProducts);
-    //function loadProducts() {
-    //    return account.getToCommentProducts().done((products) => {
-    //        model.products(products);
-    //    })
-    //}
 }

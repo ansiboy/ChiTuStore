@@ -39,9 +39,6 @@ requirejs.config({
         ErrorHandler: {
             //deps: ['Rewrite']
         },
-        'Module/Home/ProductList': {
-            deps: ['ui/ScrollLoad']
-        },
         'iscroll': {
             exports: 'IScroll'
         },
@@ -71,7 +68,6 @@ requirejs.config({
         'knockout.mapping': '../Scripts/knockout.mapping.min',
         sv: '../App/Services',
         bootbox: 'Core/bootbox.min',
-        ui: 'UI',
         mod: '../App/Module',
         scr: '../Scripts',
         swiper: '../Scripts/swiper.jquery',
@@ -84,7 +80,7 @@ requirejs.config({
 });
 
 
-requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'ui/Loading'], function(site, app) {//, ]
+requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'UI/Loading'], function(site, app) {//, ]
     //site.ready(function () {
     //====================================================
     // 说明：如果是微信环境，则加载微信模块
@@ -117,7 +113,7 @@ requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'ui/Loading'], func
 
         //==================================================
 
-        requirejs(['ui/ScrollLoad', 'ui/Loading', 'ui/Menu', 'ui/TopBar']);
+        requirejs(['UI/Loading', 'UI/Menu', 'UI/TopBar']);
 
         //==================================================
         // 非必要的模块（用于增强用户体验），延后加载

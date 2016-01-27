@@ -1,4 +1,4 @@
-﻿//import c = require('ui/ScrollLoad');
+﻿
 import TopBar = require('UI/TopBar');
 import app = require('Application');
 import member = require('Services/Member');
@@ -19,7 +19,7 @@ var titles = {
 }
 
 export = function (page: chitu.Page) {
-    //c.scrollLoad(page);
+
 
     var topbar: TopBar = (<TopBar>page['topbar']);
 

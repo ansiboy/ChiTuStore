@@ -1,5 +1,3 @@
-/// <reference path='../../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
 define(["require", "exports", 'Services/Auth', 'Services/Member', 'knockout.validation'], function (require, exports, auth, member, ko_val) {
     return function (page) {
         var _this = this;

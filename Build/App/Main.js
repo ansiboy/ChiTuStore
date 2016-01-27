@@ -36,9 +36,6 @@ requirejs.config({
             deps: ['jquery.cookie', 'jquery']
         },
         ErrorHandler: {},
-        'Module/Home/ProductList': {
-            deps: ['ui/ScrollLoad']
-        },
         'iscroll': {
             exports: 'IScroll'
         },
@@ -66,7 +63,6 @@ requirejs.config({
         'knockout.mapping': '../Scripts/knockout.mapping.min',
         sv: '../App/Services',
         bootbox: 'Core/bootbox.min',
-        ui: 'UI',
         mod: '../App/Module',
         scr: '../Scripts',
         swiper: '../Scripts/swiper.jquery',
@@ -77,7 +73,7 @@ requirejs.config({
         jweixin: 'http://res.wx.qq.com/open/js/jweixin-1.0.0'
     }
 });
-requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'ui/Loading'], function (site, app) {
+requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'UI/Loading'], function (site, app) {
     var weiXinChecked = $.Deferred();
     var ua = navigator.userAgent.toLowerCase();
     if (site.env.isWeiXin) {
@@ -98,7 +94,7 @@ requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'ui/Loading'], func
                 }, 1000);
             }
         }
-        requirejs(['ui/ScrollLoad', 'ui/Loading', 'ui/Menu', 'ui/TopBar']);
+        requirejs(['UI/Loading', 'UI/Menu', 'UI/TopBar']);
         window.setTimeout(function () {
             requirejs(['move'], function (move) {
                 window['move'] = move;

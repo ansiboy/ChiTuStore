@@ -37,7 +37,6 @@ var model = new Model();
 var validation = ko_val.group(model);
 
 export = function (page: chitu.Page) {
-    //c.scrollLoad(page);
     page.viewChanged.add(() => ko.applyBindings(model, page.node()));
 }
 

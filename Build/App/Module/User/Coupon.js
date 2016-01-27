@@ -1,7 +1,7 @@
 define(["require", "exports", 'Services/Coupon'], function (require, exports, coupon) {
     return function (page) {
         var loadjsDeferred = $.Deferred();
-        requirejs(['ui/CouponListItem', 'css!content/User/Coupon'], function () { return loadjsDeferred.resolve(); });
+        requirejs(['UI/CouponListItem', 'css!content/User/Coupon'], function () { return loadjsDeferred.resolve(); });
         var viewDeferred = page.view;
         page.view = $.when(viewDeferred, loadjsDeferred);
         page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });

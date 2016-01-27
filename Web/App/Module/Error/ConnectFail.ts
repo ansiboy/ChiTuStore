@@ -1,17 +1,11 @@
-﻿import TopBar = require('ui/TopBar');
+﻿import TopBar = require('UI/TopBar');
 import app = require('Application');
-//import c = require('ui/ScrollLoad');
 
 requirejs(['css!sc/Error/ConnectFail']);
 
 
 export = function (page: chitu.Page) {
 
-    //c.scrollLoad(page);
-
-    console.log('scrollload');
-
-    //var return_url: string;
     page.load.add((sender, args) => {
         page['return_url'] = args.hash;
     });

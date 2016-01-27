@@ -100,7 +100,7 @@ export = function (page: chitu.Page) {
     });
 
     var page_view = page.view;
-    page.view = $.when(page_view, chitu.Utility.loadjs(['ui/PromotionLabel', 'css!content/Home/ProductList']));
+    page.view = $.when(page_view, chitu.Utility.loadjs(['UI/PromotionLabel', 'css!content/Home/ProductList']));
     page.viewChanged.add(() => ko.applyBindings(model, page.node()));
 
     page['title'] = function (value) {

@@ -28,7 +28,7 @@ define(["require", "exports", 'Services/Coupon', 'move', 'Site', 'iscroll'], fun
                 }
                 _this.close();
             };
-            requirejs(['text!Module/Shopping/OrderProduct/Coupons.html', 'ui/CouponListItem'], function (html) {
+            requirejs(['text!Module/Shopping/OrderProduct/Coupons.html', 'UI/CouponListItem'], function (html) {
                 var $html = $(html).appendTo($('#footer'));
                 var win_width = $(window).width();
                 _this.width = win_width;

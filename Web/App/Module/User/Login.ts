@@ -1,15 +1,12 @@
 ﻿import member = require('Services/Auth');
 import app = require('Application');
 import validation = require('knockout.validation');
-//import c = require('ui/ScrollLoad');
 
 
 requirejs(['css!content/User/Login']);
 
 export var func = function (page: chitu.Page) {
     /// <param name="page" type="chitu.Page"/>
-
-    //c.scrollLoad(page);
 
     var redirectUrl = '';
     var model = {

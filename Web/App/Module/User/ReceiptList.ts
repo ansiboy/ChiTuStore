@@ -3,15 +3,10 @@ import shopping = require('Services/Shopping');
 import mapping = require('knockout.mapping');
 import app = require('Application');
 
-//import c = require('ui/ScrollLoad');
 
 requirejs(['css!content/User/ReceiptList']);
 
 var func = function (page: chitu.Page) {
-
-    //requirejs(['ui/ScrollLoad'], function (c) {
-    //c.scrollLoad(page);
-    //});
 
     var status_none = 'none';
     var status_modify = 'modify';

@@ -32,7 +32,7 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home'], 
             });
         });
         var viewDeferred = page.view;
-        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['ui/PromotionLabel']));
+        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/PromotionLabel']));
         page.viewChanged.add(function () { return ko.applyBindings(model, page.nodes().content); });
         page.loadCompleted.add(function () {
             requirejs(['swiper'], function (Swiper) {

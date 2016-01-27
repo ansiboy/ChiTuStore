@@ -9,10 +9,6 @@ requirejs(['css!content/User/Index']);
 export = function (page: chitu.Page) {
     /// <param name="page" type="chitu.Page"/>
 
-    //requirejs(['ui/ScrollLoad'], function () {
-    //c.scrollLoad(page);
-    //});
-
     var model = {
         groups: [],
         showItemPage: function (item) {

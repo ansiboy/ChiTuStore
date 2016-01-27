@@ -1,11 +1,11 @@
-﻿import c = require('ui/ScrollLoad')
+﻿
 import coupon = require('Services/Coupon');
 
 
 export = function (page: chitu.Page) {
 
     var loadjsDeferred = $.Deferred();
-    requirejs(['ui/CouponListItem', 'css!content/User/Coupon'], () => loadjsDeferred.resolve());
+    requirejs(['UI/CouponListItem', 'css!content/User/Coupon'], () => loadjsDeferred.resolve());
     var viewDeferred = page.view;
     page.view = $.when(viewDeferred, loadjsDeferred);
     
@@ -61,11 +61,4 @@ export = function (page: chitu.Page) {
         });
         return result;
     })
-    //function scrollLoad() {
-      
-    //};
-
-    //return scrollLoad();
-    //c.scrollLoad(page, scrollLoad);
-
 }

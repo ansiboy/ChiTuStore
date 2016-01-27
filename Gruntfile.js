@@ -1,5 +1,6 @@
 ﻿
 var dest_root = 'Build';
+var src_root = 'Web';
 var js_files = [''];
 var ts_options = {
     module: 'amd',
@@ -27,17 +28,20 @@ module.exports = function (grunt) {
         copy: {
             main: {
                 files: [
-                    { expand: true, cwd: 'Web/', src: ['App/**/*.html'], dest: 'Build' },
-                    { expand: true, src: ['Web/*.html'], flatten: true, dest: 'Build' },
-                    { expand: true, cwd: 'Web/', src: ['Scripts/**/*.js'], dest: 'Build' },
-                    { expand: true, cwd: 'Web/', src: ['Content/css/*.css'], dest: 'Build' },
-                    { expand: true, cwd: 'Web/', src: ['Content/swiper.css'], dest: 'Build' },
-                    { expand: true, cwd: 'Web/', src: ['Content/font/*.*'], dest: 'Build' },
-                    { expand: true, cwd: 'Web/', src: ['Images/**/*.*'], dest: 'Build' },
-                ]
+                    { expand: true, cwd: src_root, src: ['App/**/*.html'], dest: dest_root },
+                    { expand: true, src: ['Web/*.html'], flatten: true, dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['Scripts/**/*.js'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['Content/css/*.css'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['Content/swiper.css'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['Content/font/*.*'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['Images/**/*.*'], dest: dest_root },
+                ],
+                app_js: {
+                    files: [{ expand: true, cwd: src_root, src: ['App/**/*.js'], dest: dest_root }]
+                }
             },
             bootbox: {
-                files: [{ expand: true, cwd: 'Web', src: 'App/Core/bootbox.min.js', dest: 'Build' }]
+                files: [{ expand: true, cwd: src_root, src: 'App/Core/bootbox.min.js', dest: dest_root }]
             }
         },
         less: {
@@ -56,7 +60,7 @@ module.exports = function (grunt) {
                     dest: dest_root + '/Content/css/bootstrap.css'
                 }]
             },
-            chitu:{
+            chitu: {
                 files: [{
                     src: ['Web/Content/chitu.less'],
                     dest: dest_root + '/Content/chitu.css'

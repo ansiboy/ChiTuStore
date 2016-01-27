@@ -1,7 +1,7 @@
 ﻿import app = require('Application');
-import c = require('ui/ScrollLoad');
+
 import services = require('Services/Service');
-import TopBar = require('ui/TopBar');
+import TopBar = require('UI/TopBar');
 import account = require('Services/Account');
 
 

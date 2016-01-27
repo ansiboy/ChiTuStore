@@ -4,7 +4,7 @@ import member = require('Services/Member');
 import ko_val = require('knockout.validation');
 import app = require('Application');
 import TopBar = require('UI/TopBar');
-import c = require('ui/ScrollLoad');
+
 import registerVerifyCodeButton = require('UI/VerifyCodeButton');
 
 requirejs(['css!content/User/AccountSecurity/Setting']);

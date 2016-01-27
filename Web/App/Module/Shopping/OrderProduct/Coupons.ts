@@ -18,7 +18,7 @@ class Model {
 
     constructor() {
 
-        requirejs(['text!Module/Shopping/OrderProduct/Coupons.html', 'ui/CouponListItem'], (html) => {
+        requirejs(['text!Module/Shopping/OrderProduct/Coupons.html', 'UI/CouponListItem'], (html) => {
             var $html = $(html).appendTo($('#footer'));
             var win_width = $(window).width();
             this.width = win_width;// * site.config.panelWithRate;

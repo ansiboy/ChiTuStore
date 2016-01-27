@@ -7,7 +7,6 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
         Region: '地区'
     };
     return function (page) {
-        //c.scrollLoad(page);
         var topbar = page['topbar'];
         $(topbar.element).find('a').remove();
         topbar.createLeftButton('icon-chevron-left', function () {

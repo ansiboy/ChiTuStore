@@ -4,10 +4,9 @@ import services = require('Services/Service');
 import ko_val = require('knockout.validation');
 import mapping = require('knockout.mapping');
 
-import TopBar = require('ui/TopBar');
+import TopBar = require('UI/TopBar');
 import ImageFileResize = require('Core/ImageFileResize')
 import app = require('Application');
-import c = require('ui/ScrollLoad');
 import site = require('Site');
 
 requirejs(['css!content/User/UserInfo', 'css!content/css/fontdiao']);

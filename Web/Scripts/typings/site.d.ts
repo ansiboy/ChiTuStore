@@ -1,15 +1,6 @@
 ﻿declare module 'text!Module/Home/ProductList/ProductsFilter.html' {
 }
 
-//declare module "ui/ScrollLoad" {
-//    //namespace chitu {
-//    function scrollLoad(page: chitu.Page);
-//    function scrollLoad(page: chitu.Page, config: Object);
-//    function scrollLoad(page: chitu.Page, config: Object, loadData: Function);
-//    function scrollLoad(page: chitu.Page, loadData: Function);
-//    //}
-//}
-
 declare class IScroll {
     constructor(node: HTMLElement | string)
     constructor(node: HTMLElement | string, config: any)

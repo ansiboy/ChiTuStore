@@ -1,12 +1,12 @@
 ﻿import ko = require('knockout');
 import mapping = require('knockout.mapping');
-import c = require('ui/ScrollLoad');
+
 import shoppingCart = require('Services/ShoppingCart');
 import shopping = require('Services/Shopping');
 import app = require('Application');
-import TopBar = require('ui/TopBar');
+import TopBar = require('UI/TopBar');
 
-requirejs(['css!content/Shopping/ShoppingCart', 'ui/PromotionLabel']);
+requirejs(['css!content/Shopping/ShoppingCart', 'UI/PromotionLabel']);
 
 
 enum DialogStaus {
@@ -286,7 +286,6 @@ export = function (page: chitu.Page) {
     }
 
     var scroll_config = { pullDown: {} };
-    //c.scrollLoad(page, scroll_config);
 
     var model = _model = new Model(page);
 

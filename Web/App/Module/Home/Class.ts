@@ -1,5 +1,4 @@
 ﻿import shopping = require('Services/Shopping');
-import c = require('ui/ScrollLoad');
 
 export = function (page: chitu.Page) {
 

@@ -1,12 +1,11 @@
 ﻿import shopping = require('Services/Shopping')
-import c = require('ui/ScrollLoad');
+
 requirejs(['css!content/User/Favors'], function () { });
 
 export = function (page: chitu.Page) {
     var config = {
         pullDown: {}
     }
-    //c.scrollLoad(page, config);
 
     var model = {
         favors: ko.observableArray(),

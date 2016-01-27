@@ -3,8 +3,8 @@ import site = require('Site');
 import shopping = require('Services/Shopping');
 import shoppingCart = require('Services/ShoppingCart');
 import mapping = require('knockout.mapping');
-//import c = require('ui/ScrollLoad');
-import TopBar = require('ui/TopBar');
+
+import TopBar = require('UI/TopBar');
 import ProductPanel = require('Module/Home/Product/ProductPanel');
 import ProductDetailPanel = require('Module/Home/Product/ProductDetailPanel');
 import auth = require('Services/Auth');
@@ -82,24 +82,8 @@ class ProductModel {
 export = function (page: chitu.Page) {
 
     var viewDeferred = page.view;
-    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['ui/Promotion']));
+    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/Promotion']));
 
-    //c.scrollLoad(page, {
-    //    pullUp: {
-    //        statusText: {
-    //            init: '上拉显示商品详细信息',
-    //            ready: '松开显示商品详细信息',
-    //            doing: '<div><i class="icon-spinner icon-spin"></i><span>&nbsp;正在更新中</span></div>',
-    //            done: '更新完毕',
-    //        },
-    //        text: function (status) {
-    //            this.element.innerHTML = this.statusText[status];
-    //        },
-    //        execute: function () {
-    //            return model.detailPanel.show(ko.unwrap(model.product.Id));
-    //        }
-    //    }
-    //});
     var model = new ProductModel(page);
     page.load.add(function (sender, args) {
         var productId = args.id;

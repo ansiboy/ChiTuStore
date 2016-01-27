@@ -3,7 +3,6 @@ import mapping = require('knockout.mapping');
 import account = require('Services/Account');
 import site = require('Site');
 import app = require('Application');
-import c = require('ui/ScrollLoad');
 
 requirejs(['css!content/User/ReceiptEdit']);
 
@@ -184,14 +183,7 @@ class Model {
 export = function (page: chitu.Page) {
     /// <param name="page" type="chitu.Page"/>
 
-
-    //c.scrollLoad(page);
-
-
     var model = new Model(page);
-
-
-
     page.load.add(function (sender, args) {
         /// <param name="sender" type="chitu.Page"/>
 
