@@ -229,7 +229,8 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
                 });
                 return deferred;
             };
-        }, { _element: element, _valueAccessor: valueAccessor, _allBindings: allBindings, _viewModel: viewModel, _bindingContext: bindingContext, _value: value });
+        }, { _element: element, _valueAccessor: valueAccessor, _allBindings: allBindings,
+            _viewModel: viewModel, _bindingContext: bindingContext, _value: value });
     }
     var _click = ko.bindingHandlers.click;
     ko.bindingHandlers.click = {
@@ -244,39 +245,6 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
         }
         return src;
     }
-    var ImageLoader = (function () {
-        var MAX_THREAD = 200;
-        var thread_count = 0;
-        var items = [];
-        var imageLoaded = $.Callbacks();
-        window.setInterval(function () {
-            if (items.length <= 0)
-                return;
-            if (thread_count >= MAX_THREAD)
-                return;
-            var item = items.shift();
-            var element = item.element;
-            var src = item.src;
-            element.image = new Image();
-            element.image.element = element;
-            element.image.src = getImageUrl(src);
-            thread_count = thread_count + 1;
-            element.image.onload = function () {
-                this.element.src = this.src;
-                thread_count = thread_count - 1;
-                imageLoaded.fire(this.element);
-            };
-            element.image.onerror = function () {
-                thread_count = thread_count - 1;
-            };
-        }, 100);
-        return {
-            load: function (element, src) {
-                items.push({ element: element, src: src });
-            },
-            imageLoaded: imageLoaded
-        };
-    })();
     function getPreviewImage(img_width, img_height) {
         var scale = (img_height / img_width).toFixed(2);
         var img_name = 'img_log' + scale;

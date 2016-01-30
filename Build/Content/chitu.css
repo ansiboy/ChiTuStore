@@ -38,7 +38,7 @@ body {
   text-align: center;
 }
 .page-node.ios .page-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 100;
 }

@@ -7,7 +7,7 @@ import home = require('Services/Home');
 
 requirejs(['css!sc/Home/Index']);
 
-export = function (page: chitu.Page) {
+export = function(page: chitu.Page) {
 
     var homeProductQueryArguments = {
         pageIndex: 0
@@ -21,9 +21,9 @@ export = function (page: chitu.Page) {
     };
 
     var loadComplete = $.Deferred();
-    page.load.add(function (sender: chitu.Page, args: chitu.PageLoadArguments) {
+    page.load.add(function(sender: chitu.Page, args: chitu.PageLoadArguments) {
         if (args.loadType == chitu.PageLoadType.open) {
-            home.advertItems().done(function (advertItems) {
+            home.advertItems().done(function(advertItems) {
                 for (var i = 0; i < advertItems.length; i++) {
                     advertItems[i].index = i;
                     advertItems[i].LinkUrl = advertItems[i].LinkUrl;
@@ -33,7 +33,7 @@ export = function (page: chitu.Page) {
         }
 
 
-        return home.homeProducts(homeProductQueryArguments.pageIndex).done(function (homeProducts: Array<any>) {
+        return home.homeProducts(homeProductQueryArguments.pageIndex).done(function(homeProducts: Array<any>) {
             for (var i = 0; i < homeProducts.length; i++) {
                 homeProducts[i].Url = '#Home_Product_' + homeProducts[i].ProductId;
                 model.homeProducts.push(homeProducts[i]);
@@ -46,20 +46,48 @@ export = function (page: chitu.Page) {
 
     var viewDeferred = page.view;
     page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/PromotionLabel']));
-    page.viewChanged.add(() => ko.applyBindings(model, page.nodes().content));
+    page.viewChanged.add(() => {
+        ko.applyBindings(model, page.nodes().content);
 
-    page.loadCompleted.add(() => {
-        requirejs(['swiper'], function (Swiper) {
-            var mySwiper = new Swiper($(page.node()).find('[name="ad-swiper"]')[0], {
-                //direction: 'vertical',
-                loop: true,
-                autoplay: 5000,
-                pagination: $(page.node()).find('[name="ad-pagination"]')[0],
-                //onTap: function (swiper, event) {
-                //    var url = $(swiper.slides[swiper.activeIndex]).attr('url');
-                //    window.location.href = url;
-                //}
-            });
+        requirejs(['hammer'], function(HammerClass) {
+            window['Hammer'] = HammerClass;
+            var x = 0;
+            var node: HTMLElement = <HTMLElement>page.nodes().content.querySelector('.swiper-wrapper');
+            var hammer = new Hammer(node);
+            hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+            console.log('pan');
+            var ctr_deltaX = 0;
+            var pan_left_right = function(e: PanEvent) {
+                var transform = 'translateX(' + (x + e.deltaX) + 'px)';
+                node.style.transform = transform;
+                node.style.webkitTransform = transform;
+
+                e.preventDefault();
+            }
+            var pan_end = function(e: PanEvent) {
+                //if(e.deltaX>)
+                x = x + e.deltaX;
+            }
+            hammer.on('panleft', pan_left_right);
+            hammer.on('panright', pan_left_right);
+            hammer.on('panend', pan_end);
         });
     });
+
+    page.loadCompleted.add(() => {
+        // requirejs(['swiper'], function (Swiper) {
+        //     var mySwiper = new Swiper($(page.node()).find('[name="ad-swiper"]')[0], {
+        //         //direction: 'vertical',
+        //         loop: true,
+        //         autoplay: 5000,
+        //         pagination: $(page.node()).find('[name="ad-pagination"]')[0],
+        //         //onTap: function (swiper, event) {
+        //         //    var url = $(swiper.slides[swiper.activeIndex]).attr('url');
+        //         //    window.location.href = url;
+        //         //}
+        //     });
+        // });
+    });
+
+
 }

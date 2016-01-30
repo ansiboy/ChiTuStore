@@ -47,7 +47,6 @@ class SiteCookies {
     }
     get_value(name: string) {
         var cookieName = site.cookies.get_cookieName(name);
-        //return localStorage.getItem(cookieName);
         return $.cookie(cookieName);
     }
     get_cookieName(name) {
@@ -111,11 +110,6 @@ class SiteConfig {
     purchaseUrlFormat = 'pay/Purchase.html#{0}'
 
     cookiePrefix = 'lsyy'//该值需要设置
-    //serviceUrl = ''
-    //siteServiceUrl = ''
-    //memberServiceUrl = ''
-    //weixinServiceUrl = ''
-    //accountServiceUrl = ''
     imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop'
 
     pageAnimationTime = 500
@@ -203,10 +197,7 @@ class Site {
     cookies: SiteCookies
     storage: SiteStorage
     env: SiteEnvironment
-    //ready: JQueryDeferred<any>;
-    //browser = new Browser(navigator.userAgent);
-    //error = $.Callbacks()
-
+ 
     private ready_funcs: Function[] = []
     private is_ready = false;
 
@@ -218,39 +209,13 @@ class Site {
 
         this.env = new SiteEnvironment()
     }
-
-    //private invokeReadyFunc(func: Function) {
-    //    func();
-    //}
-
-    //set_config(config) {
-    //    site.config.cookiePrefix = config.CookiePrefix;
-    //    //site.config.serviceUrl = config.ShopServiceUrl;
-    //    //site.config.memberServiceUrl = config.MemberServiceUrl;
-    //    //site.config.weixinServiceUrl = config.WeixinServiceUrl;
-    //    //site.config.siteServiceUrl = config.SiteServiceUrl;
-    //    //site.config.accountServiceUrl = config.AccountServiceUrl;
-    //    site.config.imageBaseUrl = config.ImageBaseUrl;
-    //    //site.cookies.appToken(config.AppToken);
-
-    //    this.is_ready = true;
-    //    for (var i = 0; i < this.ready_funcs.length; i++) {
-    //        this.invokeReadyFunc(this.ready_funcs[i]);
-    //    }
-    //}
-
-    //ready(func: Function) {
-
-    //    if (func == null)
-    //        throw new Error('Argument func is null');
-
-    //    if (this.is_ready) {
-    //        this.invokeReadyFunc(func);
-    //        return;
-    //    }
-
-    //    this.ready_funcs.push(func);
-    //}
+        isMenuPage (routeData: chitu.RouteData): boolean {
+        var controller = routeData.values().controller;
+        var action = routeData.values().action;
+        var name = controller + '.' + action;
+        return (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
+            name == 'Home.NewsList' || name == 'User.Index')
+    }
 }
 
 var site: Site = window['site'] = window['site'] || new Site();

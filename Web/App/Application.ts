@@ -3,46 +3,6 @@ import site = require('Site');
 
 chitu.Page.animationTime = site.config.pageAnimationTime;
 
-
-class SiteApplication extends chitu.Application {
-    run() {
-        $(window).bind('hashchange', $.proxy(this.hashchange, this));
-
-        var hash = window.location.hash;
-        if (!hash) {
-            return;
-        }
-
-        var args = window.location['arguments'] || {};
-        window.location['arguments'] = null;
-        this.showPage(hash.substr(1), args);
-    }
-    protected hashchange() {
-        var plus = window['plus'];
-        var hash = window.location.hash;
-        if (!hash) {
-            return;
-        }
-
-        var currentWebView = plus.webview.currentWebview();
-
-        console.log('hashchange:' + hash);
-        console.log('currentWebviewID:' + currentWebView.id);
-
-        var webview_id = hash.substr(1);
-        plus.webview.open('Page.html' + hash, webview_id, {
-            popGesture: 'close'
-        }, 'slide-in-right');
-
-        location.hash = '';
-    }
-    back(args = undefined): JQueryDeferred<any> {
-        var plus = window['plus'];
-        plus.webview.currentWebview().close();
-        return $.Deferred().resolve();
-    }
-}
-
 class PageBottomLoading implements chitu.PageLoading {
     private LOADDING_HTML = '<i class="icon-spinner icon-spin"></i><span style="padding-left:10px;">数据正在加载中...</span>';
     private LOADCOMPLETE_HTML = '<span style="padding-left:10px;">数据已全部加载完</span>';
@@ -92,12 +52,11 @@ class PageBottomLoading implements chitu.PageLoading {
     }
 }
 
+/// <summary>
+/// 重置页面底部滚动显示栏。
+/// </summary>
 function resetBottomLoading(page: chitu.Page) {
-    //===================================================================
-    // 购物车数据少，用原来的底栏即可
-    if (page.routeData.values().action == 'ShoppingCart')
-        return;
-    //===================================================================
+
 
     var bottomLoading: PageBottomLoading = page.bottomLoading = new PageBottomLoading(page);
 
@@ -137,7 +96,7 @@ function resetBottomLoading(page: chitu.Page) {
 var config: chitu.ApplicationConfig = {
     container: () => document.getElementById('main'),
     scrollType: (routeData: chitu.RouteData) => {
-        if (site.env.isDegrade || (site.env.isApp && site.env.isAndroid))//||site.env.isApp
+        if (site.env.isDegrade)// || (site.env.isApp && site.env.isAndroid)
             return chitu.ScrollType.Document;
 
         if (site.env.isIOS) {
@@ -153,11 +112,7 @@ var config: chitu.ApplicationConfig = {
         if (site.env.isDegrade)
             return chitu.SwipeDirection.None;
 
-        var controller = routeData.values().controller;
-        var action = routeData.values().action;
-        var name = controller + '.' + action;
-        if (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
-            name == 'Home.NewsList' || name == 'User.Index')
+        if (site.isMenuPage(routeData))
             return chitu.SwipeDirection.None;
 
         if (name == 'Home.ProductDetail')
@@ -169,21 +124,18 @@ var config: chitu.ApplicationConfig = {
         if (site.env.isDegrade)
             return chitu.SwipeDirection.None;
 
-        var controller = routeData.values().controller;
-        var action = routeData.values().action;
-        var name = controller + '.' + action;
-        if (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
-            name == 'Home.NewsList' || name == 'User.Index')
+        if (site.isMenuPage(routeData))
             return chitu.SwipeDirection.None;
 
         if (name == 'Home.ProductDetail')
             return chitu.SwipeDirection.Donw;
 
         return chitu.SwipeDirection.Right;
-    }
+    },
+
 }
 
-var app = site.env.isApp ? new SiteApplication(config) : new chitu.Application(config);
+var app = new chitu.Application(config);//site.env.isApp ? new SiteApplication(config) :
 
 
 
@@ -223,66 +175,69 @@ app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
             $(document).scrollLeft(0);
         });
     }
+    
     //=======================================================================
+    // 购物车数据少，用原来的底栏即可
+    if (page.routeData.values().action == 'ShoppingCart')
+        return;
 
     resetBottomLoading(page);
+    //===================================================================
 })
 
+// app.isMenuPage = function(routeData: chitu.RouteData) {
+// 
+// }
 
 
-if (!site.env.isDegrade && site.env.isAndroid && !site.env.isApp) {
-    requirejs(['hammer'], function(hammer) {
-        console.log('hammer load');
-        window['Hammer'] = window['Hammer'] || hammer;
+// if (!site.env.isDegrade && site.env.isAndroid && !site.env.isApp) {
+//     requirejs(['hammer'], function(hammer) {
+//         console.log('hammer load');
+//         window['Hammer'] = window['Hammer'] || hammer;
+// 
+//         app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
+//             var previous_page = page.previous;
+//             if (previous_page == null)
+//                 return;
+// 
+//             var node = page.nodes().container;
+//             var hammer = new Hammer(page.nodes().content);
+//             hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL | Hammer.DIRECTION_VERTICAL });
+//             hammer.on('panleft', function(e: PanEvent) {
+//                 if (e.deltaX <= 0) {
+//                     node.style.webkitTransform = 'translateX(' + 0 + 'px)';
+//                     return;
+//                 }
+// 
+//                 console.log('e.deltaX:' + e.deltaX);
+//                 node.style.webkitTransform = 'translateX(' + e.deltaX + 'px)';
+//                 console.log('panleft');
+//                 console.log(arguments);
+//             });
+//             hammer.on('panright', function(e: PanEvent) {
+//                 node.style.webkitTransform = 'translateX(' + e.deltaX + 'px)';
+//                 console.log('panright');
+//                 console.log('velocityX:' + e.velocityX);
+//             });
+//             hammer.on('panstart', function() {
+//                 previous_page.nodes().container.style.display = 'block';
+//             });
+//             hammer.on('panend', function(e: PanEvent) {
+//                 if (e.deltaX > 100) {
+//                     app.back();
+//                     return;
+//                 }
+// 
+//                 previous_page.nodes().container.style.display = 'none';
+//                 node.style.webkitTransform = 'translateX(' + 0 + 'px)';
+//                 node.style.webkitTransitionDuration = '500';
+//             });
+// 
+//         })
+//     })
+// }
 
-        app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
-            var previous_page = page.previous;
-            if (previous_page == null)
-                return;
 
-            var node = page.nodes().container;
-            var hammer = new Hammer(page.nodes().content);
-            hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL | Hammer.DIRECTION_VERTICAL });
-            hammer.on('panleft', function(e: PanEvent) {
-                if (e.deltaX <= 0) {
-                    node.style.webkitTransform = 'translateX(' + 0 + 'px)';
-                    return;
-                }
-
-                console.log('e.deltaX:' + e.deltaX);
-                node.style.webkitTransform = 'translateX(' + e.deltaX + 'px)';
-                console.log('panleft');
-                console.log(arguments);
-            });
-            hammer.on('panright', function(e: PanEvent) {
-                node.style.webkitTransform = 'translateX(' + e.deltaX + 'px)';
-                console.log('panright');
-                console.log('velocityX:' + e.velocityX);
-            });
-            hammer.on('panstart', function() {
-                previous_page.nodes().container.style.display = 'block';
-            });
-            hammer.on('panend', function(e: PanEvent) {
-                if (e.deltaX > 100) {
-                    app.back();
-                    return;
-                }
-
-                previous_page.nodes().container.style.display = 'none';
-                node.style.webkitTransform = 'translateX(' + 0 + 'px)';
-                node.style.webkitTransitionDuration = '500';
-            });
-
-        })
-    })
-}
-
-
-//function addEventTest() {
-//    plus.key.addEventListener("backbutton", function () {
-//        alert("BackButton Key pressed!");
-//    });
-//}
 
 
 var viewPath = '../App/Module/{controller}/{action}.html';
@@ -312,14 +267,6 @@ app.routes().mapRoute({
         id: guidRule
     }
 });
-
-//app.routes().mapRoute({
-//    name: 'Error',
-//    url: '{controller}_{action}_{hash}',
-//    rules: {
-//        controller: ['Error']
-//    }
-//});
 
 app.routes().mapRoute({
     name: 'OrderList',

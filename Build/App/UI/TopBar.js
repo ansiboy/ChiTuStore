@@ -39,9 +39,6 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
             $btn.on('tap', callback);
             return $btn[0];
         };
-        TopBar.prototype.height = function () {
-            return TOPBAR_HEIGHT;
-        };
         return TopBar;
     })();
     function defaultTitle(page) {
@@ -120,7 +117,6 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
         }
     }
     var topbar_html = '<div class="bg-primary topbar" style="width:100%;"><h4></h4></div>';
-    var TOPBAR_HEIGHT = 50;
     app.pageCreated.add(page_created);
     if (app.currentPage() != null)
         page_created(app, app.currentPage());

@@ -56,10 +56,6 @@ class TopBar {
 
         return $btn[0];
     }
-
-    height() {
-        return TOPBAR_HEIGHT;
-    }
 }
 
 
@@ -158,7 +154,6 @@ function page_created(sender, page: chitu.Page) {
 }
 
 var topbar_html = '<div class="bg-primary topbar" style="width:100%;"><h4></h4></div>';
-var TOPBAR_HEIGHT: number = 50;
 app.pageCreated.add(page_created);
 if (app.currentPage() != null)
     page_created(app, app.currentPage());

@@ -33,15 +33,31 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home'], 
         });
         var viewDeferred = page.view;
         page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/PromotionLabel']));
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.nodes().content); });
-        page.loadCompleted.add(function () {
-            requirejs(['swiper'], function (Swiper) {
-                var mySwiper = new Swiper($(page.node()).find('[name="ad-swiper"]')[0], {
-                    loop: true,
-                    autoplay: 5000,
-                    pagination: $(page.node()).find('[name="ad-pagination"]')[0],
-                });
+        page.viewChanged.add(function () {
+            ko.applyBindings(model, page.nodes().content);
+            requirejs(['hammer'], function (HammerClass) {
+                window['Hammer'] = HammerClass;
+                var x = 0;
+                var node = page.nodes().content.querySelector('.swiper-wrapper');
+                var hammer = new Hammer(node);
+                hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+                console.log('pan');
+                var ctr_deltaX = 0;
+                var pan_left_right = function (e) {
+                    var transform = 'translateX(' + (x + e.deltaX) + 'px)';
+                    node.style.transform = transform;
+                    node.style.webkitTransform = transform;
+                    e.preventDefault();
+                };
+                var pan_end = function (e) {
+                    x = x + e.deltaX;
+                };
+                hammer.on('panleft', pan_left_right);
+                hammer.on('panright', pan_left_right);
+                hammer.on('panend', pan_end);
             });
+        });
+        page.loadCompleted.add(function () {
         });
     };
 });

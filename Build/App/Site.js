@@ -197,6 +197,13 @@ define(["require", "exports"], function (require, exports) {
             this.storage = new SiteStorage();
             this.env = new SiteEnvironment();
         }
+        Site.prototype.isMenuPage = function (routeData) {
+            var controller = routeData.values().controller;
+            var action = routeData.values().action;
+            var name = controller + '.' + action;
+            return (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
+                name == 'Home.NewsList' || name == 'User.Index');
+        };
         return Site;
     })();
     var site = window['site'] = window['site'] || new Site();

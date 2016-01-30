@@ -56,11 +56,11 @@ requirejs.config({
         'jquery.event.swipe': '../Scripts/jquery.event.swipe.min',
         'jquery.event.move': '../Scripts/jquery.event.move.min',
         chitu: '../Scripts/chitu',
-        hammer: '../Scripts/hammer.min',
+        hammer: '../Scripts/hammer',
         knockout: '../Scripts/knockout-3.2.0.min',
         'ko.ext': 'Core/ko.ext',
-        'knockout.validation': '../Scripts/knockout.validation.min',
-        'knockout.mapping': '../Scripts/knockout.mapping.min',
+        'knockout.validation': '../Scripts/knockout.validation',
+        'knockout.mapping': '../Scripts/knockout.mapping',
         sv: '../App/Services',
         bootbox: 'Core/bootbox.min',
         mod: '../App/Module',
@@ -88,11 +88,6 @@ requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'UI/Loading'], func
         app.run();
         if (!location.hash) {
             location.hash = 'Home_Index';
-            if (site.env.isApp) {
-                window.setTimeout(function () {
-                    window['plus'].webview.currentWebview().close();
-                }, 1000);
-            }
         }
         requirejs(['UI/Loading', 'UI/Menu', 'UI/TopBar']);
         window.setTimeout(function () {
@@ -101,13 +96,7 @@ requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'UI/Loading'], func
             });
         }, 2000);
     });
-    function plusReady() {
+    if (site.env.isApp) {
         requirejs(['Device']);
-    }
-    if (window['plus']) {
-        plusReady();
-    }
-    else {
-        document.addEventListener("plusready", plusReady, false);
     }
 });

@@ -28,7 +28,7 @@ var ConfirmDialogHtml =
     </div> \
 </div>';
 
-Number.prototype['toFormattedString'] = function (format) {
+Number.prototype['toFormattedString'] = function(format) {
     var reg = new RegExp('^C[0-9]+');
     if (reg.test(format)) {
         var num = format.substr(1);
@@ -37,7 +37,7 @@ Number.prototype['toFormattedString'] = function (format) {
     return this;
 };
 
-Date.prototype['toFormattedString'] = function (format) {
+Date.prototype['toFormattedString'] = function(format) {
     switch (format) {
         case 'd':
             return chitu.Utility.format("{0}-{1}-{2}", this.getFullYear(), this.getMonth() + 1, this.getDate());
@@ -54,7 +54,7 @@ Date.prototype['toFormattedString'] = function (format) {
     return this.toString();
 };
 
-var formatString = function (useLocale, args) {
+var formatString = function(useLocale, args) {
     //TODO: 验证数组
     for (var i = 1; i < args.length; i++) {
         args[i] = ko.unwrap(args[i]);
@@ -119,7 +119,7 @@ var formatString = function (useLocale, args) {
     return result;
 }
 
-var money = function (element, valueAccessor) {
+var money = function(element, valueAccessor) {
     var str;
     var value = valueAccessor();
     if (value < 0) {
@@ -131,14 +131,14 @@ var money = function (element, valueAccessor) {
     element.innerHTML = str;
 };
 ko.bindingHandlers['money'] = {
-    init: function (element, valueAccessor) {
+    init: function(element, valueAccessor) {
         money(element, valueAccessor);
     },
-    update: function (element, valueAccessor) {
+    update: function(element, valueAccessor) {
         money(element, valueAccessor);
     }
 };
-var text = function (element: HTMLElement, valueAccessor) {
+var text = function(element: HTMLElement, valueAccessor) {
     var value = valueAccessor();
     var str = $.isArray(value) ? formatString(true, value) : ko.unwrap(value);
     //debugger;
@@ -146,14 +146,14 @@ var text = function (element: HTMLElement, valueAccessor) {
     //ko.utils.setTextContent(element, str);
 }
 ko.bindingHandlers.text = {
-    init: function (element, valueAccessor) {
+    init: function(element, valueAccessor) {
         return text(element, valueAccessor);
     },
-    update: function (element, valueAccessor) {
+    update: function(element, valueAccessor) {
         return text(element, valueAccessor);
     }
 };
-var href = function (element, valueAccessor) {
+var href = function(element, valueAccessor) {
     var value = valueAccessor();
     if ($.isArray(value)) {
         var str = formatString(true, value);
@@ -164,10 +164,10 @@ var href = function (element, valueAccessor) {
     }
 };
 ko.bindingHandlers['href'] = {
-    init: function (element, valueAccessor) {
+    init: function(element, valueAccessor) {
         href(element, valueAccessor);
     },
-    update: function (element, valueAccessor) {
+    update: function(element, valueAccessor) {
         href(element, valueAccessor);
     }
 };
@@ -192,7 +192,7 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
         return valueAccessor;
     }
 
-    return $.proxy(function () {
+    return $.proxy(function() {
         var element = this._element;
         var valueAccessor = this._valueAccessor;
         var allBindings = this._allBindings;
@@ -200,14 +200,14 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
         var bindingContext = this._bindingContext;
         var value = this._value;
 
-        return function (viewModel) {
+        return function(viewModel) {
 
             var deferred: JQueryPromise<any> = $.Deferred<any>().resolve();
 
             var dialog_config = getDialogConfig(element, 'data-dialog');
             if (dialog_config.confirm) {
                 var content = dialog_config.confirm;
-                deferred = deferred.pipe(function () {
+                deferred = deferred.pipe(function() {
                     var result = $.Deferred();
 
                     var html = ConfirmDialogHtml;
@@ -215,11 +215,11 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
 
                     var model = {
                         text: content,
-                        ok: function () {
+                        ok: function() {
                             $(node)['modal']('hide');
                             result.resolve();
                         },
-                        cancel: function () {
+                        cancel: function() {
                             result.reject();
                         }
                     }
@@ -230,27 +230,27 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
             }
             //}
 
-            deferred = deferred.pipe(function () {
+            deferred = deferred.pipe(function() {
                 var result = $.isFunction(value) ? value(viewModel, event) : value;
                 if (result && $.isFunction(result.always)) {
                     $(element).attr('disabled', 'disabled');
                     $(element).addClass('disabled');
                     result.element = element;
 
-                    result.always(function () {
+                    result.always(function() {
                         $(element).removeAttr('disabled');
                         $(element).removeClass('disabled');
                     });
 
                     //===============================================
                     // 超时去掉按钮禁用，防止 always 不起作用。 
-                    setTimeout($.proxy(function () {
+                    setTimeout($.proxy(function() {
                         $(this._element).removeAttr('disabled');
                         $(this._element).removeClass('disabled');
                     }, { _element: element }), 1000 * 20);
                     //===============================================
 
-                    result.done(function () {
+                    result.done(function() {
                         if (dialog_config.toast) {
                             var content = dialog_config.toast;
                             var html = ToastDialogHtml;
@@ -260,7 +260,7 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
                                 text: content
                             }
 
-                            window.setTimeout(function () {
+                            window.setTimeout(function() {
                                 $(node)['modal']('hide');
                                 $(node).remove();
                             }, 1000);
@@ -273,17 +273,16 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
                 return result;
             });
 
-
-
             return deferred;
         };
     },
-        { _element: element, _valueAccessor: valueAccessor, _allBindings: allBindings, _viewModel: viewModel, _bindingContext: bindingContext, _value: value });
+    { _element: element, _valueAccessor: valueAccessor, _allBindings: allBindings, 
+      _viewModel: viewModel, _bindingContext: bindingContext, _value: value });
 }
 
 var _click = ko.bindingHandlers.click;
 ko.bindingHandlers.click = {
-    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
         valueAccessor = translateClickAccessor(element, valueAccessor, allBindings, viewModel, bindingContext);
         return _click.init(element, valueAccessor, allBindings, viewModel, bindingContext);
     }
@@ -306,49 +305,49 @@ function getImageUrl(src) {
     return src;
 }
 
-var ImageLoader = (function () {
-    var MAX_THREAD = 200;
-    var thread_count = 0;
-    var items = [];
-    var imageLoaded = $.Callbacks();
-
-    window.setInterval(function () {
-        if (items.length <= 0)
-            return;
-
-        if (thread_count >= MAX_THREAD)
-            return;
-
-
-        var item = items.shift();
-        var element = item.element;
-        var src = item.src;
-
-        element.image = new Image();
-        element.image.element = element;
-
-        element.image.src = getImageUrl(src);
-        thread_count = thread_count + 1;
-
-        element.image.onload = function () {
-            this.element.src = this.src;
-            thread_count = thread_count - 1;
-            imageLoaded.fire(this.element);
-        };
-        element.image.onerror = function () {
-            thread_count = thread_count - 1;
-            //TODO:显示图片加载失败
-        };
-
-    }, 100);
-
-    return {
-        load: function (element, src) {
-            items.push({ element: element, src: src });
-        },
-        imageLoaded: imageLoaded
-    };
-})();
+// var ImageLoader = (function () {
+//     var MAX_THREAD = 200;
+//     var thread_count = 0;
+//     var items = [];
+//     var imageLoaded = $.Callbacks();
+// 
+//     window.setInterval(function () {
+//         if (items.length <= 0)
+//             return;
+// 
+//         if (thread_count >= MAX_THREAD)
+//             return;
+// 
+// 
+//         var item = items.shift();
+//         var element = item.element;
+//         var src = item.src;
+// 
+//         element.image = new Image();
+//         element.image.element = element;
+// 
+//         element.image.src = getImageUrl(src);
+//         thread_count = thread_count + 1;
+// 
+//         element.image.onload = function () {
+//             this.element.src = this.src;
+//             thread_count = thread_count - 1;
+//             imageLoaded.fire(this.element);
+//         };
+//         element.image.onerror = function () {
+//             thread_count = thread_count - 1;
+//             //TODO:显示图片加载失败
+//         };
+// 
+//     }, 100);
+// 
+//     return {
+//         load: function (element, src) {
+//             items.push({ element: element, src: src });
+//         },
+//         imageLoaded: imageLoaded
+//     };
+// })();
 
 function getPreviewImage(img_width, img_height) {
 
@@ -385,13 +384,13 @@ function getPreviewImage(img_width, img_height) {
 }
 
 var _attr = ko.bindingHandlers.attr;
-ko.bindingHandlers.attr = (function () {
+ko.bindingHandlers.attr = (function() {
     return {
-        'update': function (element, valueAccessor, allBindings) {
+        'update': function(element, valueAccessor, allBindings) {
             if (element.tagName == 'IMG') {
 
                 var value = ko.utils.unwrapObservable(valueAccessor()) || {};
-                ko.utils['objectForEach'](value, function (attrName, attrValue) {
+                ko.utils['objectForEach'](value, function(attrName, attrValue) {
                     var src = ko.unwrap(attrValue);
                     if (attrName != 'src' || !src)
                         return true;
@@ -410,14 +409,14 @@ ko.bindingHandlers.attr = (function () {
                         var src_replace
                         src_replace = getPreviewImage(img_width, img_height);
 
-                        valueAccessor = $.proxy(function () {
+                        valueAccessor = $.proxy(function() {
                             var obj = ko.utils.unwrapObservable(this._source());
                             var src = ko.unwrap(obj.src);
                             obj.src = this._src;
 
                             var img_node = this._element;
                             var image = new Image();
-                            image.onload = function () {
+                            image.onload = function() {
                                 img_node.src = this.src;
                             }
                             image.src = getImageUrl(src);
@@ -428,7 +427,7 @@ ko.bindingHandlers.attr = (function () {
                     }
                     else {
                         value.src = src;
-                        valueAccessor = $.proxy(function () {
+                        valueAccessor = $.proxy(function() {
                             return this._value;
                         }, { _value: value });
                     }
@@ -441,12 +440,12 @@ ko.bindingHandlers.attr = (function () {
 
 var _html = ko.bindingHandlers.html;
 ko.bindingHandlers.html = {
-    'update': function (element, valueAccessor, allBindings) {
+    'update': function(element, valueAccessor, allBindings) {
 
         var result = _html.update(element, valueAccessor, allBindings);
 
         var $img = $(element).find('img');
-        $img.each(function () {
+        $img.each(function() {
             var src = $(this).attr('src');
 
             $(this).addClass('img-full');
@@ -465,7 +464,7 @@ ko.bindingHandlers.html = {
 
                 var image = new Image();
                 image['element'] = this;
-                image.onload = function () {
+                image.onload = function() {
                     $(this['element']).attr('src', this.src);
                 };
                 image.src = getImageUrl(src);
@@ -556,9 +555,9 @@ ko.bindingHandlers.html = {
 //}
 
 ko.bindingHandlers['tap'] = {
-    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
         valueAccessor = translateClickAccessor(element, valueAccessor, allBindings, viewModel, bindingContext);
-        $(element).on("tap", $.proxy(function (event) {
+        $(element).on("tap", $.proxy(function(event) {
 
             this._valueAccessor()(viewModel, event);
 
