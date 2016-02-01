@@ -104,11 +104,27 @@ var chitu;
     var VIEW_LOCATION_FORMATER = '{controller}/{action}';
     var Application = (function () {
         function Application(config) {
+            var _this = this;
             this.pageCreating = ns.Callbacks();
             this.pageCreated = ns.Callbacks();
             this.page_stack = [];
             this._routes = new chitu.RouteCollection();
             this._runned = false;
+            this.page_closed = function (sender) {
+                var item_index = -1;
+                for (var i = 0; i < _this.page_stack.length; i++) {
+                    if (sender == _this.page_stack[i]) {
+                        item_index = i;
+                        break;
+                    }
+                }
+                if (item_index < 0)
+                    return;
+                _this.page_stack.splice(item_index, 1);
+            };
+            this.page_shown = function (sender) {
+                _this.setCurrentPage(sender);
+            };
             if (config == null)
                 throw e.argumentNull('container');
             if (!config.container) {
@@ -116,11 +132,18 @@ var chitu;
             }
             if (!$.isFunction(config.container) && !config.container['tagName'])
                 throw new Error('Parameter container is not a function or html element.');
-            config.openSwipe = config.openSwipe || function (routeData) { return chitu.SwipeDirection.None; };
-            config.closeSwipe = config.closeSwipe || function (routeData) { return chitu.SwipeDirection.None; };
-            config.scrollType = config.scrollType || function (routeData) { return chitu.ScrollType.Document; };
-            this.config = config;
+            this._config = config;
+            this._config.openSwipe = config.openSwipe || function (routeData) { return chitu.SwipeDirection.None; };
+            this._config.closeSwipe = config.closeSwipe || function (routeData) { return chitu.SwipeDirection.None; };
+            this._config.scrollType = config.scrollType || function (routeData) { return chitu.ScrollType.Document; };
         }
+        Object.defineProperty(Application.prototype, "config", {
+            get: function () {
+                return this._config;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Application.prototype.on_pageCreating = function (context) {
             return chitu.fireCallback(this.pageCreating, [this, context]);
         };
@@ -129,6 +152,21 @@ var chitu;
         };
         Application.prototype.routes = function () {
             return this._routes;
+        };
+        Application.prototype.setCurrentPage = function (value) {
+            if (value == this.page_stack[this.page_stack.length - 1])
+                return;
+            var item_index = -1;
+            for (var i = 0; i < this.page_stack.length; i++) {
+                if (value == this.page_stack[i]) {
+                    item_index = i;
+                    break;
+                }
+            }
+            if (item_index >= 0) {
+                this.page_stack.splice(item_index, 1);
+            }
+            this.page_stack.push(value);
         };
         Application.prototype.currentPage = function () {
             if (this.page_stack.length > 0)
@@ -168,10 +206,10 @@ var chitu;
                 window.history.replaceState({}, '', this.start_flag_hash);
                 window.history.pushState({}, '', hash);
             }
-            var current_page_url = '';
+            var previous_url = '';
             if (this.previousPage() != null)
-                current_page_url = this.previousPage().routeData.url();
-            if (current_page_url.toLowerCase() == hash.substr(1).toLowerCase()) {
+                previous_url = this.previousPage().routeData.url();
+            if (previous_url.toLowerCase() == hash.substr(1).toLowerCase()) {
                 this.closeCurrentPage();
             }
             else {
@@ -244,7 +282,6 @@ var chitu;
                 current.close({}, swipe);
                 if (previous != null)
                     previous.show();
-                this.page_stack.pop();
                 console.log('page_stack lenght:' + this.page_stack.length);
             }
         };
@@ -269,6 +306,8 @@ var chitu;
             page.view = view_deferred;
             page.action = action_deferred;
             this.on_pageCreated(page, context);
+            page.closed.add(this.page_closed);
+            page.shown.add(this.page_shown);
             return page;
         };
         Application.prototype.redirect = function (url, args) {
@@ -1016,7 +1055,7 @@ var chitu;
         SwipeDirection[SwipeDirection["Left"] = 1] = "Left";
         SwipeDirection[SwipeDirection["Right"] = 2] = "Right";
         SwipeDirection[SwipeDirection["Up"] = 3] = "Up";
-        SwipeDirection[SwipeDirection["Donw"] = 4] = "Donw";
+        SwipeDirection[SwipeDirection["Down"] = 4] = "Down";
     })(chitu.SwipeDirection || (chitu.SwipeDirection = {}));
     var SwipeDirection = chitu.SwipeDirection;
     (function (ScrollType) {
@@ -1267,13 +1306,13 @@ var chitu;
             configurable: true
         });
         Page.prototype.hide = function (swipe) {
-            if (!$(this.node()).is(':visible'))
+            if (!this.visible())
                 return;
             swipe = swipe || SwipeDirection.None;
             this.hidePageNode(swipe);
         };
         Page.prototype.show = function (swipe) {
-            if ($(this.node()).is(':visible'))
+            if (this.visible())
                 return;
             swipe = swipe || SwipeDirection.None;
             this.showPageNode(swipe);
@@ -1305,7 +1344,7 @@ var chitu;
                     move(this.nodes().container).y(container_height).end()
                         .y(0 - container_height).duration(this._hideTime).end(on_end);
                     break;
-                case SwipeDirection.Donw:
+                case SwipeDirection.Down:
                     move(this.nodes().container).y(container_height).duration(this._hideTime).end(on_end);
                     break;
                 case SwipeDirection.Right:
@@ -1342,7 +1381,7 @@ var chitu;
                 default:
                     on_end();
                     break;
-                case SwipeDirection.Donw:
+                case SwipeDirection.Down:
                     move(this.node()).y(0 - container_height).duration(0).end(on_end);
                     move(this.node()).y(0).duration(0).end(on_end);
                     break;
@@ -1770,9 +1809,6 @@ var chitu;
                     scrollHeight: scroller.scrollerHeight,
                     clientHeight: scroller.wrapperHeight
                 };
-                console.log('directionY:' + scroller.directionY);
-                console.log('startY:' + scroller.startY);
-                console.log('scroller.y:' + scroller.y);
                 page.on_scrollEnd(args);
             });
             iscroller.on('scroll', function () {
@@ -1782,9 +1818,6 @@ var chitu;
                     scrollHeight: scroller.scrollerHeight,
                     clientHeight: scroller.wrapperHeight
                 };
-                console.log('directionY:' + scroller.directionY);
-                console.log('startY:' + scroller.startY);
-                console.log('scroller.y:' + scroller.y);
                 page.on_scroll(args);
             });
             (function (scroller, wrapperNode) {

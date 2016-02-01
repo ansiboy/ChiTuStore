@@ -35,29 +35,85 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home'], 
         page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/PromotionLabel']));
         page.viewChanged.add(function () {
             ko.applyBindings(model, page.nodes().content);
-            requirejs(['hammer'], function (HammerClass) {
-                window['Hammer'] = HammerClass;
-                var x = 0;
-                var node = page.nodes().content.querySelector('.swiper-wrapper');
-                var hammer = new Hammer(node);
-                hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
-                console.log('pan');
-                var ctr_deltaX = 0;
-                var pan_left_right = function (e) {
-                    var transform = 'translateX(' + (x + e.deltaX) + 'px)';
-                    node.style.transform = transform;
-                    node.style.webkitTransform = transform;
-                    e.preventDefault();
-                };
-                var pan_end = function (e) {
-                    x = x + e.deltaX;
-                };
-                hammer.on('panleft', pan_left_right);
-                hammer.on('panright', pan_left_right);
-                hammer.on('panend', pan_end);
-            });
         });
         page.loadCompleted.add(function () {
+            requirejs(['scr/unslider', 'scr/jquery.event.move', 'scr/jquery.event.swipe'], function () {
+                $('.swiper-container').unslider({
+                    dots: true
+                });
+            });
         });
+        var MySwpier = (function () {
+            function MySwpier(element) {
+                this.current_index = 0;
+                this.deltaX = 0;
+                this.container = element;
+                this.wrapper = $(element).find('.swiper-wrapper')[0];
+                this.sliders = $(element).find('.swiper-slide').map(function (index, element) {
+                    $(element).width($(window).width());
+                    return {
+                        element: element,
+                        active: function () {
+                        }
+                    };
+                }).toArray();
+            }
+            MySwpier.prototype.start = function () {
+                var _this = this;
+                if (this.isFirst && this.isLastest) {
+                    return;
+                }
+                var positive = true;
+                this.timeIntervalId = window.setInterval(function () {
+                    if (positive)
+                        _this.next();
+                    else
+                        _this.previous();
+                    if (_this.isLastest)
+                        positive = false;
+                    if (_this.isFirst)
+                        positive = true;
+                }, 1000);
+            };
+            MySwpier.prototype.stop = function () {
+                console.log('stop');
+                clearInterval(this.timeIntervalId);
+            };
+            Object.defineProperty(MySwpier.prototype, "isLastest", {
+                get: function () {
+                    return this.current_index >= this.sliders.length - 1;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(MySwpier.prototype, "isFirst", {
+                get: function () {
+                    return this.current_index <= 0;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            MySwpier.prototype.next = function () {
+                if (this.isLastest)
+                    return;
+                var deltaX = $(this.sliders[this.current_index].element).width();
+                this.deltaX = this.deltaX - deltaX;
+                this.wrapper.style.transform = this.wrapper.style.webkitTransform
+                    = 'translateX(' + this.deltaX + 'px)';
+                this.wrapper.style.webkitTransitionDuration = this.wrapper.style.transitionDuration = '0.3s';
+                this.current_index = this.current_index + 1;
+            };
+            MySwpier.prototype.previous = function () {
+                if (this.isFirst)
+                    return;
+                var deltaX = $(this.sliders[this.current_index].element).width();
+                this.deltaX = this.deltaX + deltaX;
+                this.wrapper.style.transform = this.wrapper.style.webkitTransform
+                    = 'translateX(' + this.deltaX + 'px)';
+                this.wrapper.style.webkitTransitionDuration = this.wrapper.style.transitionDuration = '0.3s';
+                this.current_index = this.current_index - 1;
+            };
+            return MySwpier;
+        })();
     };
 });

@@ -87,7 +87,9 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
                 return chitu.SwipeDirection.None;
             if (site.isMenuPage(routeData))
                 return chitu.SwipeDirection.None;
-            if (name == 'Home.ProductDetail')
+            var controller = routeData.values().controller;
+            var action = routeData.values().action;
+            if (controller == 'Home' && action == 'ProductDetail')
                 return chitu.SwipeDirection.Up;
             return chitu.SwipeDirection.Left;
         },
@@ -96,11 +98,20 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
                 return chitu.SwipeDirection.None;
             if (site.isMenuPage(routeData))
                 return chitu.SwipeDirection.None;
-            if (name == 'Home.ProductDetail')
-                return chitu.SwipeDirection.Donw;
+            var controller = routeData.values().controller;
+            var action = routeData.values().action;
+            if (controller == 'Home' && action == 'ProductDetail')
+                return chitu.SwipeDirection.Down;
+            if (site.env.isWeb && site.env.isIOS && Date.now() - touch_move_time < 500) {
+                return chitu.SwipeDirection.None;
+            }
             return chitu.SwipeDirection.Right;
         },
     };
+    var touch_move_time = 0;
+    $(window).on('touchmove', function (e) {
+        touch_move_time = Date.now();
+    });
     var app = new chitu.Application(config);
     app.pageCreated.add(function (sender, page) {
         var route_values = page.routeData.values();
@@ -129,9 +140,11 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
                 $(document).scrollLeft(0);
             });
         }
-        if (page.routeData.values().action == 'ShoppingCart')
-            return;
-        resetBottomLoading(page);
+        var controller = page.routeData.values().controller;
+        var action = page.routeData.values().action;
+        if ((controller == 'Home' && action == 'Index') || (controller == 'Home' && action == 'ProductList')) {
+            resetBottomLoading(page);
+        }
     });
     var viewPath = '../App/Module/{controller}/{action}.html';
     var actionPath = '../App/Module/{controller}/{action}';
@@ -216,5 +229,7 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
         viewPath: '../App/Module/User/{controller}/{action}.html',
         actionPath: '../App/Module/User/{controller}/{action}'
     });
+    function enable_iscroll_gesture(page) {
+    }
     return window['app'] = app;
 });

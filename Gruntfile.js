@@ -41,7 +41,7 @@ module.exports = function (grunt) {
                 }
             },
             bootbox: {
-                files: [{ expand: true, cwd: src_root, src: 'App/Core/bootbox.min.js', dest: dest_root }]
+                files: [{ expand: true, cwd: src_root, src: 'App/Core/bootbox.js', dest: dest_root }]
             }
         },
         less: {

@@ -126,15 +126,15 @@ export = function (page: chitu.Page) {
         $(page.nodes().header).find('.topbar').first().remove();
         //=============================================
 
-        requirejs(['swiper'], function (Swiper) {
-            var mySwiper = new Swiper($(page.node()).find('[name="productImages"]')[0], {
-                pagination: $(page.node()).find('[name="productImages-pagination"]')[0],
-                onTap: function (swiper, event) {
-                    //TODO:以弹出方式显示图片
-                }
-            });
-
-        })
+//         requirejs(['swiper'], function (Swiper) {
+//             var mySwiper = new Swiper($(page.node()).find('[name="productImages"]')[0], {
+//                 pagination: $(page.node()).find('[name="productImages-pagination"]')[0],
+//                 onTap: function (swiper, event) {
+//                     //TODO:以弹出方式显示图片
+//                 }
+//             });
+// 
+//         })
     });
     //======================================================================
     // 说明：必须是视图，和加载都加完成了，才进行绑定。

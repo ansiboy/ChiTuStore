@@ -625,4 +625,101 @@ p {
   display: block;
   color: white;
 }
-/*# sourceMappingURL=Site.css.map */
+
+.swiper-container { 
+    .swiper-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-transition-property: -webkit-transform;
+        -moz-transition-property: -moz-transform;
+        -o-transition-property: -o-transform;
+        -ms-transition-property: -ms-transform;
+        transition-property: transform;
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        }
+
+        .swiper-slide {
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-flex-shrink: 0;
+        -ms-flex: 0 0 auto;
+        flex-shrink: 0;
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    /* Fix of Webkit flickering */
+    z-index: 1;
+    position: relative; 
+    overflow: auto; 
+    li { 
+        list-style: none;
+    }
+    ul li { 
+        float: left; 
+    }
+
+    .dots{
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 10;
+        margin-top: -20px;
+        
+        
+        @dot-radius:4px;
+        @dot-border:2px;
+        @dot-color:#FFFFFF;
+        
+        li {
+            display: inline-block;
+            width: @dot-radius * 2;
+            height: @dot-radius * 2;
+            margin: 0 4px;
+
+            text-indent: -999em;
+
+            border: @dot-border solid @dot-color;
+            border-radius: @dot-radius;
+
+            cursor: pointer;
+            opacity: .2;
+
+            -webkit-transition: background .5s, opacity .5s;
+            -moz-transition: background .5s, opacity .5s;
+            transition: background .5s, opacity .5s;
+            
+        }
+        
+        li.active {
+            background: @dot-color;
+            opacity: 1;
+        }
+    }
+    
+    
+}
+
+
+
+

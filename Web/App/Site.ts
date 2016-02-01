@@ -116,8 +116,8 @@ class SiteConfig {
     get animationSpeed() {
         return $(window).width() / this.pageAnimationTime;
     }
-    panelWithRate = 0.9
-    imageDataSpliter = '#'
+    panelWithRate = 0.9;
+    imageDataSpliter = '#';
 }
 
 class SiteEnvironment {
@@ -166,8 +166,15 @@ class SiteEnvironment {
     /// <summary>
     /// 判断是否为 APP
     /// </summary>
-    get isApp() {
-        return window['plus'] != null;
+    get isApp(): boolean {
+        return navigator.userAgent.indexOf("Html5Plus") >= 0;
+        //return window['plus'] != null;
+    }
+    /// <summary>
+    /// 判断是否为 WEB
+    /// </summary>
+    get isWeb():boolean{
+        return !this.isApp;
     }
     /// <summary>
     /// 是否需要降级
@@ -197,7 +204,7 @@ class Site {
     cookies: SiteCookies
     storage: SiteStorage
     env: SiteEnvironment
- 
+
     private ready_funcs: Function[] = []
     private is_ready = false;
 
@@ -209,7 +216,7 @@ class Site {
 
         this.env = new SiteEnvironment()
     }
-        isMenuPage (routeData: chitu.RouteData): boolean {
+    isMenuPage(routeData: chitu.RouteData): boolean {
         var controller = routeData.values().controller;
         var action = routeData.values().action;
         var name = controller + '.' + action;

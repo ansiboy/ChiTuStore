@@ -47,14 +47,13 @@
 
     <div class="clearfix"></div>
     <div data-bind="visible:ko.unwrap(advertItems).length > 0" name="ad-swiper" class="swiper-container">
-        <div data-bind="foreach: advertItems" class="swiper-wrapper">
-            <div data-bind="attr: { url: LinkUrl }" class="swiper-slide">
+        <ul data-bind="foreach: advertItems" class="swiper-wrapper">
+            <li data-bind="attr: { url: LinkUrl }" class="swiper-slide">
                 <a data-bind="attr: { href: LinkUrl }">
                     <img data-bind="attr: { src: ImgUrl }" data-image="" alt="..." class="img-responsive">
                 </a>
-            </div>
-        </div>
-        <div name="ad-pagination" class="swiper-pagination"></div>
+            </li>
+        </ul>
     </div>
     <div data-bind="visible:ko.unwrap(advertItems).length == 0" style="padding:80px 0px 80px 0px" class="text-center">
 

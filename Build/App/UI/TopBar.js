@@ -1,4 +1,4 @@
-define(["require", "exports", 'Application'], function (require, exports, app) {
+define(["require", "exports", 'Application', 'Site'], function (require, exports, app, site) {
     var TopBar = (function () {
         function TopBar(element) {
             this.element = element;
@@ -96,21 +96,27 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
     function page_created(sender, page) {
         var title = defaultTitle(page);
         if (title) {
-            var $page_header = $(page.node()).find('.page-header');
-            var $children = $page_header.children();
             var topbar;
-            if ($children.length > 0) {
-                topbar = new TopBar($(topbar_html).insertBefore($children[0])[0]);
+            if (site.env.isApp && !site.isMenuPage(page.routeData)) {
+                var $page_header = $('#header');
+                topbar = new TopBar($page_header.children()[0]);
             }
             else {
-                topbar = new TopBar($(topbar_html).appendTo($page_header)[0]);
+                var $page_header = $(page.node()).find('.page-header');
+                var $children = $page_header.children();
+                if ($children.length > 0) {
+                    topbar = new TopBar($(topbar_html).insertBefore($children[0])[0]);
+                }
+                else {
+                    topbar = new TopBar($(topbar_html).appendTo($page_header)[0]);
+                }
             }
             topbar.element.style.zIndex = $page_header[0].style.zIndex;
             page.topbar = topbar;
             topbar.title(title);
             if (page.name != 'Home.Index' && page.name != 'Home.Class' && page.name != 'Home.NewsList' &&
                 page.name != 'Shopping.Shopping.Cart' && page.name != 'User.Index') {
-                topbar.createLeftButton('icon-chevron-left', function () {
+                var btn_back = topbar.createLeftButton('icon-chevron-left', function () {
                     app.back();
                 });
             }

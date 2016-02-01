@@ -115,7 +115,9 @@ var config: chitu.ApplicationConfig = {
         if (site.isMenuPage(routeData))
             return chitu.SwipeDirection.None;
 
-        if (name == 'Home.ProductDetail')
+        var controller = routeData.values().controller;
+        var action = routeData.values().action;
+        if (controller == 'Home' && action == 'ProductDetail')
             return chitu.SwipeDirection.Up;
 
         return chitu.SwipeDirection.Left;
@@ -127,13 +129,27 @@ var config: chitu.ApplicationConfig = {
         if (site.isMenuPage(routeData))
             return chitu.SwipeDirection.None;
 
-        if (name == 'Home.ProductDetail')
-            return chitu.SwipeDirection.Donw;
+        var controller = routeData.values().controller;
+        var action = routeData.values().action;
+        if (controller == 'Home' && action == 'ProductDetail')
+            return chitu.SwipeDirection.Down;
 
+        //============================================
+        // 如果 touchmove 时间与方法调用的时间在 500ms 以内，则认为是通过滑屏返回，
+        // 通过滑屏返回，是不需要有返回效果的。
+        if (site.env.isWeb && site.env.isIOS && Date.now() - touch_move_time < 500) {
+            return chitu.SwipeDirection.None;
+        }
+        //============================================
         return chitu.SwipeDirection.Right;
     },
 
 }
+
+var touch_move_time: number = 0;
+$(window).on('touchmove', function(e) {
+    touch_move_time = Date.now();
+});
 
 var app = new chitu.Application(config);//site.env.isApp ? new SiteApplication(config) :
 
@@ -177,12 +193,13 @@ app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
     }
     
     //=======================================================================
-    // 购物车数据少，用原来的底栏即可
-    if (page.routeData.values().action == 'ShoppingCart')
-        return;
-
-    resetBottomLoading(page);
-    //===================================================================
+    // 只有这两个页面需要替换底栏。
+    var controller = page.routeData.values().controller;
+    var action = page.routeData.values().action;
+    if ((controller == 'Home' && action == 'Index') || (controller == 'Home' && action == 'ProductList')) {
+        resetBottomLoading(page);
+    }
+    //=======================================================================
 })
 
 // app.isMenuPage = function(routeData: chitu.RouteData) {
@@ -337,7 +354,9 @@ app.routes().mapRoute({
 
 export = window['app'] = app;
 
+function enable_iscroll_gesture(page: chitu.Page) {
 
+}
 
 
 

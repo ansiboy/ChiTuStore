@@ -541,7 +541,6 @@ namespace chitu {
     }
 }
 
-
 namespace chitu {
 
 
@@ -621,7 +620,7 @@ namespace chitu {
         Left,
         Right,
         Up,
-        Donw,
+        Down,
     }
 
     export enum ScrollType {
@@ -928,7 +927,7 @@ namespace chitu {
                     move(this.nodes().container).y(container_height).end()
                         .y(0 - container_height).duration(this._hideTime).end(on_end);
                     break;
-                case SwipeDirection.Donw:
+                case SwipeDirection.Down:
                     move(this.nodes().container).y(container_height).duration(this._hideTime).end(on_end);
                     break;
                 case SwipeDirection.Right:
@@ -971,7 +970,7 @@ namespace chitu {
                 default:
                     on_end();
                     break;
-                case SwipeDirection.Donw:
+                case SwipeDirection.Down:
                     move(this.node()).y(0 - container_height).duration(0).end(on_end);
                     move(this.node()).y(0).duration(0).end(on_end);
                     break;
@@ -1633,6 +1632,7 @@ namespace chitu {
         }
     }
 } 
+
 namespace chitu {
     export class ScrollArguments {
         scrollTop: number

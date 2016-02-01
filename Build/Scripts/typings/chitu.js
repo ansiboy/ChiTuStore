@@ -515,7 +515,7 @@ var chitu;
         SwipeDirection[SwipeDirection["Left"] = 1] = "Left";
         SwipeDirection[SwipeDirection["Right"] = 2] = "Right";
         SwipeDirection[SwipeDirection["Up"] = 3] = "Up";
-        SwipeDirection[SwipeDirection["Donw"] = 4] = "Donw";
+        SwipeDirection[SwipeDirection["Down"] = 4] = "Down";
     })(chitu.SwipeDirection || (chitu.SwipeDirection = {}));
     var SwipeDirection = chitu.SwipeDirection;
     (function (ScrollType) {
@@ -804,7 +804,7 @@ var chitu;
                     move(this.nodes().container).y(container_height).end()
                         .y(0 - container_height).duration(this._hideTime).end(on_end);
                     break;
-                case SwipeDirection.Donw:
+                case SwipeDirection.Down:
                     move(this.nodes().container).y(container_height).duration(this._hideTime).end(on_end);
                     break;
                 case SwipeDirection.Right:
@@ -841,7 +841,7 @@ var chitu;
                 default:
                     on_end();
                     break;
-                case SwipeDirection.Donw:
+                case SwipeDirection.Down:
                     move(this.node()).y(0 - container_height).duration(0).end(on_end);
                     move(this.node()).y(0).duration(0).end(on_end);
                     break;

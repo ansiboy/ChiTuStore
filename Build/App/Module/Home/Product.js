@@ -98,13 +98,6 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
         });
         page.viewChanged.add(function () {
             $(page.nodes().header).find('.topbar').first().remove();
-            requirejs(['swiper'], function (Swiper) {
-                var mySwiper = new Swiper($(page.node()).find('[name="productImages"]')[0], {
-                    pagination: $(page.node()).find('[name="productImages-pagination"]')[0],
-                    onTap: function (swiper, event) {
-                    }
-                });
-            });
         });
         page.loadCompleted.add(function () { return ko.applyBindings(model, page.nodes().container); });
     };

@@ -154,7 +154,14 @@ define(["require", "exports"], function (require, exports) {
         });
         Object.defineProperty(SiteEnvironment.prototype, "isApp", {
             get: function () {
-                return window['plus'] != null;
+                return navigator.userAgent.indexOf("Html5Plus") >= 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SiteEnvironment.prototype, "isWeb", {
+            get: function () {
+                return !this.isApp;
             },
             enumerable: true,
             configurable: true
