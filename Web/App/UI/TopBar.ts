@@ -2,12 +2,15 @@
 import site = require('Site');
 import menu = require('UI/Menu');
 
-class TopBar {
+class TitleBar {
     public element: HTMLElement
     public leftButtons: HTMLElement[]
     public rightButtons: HTMLElement[]
 
     constructor(element) {
+        if (element == null)
+            throw chitu.Errors.argumentNull('element');
+
         this.element = element;
         this.leftButtons = [];
         this.rightButtons = [];
@@ -115,21 +118,29 @@ function defaultTitle(page: chitu.Page): string {
 
 function page_created(sender, page: chitu.Page) {
     /// <param name="page" type="chitu.Page"/>
+    var controller = page.routeData.values().controller;
+    var action = page.routeData.values().action;
+
+    var page_container = <chitu.WebPageContainer>page.conatiner;
+    if ((controller == 'Home' && (action == 'Index' || action == 'Class'))) {
+        var file_name = controller + '_' + action + '.html';
+        requirejs(['text!UI/Headers/' + file_name], function(html) {
+            $(page_container.topBar).append(html);
+        });
+        return;
+    }
+
     var title = defaultTitle(page);
     if (title) {
 
-        var topbar: TopBar;
-        if (site.env.isApp && !site.isMenuPage(page.routeData)) {
-            var $page_header = $('#header');
-            topbar = new TopBar($page_header.children()[0]);
+        var topbar: TitleBar;
+
+        var $page_header = $((<chitu.WebPageContainer>page.conatiner).topBar);
+        var $children = $page_header.children();
+        if ($children.length > 0) {
+            topbar = new TitleBar($(topbar_html).insertBefore($children[0])[0]);
         } else {
-            var $page_header = $(page.node()).find('.page-header');
-            var $children = $page_header.children();
-            if ($children.length > 0) {
-                topbar = new TopBar($(topbar_html).insertBefore($children[0])[0]);
-            } else {
-                topbar = new TopBar($(topbar_html).appendTo($page_header)[0]);
-            }
+            topbar = new TitleBar($(topbar_html).appendTo($page_header)[0]);
         }
 
         topbar.element.style.zIndex = $page_header[0].style.zIndex;
@@ -141,19 +152,9 @@ function page_created(sender, page: chitu.Page) {
             var btn_back = topbar.createLeftButton('icon-chevron-left', function() {
                 app.back();
             });
-           
+
         }
     }
-
-    //page.load.add(function (sender) {
-    //    if (sender.topbar) {
-    //        //(<TopBar>sender.topbar).element.style.position = 'unset';
-
-    //        (<TopBar>sender.topbar).visible(true);
-    //        var title = defaultTitle(sender);
-    //        (<TopBar>sender.topbar).title(title == null ? "&nbsp;" : title);
-    //    }
-    //})
 }
 
 var topbar_html = '<div class="bg-primary topbar" style="width:100%;"><h4></h4></div>';
@@ -161,8 +162,5 @@ app.pageCreated.add(page_created);
 if (app.currentPage() != null)
     page_created(app, app.currentPage());
 
-
-
-
-export = TopBar;
+export = TitleBar;
 

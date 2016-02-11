@@ -20,6 +20,6 @@ define(["require", "exports", 'Services/Auth', 'knockout', 'Services/Service'], 
     })();
     return function (page) {
         var model = new Model();
-        ko.applyBindings(model, page.nodes().content);
+        ko.applyBindings(model, page.node);
     };
 });

@@ -1,4 +1,8 @@
-﻿import site = require('Site');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+
+import site = require('Site');
 import station = require('Services/Station');
 
 
@@ -77,7 +81,7 @@ class Model {
 
 export = function (page: chitu.Page) {
     var model = new Model();
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
     station.hotKeywords().done((data) => {
         model.hotKeywords(data);

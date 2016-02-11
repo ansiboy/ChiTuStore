@@ -1,3 +1,6 @@
+/// <reference path='../../../../Scripts/typings/move.d.ts' />
+/// <reference path='../../../../Scripts/typings/iscroll.d.ts' />
+/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'knockout', 'iscroll', 'knockout.mapping'], function (require, exports, move, site, Hammer, shopping, ko, IScroll, mapping) {
     var show_time = site.config.pageAnimationTime;
     var ProductDetailPanel = (function () {
@@ -10,7 +13,6 @@ define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'kn
                 _this.pan_move = move(_this._node);
                 _this.pan_move.y(0).duration(show_time).end(function () {
                     result.resolve();
-                    $(_this._page.nodes().body).hide();
                 });
                 if (!_this._loaded) {
                     var load_html = $.Deferred();
@@ -38,6 +40,7 @@ define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'kn
                 return result;
             };
             this.on_pageClosed = function (sender) {
+                debugger;
                 $(_this._node).remove();
             };
             this.on_dataLoad = function (data) {
@@ -58,12 +61,10 @@ define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'kn
             this.hide = function () {
                 _this._node.style.transform = '';
                 _this.pan_move.y($(window).height()).duration(show_time).end(function () {
-                    $(_this._page.nodes().body).show();
                     if (_this.disable_iscroll == true) {
                         _this._page['iscroller'].enable();
                     }
                 });
-                $(_this._page.nodes().body).show();
             };
             this.on_panstart = function (e) {
                 _this.enablePullDown = _this.content_node != null &&
@@ -101,8 +102,7 @@ define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'kn
             this._node.style.position = 'fixed';
             this._node.style.height = ($(window).height() - 50) + 'px';
             this._node.className = 'product-detail wrapper';
-            this._node.style.zIndex = this._page.nodes().body.style.zIndex;
-            $(page.nodes().container).append(this._node);
+            document.body.appendChild(this._node);
             this._hammer = new Hammer(this._node);
             this._hammer.get('pan').set({ direction: Hammer.DIRECTION_DOWN | Hammer.DIRECTION_UP });
             this._hammer.on('panstart', this.on_panstart);
@@ -110,6 +110,8 @@ define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'kn
             this._hammer.on('panend', this.on_panend);
             this.pan_move = move(this._node);
             this.hide();
+            debugger;
+            this._page.closed.add(this.on_pageClosed);
         }
         return ProductDetailPanel;
     })();

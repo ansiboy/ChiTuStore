@@ -1,3 +1,5 @@
+///<reference path='../../../Scripts/typings/require.d.ts'/>
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/ShoppingCart', 'Services/Shopping', 'Application'], function (require, exports, ko, mapping, shoppingCart, shopping, app) {
     requirejs(['css!content/Shopping/ShoppingCart', 'UI/PromotionLabel']);
     var DialogStaus;
@@ -25,7 +27,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                     return;
                 var count = item.Count();
                 if (count <= 1) {
-                    var $dlg = $(_this.page.nodes().content).find('[name="dlg_confirm_remove"]');
+                    var $dlg = $(_this.page.node).find('[name="dlg_confirm_remove"]');
                     $dlg.find('[name="product-name"]').html(ko.unwrap(item.Name));
                     $dlg.find('[name="confirm"]')[0].onclick = function () {
                         shoppingCart.removeItems([ko.unwrap(item.ProductId)]).done(function (data) {
@@ -207,7 +209,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                 var _this = this;
                 return {
                     text: [],
-                    element: $(this.page.node()).find('[name="dlg_update"]')[0],
+                    element: $(this.page.node).find('[name="dlg_update"]')[0],
                     status: function (status) {
                         var text = DialogText[status];
                         _model.updateDialogText(text);
@@ -245,7 +247,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
             return model.loadItems();
         });
         page.viewChanged.add(function () {
-            ko.applyBindings(model, page.nodes().container);
+            ko.applyBindings(model, page.node);
         });
     };
 });

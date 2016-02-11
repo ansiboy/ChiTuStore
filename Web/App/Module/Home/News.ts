@@ -23,7 +23,7 @@ export = function (page: chitu.Page) {
         return info.getArticleById(id).done(function (news) {
             if (model.news == null) {
                 model.news = mapping.fromJS(news);
-                ko.applyBindings(model, page.nodes().content);
+                ko.applyBindings(model, sender.node);
             }
             else {
                 mapping.fromJS(news, {}, model.news);
@@ -33,7 +33,7 @@ export = function (page: chitu.Page) {
 
     //===========================================
     // 由于个别文章的图片，没有按指定的名称命名，不能预设大小
-    if (page.scrollType == chitu.ScrollType.IScroll) {
+    if (page.conatiner instanceof chitu.IScrollPageContainer) {
         page.scrollEnd.add(() => {
             page.refreshUI();
         });

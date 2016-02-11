@@ -1,3 +1,6 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
 define(["require", "exports", 'Site', 'Services/Station'], function (require, exports, site, station) {
     requirejs(['css!content/Home/Search']);
     var Status;
@@ -64,7 +67,7 @@ define(["require", "exports", 'Site', 'Services/Station'], function (require, ex
     })();
     return function (page) {
         var model = new Model();
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
         station.hotKeywords().done(function (data) {
             model.hotKeywords(data);
         });

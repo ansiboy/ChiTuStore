@@ -1,4 +1,7 @@
-﻿import ko = require('knockout');
+﻿///<reference path='../../../Scripts/typings/require.d.ts'/>
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+
+import ko = require('knockout');
 import mapping = require('knockout.mapping');
 
 import shoppingCart = require('Services/ShoppingCart');
@@ -120,7 +123,7 @@ class Model {
 
         var count = item.Count();
         if (count <= 1) {
-            var $dlg = $(this.page.nodes().content).find('[name="dlg_confirm_remove"]');
+            var $dlg = $(this.page.node).find('[name="dlg_confirm_remove"]');
             $dlg.find('[name="product-name"]').html(ko.unwrap(item.Name));
             $dlg.find('[name="confirm"]')[0].onclick = () => {
                 shoppingCart.removeItems([ko.unwrap(item.ProductId)]).done((data) => {
@@ -243,7 +246,7 @@ class Model {
     get dialog(): any {
         return {
             text: [],
-            element: $(this.page.node()).find('[name="dlg_update"]')[0],
+            element: $(this.page.node).find('[name="dlg_update"]')[0],
             status: (status: DialogStaus) => {
                 var text = DialogText[status];
                 _model.updateDialogText(text);
@@ -302,7 +305,7 @@ export = function (page: chitu.Page) {
     });
 
     page.viewChanged.add(() => {
-        ko.applyBindings(model, page.nodes().container);
+        ko.applyBindings(model, page.node);
     });
 
 

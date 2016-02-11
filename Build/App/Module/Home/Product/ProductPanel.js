@@ -1,11 +1,8 @@
+///<reference path='../../../../Scripts/typings/require.d.ts'/>
+///<reference path='../../../../Scripts/typings/move.d.ts'/>
+///<reference path='../../../../Scripts/typings/iscroll.d.ts'/>
+///<reference path='../../../../Scripts/typings/chitu.d.ts'/>
 define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', 'iscroll', 'knockout.mapping'], function (require, exports, move, site, ko, shopping, IScroll, mapping) {
-    var product_number_input_html = '<div style="width:100%;height:100%;z-index:2000;display:none;"> \
-    <div style= "position:fixed;width:100%;z-index:2000;bottom:0px;" class="container" > \
-        <input name="product_number_input" type= "number" class="form-control"/> \
-    </div> \
-    <div class="modal-backdrop" style= "opacity:0"> \
-    </div> \
-</div>';
     var ProductPanelModel = (function () {
         function ProductPanelModel(panel, parent_model) {
             var _this = this;
@@ -61,22 +58,9 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                     _this.panel.close();
                 });
             };
-            this.showProdutNumberInput = function () {
-                _this.panel.hide();
-                _this.produtNumberInput.show();
-                _this.produtNumberInput.find('input[name="product_number_input"]').focus();
-                console.log('produtNumberInput focus');
-            };
-            this.hideProdutNumberInput = function () {
-                _this.panel.show();
-                _this.produtNumberInput.hide();
-            };
             this.panel = panel;
             this.product = parent_model.product;
             this.parent_model = parent_model;
-            this.produtNumberInput = $(product_number_input_html).appendTo(document.body);
-            this.produtNumberInput.on('touck,click', this.hideProdutNumberInput);
-            this.produtNumberInput.find('input').focusout(this.hideProdutNumberInput);
         }
         return ProductPanelModel;
     })();
@@ -102,7 +86,7 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                 var $wrapper = $(_this.node).find('.modal-body');
                 $wrapper.height($(window).height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT);
                 var iscroll = new IScroll($wrapper[0], { tap: true });
-                if (_this.page.scrollType == chitu.ScrollType.IScroll) {
+                if (_this.page.conatiner instanceof chitu.IScrollPageContainer) {
                     var $input = $(_this.node).find('input');
                     var fix_doc_pos = function () {
                         $(document).scrollTop(0);
@@ -122,6 +106,7 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
                 }
             };
             this.page_closed = function () {
+                debugger;
                 console.log('page_closed, remove node.');
                 $(_this.node).remove();
             };
@@ -163,7 +148,9 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
             this.node = document.createElement('div');
             this.node.style.display = 'none';
             document.body.appendChild(this.node);
-            this._page.closed.add(this.page_closed);
+            this._page.closed.add(function () {
+                _this.page_closed();
+            });
             requirejs(['text!Module/Home/Product/ProductPanel.html'], this.html_loaded);
         }
         Object.defineProperty(ProductPanel.prototype, "page", {
@@ -183,11 +170,9 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
         });
         ProductPanel.prototype.hide = function () {
             this.node.style.display = 'none';
-            this.page.nodes().container.style.display = 'none';
         };
         ProductPanel.prototype.show = function () {
             this.node.style.display = 'block';
-            this.page.nodes().container.style.display = 'block';
         };
         return ProductPanel;
     })();

@@ -27,7 +27,7 @@ define(["require", "exports", 'Services/Account', 'Site'], function (require, ex
         //        model.scoreRecords(data);
         //    })
         //});
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
         page.load.add(function (sender, args) {
             model.loading(true);
             return account.getScoreDetails().done(function (data) {

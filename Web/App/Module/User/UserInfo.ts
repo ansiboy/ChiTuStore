@@ -1,4 +1,10 @@
-﻿import member = require('Services/Member');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
+
+import member = require('Services/Member');
 import account = require('Services/Account');
 import services = require('Services/Service');
 import ko_val = require('knockout.validation');
@@ -48,13 +54,13 @@ export = function (page: chitu.Page) {
     var model = new Model();
 
     page.viewChanged.add(() => {
-        var e = page.nodes().content.querySelector('[type="file"]');
+        var e = page.node.querySelector('[type="file"]');
         var imageFileResize = new ImageFileResize(<HTMLInputElement>e, { maxWidth: 100, maxHeight: 100 });
         imageFileResize.imageResized = (urls: string[], thumbs1: string[], thumbs2: string[]) => {
             model.userInfo.HeadImageUrl(thumbs1[0]);
             member.setUserInfo(mapping.toJS(model.userInfo));
         }
-        ko.applyBindings(model, page.node());
+        ko.applyBindings(model, page.node);
     })
 
     page.load.add((sender, args) => {

@@ -112,7 +112,7 @@ class SiteConfig {
     cookiePrefix = 'lsyy'//该值需要设置
     imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop'
 
-    pageAnimationTime = 500
+    pageAnimationTime = 450
     get animationSpeed() {
         return $(window).width() / this.pageAnimationTime;
     }

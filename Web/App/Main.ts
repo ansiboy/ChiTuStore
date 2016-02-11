@@ -1,12 +1,20 @@
-﻿
+﻿/// <reference path='../Scripts/typings/require.d.ts'/>
+/// <reference path='../Scripts/typings/jquery.d.ts'/>
+
 requirejs.config({
     urlArgs: "bust=46",
     shim: {
-        chitu: {
-            deps: ['jquery', 'crossroads']
+        'bs/carousel': {
+            deps: ['jquery', 'bs/transition']
+        },
+        'bs/modal': {
+            deps: ['jquery']
         },
         bootbox: {
-            deps: ['jquery']
+            deps: ['bs/modal']
+        },
+        chitu: {
+            deps: ['jquery', 'crossroads']
         },
         'knockout': {
             exports: 'ko'
@@ -52,40 +60,43 @@ requirejs.config({
     },
 
     paths: {
-        css: '../Scripts/css',
-        text: '../Scripts/text',
+        bootbox: '../Scripts/bootbox',
+        bs: '../Scripts/bootstrap',
+        chitu: '../Scripts/chitu',
+        content: '../Content',
         crossroads: '../Scripts/crossroads',
+        css: '../Scripts/css',
+        hammer: '../Scripts/hammer',
         iscroll: '../Scripts/iscroll-lite',
         jquery: '../Scripts/jquery-2.1.0',
         'jquery.cookie': '../Scripts/jquery.cookie',
         'jquery.event.swipe': '../Scripts/jquery.event.swipe',
         'jquery.event.move': '../Scripts/jquery.event.move',
-        chitu: '../Scripts/chitu',
-        hammer: '../Scripts/hammer',
         knockout: '../Scripts/knockout-3.2.0.debug',
-        'ko.ext': 'Core/ko.ext',
         'knockout.validation': '../Scripts/knockout.validation',
         'knockout.mapping': '../Scripts/knockout.mapping',
-        sv: '../App/Services',
-        bootbox: 'Core/bootbox',
-        mod: '../App/Module',
+        'ko.ext': 'Core/ko.ext',
         scr: '../Scripts',
+        sv: '../App/Services',
         swiper: '../Scripts/swiper.jquery',
+        text: '../Scripts/text',
+        mod: '../App/Module',
         move: '../Scripts/move',
         md5: '../Scripts/CryptoJS/md5',
-        content: '../Content',
+
         sc: '../Content',       // Site CSS 文件夹
         jweixin: 'http://res.wx.qq.com/open/js/jweixin-1.0.0'
     }
 });
 
 
-requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'UI/Loading'], function(site, app) {//, ]
+requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'UI/Loading', 'UI/TopBar', 'move'], function(site, app) {//, ]
     //site.ready(function () {
     //====================================================
     // 说明：如果是微信环境，则加载微信模块
     var weiXinChecked = $.Deferred();
     var ua = navigator.userAgent.toLowerCase();
+    window['move']=arguments[6];
     if (site.env.isWeiXin) { //(ua.match(/MicroMessenger/i) == 'micromessenger') {
         requirejs(['sv/WeiXin', 'WXShare'], function() {
             weiXinChecked.resolve();
@@ -113,17 +124,17 @@ requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'UI/Loading'], func
 
         //==================================================
 
-        requirejs(['UI/Loading', 'UI/Menu', 'UI/TopBar']);
+        requirejs(['UI/Menu', 'move']);
 
         //==================================================
         // 非必要的模块（用于增强用户体验），延后加载
-        window.setTimeout(function() {
-            requirejs(['move'], function(move) {
-                window['move'] = move;
-            });
-
-            //require(['jquery.event.swipe'], function () { });
-        }, 2000);
+        //         window.setTimeout(function() {
+        //             requirejs(['move'], function(move) {
+        //                 window['move'] = move;
+        //             });
+        // 
+        //             //require(['jquery.event.swipe'], function () { });
+        //         }, 2000);
         //==================================================
     })
 

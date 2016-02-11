@@ -21,7 +21,7 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
             this._scrollLoad_loading_bar.innerHTML = '<div style="padding:10px 0px 10px 0px;"><h5 class="text-center"></h5></div>';
             this._scrollLoad_loading_bar.style.display = 'block';
             $(this._scrollLoad_loading_bar).find('h5').html(this.contents[this._status]);
-            this._page.nodes().content.appendChild(this._scrollLoad_loading_bar);
+            $(this._page.node).find('.page-content').append(this._scrollLoad_loading_bar);
             this._page.refreshUI();
             this.is_render = true;
         };
@@ -33,7 +33,6 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
         PageBottomLoading.prototype.status = function (value) {
             if (this._status == value)
                 return;
-            debugger;
             this._status = value;
             if (this.is_render)
                 $(this._scrollLoad_loading_bar).find('h5').html(this.contents[this._status]);
@@ -71,19 +70,8 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
         $.when(viewChanged, enableScrollLoad_value_assinged).done(function () { return bottomLoading.render(); });
     }
     var config = {
-        container: function () { return document.getElementById('main'); },
-        scrollType: function (routeData) {
-            if (site.env.isDegrade)
-                return chitu.ScrollType.Document;
-            if (site.env.isIOS) {
-                return chitu.ScrollType.IScroll;
-            }
-            if (site.env.isAndroid)
-                return chitu.ScrollType.Div;
-            return chitu.ScrollType.Div;
-        },
         openSwipe: function (routeData) {
-            if (site.env.isDegrade)
+            if (site.env.isDegrade || site.env.isApp)
                 return chitu.SwipeDirection.None;
             if (site.isMenuPage(routeData))
                 return chitu.SwipeDirection.None;
@@ -117,23 +105,15 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
         var route_values = page.routeData.values();
         var controller = route_values.controller;
         var action = route_values.action;
-        $(page.nodes().container).addClass(controller + '-' + action);
+        $(page.node).addClass(controller + '-' + action);
+        if (page.conatiner instanceof chitu.WebPageContainer) {
+            var c = page.conatiner;
+            c.topBar.className = c.topBar.className + ' ' + controller + '-' + action;
+            c.bottomBar.className = c.bottomBar.className + ' ' + controller + '-' + action;
+        }
         var is_menu_page = (controller == 'Home' && (action == 'Index' || action == 'NewsList' || action == 'Class')) ||
             (controller == 'Shopping' && action == 'ShoppingCart') ||
             (controller == 'User' && action == 'Index');
-        if (!is_menu_page) {
-            if ($.event.special.swipe) {
-                $(page.node())
-                    .on('swiperight', function () {
-                    app.back();
-                })
-                    .on('movestart', function (e) {
-                    if (Math.abs(e.distX) < Math.abs(e.distY)) {
-                        e.preventDefault();
-                    }
-                });
-            }
-        }
         if (site.env.isIOS) {
             page.shown.add(function () {
                 $(document).scrollTop(0);
@@ -145,6 +125,14 @@ define(["require", "exports", 'Site'], function (require, exports, site) {
         if ((controller == 'Home' && action == 'Index') || (controller == 'Home' && action == 'ProductList')) {
             resetBottomLoading(page);
         }
+        page.viewChanged.add(function () {
+            var q = page.conatiner.nodes.content.querySelector('[ch-part="header"]');
+            if (q)
+                $(page.conatiner.nodes.header).append(q);
+            q = page.conatiner.nodes.content.querySelector('[ch-part="footer"]');
+            if (q)
+                $(page.conatiner.nodes.footer).append(q);
+        });
     });
     var viewPath = '../App/Module/{controller}/{action}.html';
     var actionPath = '../App/Module/{controller}/{action}';

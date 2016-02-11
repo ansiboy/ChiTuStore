@@ -1,4 +1,9 @@
-﻿import member = require('Services/Auth');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+
+import member = require('Services/Auth');
 import app = require('Application');
 import validation = require('knockout.validation');
 
@@ -36,7 +41,7 @@ export var func = function (page: chitu.Page) {
 
     });
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
 
 

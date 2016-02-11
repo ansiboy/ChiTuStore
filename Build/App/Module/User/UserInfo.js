@@ -1,3 +1,8 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
 define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.validation', 'knockout.mapping', 'Core/ImageFileResize', 'Application', 'Site'], function (require, exports, member, services, ko_val, mapping, ImageFileResize, app, site) {
     requirejs(['css!content/User/UserInfo', 'css!content/css/fontdiao']);
     var Model = (function () {
@@ -25,13 +30,13 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
         page['topbar'].createLeftButton('icon-chevron-left', function () { return location.href = '#User_Index'; });
         var model = new Model();
         page.viewChanged.add(function () {
-            var e = page.nodes().content.querySelector('[type="file"]');
+            var e = page.node.querySelector('[type="file"]');
             var imageFileResize = new ImageFileResize(e, { maxWidth: 100, maxHeight: 100 });
             imageFileResize.imageResized = function (urls, thumbs1, thumbs2) {
                 model.userInfo.HeadImageUrl(thumbs1[0]);
                 member.setUserInfo(mapping.toJS(model.userInfo));
             };
-            ko.applyBindings(model, page.node());
+            ko.applyBindings(model, page.node);
         });
         page.load.add(function (sender, args) {
             if (args.code) {

@@ -1,28 +1,51 @@
 ﻿@import "bootstrap-3.3.5/variables.less";
 @header-zindex: 100;
 @footer-zindex: 100;
+@contailer-zindex:100;
 @bg-color: white;
+@topBar-height: 50px;
 
 body {
     margin: 0;
     padding: 0;
 }
 
-.page-node .page-header {
+.page-container{
+    width: 100%;
+    height:100%;
+    background-color: white;
+    position: absolute;
+    z-index: @contailer-zindex;
+}
+
+.page-topBar {
+  position: fixed;
+  top: 0;
+  z-index: @header-zindex + 10;
+  width: 100%;
+}
+
+.page-bottomBar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: @footer-zindex + 10;
+}
+
+.page-node .page-topBar {
     width: 100%;
     margin: 0px;
     padding: 0;
     border-bottom: none;
+    height: @topBar-height;
 }
-
-
 
 /* ---------- IScroll 样式 ---------- */
 .page-node.ios {
     width: 100%;
     height: 100%;
     background-color: @bg-color;
-    position: absolute;
+    position: fixed;
     z-index: 100;
 }
 
@@ -31,6 +54,23 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
 }
 
 .page-node.ios .page-content {
@@ -39,6 +79,7 @@ body {
     width: 100%;
     min-height: 100%;
     z-index: 80;
+    background-color: @bg-color;
 }
 
 .page-node.ios .page-loading {
@@ -54,6 +95,7 @@ body {
     position: fixed;
     top: 0;
     z-index: 100;
+    width: 100%;
 }
 
 .page-node.ios .page-footer {
@@ -137,3 +179,33 @@ body {
     width: 100%;
     z-index: @footer-zindex;
 }
+
+
+// .ios .wrapper {
+//   position: absolute;
+//   z-index: 1;
+//   left: 0;
+//   width: 100%;
+//   overflow: hidden;
+// }
+// .ios .scroller {
+//   position: absolute;
+//   z-index: 1;
+//   
+//   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+//   -webkit-transform: translateZ(0);
+//   -moz-transform: translateZ(0);
+//   -ms-transform: translateZ(0);
+//   -o-transform: translateZ(0);
+//   transform: translateZ(0);
+//   -webkit-touch-callout: none;
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none;
+//   -webkit-text-size-adjust: none;
+//   -moz-text-size-adjust: none;
+//   -ms-text-size-adjust: none;
+//   -o-text-size-adjust: none;
+//   text-size-adjust: none;
+// }

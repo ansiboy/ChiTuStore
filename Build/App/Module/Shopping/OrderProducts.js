@@ -1,3 +1,6 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 define(["require", "exports", 'Services/Account', 'Application', 'Services/Shopping', 'Services/ShoppingCart', 'Services/Coupon', 'knockout.validation', 'knockout.mapping', 'Module/Shopping/OrderProduct/Coupons'], function (require, exports, account, app, shopping, shoppingCart, coupon, ko_val, mapping, AvalibleCoupons) {
     requirejs(['css!content/Shopping/OrderProducts'], function () { });
     var avalibleCoupons = new AvalibleCoupons();
@@ -19,7 +22,7 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Shopp
                 var order = _this.order;
                 var data = {
                     orderId: order.Id(),
-                    remark: $(_this._page.node()).find('[name="remark"]').val(),
+                    remark: $(_this._page.node).find('[name="remark"]').val(),
                     invoice: order.Invoice(),
                     address: order.ReceiptAddress(),
                     regionId: order.ReceiptRegionId()

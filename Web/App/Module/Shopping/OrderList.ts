@@ -1,4 +1,6 @@
-﻿import account = require('Services/Account');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+
+import account = require('Services/Account');
 import shopping = require('Services/Shopping');
 import app = require('Application');
 import mapping = require('knockout.mapping');
@@ -57,11 +59,11 @@ class Model {
         });
     }
     loadOrders = () => {
-        $($(this.page.node())).find('a').removeClass('active');
+        $($(this.page.node)).find('a').removeClass('active');
         if (this.status())
-            $(this.page.node()).find('.tabs').find('[name="' + this.status() + '"]').addClass('active');
+            $(this.page.node).find('.tabs').find('[name="' + this.status() + '"]').addClass('active');
         else {
-            $(this.page.node()).find('.tabs').find('a').first().addClass('active');
+            $(this.page.node).find('.tabs').find('a').first().addClass('active');
         }
 
         this.isLoading(true);
@@ -120,7 +122,7 @@ export = function (page: chitu.Page) {
     });
 
     var model = new Model(page);
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
     //model.orderEvaluate.open({});
     //return c.scrollLoad(page,);
 }

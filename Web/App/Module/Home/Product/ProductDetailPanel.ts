@@ -1,4 +1,7 @@
-﻿
+﻿/// <reference path='../../../../Scripts/typings/move.d.ts' />
+/// <reference path='../../../../Scripts/typings/iscroll.d.ts' />
+/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
+
 import move = require('move');
 import site = require('Site');
 import Hammer = require('hammer');
@@ -33,9 +36,10 @@ class ProductDetailPanel {
         this._node.style.position = 'fixed';
         this._node.style.height = ($(window).height() - 50) + 'px';
         this._node.className = 'product-detail wrapper';
-        this._node.style.zIndex = this._page.nodes().body.style.zIndex;
+        //this._node.style.zIndex = this._page.nodes().body.style.zIndex;
 
-        $(page.nodes().container).append(this._node);
+        //$(page.nodes().content).append(this._node);
+        document.body.appendChild(this._node);
 
         this._hammer = new Hammer(this._node);
         this._hammer.get('pan').set({ direction: Hammer.DIRECTION_DOWN | Hammer.DIRECTION_UP })
@@ -46,8 +50,8 @@ class ProductDetailPanel {
 
         this.pan_move = move(this._node);
         this.hide();
-
-        //this._page.closed.add(this.on_pageClosed);
+        debugger;
+        this._page.closed.add(this.on_pageClosed);
     }
 
     show = (productId: string) => {
@@ -57,7 +61,7 @@ class ProductDetailPanel {
             result.resolve();
             //======================================
             // 说明：必须隐藏，否则苹果真机会出现问题
-            $(this._page.nodes().body).hide();
+            //$(this._page.nodes().body).hide();
             //======================================
         });
 
@@ -94,6 +98,7 @@ class ProductDetailPanel {
     }
 
     private on_pageClosed = (sender: chitu.Page) => {
+        debugger;
         $(this._node).remove();
     }
 
@@ -125,7 +130,7 @@ class ProductDetailPanel {
         this.pan_move.y($(window).height()).duration(show_time).end(() => {
             //======================================
             // 说明：必须再 show 一次，否则会自动隐藏
-            $(this._page.nodes().body).show()
+            //$(this._page.nodes().body).show()
             if (this.disable_iscroll == true) {
                 (<IScroll>this._page['iscroller']).enable();
             }
@@ -136,15 +141,15 @@ class ProductDetailPanel {
         // 说明：
         // 1、为了有好的视觉效果，在这里就显示
         // 2、必须禁用页面中的 iscroll，以防止触页面的滚动
-        $(this._page.nodes().body).show();
+        //$(this._page.nodes().body).show();
 
         //======================================
     }
 
     private on_panstart = (e) => {
         this.enablePullDown = this.content_node != null &&
-        Math.abs(this.content_node.getBoundingClientRect().top - this.start_pos) <= 20 &&
-        e['direction'] == Hammer.DIRECTION_DOWN;
+            Math.abs(this.content_node.getBoundingClientRect().top - this.start_pos) <= 20 &&
+            e['direction'] == Hammer.DIRECTION_DOWN;
 
         if (this.enablePullDown && this.iscroll != null) {
             this.iscroll.enabled = false;

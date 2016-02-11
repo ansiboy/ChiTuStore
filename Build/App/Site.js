@@ -88,7 +88,7 @@ define(["require", "exports"], function (require, exports) {
             this.purchaseUrlFormat = 'pay/Purchase.html#{0}';
             this.cookiePrefix = 'lsyy';
             this.imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop';
-            this.pageAnimationTime = 500;
+            this.pageAnimationTime = 450;
             this.panelWithRate = 0.9;
             this.imageDataSpliter = '#';
         }

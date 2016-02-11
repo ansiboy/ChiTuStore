@@ -38,7 +38,7 @@ define(["require", "exports", 'Application', 'Services/Account'], function (requ
             },
             firstLoad: undefined
         };
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
         page.load.add(function () {
             return account.getBalanceDetails().done(function (records) {
                 pageIndex = pageIndex + 1;

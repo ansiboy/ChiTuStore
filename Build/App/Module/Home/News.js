@@ -17,14 +17,14 @@ define(["require", "exports", 'Services/Info', 'Application', 'knockout.mapping'
             return info.getArticleById(id).done(function (news) {
                 if (model.news == null) {
                     model.news = mapping.fromJS(news);
-                    ko.applyBindings(model, page.nodes().content);
+                    ko.applyBindings(model, sender.node);
                 }
                 else {
                     mapping.fromJS(news, {}, model.news);
                 }
             });
         });
-        if (page.scrollType == chitu.ScrollType.IScroll) {
+        if (page.conatiner instanceof chitu.IScrollPageContainer) {
             page.scrollEnd.add(function () {
                 page.refreshUI();
             });

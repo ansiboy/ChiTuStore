@@ -53,7 +53,7 @@ export =function (page: chitu.Page) {
         firstLoad: undefined
     }
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
     page.load.add(() => {
         return account.getBalanceDetails().done(function (records) {

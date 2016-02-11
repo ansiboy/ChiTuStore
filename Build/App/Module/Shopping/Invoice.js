@@ -1,3 +1,5 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 define(["require", "exports", 'Application', 'knockout.validation'], function (require, exports, app, ko_val) {
     requirejs(['css!content/Shopping/Invoice']);
     return function (page) {
@@ -29,6 +31,6 @@ define(["require", "exports", 'Application', 'knockout.validation'], function (r
             if (validation)
                 validation.showAllMessages(false);
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
     };
 });

@@ -1,10 +1,14 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'Services/Coupon'], function (require, exports, coupon) {
     return function (page) {
         var loadjsDeferred = $.Deferred();
         requirejs(['UI/CouponListItem', 'css!content/User/Coupon'], function () { return loadjsDeferred.resolve(); });
         var viewDeferred = page.view;
         page.view = $.when(viewDeferred, loadjsDeferred);
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
         var queryArguments = {
             pageIndex: 0,
             status: 'available'

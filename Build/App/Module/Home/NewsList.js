@@ -16,6 +16,6 @@ define(["require", "exports", 'Services/Info', 'Site'], function (require, expor
                 args.enableScrollLoad = items.length == site.config.pageSize;
             });
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.nodes().content); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
     };
 });

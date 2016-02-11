@@ -14,16 +14,17 @@ var ts_options = {
 module.exports = function (grunt) {
     grunt.initConfig({
         typescript: {
-            base: {
+            app: {
                 src: ['Web/App/**/*.ts'],
-                dest: 'Build',
-                options: ts_options
-            },
-            root_files: {
-                src: ['Web/App/*.ts'],
-                dest: 'Build',
+                dest: 'Build/App',
                 options: ts_options
             }
+            // ,
+            // root_files: {
+            //     src: ['Web/App/*.ts'],
+            //     dest: 'Build',
+            //     options: ts_options
+            // }
         },
         copy: {
             main: {
@@ -72,6 +73,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.registerTask('default', ['typescript', 'copy', 'less']);
-
+    grunt.registerTask('default', ['typescript:app', 'copy', 'less']);//, 'less'
+    //grunt.registerTask('default', ['typescript:app']);
 };

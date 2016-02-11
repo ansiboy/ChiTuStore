@@ -54,6 +54,6 @@ define(["require", "exports", 'Application', 'Services/Account', 'Services/Membe
             });
             return result;
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.nodes().content); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
     };
 });

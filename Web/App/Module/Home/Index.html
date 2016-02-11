@@ -1,63 +1,26 @@
-﻿<!--<div ch-part="header" style="position:fixed;top:0px;left:0px;right:0px;z-index:0;display:none;">
-    <div style="top:0px;left:0px;height:0px;right:0px;">
-        <img src="Images/logo_main.png" style="position:relative;top:4px;left:6px;height:42px;">
-        <div class="search-icon">
-            <i class="glyphicon glyphicon-search" style=""></i>
-        </div>
-        <a href="#User_Messages" style="" class="right-icon">
-            <i class="icon-comments-alt">
-            </i>
-            <div style="">消息</div>
-        </a>
-    </div>
-    <div data-topbar="" class="search bg-primary text-center" style="">
-        <input data-bind="value: name" type="text" class="form-control" style="border-width:0px;border-radius:4px;" placeholder="寻找商品、品牌、品类">
-    </div>
-</div>-->
-
-<nav ch-part="header" class="bg-primary" style="">
-    <img class="logo" src="Images/logo_main.png">
-    <div class="search" style="">
-        <a href="#Home_Search">
-            <div name="search_input" data-bind="value: name" type="text" class="form-control" style="border-width:0px;border-radius:4px;">
-                寻找商品、品牌、品类
-            </div>
-        </a>
-    </div>
-    <div class="search-icon">
-        <i class="glyphicon glyphicon-search" style=""></i>
-    </div>
-    <a href="#User_Messages" style="" class="right-icon">
-        <i class="icon-comments-alt">
-        </i>
-        <div style="">消息</div>
-    </a>
-</nav>
-<!--<div class="pull-down" style="text-align:center;">
-    <div name="slogan" style="text-align:center;">
-        <img src="Content/images/slogan.png" />
-    </div>
-    <div name="status-text">
-        下拉刷新
-    </div>
-</div>-->
-
+﻿
 <div class="container" style="padding:0px;">
-    <!--顶部搜索-->
+    <div id="carousel-ad" style="min-height:80px;" data-bind="visible:ko.unwrap(advertItems).length > 0" name="ad-swiper" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators" data-bind="foreach: advertItems">
+            <li data-bind="attr: {'data-slide-to': $index(), 'class': $index() == 0 ? 'active' : ''}" data-target="#carousel-ad"></li>
+        </ol>
 
-    <div class="clearfix"></div>
-    <div data-bind="visible:ko.unwrap(advertItems).length > 0" name="ad-swiper" class="swiper-container">
-        <ul data-bind="foreach: advertItems" class="swiper-wrapper">
-            <li data-bind="attr: { url: LinkUrl }" class="swiper-slide">
-                <a data-bind="attr: { href: LinkUrl }">
-                    <img data-bind="attr: { src: ImgUrl }" data-image="" alt="..." class="img-responsive">
-                </a>
-            </li>
-        </ul>
+        <!-- Wrapper for slides -->
+        <div data-bind="foreach: advertItems" class="carousel-inner" role="listbox">
+            <div data-bind="attr: {'class': $index() == 0 ? 'active item': 'item'}">
+                <img data-bind="attr: { src: ImgUrl }" data-image="" alt="..." class="img-responsive">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+        </div>
     </div>
+
     <div data-bind="visible:ko.unwrap(advertItems).length == 0" style="padding:80px 0px 80px 0px" class="text-center">
-
     </div>
+
+    <!--//class="carousel slide" data-ride="carousel"-->
     <div style="padding-top:20px;padding-bottom:20px;">
         <div class="quickbar">
             <div class="col-xs-3 text-center">

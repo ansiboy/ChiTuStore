@@ -1,3 +1,6 @@
+/// <reference path='../../../../Scripts/typings/jquery.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'knockout.validation', 'Services/Member'], function (require, exports, ko_val, member) {
     var Model = (function () {
         function Model() {
@@ -73,6 +76,6 @@ define(["require", "exports", 'knockout.validation', 'Services/Member'], functio
     return function (page) {
         page.load.add(function () { });
         var model = new Model();
-        ko.applyBindings(model, page.node());
+        ko.applyBindings(model, page.node);
     };
 });

@@ -1,4 +1,8 @@
-﻿import ko_val = require('knockout.validation');
+﻿/// <reference path='../../../../Scripts/typings/jquery.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
+
+import ko_val = require('knockout.validation');
 import member = require('Services/Member');
 
 class Model {
@@ -82,5 +86,5 @@ export =function (page: chitu.Page) {
     page.load.add(() => { });
 
     var model = new Model();
-    ko.applyBindings(model, page.node());
+    ko.applyBindings(model, page.node);
 } 

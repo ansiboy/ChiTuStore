@@ -1,3 +1,6 @@
+/// <reference path='../../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'Services/Auth', 'Services/Member', 'knockout.validation'], function (require, exports, auth, member, ko_val) {
     return function (page) {
         var _this = this;
@@ -28,7 +31,7 @@ define(["require", "exports", 'Services/Auth', 'Services/Member', 'knockout.vali
             smsId: ko.observable()
         };
         requirejs(['UI/VerifyCodeButton'], function () {
-            ko.applyBindings(model, page.node());
+            ko.applyBindings(model, page.node);
         });
     };
 });

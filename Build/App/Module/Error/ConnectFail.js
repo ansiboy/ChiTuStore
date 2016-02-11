@@ -8,7 +8,7 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
             var url = (page['return_url'] || '#Home_Index').substr(1);
             app.showPage(url, {});
         };
-        page.viewChanged.add(function () { return ko.applyBindings(page, page.nodes().content); });
+        page.viewChanged.add(function () { return ko.applyBindings(page, page.node); });
         var topbar = page['topbar'];
         if (topbar) {
             $(topbar.element).find('.leftButton').hide();

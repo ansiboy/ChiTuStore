@@ -1,4 +1,7 @@
-﻿
+﻿/// <reference path='../../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
+
 import auth = require('Services/Auth');
 import member = require('Services/Member');
 
@@ -38,6 +41,6 @@ export = function (page: chitu.Page) {
     };
 
     requirejs(['UI/VerifyCodeButton'], function () {
-        ko.applyBindings(model, page.node());
+        ko.applyBindings(model, page.node);
     });
 } 

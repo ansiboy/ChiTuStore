@@ -1,3 +1,7 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'Services/Shopping'], function (require, exports, shopping) {
     requirejs(['css!content/User/Favors'], function () { });
     return function (page) {
@@ -29,6 +33,6 @@ define(["require", "exports", 'Services/Shopping'], function (require, exports, 
                 model.loading(false);
             });
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
     };
 });

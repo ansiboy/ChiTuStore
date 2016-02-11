@@ -1,3 +1,6 @@
+/// <reference path='../../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
 define(["require", "exports", 'Services/Auth', 'knockout.validation', 'Application'], function (require, exports, auth, ko_val, app) {
     requirejs(['css!content/User/AccountSecurity/Setting']);
     var Step;
@@ -71,11 +74,11 @@ define(["require", "exports", 'Services/Auth', 'knockout.validation', 'Applicati
             model.step(Step.Verify);
         });
         requirejs(['UI/VerifyCodeButton'], function () {
-            ko.applyBindings(model, page.node().querySelector('[name="stepOne"]'));
-            ko.applyBindings(model, page.node().querySelector('[class="step"]'));
+            ko.applyBindings(model, page.node.querySelector('[name="stepOne"]'));
+            ko.applyBindings(model, page.node.querySelector('[class="step"]'));
         });
         model.after_next.add(function () {
-            var element = page.node().querySelector('[name="stepTwo"]');
+            var element = page.node.querySelector('[name="stepTwo"]');
             ko.cleanNode(element);
             next_step.execute(element, { mobile: model.mobile(), verifyCode: model.verifyCode(), smsId: model.smsId() });
         });

@@ -1,4 +1,7 @@
-﻿import account = require('Services/Account');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+
+import account = require('Services/Account');
 import shopping = require('Services/Shopping');
 import mapping = require('knockout.mapping');
 import app = require('Application');
@@ -101,7 +104,7 @@ var func = function (page: chitu.Page) {
     account.receiptInfoUpdated.add(on_receiptUpdated);
     account.receiptInfoInserted.add(on_receiptInserted);
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
 }
 

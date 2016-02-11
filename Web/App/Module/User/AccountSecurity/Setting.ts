@@ -1,4 +1,8 @@
-﻿import shopping = require('Services/Shopping');
+﻿/// <reference path='../../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
+
+import shopping = require('Services/Shopping');
 import auth = require('Services/Auth');
 import member = require('Services/Member');
 import ko_val = require('knockout.validation');
@@ -103,14 +107,14 @@ export = function (page: chitu.Page) {
     });
 
     requirejs(['UI/VerifyCodeButton'], function () {
-        ko.applyBindings(model, page.node().querySelector('[name="stepOne"]'));
-        ko.applyBindings(model, page.node().querySelector('[class="step"]'));
+        ko.applyBindings(model, page.node.querySelector('[name="stepOne"]'));
+        ko.applyBindings(model, page.node.querySelector('[class="step"]'));
     });
 
 
 
     model.after_next.add(() => {
-        var element = <HTMLElement>page.node().querySelector('[name="stepTwo"]');
+        var element = <HTMLElement>page.node.querySelector('[name="stepTwo"]');
         ko.cleanNode(element);
         next_step.execute(element, { mobile: model.mobile(), verifyCode: model.verifyCode(), smsId: model.smsId() });
     });

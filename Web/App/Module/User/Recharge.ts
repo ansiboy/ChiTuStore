@@ -1,4 +1,5 @@
-﻿/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 
 import app = require('Application')
@@ -37,6 +38,6 @@ var model = new Model();
 var validation = ko_val.group(model);
 
 export = function (page: chitu.Page) {
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 }
 

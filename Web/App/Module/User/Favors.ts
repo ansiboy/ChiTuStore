@@ -1,4 +1,9 @@
-﻿import shopping = require('Services/Shopping')
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+
+import shopping = require('Services/Shopping')
 
 requirejs(['css!content/User/Favors'], function () { });
 
@@ -34,5 +39,5 @@ export = function (page: chitu.Page) {
             });
     });
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 } 

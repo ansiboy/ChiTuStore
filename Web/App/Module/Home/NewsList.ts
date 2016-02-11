@@ -24,6 +24,6 @@ export = function (page: chitu.Page) {
         });
     })
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.nodes().content));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
 } 

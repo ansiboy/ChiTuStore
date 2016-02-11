@@ -1,4 +1,7 @@
-﻿import app = require('Application');
+﻿/// <reference path='../../Scripts/typings/require.d.ts'/>
+/// <reference path='../../Scripts/typings/knockout.d.ts'/>
+
+import app = require('Application');
 import site = require('Site');
 import member = require('Services/Member');
 import shoppingCart = require('Services/ShoppingCart');
@@ -12,7 +15,7 @@ class Menu {
 
     constructor(page: chitu.Page) {
         this.node = document.createElement('div');
-        page.nodes().footer.appendChild(this.node);
+        $((<chitu.WebPageContainer>page.conatiner).bottomBar).append(this.node);
 
         var updateProductsCount = () => {
             var $products_count = $(this.node).find('[name="products-count"]');

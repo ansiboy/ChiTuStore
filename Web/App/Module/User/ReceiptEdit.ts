@@ -1,4 +1,10 @@
-﻿import ko_val = require('knockout.validation');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+
+import ko_val = require('knockout.validation');
 import mapping = require('knockout.mapping');
 import account = require('Services/Account');
 import site = require('Site');
@@ -131,7 +137,7 @@ class Model {
         return account.saveReceiptInfo(this.receipt).done(() => {
             //===========================================
             // 说明：触发加载事件，重新加载数据。
-            var list_page = app.getCachePage('User.ReceiptList');
+            var list_page = app.getPage('User.ReceiptList');
             if (list_page) {
                 list_page.on_load(<chitu.PageLoadArguments>{});
             }
@@ -147,16 +153,16 @@ class Model {
     //===================================================================
     // 说明：页面上的控件
     receiptNode = () => {
-        return $(this.page.node()).find('[name="Receipt"]')[0];
+        return $(this.page.node).find('[name="Receipt"]')[0];
     }
     province = () => {
-        return $(this.page.node()).find('[name="Province"]');
+        return $(this.page.node).find('[name="Province"]');
     }
     city = () => {
-        return $(this.page.node()).find('[name="City"]');
+        return $(this.page.node).find('[name="City"]');
     }
     county = () => {
-        return $(this.page.node()).find('[name="County"]');
+        return $(this.page.node).find('[name="County"]');
     }
     //===================================================================
     // 说明：事件
@@ -223,7 +229,7 @@ export = function (page: chitu.Page) {
             });
     })
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
 
     return account.getProvinces().done(function (provinces) {

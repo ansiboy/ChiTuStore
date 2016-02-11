@@ -1,3 +1,4 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
 define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapping', 'knockout', 'Site'], function (require, exports, app, shopping, mapping, ko, site) {
     return function (page) {
         /// <param name="page" type="chitu.Page"/>
@@ -86,7 +87,10 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
         });
         var page_view = page.view;
         page.view = $.when(page_view, chitu.Utility.loadjs(['UI/PromotionLabel', 'css!content/Home/ProductList']));
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () {
+            debugger;
+            ko.applyBindings(model, page.node);
+        });
         page['title'] = function (value) {
             if (page['topbar'])
                 page['topbar']['title'](value);

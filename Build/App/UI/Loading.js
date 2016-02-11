@@ -13,7 +13,7 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
     });
     if (app.currentPage() != null) {
         app.currentPage().shown.add(on_shown);
-        if (app.currentPage().visible()) {
+        if (app.currentPage().visible() == true) {
             on_shown();
         }
     }

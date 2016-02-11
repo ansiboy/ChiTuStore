@@ -1,3 +1,4 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
 define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Application', 'knockout.mapping', 'Site', 'Services/Service'], function (require, exports, account, shopping, app, mapping, site, services) {
     var weixin = services['weixin'];
     requirejs(['css!content/Shopping/OrderList']);
@@ -25,11 +26,11 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
                 });
             };
             this.loadOrders = function () {
-                $($(_this.page.node())).find('a').removeClass('active');
+                $($(_this.page.node)).find('a').removeClass('active');
                 if (_this.status())
-                    $(_this.page.node()).find('.tabs').find('[name="' + _this.status() + '"]').addClass('active');
+                    $(_this.page.node).find('.tabs').find('[name="' + _this.status() + '"]').addClass('active');
                 else {
-                    $(_this.page.node()).find('.tabs').find('a').first().addClass('active');
+                    $(_this.page.node).find('.tabs').find('a').first().addClass('active');
                 }
                 _this.isLoading(true);
                 return shopping.getMyOrderList(_this.status(), _this.pageIndex, _this.lastDateTime).done(function (orders) {
@@ -87,6 +88,6 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
             return model.loadOrders().done(function (items) { return items.length < site.config.pageSize; });
         });
         var model = new Model(page);
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
     };
 });

@@ -1,3 +1,10 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
+/// <reference path='../../../Scripts/typings/move.d.ts' />
+/// <reference path='../../../Scripts/typings/iscroll.d.ts' />
 define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/Account'], function (require, exports, member, mapping, account) {
     requirejs(['css!content/User/UserInfoItemEdit']);
     var province_none = { Name: '请选择省' };
@@ -67,12 +74,12 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
             },
             $privonce: function () {
                 if (!model._$privonce)
-                    model._$privonce = $(page.node()).find('[name="province"]');
+                    model._$privonce = $(page.node).find('[name="province"]');
                 return model._$privonce;
             },
             $city: function () {
                 if (!model._$city)
-                    model._$city = $(page.node()).find('[name="city"]');
+                    model._$city = $(page.node).find('[name="city"]');
                 return model._$city;
             },
             hideCity: function () {
@@ -97,7 +104,7 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
         model.userInfo.City.subscribe(function (value) { return model.currentCity(value); });
         model.userInfo.NickName.subscribe(function (value) { return model.currentNickName(value); });
         page.viewChanged.add(function () {
-            ko.applyBindings(model, page.nodes().content);
+            ko.applyBindings(model, page.node);
         });
         page.load.add(function (sender, args) {
             model.field(args.field);

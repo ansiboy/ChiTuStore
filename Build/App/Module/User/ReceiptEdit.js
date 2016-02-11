@@ -1,3 +1,8 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Services/Account', 'Application'], function (require, exports, ko_val, mapping, account, app) {
     requirejs(['css!content/User/ReceiptEdit']);
     var province_none = { Name: '请选择省' };
@@ -102,7 +107,7 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
                     return $.Deferred().reject();
                 }
                 return account.saveReceiptInfo(_this.receipt).done(function () {
-                    var list_page = app.getCachePage('User.ReceiptList');
+                    var list_page = app.getPage('User.ReceiptList');
                     if (list_page) {
                         list_page.on_load({});
                     }
@@ -113,16 +118,16 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
                 return id == '' || id == null || id == '00000000-0000-0000-0000-000000000000';
             };
             this.receiptNode = function () {
-                return $(_this.page.node()).find('[name="Receipt"]')[0];
+                return $(_this.page.node).find('[name="Receipt"]')[0];
             };
             this.province = function () {
-                return $(_this.page.node()).find('[name="Province"]');
+                return $(_this.page.node).find('[name="Province"]');
             };
             this.city = function () {
-                return $(_this.page.node()).find('[name="City"]');
+                return $(_this.page.node).find('[name="City"]');
             };
             this.county = function () {
-                return $(_this.page.node()).find('[name="County"]');
+                return $(_this.page.node).find('[name="County"]');
             };
             this.onProvinceChanged = function () {
                 var provinceId = _this.province().find('option:selected').val();
@@ -174,7 +179,7 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
                 });
             });
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
         return account.getProvinces().done(function (provinces) {
             model.provinces.push(province_none);
             for (var i = 0; i < provinces.length; i++) {

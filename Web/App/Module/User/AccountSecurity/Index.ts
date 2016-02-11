@@ -21,6 +21,6 @@ class Model {
 }
 export = function (page: chitu.Page) {
     var model = new Model();
-    ko.applyBindings(model, page.nodes().content);
+    ko.applyBindings(model, page.node);
 
 }

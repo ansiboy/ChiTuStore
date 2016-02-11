@@ -52,7 +52,7 @@ define(["require", "exports", 'Services/Shopping', 'knockout.mapping', 'Services
         function order_loaded(order) {
             if (model.order == null) {
                 model.order = order;
-                ko.applyBindings(model, page.nodes().content);
+                ko.applyBindings(model, page.node);
             }
             var js_data = mapping.toJS(order);
             mapping.fromJS(js_data, {}, model.order);

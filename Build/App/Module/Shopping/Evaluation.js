@@ -1,3 +1,4 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
 define(["require", "exports", 'Services/Account', 'Application', 'Services/Service'], function (require, exports, account, app, services) {
     requirejs(['css!content/Shopping/Evaluation']);
     var Model = (function () {
@@ -53,7 +54,7 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Servi
     })();
     return function (page) {
         var model = new Model(page);
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
         page.load.add(function (sender, args) {
             return model.loadProducts().done(function (items) {
                 args.enableScrollLoad = items.length < services.defaultPageSize;

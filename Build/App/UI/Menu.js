@@ -1,10 +1,12 @@
+/// <reference path='../../Scripts/typings/require.d.ts'/>
+/// <reference path='../../Scripts/typings/knockout.d.ts'/>
 define(["require", "exports", 'Application', 'Services/ShoppingCart'], function (require, exports, app, shoppingCart) {
     var menu_html;
     var Menu = (function () {
         function Menu(page) {
             var _this = this;
             this.node = document.createElement('div');
-            page.nodes().footer.appendChild(this.node);
+            $(page.conatiner.bottomBar).append(this.node);
             var updateProductsCount = function () {
                 var $products_count = $(_this.node).find('[name="products-count"]');
                 if (shoppingCart.info.itemsCount() == 0) {

@@ -1,4 +1,8 @@
-﻿
+﻿///<reference path='../../../../Scripts/typings/require.d.ts'/>
+///<reference path='../../../../Scripts/typings/move.d.ts'/>
+///<reference path='../../../../Scripts/typings/iscroll.d.ts'/>
+///<reference path='../../../../Scripts/typings/chitu.d.ts'/>
+
 import move = require('move');
 import site = require('Site');
 import ko = require('knockout');
@@ -6,16 +10,6 @@ import shopping = require('Services/Shopping');
 import IScroll = require('iscroll');
 import Hammer = require('hammer');
 import mapping = require('knockout.mapping');
-
-//var v = site.config.dialogAnimationTime;
-var product_number_input_html =
-    '<div style="width:100%;height:100%;z-index:2000;display:none;"> \
-    <div style= "position:fixed;width:100%;z-index:2000;bottom:0px;" class="container" > \
-        <input name="product_number_input" type= "number" class="form-control"/> \
-    </div> \
-    <div class="modal-backdrop" style= "opacity:0"> \
-    </div> \
-</div>';
 
 class ProductPanelModel {
     private panel: ProductPanel
@@ -27,12 +21,6 @@ class ProductPanelModel {
         this.panel = panel;
         this.product = parent_model.product;
         this.parent_model = parent_model;
-        this.produtNumberInput = $(product_number_input_html).appendTo(document.body);
-        //this.produtNumberInput.css('z-index', 2000);
-        //this.produtNumberInput.hide();
-
-        this.produtNumberInput.on('touck,click', this.hideProdutNumberInput);
-        this.produtNumberInput.find('input').focusout(this.hideProdutNumberInput);
     }
 
     increaseCount = () => {
@@ -97,28 +85,6 @@ class ProductPanelModel {
             this.panel.close()
         });
     }
-
-    showProdutNumberInput = () => {
-        this.panel.hide();
-        this.produtNumberInput.show();
-
-        //window.setTimeout(() => {
-        //    debugger;
-        //    //this.produtNumberInput.scrollTop(40);
-        //    //console.log('scrollTop:' + this.produtNumberInput.scrollTop());
-        //    var input = this.produtNumberInput.find('input[name="product_number_input"]');
-        //    //console.log('input lenght', input.length);
-        //    input.parent().css('bottom', '0px');
-        //}, 300);
-
-        this.produtNumberInput.find('input[name="product_number_input"]').focus();
-        console.log('produtNumberInput focus');
-    }
-
-    hideProdutNumberInput = () => {
-        this.panel.show();
-        this.produtNumberInput.hide();
-    }
 }
 
 class ProductPanel {
@@ -148,7 +114,9 @@ class ProductPanel {
         //page.nodes().container.appendChild(this.node);
         document.body.appendChild(this.node);
         //==========================================
-        this._page.closed.add(this.page_closed);
+        this._page.closed.add(() => {
+            this.page_closed();
+        });
 
         requirejs(['text!Module/Home/Product/ProductPanel.html'], this.html_loaded);
     }
@@ -181,7 +149,7 @@ class ProductPanel {
         $wrapper.height($(window).height() - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT);
 
         var iscroll = new IScroll($wrapper[0], { tap: true });
-        if (this.page.scrollType == chitu.ScrollType.IScroll) {
+        if (this.page.conatiner instanceof chitu.IScrollPageContainer) {
             //=====================================================
             // 修正弹出键盘时，document 位置发生偏移。
             var $input = $(this.node).find('input');
@@ -210,6 +178,7 @@ class ProductPanel {
     }
 
     private page_closed = () => {
+        debugger;
         console.log('page_closed, remove node.');
         $(this.node).remove();
     }
@@ -257,12 +226,12 @@ class ProductPanel {
 
     hide() {
         this.node.style.display = 'none';
-        this.page.nodes().container.style.display = 'none';
+        //this.page.nodes().container.style.display = 'none';
     }
 
     show() {
         this.node.style.display = 'block';
-        this.page.nodes().container.style.display = 'block';
+        //this.page.nodes().container.style.display = 'block';
     }
 }
 

@@ -1,4 +1,5 @@
-﻿import shopping = require('Services/Shopping');
+﻿/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+import shopping = require('Services/Shopping');
 import mapping = require('knockout.mapping');
 import IScroll = require('iscroll');
 
@@ -10,7 +11,7 @@ export = function (page: chitu.Page) {
         return shopping.getProductIntroduce(productId).done((data) => {
             if (model == null) {
                 model = mapping.fromJS(data);
-                ko.applyBindings(model, page.node());
+                ko.applyBindings(model, sender.node);
             }
             else {
                 mapping.fromJS(data, {}, model);

@@ -1,4 +1,8 @@
-﻿
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+
 import coupon = require('Services/Coupon');
 
 
@@ -10,7 +14,7 @@ export = function (page: chitu.Page) {
     page.view = $.when(viewDeferred, loadjsDeferred);
     
     //ko.applyBindings(model, page.node());
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
     var queryArguments = {
         pageIndex: 0,

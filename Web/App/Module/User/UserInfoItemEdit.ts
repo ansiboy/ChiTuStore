@@ -1,4 +1,12 @@
-﻿
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
+/// <reference path='../../../Scripts/typings/move.d.ts' />
+/// <reference path='../../../Scripts/typings/iscroll.d.ts' />
+
+
 import TopBar = require('UI/TopBar');
 import app = require('Application');
 import member = require('Services/Member');
@@ -91,14 +99,14 @@ export = function (page: chitu.Page) {
         },
         $privonce(): JQuery {
             if (!model._$privonce)
-                model._$privonce = $(page.node()).find('[name="province"]');
+                model._$privonce = $(page.node).find('[name="province"]');
 
             return model._$privonce;
             //var $city = $(page.node()).find('[name="city"]');
         },
         $city(): JQuery {
             if (!model._$city)
-                model._$city = $(page.node()).find('[name="city"]');
+                model._$city = $(page.node).find('[name="city"]');
 
             return model._$city;
         },
@@ -131,7 +139,7 @@ export = function (page: chitu.Page) {
 
 
     page.viewChanged.add(() => {
-        ko.applyBindings(model, page.nodes().content);
+        ko.applyBindings(model, page.node);
     });
 
 

@@ -1,6 +1,5 @@
 define(["require", "exports", 'Application', 'Services/Shopping', 'Services/ShoppingCart', 'knockout.mapping', 'Module/Home/Product/ProductPanel', 'Module/Home/Product/ProductDetailPanel', 'Services/Auth'], function (require, exports, app, shopping, shoppingCart, mapping, ProductPanel, ProductDetailPanel, auth) {
     var services = window['services'];
-    requirejs(['css!content/Home/Product'], function () { });
     var ProductModel = (function () {
         function ProductModel(page) {
             var _this = this;
@@ -10,7 +9,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
             this.addToShoppingCart = function () {
                 var product = _this['product'];
                 return shoppingCart.addItem(product, product.Count()).done(function () {
-                    var shopping_cart_page = app.getCachePage('Shopping.ShoppingCart');
+                    var shopping_cart_page = app.getPage('Shopping.ShoppingCart');
                     if (shopping_cart_page)
                         shopping_cart_page.on_load({});
                 });
@@ -68,7 +67,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
     })();
     return function (page) {
         var viewDeferred = page.view;
-        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/Promotion']));
+        page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/Promotion', 'css!content/Home/Product']));
         var model = new ProductModel(page);
         page.load.add(function (sender, args) {
             var productId = args.id;
@@ -97,8 +96,11 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
             });
         });
         page.viewChanged.add(function () {
-            $(page.nodes().header).find('.topbar').first().remove();
+            //=============================================
+            // 移除掉原来的 TopBar
+            //$(page.nodes().header).find('.topbar').first().remove();
+            //=============================================
         });
-        page.loadCompleted.add(function () { return ko.applyBindings(model, page.nodes().container); });
+        page.loadCompleted.add(function () { return ko.applyBindings(model, page.node); });
     };
 });

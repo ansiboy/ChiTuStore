@@ -16,7 +16,7 @@ export = function (page: chitu.Page) {
         app.showPage(url, {});
     }
 
-    page.viewChanged.add(() => ko.applyBindings(page, page.nodes().content));
+    page.viewChanged.add(() => ko.applyBindings(page, page.node));
 
 
     var topbar: TopBar = page['topbar'];

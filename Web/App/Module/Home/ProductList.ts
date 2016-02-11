@@ -1,10 +1,12 @@
-﻿import app = require('Application');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+
+import app = require('Application');
 import shopping = require('Services/Shopping');
 import mapping = require('knockout.mapping');
 import ko = require('knockout');
 import site = require('Site');
 
-export = function (page: chitu.Page) {
+export = function(page: chitu.Page) {
     /// <param name="page" type="chitu.Page"/>
         
     var node;
@@ -21,7 +23,7 @@ export = function (page: chitu.Page) {
             sort: ko.observable(''),
             filter: ko.observable('')
         },
-        resetQueryArguments: function () {
+        resetQueryArguments: function() {
             model.queryArguments.brandId = null;
             model.queryArguments.categoryId = null;
             model.queryArguments.pageIndex = 0;
@@ -32,16 +34,16 @@ export = function (page: chitu.Page) {
         isLoading: ko.observable(false),
         products: ko.observableArray(),
         brands: ko.observableArray(),
-        back: function () {
-            return app.back().fail(function () {
+        back: function() {
+            return app.back().fail(function() {
                 app.redirect('Home_Class');
             });
         },
         isFilteByCategory: ko.observable(),
-        loadProducts: function (clear) {
+        loadProducts: function(clear) {
             clear = (clear === undefined) ? true : clear;
             var args = $.extend({}, mapping.toJS(model.queryArguments));
-            return shopping.getProducts(args).done(function (items: any[], filter) {
+            return shopping.getProducts(args).done(function(items: any[], filter) {
                 if (clear == true)
                     model.products.removeAll();
 
@@ -50,7 +52,7 @@ export = function (page: chitu.Page) {
                 }
             });
         },
-        sort: function (model, event) {
+        sort: function(model, event) {
 
             var type = $(event.target).attr('data-type') || $(event.target).parent().attr('data-type');
 
@@ -75,8 +77,8 @@ export = function (page: chitu.Page) {
             model.products.removeAll();
             return page.on_load({ loadType: chitu.PageLoadType.scroll }); //page['scrollLoad']();
         },
-        showFilterDialog: function (model, event) {
-            loadFilterDialog.done(function (filterDialog: any) {
+        showFilterDialog: function(model, event) {
+            loadFilterDialog.done(function(filterDialog: any) {
                 filterDialog.brands(model.brands());
                 filterDialog.filter.minPrice(null);
                 filterDialog.filter.maxPrice(null);
@@ -87,11 +89,11 @@ export = function (page: chitu.Page) {
     }
 
     var loadFilterDialog = $.Deferred();
-    requirejs(['mod/Home/ProductList/ProductsFilter'], function (filterDialog: any) {
+    requirejs(['mod/Home/ProductList/ProductsFilter'], function(filterDialog: any) {
 
         loadFilterDialog.resolve(filterDialog);
 
-        filterDialog.after_ok.add(function (args) {
+        filterDialog.after_ok.add(function(args) {
             model.queryArguments.pageIndex = 0;
             model.queryArguments.filter(args.filter);
             model.products.removeAll();
@@ -101,16 +103,19 @@ export = function (page: chitu.Page) {
 
     var page_view = page.view;
     page.view = $.when(page_view, chitu.Utility.loadjs(['UI/PromotionLabel', 'css!content/Home/ProductList']));
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => {
+        debugger;
+        ko.applyBindings(model, page.node)
+    });
 
-    page['title'] = function (value) {
+    page['title'] = function(value) {
         if (page['topbar'])
             page['topbar']['title'](value);
     };
 
     model.queryArguments.categoryId = (<any>page.routeData.values()).name;
     model.isFilteByCategory(true);
-    shopping.getCategory(model.queryArguments.categoryId).done(function (data) {
+    shopping.getCategory(model.queryArguments.categoryId).done(function(data) {
         page['title'](data.Name);
     });
 

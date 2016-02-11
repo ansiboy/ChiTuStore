@@ -1,4 +1,10 @@
-﻿import app = require('Application');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
+
+import app = require('Application');
 import auth = require('Services/Auth');
 import member = require('Services/Member');
 import services = require('Services/Service');
@@ -84,7 +90,7 @@ export = function (page: chitu.Page) {
         }, 1000);
     }
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
     model.user.confirmPassword.extend({ equal: model.user.password });
     model.user.mobile.extend({

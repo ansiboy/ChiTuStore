@@ -1,3 +1,8 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
 define(["require", "exports", 'Application', 'Services/Auth', 'Services/Member', 'Services/Service', 'knockout.validation', 'knockout.mapping'], function (require, exports, app, auth, member, services, ko_val, mapping) {
     return function (page) {
         var pageNode;
@@ -66,7 +71,7 @@ define(["require", "exports", 'Application', 'Services/Auth', 'Services/Member',
                 }
             }, 1000);
         }
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
         model.user.confirmPassword.extend({ equal: model.user.password });
         model.user.mobile.extend({
             validation: [{

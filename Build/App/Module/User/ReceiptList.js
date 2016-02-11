@@ -1,3 +1,5 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 define(["require", "exports", 'Services/Account', 'Services/Shopping', 'knockout.mapping', 'Application'], function (require, exports, account, shopping, mapping, app) {
     requirejs(['css!content/User/ReceiptList']);
     var func = function (page) {
@@ -80,7 +82,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'knockout
         });
         account.receiptInfoUpdated.add(on_receiptUpdated);
         account.receiptInfoInserted.add(on_receiptInserted);
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
     };
     return { func: func };
 });

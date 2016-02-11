@@ -1,3 +1,7 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+/// <reference path='../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'Services/Auth', 'Application', 'knockout.validation'], function (require, exports, member, app, validation) {
     requirejs(['css!content/User/Login']);
     exports.func = function (page) {
@@ -24,6 +28,6 @@ define(["require", "exports", 'Services/Auth', 'Application', 'knockout.validati
             redirectUrl = args.redirectUrl;
             model.val = validation.group(model);
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
     };
 });

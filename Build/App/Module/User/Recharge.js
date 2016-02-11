@@ -1,3 +1,4 @@
+/// <reference path='../../../Scripts/typings/require.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Service', 'knockout.validation', 'Site'], function (require, exports, app, recharge, services, ko_val, site) {
@@ -29,6 +30,6 @@ define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Serv
     var model = new Model();
     var validation = ko_val.group(model);
     return function (page) {
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node()); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
     };
 });

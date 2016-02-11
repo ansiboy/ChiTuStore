@@ -1,4 +1,7 @@
-﻿import app = require('Application');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+
+import app = require('Application');
 import ko_val = require('knockout.validation');
 
 requirejs(['css!content/Shopping/Invoice']);
@@ -36,5 +39,5 @@ export = function (page: chitu.Page) {
             validation.showAllMessages(false);
     });
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 }

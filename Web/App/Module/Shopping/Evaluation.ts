@@ -1,4 +1,6 @@
-﻿import account = require('Services/Account');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+
+import account = require('Services/Account');
 import shopping = require('Services/Shopping');
 
 import Page = require('Core/Page');
@@ -77,7 +79,7 @@ class Model {
 export = function (page: chitu.Page) {
 
     var model = new Model(page);
-    page.viewChanged.add(() => ko.applyBindings(model, page.node()));
+    page.viewChanged.add(() => ko.applyBindings(model, page.node));
 
     page.load.add((sender:chitu.Page,args:chitu.PageLoadArguments) => {
         return model.loadProducts().done((items) => {

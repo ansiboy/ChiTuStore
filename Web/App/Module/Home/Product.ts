@@ -11,7 +11,7 @@ import auth = require('Services/Auth');
 
 var services = window['services'];
 
-requirejs(['css!content/Home/Product'], function () { });
+//requirejs(['css!content/Home/Product'], function () { });
 
 class ProductModel {
     private page: chitu.Page
@@ -44,7 +44,7 @@ class ProductModel {
     addToShoppingCart = () => {
         var product = this['product'];
         return shoppingCart.addItem(product, product.Count()).done(() => {
-            var shopping_cart_page = app.getCachePage('Shopping.ShoppingCart');
+            var shopping_cart_page = app.getPage('Shopping.ShoppingCart');
             if (shopping_cart_page)
                 shopping_cart_page.on_load(<chitu.PageLoadArguments>{});
         });
@@ -82,7 +82,7 @@ class ProductModel {
 export = function (page: chitu.Page) {
 
     var viewDeferred = page.view;
-    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/Promotion']));
+    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/Promotion','css!content/Home/Product']));
 
     var model = new ProductModel(page);
     page.load.add(function (sender, args) {
@@ -123,7 +123,7 @@ export = function (page: chitu.Page) {
     page.viewChanged.add(() => {
         //=============================================
         // 移除掉原来的 TopBar
-        $(page.nodes().header).find('.topbar').first().remove();
+        //$(page.nodes().header).find('.topbar').first().remove();
         //=============================================
 
 //         requirejs(['swiper'], function (Swiper) {
@@ -138,7 +138,7 @@ export = function (page: chitu.Page) {
     });
     //======================================================================
     // 说明：必须是视图，和加载都加完成了，才进行绑定。
-    page.loadCompleted.add(() => ko.applyBindings(model, page.nodes().container));
+    page.loadCompleted.add(() => ko.applyBindings(model, page.node));
 
 
 };

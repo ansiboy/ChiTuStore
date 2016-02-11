@@ -1,4 +1,4 @@
-﻿
+﻿/// <reference path='../Scripts/typings/chitu.d.ts' />
 import site = require('Site');
 
 chitu.Page.animationTime = site.config.pageAnimationTime;
@@ -32,7 +32,7 @@ class PageBottomLoading implements chitu.PageLoading {
         this._scrollLoad_loading_bar.innerHTML = '<div style="padding:10px 0px 10px 0px;"><h5 class="text-center"></h5></div>';
         this._scrollLoad_loading_bar.style.display = 'block';
         $(this._scrollLoad_loading_bar).find('h5').html(this.contents[this._status]);
-        this._page.nodes().content.appendChild(this._scrollLoad_loading_bar);
+        $(this._page.node).find('.page-content').append(this._scrollLoad_loading_bar);
         this._page.refreshUI();
         this.is_render = true;
     }
@@ -45,7 +45,6 @@ class PageBottomLoading implements chitu.PageLoading {
         if (this._status == value)
             return;
 
-        debugger;
         this._status = value;
         if (this.is_render)
             $(this._scrollLoad_loading_bar).find('h5').html(this.contents[this._status]);
@@ -94,22 +93,22 @@ function resetBottomLoading(page: chitu.Page) {
 }
 
 var config: chitu.ApplicationConfig = {
-    container: () => document.getElementById('main'),
-    scrollType: (routeData: chitu.RouteData) => {
-        if (site.env.isDegrade)// || (site.env.isApp && site.env.isAndroid)
-            return chitu.ScrollType.Document;
-
-        if (site.env.isIOS) {
-            return chitu.ScrollType.IScroll;
-        }
-
-        if (site.env.isAndroid)
-            return chitu.ScrollType.Div;
-
-        return chitu.ScrollType.Div;
-    },
+    //container: () => document.getElementById('main'),
+    //     scrollType: (routeData: chitu.RouteData) => {
+    //         if (site.env.isDegrade)// || (site.env.isApp && site.env.isAndroid)
+    //             return chitu.ScrollType.Document;
+    // 
+    //         if (site.env.isIOS) {
+    //             return chitu.ScrollType.IScroll;
+    //         }
+    // 
+    //         if (site.env.isAndroid)
+    //             return chitu.ScrollType.Div;
+    // 
+    //         return chitu.ScrollType.Div;
+    //     },
     openSwipe: (routeData: chitu.RouteData) => {
-        if (site.env.isDegrade)
+        if (site.env.isDegrade || site.env.isApp)
             return chitu.SwipeDirection.None;
 
         if (site.isMenuPage(routeData))
@@ -161,27 +160,33 @@ app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
     var controller = route_values.controller;
     var action = route_values.action;
 
-    $(page.nodes().container).addClass(controller + '-' + action);
+    $(page.node).addClass(controller + '-' + action);
+    if (page.conatiner instanceof chitu.WebPageContainer) {
+        var c = <chitu.WebPageContainer>page.conatiner;
+        c.topBar.className = c.topBar.className + ' ' + controller + '-' + action;
+        c.bottomBar.className = c.bottomBar.className + ' ' + controller + '-' + action;
+    }
+
 
     var is_menu_page =  // 底部菜单页面
         (controller == 'Home' && (action == 'Index' || action == 'NewsList' || action == 'Class')) ||
         (controller == 'Shopping' && action == 'ShoppingCart') ||
         (controller == 'User' && action == 'Index');
 
-    if (!is_menu_page) {
-        // 实现滑动返回
-        if ((<any>$).event.special.swipe) {
-            $(page.node())
-                .on('swiperight', function() {
-                    app.back();
-                })
-                .on('movestart', function(e: any) {
-                    if (Math.abs(e.distX) < Math.abs(e.distY)) {
-                        e.preventDefault();
-                    }
-                });
-        }
-    }
+    // if (!is_menu_page) {
+    //     // 实现滑动返回
+    //     if ((<any>$).event.special.swipe) {
+    //         $(page.node())
+    //             .on('swiperight', function() {
+    //                 app.back();
+    //             })
+    //             .on('movestart', function(e: any) {
+    //                 if (Math.abs(e.distX) < Math.abs(e.distY)) {
+    //                     e.preventDefault();
+    //                 }
+    //             });
+    //     }
+    // }
    
     //=======================================================================
     //说明：一定要的，否则会因为 document 对象的偏移，使得顶栏消失
@@ -200,6 +205,14 @@ app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
         resetBottomLoading(page);
     }
     //=======================================================================
+    page.viewChanged.add(function() {
+        //debugger;
+        var q = page.conatiner.nodes.content.querySelector('[ch-part="header"]');
+        if (q) $(page.conatiner.nodes.header).append(q);
+
+        q = page.conatiner.nodes.content.querySelector('[ch-part="footer"]');
+        if (q) $(page.conatiner.nodes.footer).append(q);
+    })
 })
 
 // app.isMenuPage = function(routeData: chitu.RouteData) {

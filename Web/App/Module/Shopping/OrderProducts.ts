@@ -1,4 +1,8 @@
-﻿import account = require('Services/Account');
+﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+
+import account = require('Services/Account');
 import app = require('Application');
 import site = require('Site');
 import shopping = require('Services/Shopping');
@@ -41,7 +45,7 @@ class Model {
         //var regionId = model.receiptRegionId();
         var data = {
             orderId: order.Id(),
-            remark: $(this._page.node()).find('[name="remark"]').val(), //order.Remark(),
+            remark: $(this._page.node).find('[name="remark"]').val(), //order.Remark(),
             invoice: order.Invoice(),
             address: order.ReceiptAddress(),
             regionId: order.ReceiptRegionId()

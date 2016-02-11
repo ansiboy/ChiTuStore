@@ -5450,9 +5450,9 @@ button.close {
 .carousel-inner > .item {
   display: none;
   position: relative;
-  -webkit-transition: 0.6s ease-in-out left;
-  -o-transition: 0.6s ease-in-out left;
-  transition: 0.6s ease-in-out left;
+  -webkit-transition: 0.4s ease-in-out left;
+  -o-transition: 0.4s ease-in-out left;
+  transition: 0.4s ease-in-out left;
 }
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
@@ -5460,10 +5460,10 @@ button.close {
 }
 @media all and (transform-3d), (-webkit-transform-3d) {
   .carousel-inner > .item {
-    -webkit-transition: -webkit-transform 0.6s ease-in-out;
-    -moz-transition: -moz-transform 0.6s ease-in-out;
-    -o-transition: -o-transform 0.6s ease-in-out;
-    transition: transform 0.6s ease-in-out;
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+    -moz-transition: -moz-transform 0.4s ease-in-out;
+    -o-transition: -o-transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     backface-visibility: hidden;
