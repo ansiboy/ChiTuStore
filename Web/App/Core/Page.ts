@@ -85,9 +85,6 @@ class Page {
         this.element.className = Page.PAGE_CLASS_NAME;
         this.element.style.display = 'none';
 
-        //if (site.env.isIOS)
-        $(this.element).addClass('ios');
-
         var header_node = document.createElement('div');
         header_node.className = Page.PAGE_HEADER_CLASS_NAME;
         this.header = new Control(header_node);

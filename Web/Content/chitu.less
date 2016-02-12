@@ -19,7 +19,7 @@ body {
 }
 
 .page-topBar {
-  position: fixed;
+  position: absolute;
   top: 0;
   z-index: @header-zindex + 10;
   width: 100%;
@@ -40,8 +40,24 @@ body {
     height: @topBar-height;
 }
 
+.page-node{
+    .page-header{
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+    
+}
 /* ---------- IScroll 样式 ---------- */
-.page-node.ios {
+// .page-node.ios {
+//     width: 100%;
+//     height: 100%;
+//     background-color: @bg-color;
+//     position: fixed;
+//     z-index: 100;
+// }
+
+.page-container.iscroll {
     width: 100%;
     height: 100%;
     background-color: @bg-color;
@@ -49,7 +65,7 @@ body {
     z-index: 100;
 }
 
-.page-node.ios .page-body {
+.page-node.iscroll .page-body {
     position: absolute;
     left: 0;
     width: 100%;
@@ -73,7 +89,7 @@ body {
     text-size-adjust: none;
 }
 
-.page-node.ios .page-content {
+.page-node.iscroll .page-content {
     top: 0;
     position: absolute;
     width: 100%;
@@ -82,7 +98,7 @@ body {
     background-color: @bg-color;
 }
 
-.page-node.ios .page-loading {
+.page-node.iscroll .page-loading {
     top: 0;
     position: absolute;
     width: 100%;
@@ -91,15 +107,16 @@ body {
     text-align: center;
 }
 
-.page-node.ios .page-header {
-    position: fixed;
+.page-node.iscroll .page-header {
+    position: absolute;
     top: 0;
-    z-index: 100;
+    z-index: 100; 
     width: 100%;
+   
 }
 
-.page-node.ios .page-footer {
-    position: fixed;
+.page-node.iscroll .page-footer {
+    position: absolute;
     bottom: 0;
     width: 100%;
     z-index: @footer-zindex;

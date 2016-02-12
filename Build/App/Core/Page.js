@@ -54,7 +54,6 @@ define(["require", "exports", 'move'], function (require, exports, move) {
                     return;
                 _this.element.className = Page.PAGE_CLASS_NAME;
                 _this.element.style.display = 'none';
-                $(_this.element).addClass('ios');
                 var header_node = document.createElement('div');
                 header_node.className = Page.PAGE_HEADER_CLASS_NAME;
                 _this.header = new Control(header_node);

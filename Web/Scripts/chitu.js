@@ -330,6 +330,190 @@ var chitu;
         }
         return ScrollArguments;
     })();
+    var PageContainerTypeClassNames = (function () {
+        function PageContainerTypeClassNames() {
+            this.Div = 'div';
+            this.IScroll = 'iscroll';
+            this.Document = 'doc';
+        }
+        return PageContainerTypeClassNames;
+    })();
+    var BasePageContainer = (function () {
+        function BasePageContainer(node, prevous) {
+            this.animationTime = 300;
+            this.scrollEnd = $.Callbacks();
+            this.is_dispose = false;
+            if (!node)
+                throw chitu.Errors.argumentNull('node');
+            $(node).hide();
+            this.previous = prevous;
+            this._nodes = new chitu.PageNodes(node);
+            this.disableHeaderFooterTouchMove();
+        }
+        BasePageContainer.prototype.show = function (swipe) {
+            var _this = this;
+            if (this.visible == true)
+                return $.Deferred().resolve();
+            var container_width = $(this.nodes.container).width();
+            var container_height = $(this.nodes.container).height();
+            var result = $.Deferred();
+            var on_end = function () {
+                result.resolve();
+            };
+            switch (swipe) {
+                case chitu.SwipeDirection.None:
+                default:
+                    $(this.nodes.container).show();
+                    result = $.Deferred().resolve();
+                    break;
+                case chitu.SwipeDirection.Down:
+                    this.translateY(0 - container_height, 0);
+                    $(this.nodes.container).show();
+                    window.setTimeout(function () {
+                        _this.translateY(0, _this.animationTime).done(on_end);
+                    }, 30);
+                    break;
+                case chitu.SwipeDirection.Up:
+                    this.translateY(container_height, 0);
+                    $(this.nodes.container).show();
+                    window.setTimeout(function () {
+                        _this.translateY(0, _this.animationTime).done(on_end);
+                    }, 30);
+                    break;
+                case chitu.SwipeDirection.Right:
+                    this.translateX(0 - container_width, 0);
+                    $(this.nodes.container).show();
+                    window.setTimeout(function () {
+                        _this.translateX(0, _this.animationTime).done(on_end);
+                    }, 30);
+                    break;
+                case chitu.SwipeDirection.Left:
+                    this.translateX(container_width, 0);
+                    $(this.nodes.container).show();
+                    window.setTimeout(function () {
+                        _this.translateX(0, _this.animationTime).done(on_end);
+                    }, 30);
+                    break;
+            }
+            return result;
+        };
+        BasePageContainer.prototype.translateDuration = function (duration) {
+            if (duration < 0)
+                throw chitu.Errors.paramError('Parameter duration must greater or equal 0, actual is ' + duration + '.');
+            var result = $.Deferred();
+            if (duration == 0) {
+                this.nodes.container.style.transitionDuration =
+                    this.nodes.container.style.webkitTransitionDuration = '';
+                return result.resolve();
+            }
+            this.nodes.container.style.transitionDuration =
+                this.nodes.container.style.webkitTransitionDuration = duration + 'ms';
+            window.setTimeout(function () { return result.resolve(); }, duration);
+            return result;
+        };
+        BasePageContainer.prototype.translateX = function (x, duration) {
+            var result = this.translateDuration(duration);
+            this.nodes.container.style.transform = this.nodes.container.style.webkitTransform
+                = 'translateX(' + x + 'px)';
+            return result;
+        };
+        BasePageContainer.prototype.translateY = function (y, duration) {
+            var result = this.translateDuration(duration);
+            this.nodes.container.style.transform = this.nodes.container.style.webkitTransform
+                = 'translateY(' + y + 'px)';
+            return result;
+        };
+        BasePageContainer.prototype.disableHeaderFooterTouchMove = function () {
+            $([this.footer, this.header]).on('touchmove', function (e) {
+                e.preventDefault();
+            });
+        };
+        BasePageContainer.prototype.hide = function (swipe) {
+            var _this = this;
+            if (this.visible == false)
+                return $.Deferred().resolve();
+            var container_width = $(this.nodes.container).width();
+            var container_height = $(this.nodes.container).height();
+            var result;
+            switch (swipe) {
+                case chitu.SwipeDirection.None:
+                default:
+                    result = $.Deferred().resolve();
+                    break;
+                case chitu.SwipeDirection.Down:
+                    result = this.translateY(container_height, this.animationTime);
+                    break;
+                case chitu.SwipeDirection.Up:
+                    result = this.translateY(0 - container_height, this.animationTime);
+                    break;
+                case chitu.SwipeDirection.Right:
+                    result = this.translateX(container_width, this.animationTime);
+                    break;
+                case chitu.SwipeDirection.Left:
+                    result = this.translateX(0 - container_width, this.animationTime);
+                    break;
+            }
+            result.done(function () { return $(_this.nodes.container).hide(); });
+            return result;
+        };
+        BasePageContainer.prototype.dispose = function () {
+            if (this.is_dispose)
+                return;
+            this.is_dispose = true;
+            this.nodes.container.parentNode.removeChild(this.nodes.container);
+        };
+        Object.defineProperty(BasePageContainer.prototype, "header", {
+            get: function () {
+                return this.nodes.header;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BasePageContainer.prototype, "nodes", {
+            get: function () {
+                return this._nodes;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BasePageContainer.prototype, "footer", {
+            get: function () {
+                return this.nodes.footer;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BasePageContainer.prototype, "loading", {
+            get: function () {
+                return this.nodes.loading;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(BasePageContainer.prototype, "visible", {
+            get: function () {
+                return $(this.nodes.container).is(':visible');
+            },
+            set: function (value) {
+                if (value)
+                    $(this.nodes.container).show();
+                else
+                    $(this.nodes.container).hide();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return BasePageContainer;
+    })();
+    chitu.BasePageContainer = BasePageContainer;
+})(chitu || (chitu = {}));
+var chitu;
+(function (chitu) {
+    var ScrollArguments = (function () {
+        function ScrollArguments() {
+        }
+        return ScrollArguments;
+    })();
     chitu.ScrollArguments = ScrollArguments;
     var WebPageContainer = (function () {
         function WebPageContainer(prevous) {
@@ -337,13 +521,10 @@ var chitu;
             this.scrollEnd = $.Callbacks();
             this.is_dispose = false;
             var node = document.createElement('div');
-            node.className = 'page-container';
             document.body.appendChild(node);
             var topBar = document.createElement('div');
             var bottomBar = document.createElement('div');
             var body = document.createElement('div');
-            topBar.className = 'page-topBar';
-            bottomBar.className = 'page-bottomBar';
             node.appendChild(topBar);
             node.appendChild(body);
             node.appendChild(bottomBar);
@@ -352,7 +533,21 @@ var chitu;
             this._node = node;
             this.previous = prevous;
             this.nodes = new chitu.PageNodes(body);
-            this.disableHeaderFooterTouchMove();
+            node.className = 'page-container';
+            topBar.className = 'page-topBar';
+            bottomBar.className = 'page-bottomBar';
+            if (this instanceof chitu.DivPageContainer) {
+                $(this.nodes.container).addClass('div');
+                $(this._node).addClass('div');
+            }
+            else if (this instanceof chitu.DocumentPageContainer) {
+                $(this.nodes.container).addClass('doc');
+                $(this._node).addClass('doc');
+            }
+            else if (this instanceof chitu.IScrollPageContainer) {
+                $(this.nodes.container).addClass('iscroll');
+                $(this._node).addClass('iscroll');
+            }
             $(this._node).hide();
         }
         WebPageContainer.prototype.show = function (swipe) {
@@ -427,11 +622,6 @@ var chitu;
             this._node.style.transform = this._node.style.webkitTransform
                 = 'translateY(' + y + 'px)';
             return result;
-        };
-        WebPageContainer.prototype.disableHeaderFooterTouchMove = function () {
-            $([this.topBar, this.bottomBar]).on('touchmove', function (e) {
-                e.preventDefault();
-            });
         };
         WebPageContainer.prototype.wrapPageNode = function () {
         };
@@ -521,7 +711,6 @@ var chitu;
             _super.call(this, previous);
             this.cur_scroll_args = new chitu.ScrollArguments();
             this.CHECK_INTERVAL = 300;
-            $(this.nodes.container).addClass('div');
             var wrapper_node = this.nodes.body;
             wrapper_node.onscroll = function () {
                 var args = {
@@ -564,7 +753,6 @@ var chitu;
             _super.call(this, previous);
             this.cur_scroll_args = new chitu.ScrollArguments();
             this.CHECK_INTERVAL = 300;
-            $(this.nodes.container).addClass('doc');
             $(document).scroll(function (event) {
                 // if (!page.visible())
                 //     return;
@@ -622,9 +810,6 @@ var chitu;
             _super.call(this, previous);
             this.scroll = $.Callbacks();
             this._is_dispose = false;
-            $(this.nodes.container).addClass('ios');
-            $(this.nodes.body).addClass('wrapper');
-            $(this.nodes.content).addClass('scroller');
             requirejs(['iscroll'], function () { return _this.init(_this.nodes); });
         }
         IScrollPageContainer.prototype.on_scroll = function (args) {
@@ -1453,7 +1638,6 @@ var chitu;
             }
             load_args.loading.show();
             var result = this.fireEvent(this.load, load_args);
-            result.done(function () { return load_args.loading.hide(); });
             if (this.view == null) {
                 result.done(function () { return _this.on_loadCompleted(load_args); });
             }
@@ -1469,7 +1653,8 @@ var chitu;
         };
         Page.prototype.on_loadCompleted = function (args) {
             var _this = this;
-            return this.fireEvent(this.loadCompleted, args).done(function () {
+            var result = this.fireEvent(this.loadCompleted, args).done(function () {
+                args.loading.hide();
                 window.setTimeout(function () { return _this.refreshUI(); }, 100);
             });
         };
@@ -1546,182 +1731,6 @@ var chitu;
     });
 })(chitu || (chitu = {}));
 ;
-var chitu;
-(function (chitu) {
-    var ScrollArguments = (function () {
-        function ScrollArguments() {
-        }
-        return ScrollArguments;
-    })();
-    var BasePageContainer = (function () {
-        function BasePageContainer(node, prevous) {
-            this.animationTime = 300;
-            this.scrollEnd = $.Callbacks();
-            this.is_dispose = false;
-            if (!node)
-                throw chitu.Errors.argumentNull('node');
-            $(node).hide();
-            this.previous = prevous;
-            this._nodes = new chitu.PageNodes(node);
-            this.disableHeaderFooterTouchMove();
-        }
-        BasePageContainer.prototype.show = function (swipe) {
-            var _this = this;
-            if (this.visible == true)
-                return $.Deferred().resolve();
-            var container_width = $(this.nodes.container).width();
-            var container_height = $(this.nodes.container).height();
-            var result = $.Deferred();
-            var on_end = function () {
-                result.resolve();
-            };
-            switch (swipe) {
-                case chitu.SwipeDirection.None:
-                default:
-                    $(this.nodes.container).show();
-                    result = $.Deferred().resolve();
-                    break;
-                case chitu.SwipeDirection.Down:
-                    this.translateY(0 - container_height, 0);
-                    $(this.nodes.container).show();
-                    window.setTimeout(function () {
-                        _this.translateY(0, _this.animationTime).done(on_end);
-                    }, 30);
-                    break;
-                case chitu.SwipeDirection.Up:
-                    this.translateY(container_height, 0);
-                    $(this.nodes.container).show();
-                    window.setTimeout(function () {
-                        _this.translateY(0, _this.animationTime).done(on_end);
-                    }, 30);
-                    break;
-                case chitu.SwipeDirection.Right:
-                    this.translateX(0 - container_width, 0);
-                    $(this.nodes.container).show();
-                    window.setTimeout(function () {
-                        _this.translateX(0, _this.animationTime).done(on_end);
-                    }, 30);
-                    break;
-                case chitu.SwipeDirection.Left:
-                    this.translateX(container_width, 0);
-                    $(this.nodes.container).show();
-                    window.setTimeout(function () {
-                        _this.translateX(0, _this.animationTime).done(on_end);
-                    }, 30);
-                    break;
-            }
-            return result;
-        };
-        BasePageContainer.prototype.translateDuration = function (duration) {
-            if (duration < 0)
-                throw chitu.Errors.paramError('Parameter duration must greater or equal 0, actual is ' + duration + '.');
-            var result = $.Deferred();
-            if (duration == 0) {
-                this.nodes.container.style.transitionDuration =
-                    this.nodes.container.style.webkitTransitionDuration = '';
-                return result.resolve();
-            }
-            this.nodes.container.style.transitionDuration =
-                this.nodes.container.style.webkitTransitionDuration = duration + 'ms';
-            window.setTimeout(function () { return result.resolve(); }, duration);
-            return result;
-        };
-        BasePageContainer.prototype.translateX = function (x, duration) {
-            var result = this.translateDuration(duration);
-            this.nodes.container.style.transform = this.nodes.container.style.webkitTransform
-                = 'translateX(' + x + 'px)';
-            return result;
-        };
-        BasePageContainer.prototype.translateY = function (y, duration) {
-            var result = this.translateDuration(duration);
-            this.nodes.container.style.transform = this.nodes.container.style.webkitTransform
-                = 'translateY(' + y + 'px)';
-            return result;
-        };
-        BasePageContainer.prototype.disableHeaderFooterTouchMove = function () {
-            $([this.footer, this.header]).on('touchmove', function (e) {
-                e.preventDefault();
-            });
-        };
-        BasePageContainer.prototype.hide = function (swipe) {
-            var _this = this;
-            if (this.visible == false)
-                return $.Deferred().resolve();
-            var container_width = $(this.nodes.container).width();
-            var container_height = $(this.nodes.container).height();
-            var result;
-            switch (swipe) {
-                case chitu.SwipeDirection.None:
-                default:
-                    result = $.Deferred().resolve();
-                    break;
-                case chitu.SwipeDirection.Down:
-                    result = this.translateY(container_height, this.animationTime);
-                    break;
-                case chitu.SwipeDirection.Up:
-                    result = this.translateY(0 - container_height, this.animationTime);
-                    break;
-                case chitu.SwipeDirection.Right:
-                    result = this.translateX(container_width, this.animationTime);
-                    break;
-                case chitu.SwipeDirection.Left:
-                    result = this.translateX(0 - container_width, this.animationTime);
-                    break;
-            }
-            result.done(function () { return $(_this.nodes.container).hide(); });
-            return result;
-        };
-        BasePageContainer.prototype.dispose = function () {
-            if (this.is_dispose)
-                return;
-            this.is_dispose = true;
-            this.nodes.container.parentNode.removeChild(this.nodes.container);
-        };
-        Object.defineProperty(BasePageContainer.prototype, "header", {
-            get: function () {
-                return this.nodes.header;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BasePageContainer.prototype, "nodes", {
-            get: function () {
-                return this._nodes;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BasePageContainer.prototype, "footer", {
-            get: function () {
-                return this.nodes.footer;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BasePageContainer.prototype, "loading", {
-            get: function () {
-                return this.nodes.loading;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BasePageContainer.prototype, "visible", {
-            get: function () {
-                return $(this.nodes.container).is(':visible');
-            },
-            set: function (value) {
-                if (value)
-                    $(this.nodes.container).show();
-                else
-                    $(this.nodes.container).hide();
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return BasePageContainer;
-    })();
-    chitu.BasePageContainer = BasePageContainer;
-})(chitu || (chitu = {}));
 var chitu;
 (function (chitu) {
     var PageContext = (function () {

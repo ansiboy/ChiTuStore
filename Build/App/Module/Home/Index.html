@@ -1,14 +1,14 @@
 ﻿
 <div class="container" style="padding:0px;">
-    <div id="carousel-ad" style="min-height:80px;" data-bind="visible:ko.unwrap(advertItems).length > 0" name="ad-swiper" class="carousel slide" data-ride="carousel">
+    <div style="min-height:80px;" data-bind="visible:ko.unwrap(advertItems).length > 0" name="ad-swiper" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators" data-bind="foreach: advertItems">
             <li data-bind="attr: {'data-slide-to': $index(), 'class': $index() == 0 ? 'active' : ''}" data-target="#carousel-ad"></li>
         </ol>
 
         <!-- Wrapper for slides -->
-        <div data-bind="foreach: advertItems" class="carousel-inner" role="listbox">
-            <div data-bind="attr: {'class': $index() == 0 ? 'active item': 'item'}">
+        <div data-bind="foreach: advertItems" class="carousel-inner">
+            <div class="item">
                 <img data-bind="attr: { src: ImgUrl }" data-image="" alt="..." class="img-responsive">
                 <div class="carousel-caption">
 

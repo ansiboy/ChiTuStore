@@ -50,6 +50,38 @@ declare namespace chitu {
     }
 }
 declare namespace chitu {
+    interface PageContainer {
+        show(swipe: SwipeDirection): JQueryPromise<any>;
+        hide(swipe: SwipeDirection): JQueryPromise<any>;
+        dispose(): any;
+        nodes: PageNodes;
+        loading: HTMLElement;
+        visible: boolean;
+        scrollEnd: JQueryCallback;
+    }
+    abstract class BasePageContainer implements PageContainer {
+        private animationTime;
+        private num;
+        private _nodes;
+        protected previous: PageContainer;
+        scrollEnd: JQueryCallback;
+        constructor(node: HTMLElement, prevous: PageContainer);
+        show(swipe: SwipeDirection): JQueryPromise<any>;
+        private translateDuration(duration);
+        private translateX(x, duration?);
+        private translateY(y, duration?);
+        private disableHeaderFooterTouchMove();
+        hide(swipe: SwipeDirection): JQueryPromise<any>;
+        private is_dispose;
+        dispose(): void;
+        header: HTMLElement;
+        nodes: PageNodes;
+        footer: HTMLElement;
+        loading: HTMLElement;
+        visible: boolean;
+    }
+}
+declare namespace chitu {
     class ScrollArguments {
         scrollTop: number;
         scrollHeight: number;
@@ -69,7 +101,6 @@ declare namespace chitu {
         private translateDuration(duration);
         private translateX(x, duration?);
         private translateY(y, duration?);
-        private disableHeaderFooterTouchMove();
         private wrapPageNode();
         hide(swipe: SwipeDirection): JQueryPromise<any>;
         private is_dispose;
@@ -250,7 +281,7 @@ declare namespace chitu {
             loadType: PageLoadType;
             loading?: PageLoading;
         }): JQueryPromise<any>;
-        on_loadCompleted(args: any): JQueryPromise<any>;
+        on_loadCompleted(args: PageLoadArguments): void;
         on_closing(args: any): JQueryPromise<any>;
         on_closed(args: any): JQueryPromise<any>;
         on_scroll(args: any): JQueryPromise<any>;
@@ -262,38 +293,6 @@ declare namespace chitu {
         close(args?: Object, swipe?: SwipeDirection): void;
         private static page_scrollEnd(sender, args);
         refreshUI(): void;
-    }
-}
-declare namespace chitu {
-    interface PageContainer {
-        show(swipe: SwipeDirection): JQueryPromise<any>;
-        hide(swipe: SwipeDirection): JQueryPromise<any>;
-        dispose(): any;
-        nodes: PageNodes;
-        loading: HTMLElement;
-        visible: boolean;
-        scrollEnd: JQueryCallback;
-    }
-    abstract class BasePageContainer implements PageContainer {
-        private animationTime;
-        private num;
-        private _nodes;
-        protected previous: PageContainer;
-        scrollEnd: JQueryCallback;
-        constructor(node: HTMLElement, prevous: PageContainer);
-        show(swipe: SwipeDirection): JQueryPromise<any>;
-        private translateDuration(duration);
-        private translateX(x, duration?);
-        private translateY(y, duration?);
-        private disableHeaderFooterTouchMove();
-        hide(swipe: SwipeDirection): JQueryPromise<any>;
-        private is_dispose;
-        dispose(): void;
-        header: HTMLElement;
-        nodes: PageNodes;
-        footer: HTMLElement;
-        loading: HTMLElement;
-        visible: boolean;
     }
 }
 declare namespace chitu {

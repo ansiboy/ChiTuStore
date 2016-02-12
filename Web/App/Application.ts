@@ -165,6 +165,10 @@ app.pageCreated.add(function(sender: chitu.Application, page: chitu.Page) {
         var c = <chitu.WebPageContainer>page.conatiner;
         c.topBar.className = c.topBar.className + ' ' + controller + '-' + action;
         c.bottomBar.className = c.bottomBar.className + ' ' + controller + '-' + action;
+        
+        // var os_class:string;
+        // if(site.env.os)
+        //$(c.nodes.container).parents('.page-conatiner').addClass('');
     }
 
 
