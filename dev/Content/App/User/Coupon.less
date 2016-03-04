@@ -1,0 +1,63 @@
+﻿@import "../Variables.less";
+
+.User-Coupon {
+    @tabs-height: 40px;
+    .scrollViewTopPadding(@header-height + @tabs-height);
+    .topbarTop(@header-height);
+    .tabs {
+        margin-bottom: 40px;
+        
+        li {
+            width: 33.33%;
+            float: left;
+            text-align: center;
+            background-color: #fff;
+            font-size: 16px;
+            display: block;
+            border: 1px solid @gray-lighter;
+            border-left: none;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 8px;
+            color: @gray-light;
+            cursor: pointer;
+
+            &:first-child {
+                border-left: 1px solid #e5e5e5;
+            }
+            /*a {
+                text-decoration: none;*/
+            &.active {
+                color: @brand-primary;
+                font-weight: bold;
+            }
+            //}
+        }
+    }
+
+    hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        /*margin: 0;*/
+        height: 6px;
+        background-color: @gray-lighter;
+
+        &:first-child, &:last-child {
+            height: 12px;
+        }
+    }
+
+    .coupon {
+        padding: 10px 0px 10px 0px;
+    }
+
+    .norecords {
+        .icon {
+            i {
+                top: 33px;
+                font-size: 100px;
+            }
+        }
+    }
+}

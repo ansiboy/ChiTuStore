@@ -1,0 +1,94 @@
+﻿@import "../../bootstrap-3.3.5/variables.less";
+@import "../Variables.less";
+
+.Home-Search {
+
+    .scrollViewTopPadding(@header-height + @v-padding);
+
+
+
+    .search-icon {
+        position: absolute;
+        top: 14px;
+        right: 88px;
+        font-size: 20px;
+        color: #98a0af;
+    }
+
+    .products {
+        padding-left: 10px;
+        padding-right: 10px;
+
+        .row {
+            .name {
+                font-size: @font-size-h4;
+                height: 46px;
+                padding-top: 8px;
+            }
+
+            .price {
+                font-size: @font-size-h3;
+            }
+        }
+    }
+
+    .search-panel {
+        h2 {
+            margin: 0px;
+        }
+
+        .keywords {
+            padding-left: @h-padding;
+            padding-right: @h-padding;
+
+            hr {
+                margin-top: 6px;
+            }
+        }
+
+        hr {
+            margin-top: @v-padding + 6;
+        }
+
+        .history {
+            h4 {
+                color: @brand-primary;
+                font-weight: bold;
+                margin: 0px;
+                padding: 0px 10px 6px 10px;
+            }
+
+            .word {
+                padding-left: @h-padding;
+                padding-right: @h-padding;
+                padding-top: 6px;
+            }
+
+            hr {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .button {
+                padding-top: @v-padding;
+                padding-left: @h-padding * 2;
+                padding-right: @h-padding * 2;
+            }
+        }
+    }
+
+    .norecords {
+        padding-top: @v-padding;
+        padding-bottom: @v-padding;
+
+        i {
+            top: 20px;
+            font-size: 110px;
+        }
+
+        .text {
+            padding-top: @v-padding;
+            font-size: @font-size-h4;
+        }
+    }
+}

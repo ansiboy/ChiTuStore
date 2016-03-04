@@ -1,0 +1,207 @@
+﻿@import "../../bootstrap-3.3.5/variables.less";
+@import "../Variables.less";
+@footer-holder-height: 100px;
+
+.Home-Product {
+
+    @buy_bar: 50px;
+    .scrollViewTopPadding(@header-height);
+    .scrollViewBottomPadding(@buy_bar);
+    
+    .page-footer {
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+    }
+
+    .page-pullup {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    [name="btn_shopping_cart"] {
+        font-size: 28px;
+        margin-bottom: 0px;
+
+        & .badge {
+            position: relative;
+            top: -14px;
+            left: -14px;
+            background-color: @sub-num;
+        }
+    }
+
+    [name="bottom_bar"] {
+        width: 100%;
+        padding: 10px 10px 0px 10px;
+        background-color: @gray-lighter;
+        height: 50px;
+    }
+
+    hr {
+        border-top-width: 20px;
+        margin: 0;
+    }
+
+    .comments {
+        padding-bottom: @v-padding;
+
+        img {
+            margin-top: 10px;
+        }
+    }
+
+    .stars {
+        color: @star-color;
+    }
+
+    .active-tab {
+        padding-bottom: 12px;
+        border-bottom: 4px solid @gray-dark;
+    }
+}
+
+.product-panel {
+    position: fixed;
+    z-index: @zindex-modal;
+    background-color: white;
+    right: 0px;
+    bottom: 50px;
+
+
+    
+
+
+    .cust-prop {
+        border: 1px solid @brand-primary;
+        margin-bottom: 8px;
+        margin-right: 10px;
+        border-radius: 4px;
+        padding: 4px 20px 4px 20px;
+        white-space: nowrap;
+        background-color: white;
+
+        &.selected {
+            background-color: @brand-primary;
+            color: white;
+        }
+    }
+
+    .modal-content {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+
+        .modal-body {
+            padding: 50px 0px 60px 0px;
+        }
+
+        .modal-header {
+            position: fixed;
+            width: 100%;
+            padding: 0;
+            top: 0px;
+            right: 0px;
+            z-index: @zindex-modal;
+        }
+
+        .modal-footer {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            width: 100%;
+            background-color: white;
+            padding-bottom: @footer-holder-height+10;
+        }
+    }
+
+    .modal-dialog {
+        background-color: white;
+        margin: 0px;
+        top: 0px;
+        bottom: 0-@footer-holder-height;
+        right: 0;
+        position: fixed;
+        border: none;
+    }
+
+    .wrapper {
+        top: 0px;
+    }
+
+    .modal-backdrop.in {
+        opacity: @modal-backdrop-opacity;
+    }
+
+    .modal {
+        bottom: 0-@footer-holder-height;
+    }
+}
+
+
+.product-panel { 
+    nav {
+        background-color: @brand-primary;
+        color: white;
+        height: @header-height;
+        font-size: @topbar-font-size;
+        position: absolute;
+        //top: 0;
+        width: 100%;
+        height: @header-height;// + @immersion-height; 
+        
+        .nav-tabs {
+            border-bottom: none;
+            width: 100%;
+            position: absolute;
+        }
+    }
+}
+
+.immersion .product-panel { 
+    nav {
+        height: @header-height + @immersion-height; 
+        
+         .nav-tabs {
+            top: @immersion-height;
+        }
+    }
+    
+}
+
+// .product-detail {
+//     background-color: white;
+//     width: 100%;
+//     overflow-y: auto;
+//     overflow-x: hidden;
+// 
+//     .wrapper {
+//         z-index: @zindex-modal;
+//     }
+// 
+//     .pulldown {
+//         height: 50px;
+//         padding-top: 14px;
+//         text-align: center;
+//         background-color: @gray-lighter;
+//     }
+// 
+//     .container {
+//         padding-top: 20px;
+//     }
+// 
+//     .spin {
+//         /*margin-top: 140px;
+//             position: relative;*/
+//         width: 100%;
+//         text-align: center;
+//         padding-top: 100px;
+// 
+// 
+//         .icon-spinner {
+//             color: @brand-primary;
+//             font-size: 140px;
+//         }
+//     }
+//     
+// }

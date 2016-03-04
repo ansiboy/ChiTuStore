@@ -1,0 +1,40 @@
+﻿<div class="container">
+    <div class="caption">
+        <h4>订单概况</h4>
+        <hr />
+    </div>
+    <div class="row" style="padding-bottom:10px;">
+        <label class="col-xs-3" style="padding-right:0px;">订单状态</label>
+        <div class="col-xs-9" data-bind="text:order.StatusText" style="color:#f70"></div>
+    </div>
+    <div class="row" style="padding-bottom:10px;">
+        <label class="col-xs-3" style="padding-right:0px;">订单编号</label>
+        <div class="col-xs-9" data-bind="text:order.Serial"></div>
+    </div>
+    <div class="row" style="padding-bottom:10px;">
+        <label class="col-xs-3" style="padding-right:0px;">订单总计</label>
+        <div class="col-xs-9 price" data-bind="money:order.Sum"></div>
+    </div>
+    <div class="row" style="padding-bottom:10px;">
+        <label class="col-xs-3" style="padding-right:0px;">收货信息</label>
+        <div class="col-xs-9" data-bind="text:order.ReceiptAddress"></div>
+    </div>
+    <div class="row" style="padding-bottom:10px;">
+        <label class="col-xs-3" style="padding-right:0px;">发票信息</label>
+        <div class="col-xs-9" data-bind="text:order.Invoice"></div>
+    </div>
+    <div class="row" style="padding-bottom:10px;">
+        <label class="col-xs-3" style="padding-right:0px;">下单时间</label>
+        <div class="col-xs-9" data-bind="text:['{0:g}', order.OrderDate]"></div>
+    </div>
+    <div data-bind="visible:ko.unwrap(order.Remark)" class="row" style="padding-bottom:10px;">
+        <label class="col-xs-3" style="padding-right:0px;">订单备注</label>
+        <div class="col-xs-9" data-bind="text:order.Remark"></div>
+    </div>
+    <div style="margin-bottom:10px;">
+        提示：请在下单24小时内付款，过期后订单将自动取消。
+    </div>
+    <div data-bind="visible:ko.unwrap(order.Status) == 'WaitingForPayment'">
+        <a data-bind="tap:purchase,click:purchase" id="btnPurchase" href="javascript:void(0);" class="btn btn-block btn-primary">微信支付</a>
+    </div>
+</div>

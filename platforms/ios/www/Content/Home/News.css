@@ -1,0 +1,10 @@
+.Home-News scroller,
+.Home-News scroll-view[scroll-type="div"],
+.Home-News scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 50px;
+}
+.Home-News.immersion scroller,
+.Home-News.immersion scroll-view[scroll-type="div"],
+.Home-News.immersion scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 65px;
+}

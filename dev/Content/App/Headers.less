@@ -1,0 +1,135 @@
+@import "../bootstrap-3.3.5/variables.less";
+@import "Variables.less";
+header {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    width: 100%;
+    height: @header-height;
+    position: fixed;
+    z-index: @page-zindex + 20;  
+    background-color: @brand-primary; 
+    
+    nav{
+        padding: 4px 4px 0px 4px;
+        top: 0px;
+        position: relative;
+        text-align: center;
+        width: 100%;
+         
+        h4 {
+            font-size: @header-title-font-size;
+        }
+        .rightButton {
+            position: absolute;
+            font-size: 18px;
+            top: 10px;
+            right: 12px;
+        }
+        .leftButton {
+            position: absolute;
+            font-size: 18px;
+            top: 10px;
+            left: 12px;
+        }
+    }
+    
+   
+}
+
+ .immersion {
+    header {
+        height: @header-height + @immersion-height;
+        // top-bar {
+        //     top: @immersion-height;
+        //     position: fixed;
+        //     width: 100%;
+        // }
+        // .topbar {
+        //         top: @immersion-height;
+        //         position: fixed;
+        // }
+        nav {
+            top: @immersion-height;
+            position: fixed;
+        }
+    }
+}
+
+.Home-Index {
+    .logo {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        height: 36px;
+    }
+    .search {
+        
+        [name="search_input"] {
+            position: absolute;
+            top: 8px;
+            left: 46px;
+            right: 52px;
+            bottom: 2px;
+            width: auto;
+            background-color: white;
+            color: @gray-light;
+            text-align: left;
+        }
+    }
+    .search-icon {
+        position: absolute;
+        top: 12px;
+        right: 60px;
+        font-size: 20px;
+        color: #98a0af;
+    }
+}
+
+.Home-Class {
+    header {
+        [name="search_box"] {
+            color: @gray-light;
+            text-align: left;
+        }
+    }
+    
+   .search {
+        position: fixed;
+        padding: 8px 10px 8px 10px;
+        width: 100%;
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        font-size: 20px;
+        color: #98a0af;
+    }
+}
+	
+.Home-Search {
+    .search {
+        padding: 7px 80px 0px 40px;
+        height: @header-height;
+
+        [name="btn-back"] {
+            position: relative;
+            left: -28px;
+            top: -30px;
+            font-size: @font-size-h2;
+            /* 扩大可点击区域，使其更易于点中 */
+            padding-right: 16px;
+            padding-left: 20px;
+            margin-left: -20px;
+            /*------------------------------*/
+        }
+
+        .btn {
+            position: relative;
+            right: -66px;
+            top: -34px;
+        }
+    }
+}

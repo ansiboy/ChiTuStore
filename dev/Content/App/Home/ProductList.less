@@ -1,0 +1,135 @@
+﻿@import "../../bootstrap-3.3.5/variables.less";
+@import "../Variables.less";
+
+.Home-ProductList {
+    .topbarTop(@header-height);
+
+    @tab-height:40px;
+    .scrollViewTopPadding(@header-height + @tab-height);
+    .page-pulldown {
+        width: 100%;
+        height: @header-height;
+        z-index: 1000;
+    }
+
+    .products {
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .mini, .small {
+            width: 100%;
+            text-align: left;
+            margin: 0.1em 0 0 0;
+        }
+
+        .item {
+            padding-top: 16px;
+            padding-bottom: 10px;
+
+            &:nth-child(2n+1) {
+                border-bottom: 1px solid @gray-lighter;
+                border-right: 1px solid @gray-lighter;
+            }
+
+            &:nth-child(2n) {
+                border-bottom: 1px solid @gray-lighter;
+            }
+        }
+    }
+
+    .tabs {
+        li {
+            width: 25%;
+            float: left;
+            text-align: center;
+            background-color: #fff;
+            font-size: 16px;
+            display: block;
+            border: 1px solid @gray-lighter;
+            border-left: none;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 8px;
+            color: @gray-light;
+            cursor: pointer;
+
+            &:first-child {
+                border-left: 1px solid #e5e5e5;
+            }
+
+            a {
+                text-decoration: none;
+
+                &.active {
+                    color: @brand-primary;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+/*.Home-ProductList {
+
+}*/
+
+.product-filter {
+    .nav-tabs {
+        background-color: @brand-primary;
+        color: white;
+        height: @header-height;
+        font-size: @topbar-font-size;
+    }
+
+    .max-price {
+        @control-height: 30px;
+        margin-left: 80px;
+        padding-top: @v-padding + @control-height;
+    }
+
+    .min-price {
+        margin-left: 80px;
+        padding-top: @v-padding;
+    }
+
+    .modal-backdrop.in {
+        opacity: @modal-backdrop-opacity;
+    }
+
+
+
+    .modal {
+        /*z-index: @zindex-modal - 50;*/
+        .modal-dialog {
+            right: 0px;
+            top: 0px;
+            bottom: 0px;
+            background-color: white;
+            width: 100%;
+            margin: 0px;
+            position: fixed;
+
+            .modal-content {
+                border-radius: 0px;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                position: fixed;
+                border: none;
+                width: 100%;
+
+                .modal-header {
+                    padding: 0px;
+                }
+            }
+        }
+    }
+
+
+    .container {
+        right: 0;
+    }
+}
