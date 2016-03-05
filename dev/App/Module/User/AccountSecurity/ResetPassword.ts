@@ -86,5 +86,5 @@ export =function (page: chitu.Page) {
     page.load.add(() => { });
 
     var model = new Model();
-    ko.applyBindings(model, page.node);
+    ko.applyBindings(model, page.element);
 } 

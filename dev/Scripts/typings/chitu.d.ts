@@ -247,7 +247,7 @@ declare namespace chitu {
         static getPageName(routeData: RouteData): string;
         routeData: chitu.RouteData;
         name: string;
-        node: HTMLElement;
+        element: HTMLElement;
         previous: chitu.Page;
         visible: boolean;
         container: PageContainer;
@@ -282,7 +282,7 @@ declare namespace chitu {
         pageCreated: chitu.Callback;
         constructor(app: Application, previous?: PageContainer);
         on_pageCreated(page: chitu.Page): JQueryPromise<any>;
-        private _enableSwipeClose();
+        private _enableSwipeBack();
         protected createNode(): HTMLElement;
         protected createLoading(parent: HTMLElement): HTMLElement;
         show(swipe: SwipeDirection): JQueryPromise<any>;

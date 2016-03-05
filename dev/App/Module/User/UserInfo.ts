@@ -54,13 +54,13 @@ export = function (page: chitu.Page) {
     var model = new Model();
 
     page.viewChanged.add(() => {
-        var e = page.node.querySelector('[type="file"]');
+        var e = page.element.querySelector('[type="file"]');
         var imageFileResize = new ImageFileResize(<HTMLInputElement>e, { maxWidth: 100, maxHeight: 100 });
         imageFileResize.imageResized = (urls: string[], thumbs1: string[], thumbs2: string[]) => {
             model.userInfo.HeadImageUrl(thumbs1[0]);
             member.setUserInfo(mapping.toJS(model.userInfo));
         }
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     })
 
     page.load.add((sender, args) => {

@@ -41,6 +41,6 @@ export = function (page: chitu.Page) {
     };
 
     requirejs(['UI/VerifyCodeButton'], function () {
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     });
 } 

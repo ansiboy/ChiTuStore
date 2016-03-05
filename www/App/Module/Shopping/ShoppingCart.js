@@ -27,7 +27,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                     return;
                 var count = item.Count();
                 if (count <= 1) {
-                    var $dlg = $(_this.page.node).find('[name="dlg_confirm_remove"]');
+                    var $dlg = $(_this.page.element).find('[name="dlg_confirm_remove"]');
                     $dlg.find('[name="product-name"]').html(ko.unwrap(item.Name));
                     $dlg.find('[name="confirm"]')[0].onclick = function () {
                         shoppingCart.removeItems([ko.unwrap(item.ProductId)]).done(function (data) {
@@ -208,7 +208,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                 var _this = this;
                 return {
                     text: [],
-                    element: $(this.page.node).find('[name="dlg_update"]')[0],
+                    element: $(this.page.element).find('[name="dlg_update"]')[0],
                     status: function (status) {
                         var text = DialogText[status];
                         _model.updateDialogText(text);
@@ -244,7 +244,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
         var model = _model = new Model(page);
         page.viewChanged.add(function () {
             page.findControl('shoppingcart').load.add(function () { return model.loadItems(); });
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
     };
 });

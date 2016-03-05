@@ -33,15 +33,15 @@ export = function(page: chitu.Page) {
                 homeProductQueryArguments.pageIndex++;
                 args.enableScrollLoad = (homeProducts.length == services.defaultPageSize);
             });
-            
+
         return result;
     }
 
     var viewDeferred = page.view;
     page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/PromotionLabel', 'css!sc/Home/Index']));
 
-    page.viewChanged.add((sender, args) => {
-        ko.applyBindings(model, sender.node);
+    page.viewChanged.add((sender: chitu.Page, args) => {
+        ko.applyBindings(model, sender.element);
         var scroll_view = (<chitu.ScrollView>page.findControl('products'));
         scroll_view.scrollLoad = page_load;
 
@@ -53,7 +53,7 @@ export = function(page: chitu.Page) {
             }
 
             //requirejs(['Core/Carousel'], function(Carousel) {
-            var c = new Carousel($(page.node).find('[name="ad-swiper"]')[0]);
+            var c = new Carousel($(page.element).find('[name="ad-swiper"]')[0]);
             scroll_view.scroll.add((sender, e) => {
                 //if (e.scrollTop < 0) {
                 c.pause = e.scrollTop < 0;

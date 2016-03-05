@@ -67,7 +67,7 @@ define(["require", "exports", 'Site', 'Services/Station'], function (require, ex
     })();
     return function (page) {
         var model = new Model();
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
         station.hotKeywords().done(function (data) {
             model.hotKeywords(data);
         });

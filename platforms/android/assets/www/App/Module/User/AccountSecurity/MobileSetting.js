@@ -31,7 +31,7 @@ define(["require", "exports", 'Services/Auth', 'Services/Member', 'knockout.vali
             smsId: ko.observable()
         };
         requirejs(['UI/VerifyCodeButton'], function () {
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
     };
 });

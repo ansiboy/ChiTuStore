@@ -92,7 +92,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
                 str = str + this.Count() + '件';
                 return str;
             }, model.product);
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
         function on_load(sender, args) {
             return result;
@@ -111,13 +111,16 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
             var pan = page.container.gesture.createPan(page.container.element);
             pan.start = function (e) {
                 console.log('start');
-                $active_item = $(page.node).find('scroll-view.active');
+                $active_item = $(page.element).find('scroll-view.active');
                 if ($active_item.length == 0 || chitu.ScrollView.scrolling) {
                     return false;
                 }
+                var d = Math.atan(Math.abs(e.deltaY / e.deltaX)) / 3.14159265 * 180;
+                if (d > 20)
+                    return false;
                 $next_item = $active_item.next('scroll-view');
                 $prev_item = $active_item.prev('scroll-view');
-                var index = $(page.node).find('scroll-view').index($active_item);
+                var index = $(page.element).find('scroll-view').index($active_item);
                 var started = (index == 0 && (e.direction & Hammer.DIRECTION_LEFT) == Hammer.DIRECTION_LEFT) || (index == 1) ||
                     (index == 2 && (e.direction & Hammer.DIRECTION_RIGHT) == Hammer.DIRECTION_RIGHT);
                 return started;
@@ -159,7 +162,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
                     $prev_item.addClass('active');
                     $active_item.removeClass('active');
                 }
-                $active_item = $(page.node).find('scroll-view.active');
+                $active_item = $(page.element).find('scroll-view.active');
                 $next_item = $active_item.next('scroll-view');
                 $prev_item = $active_item.prev('scroll-view');
             };

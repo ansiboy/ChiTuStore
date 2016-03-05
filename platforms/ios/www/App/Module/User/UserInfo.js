@@ -30,13 +30,13 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
         page['topbar'].createLeftButton('icon-chevron-left', function () { return location.href = '#User_Index'; });
         var model = new Model();
         page.viewChanged.add(function () {
-            var e = page.node.querySelector('[type="file"]');
+            var e = page.element.querySelector('[type="file"]');
             var imageFileResize = new ImageFileResize(e, { maxWidth: 100, maxHeight: 100 });
             imageFileResize.imageResized = function (urls, thumbs1, thumbs2) {
                 model.userInfo.HeadImageUrl(thumbs1[0]);
                 member.setUserInfo(mapping.toJS(model.userInfo));
             };
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
         page.load.add(function (sender, args) {
             if (args.code) {

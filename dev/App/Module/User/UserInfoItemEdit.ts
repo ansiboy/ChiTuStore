@@ -99,14 +99,14 @@ export = function (page: chitu.Page) {
         },
         $privonce(): JQuery {
             if (!model._$privonce)
-                model._$privonce = $(page.node).find('[name="province"]');
+                model._$privonce = $(page.element).find('[name="province"]');
 
             return model._$privonce;
-            //var $city = $(page.node()).find('[name="city"]');
+            //var $city = $(page.element()).find('[name="city"]');
         },
         $city(): JQuery {
             if (!model._$city)
-                model._$city = $(page.node).find('[name="city"]');
+                model._$city = $(page.element).find('[name="city"]');
 
             return model._$city;
         },
@@ -139,7 +139,7 @@ export = function (page: chitu.Page) {
 
 
     page.viewChanged.add(() => {
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     });
 
 

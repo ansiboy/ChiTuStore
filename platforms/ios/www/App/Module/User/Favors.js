@@ -34,7 +34,7 @@ define(["require", "exports", 'Services/Shopping'], function (require, exports, 
                     model.loading(false);
                 });
             });
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
     };
 });

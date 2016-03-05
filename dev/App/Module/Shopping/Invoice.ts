@@ -39,5 +39,5 @@ export = function (page: chitu.Page) {
             validation.showAllMessages(false);
     });
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 }

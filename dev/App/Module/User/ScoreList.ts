@@ -37,7 +37,7 @@ export = function(page: chitu.Page) {
 
     //window.setTimeout(() => model.scoreRecords.removeAll());
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
     page.load.add(function(sender: chitu.Page, args) {
         model.loading(true);

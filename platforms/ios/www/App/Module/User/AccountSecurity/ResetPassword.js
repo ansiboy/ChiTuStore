@@ -76,6 +76,6 @@ define(["require", "exports", 'knockout.validation', 'Services/Member'], functio
     return function (page) {
         page.load.add(function () { });
         var model = new Model();
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     };
 });

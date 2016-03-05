@@ -28,6 +28,6 @@ define(["require", "exports", 'Services/Auth', 'Application', 'knockout.validati
             redirectUrl = args.redirectUrl;
             model.val = validation.group(model);
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
     };
 });

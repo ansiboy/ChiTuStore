@@ -22,7 +22,7 @@ export = function (page) {
         return shopping.getOrder(args.id).pipe(function (order) {
             if (!model.order) {
                 model.order = order;
-                ko.applyBindings(model, page.node());
+                ko.applyBindings(model, page.element);
             }
             else {
                 ko.mapping.fromJS(order, {}, model.order);

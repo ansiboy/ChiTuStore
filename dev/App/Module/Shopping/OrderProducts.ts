@@ -45,7 +45,7 @@ class Model {
         //var regionId = model.receiptRegionId();
         var data = {
             orderId: order.Id(),
-            remark: $(this._page.node).find('[name="remark"]').val(), //order.Remark(),
+            remark: $(this._page.element).find('[name="remark"]').val(), //order.Remark(),
             invoice: order.Invoice(),
             address: order.ReceiptAddress(),
             regionId: order.ReceiptRegionId()
@@ -169,7 +169,7 @@ export = function (page) {
 
                 if (model.order == null) {
                     model.order = order;
-                    ko.applyBindings(model, page.node());
+                    ko.applyBindings(model, page.element);
                 }
                 else {
                     for (var key in order) {

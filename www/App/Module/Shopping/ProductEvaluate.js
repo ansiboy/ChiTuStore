@@ -90,10 +90,10 @@ define(["require", "exports", 'knockout', 'Services/Account', 'Core/ImageFileRes
             model.orderDetailId(args.orderDetailId);
         });
         page.viewChanged.add(function () {
-            var e = page.node.querySelector('[type="file"]');
+            var e = page.element.querySelector('[type="file"]');
             var imageFileResize = new ImageFileResize(e, { maxWidth: 800, maxHeight: 800 }, { maxWidth: 100, maxHeight: 100 });
             imageFileResize.imageResized = image_resized;
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
         function image_resized(urls, datas, thumbs) {
             for (var i = 0; i < urls.length; i++)

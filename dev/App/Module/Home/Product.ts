@@ -112,7 +112,7 @@ export = function(page: chitu.Page) {
                 return str;
 
             }, model.product)
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
 
 
@@ -141,15 +141,22 @@ export = function(page: chitu.Page) {
         //page.container.gesture.add(pan);
         pan.start = (e: PanEvent) => {
             console.log('start');
-            $active_item = $(page.node).find('scroll-view.active');
+            $active_item = $(page.element).find('scroll-view.active');
             if ($active_item.length == 0 || chitu.ScrollView.scrolling) {
                 return false;
             }
+            
+            //==================================================
+            // 说明：计算角度，超过了水平滑动角度，则认为不是水平滑动。
+            var d = Math.atan(Math.abs(e.deltaY / e.deltaX)) / 3.14159265 * 180;
+            if (d > 20)
+                return false;
+            //==================================================
 
             $next_item = $active_item.next('scroll-view');
             $prev_item = $active_item.prev('scroll-view');
 
-            var index = $(page.node).find('scroll-view').index($active_item);
+            var index = $(page.element).find('scroll-view').index($active_item);
             var started = (index == 0 && (e.direction & Hammer.DIRECTION_LEFT) == Hammer.DIRECTION_LEFT) || (index == 1) ||
                 (index == 2 && (e.direction & Hammer.DIRECTION_RIGHT) == Hammer.DIRECTION_RIGHT);
             return started;
@@ -201,7 +208,7 @@ export = function(page: chitu.Page) {
                 $active_item.removeClass('active');
             }
 
-            $active_item = $(page.node).find('scroll-view.active');
+            $active_item = $(page.element).find('scroll-view.active');
             $next_item = $active_item.next('scroll-view');
             $prev_item = $active_item.prev('scroll-view');
         }

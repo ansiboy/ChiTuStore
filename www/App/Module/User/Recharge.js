@@ -30,6 +30,6 @@ define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Serv
     var model = new Model();
     var validation = ko_val.group(model);
     return function (page) {
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
     };
 });

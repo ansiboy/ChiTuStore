@@ -5,7 +5,7 @@ define(["require", "exports", 'Services/Shopping', 'knockout.mapping'], function
         var result = shopping.getProductIntroduce(productId).done(function (data) {
             if (model == null) {
                 model = mapping.fromJS(data);
-                ko.applyBindings(model, page.node);
+                ko.applyBindings(model, page.element);
             }
             else {
                 mapping.fromJS(data, {}, model);

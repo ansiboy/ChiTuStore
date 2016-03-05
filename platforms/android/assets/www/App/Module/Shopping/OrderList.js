@@ -26,11 +26,11 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
                 });
             };
             this.loadOrders = function () {
-                $($(_this.page.node)).find('a').removeClass('active');
+                $($(_this.page.element)).find('a').removeClass('active');
                 if (_this.status())
-                    $(_this.page.node).find('.tabs').find('[name="' + _this.status() + '"]').addClass('active');
+                    $(_this.page.element).find('.tabs').find('[name="' + _this.status() + '"]').addClass('active');
                 else {
-                    $(_this.page.node).find('.tabs').find('a').first().addClass('active');
+                    $(_this.page.element).find('.tabs').find('a').first().addClass('active');
                 }
                 _this.isLoading(true);
                 return shopping.getMyOrderList(_this.status(), _this.pageIndex, _this.lastDateTime).done(function (orders) {
@@ -93,7 +93,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
                 model.status(args.status || '');
                 return model.loadOrders().done(function (items) { return items.length < site.config.pageSize; });
             });
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
     };
 });

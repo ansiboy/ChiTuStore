@@ -4,13 +4,40 @@
         "uninstalled": []
     },
     "config_munge": {
-        "files": {}
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"CDVWKWebViewEngine\"><param name=\"ios-package\" value=\"CDVWKWebViewEngine\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"CordovaWebViewEngine\" value=\"CDVWKWebViewEngine\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
     },
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.maishu.chitustore"
+        },
+        "cordova-plugin-wkwebview-engine": {
+            "PACKAGE_NAME": "com.maishu.chitustore"
         }
     },
     "dependent_plugins": {},
-    "modules": []
+    "modules": [
+        {
+            "file": "plugins/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview-exec.js",
+            "id": "cordova-plugin-wkwebview-engine.ios-wkwebview-exec",
+            "pluginId": "cordova-plugin-wkwebview-engine",
+            "clobbers": [
+                "cordova.exec"
+            ]
+        }
+    ]
 }

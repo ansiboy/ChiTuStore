@@ -20,6 +20,6 @@ export = function (page: chitu.Page) {
 
     var page_view = page.view;
     page.view = $.when(page_view, chitu.Utility.loadjs(['css!content/Home/Class']));
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 };
 

@@ -75,7 +75,7 @@ export =function(page: chitu.Page) {
                 //page.enableScrollLoad = items.length < services.defaultPageSize;
             });
         });
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     });
 };
 

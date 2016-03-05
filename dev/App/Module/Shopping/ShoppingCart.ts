@@ -123,7 +123,7 @@ class Model {
 
         var count = item.Count();
         if (count <= 1) {
-            var $dlg = $(this.page.node).find('[name="dlg_confirm_remove"]');
+            var $dlg = $(this.page.element).find('[name="dlg_confirm_remove"]');
             $dlg.find('[name="product-name"]').html(ko.unwrap(item.Name));
             $dlg.find('[name="confirm"]')[0].onclick = () => {
                 shoppingCart.removeItems([ko.unwrap(item.ProductId)]).done((data) => {
@@ -246,7 +246,7 @@ class Model {
     get dialog(): any {
         return {
             text: [],
-            element: $(this.page.node).find('[name="dlg_update"]')[0],
+            element: $(this.page.element).find('[name="dlg_update"]')[0],
             status: (status: DialogStaus) => {
                 var text = DialogText[status];
                 _model.updateDialogText(text);
@@ -293,7 +293,7 @@ export = function(page: chitu.Page) {
 
     page.viewChanged.add(() => {
         page.findControl<chitu.ScrollView>('shoppingcart').load.add(() => model.loadItems());
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     });
 
 

@@ -28,7 +28,7 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home', '
         var viewDeferred = page.view;
         page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/PromotionLabel', 'css!sc/Home/Index']));
         page.viewChanged.add(function (sender, args) {
-            ko.applyBindings(model, sender.node);
+            ko.applyBindings(model, sender.element);
             var scroll_view = page.findControl('products');
             scroll_view.scrollLoad = page_load;
             var items_deferred = home.advertItems().done(function (advertItems) {
@@ -37,7 +37,7 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home', '
                     advertItems[i].LinkUrl = advertItems[i].LinkUrl;
                     model.advertItems.push(advertItems[i]);
                 }
-                var c = new Carousel($(page.node).find('[name="ad-swiper"]')[0]);
+                var c = new Carousel($(page.element).find('[name="ad-swiper"]')[0]);
                 scroll_view.scroll.add(function (sender, e) {
                     c.pause = e.scrollTop < 0;
                 });

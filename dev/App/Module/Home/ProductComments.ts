@@ -10,6 +10,6 @@ export = function (page: chitu.Page) {
         });
     })
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
 } 

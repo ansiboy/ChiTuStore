@@ -8,6 +8,6 @@ define(["require", "exports", 'Services/Shopping'], function (require, exports, 
                 return model.comments(comments);
             });
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
     };
 });

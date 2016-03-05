@@ -22,7 +22,7 @@ export = function(page: chitu.Page) {
     var result = info.getArticleById(id).done(function(news) {
         if (model.news == null) {
             model.news = mapping.fromJS(news);
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         }
         else {
             mapping.fromJS(news, {}, model.news);

@@ -104,7 +104,7 @@ var func = function (page: chitu.Page) {
     account.receiptInfoUpdated.add(on_receiptUpdated);
     account.receiptInfoInserted.add(on_receiptInserted);
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
 }
 

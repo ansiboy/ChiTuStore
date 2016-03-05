@@ -59,11 +59,11 @@ class Model {
         });
     }
     loadOrders = () => {
-        $($(this.page.node)).find('a').removeClass('active');
+        $($(this.page.element)).find('a').removeClass('active');
         if (this.status())
-            $(this.page.node).find('.tabs').find('[name="' + this.status() + '"]').addClass('active');
+            $(this.page.element).find('.tabs').find('[name="' + this.status() + '"]').addClass('active');
         else {
-            $(this.page.node).find('.tabs').find('a').first().addClass('active');
+            $(this.page.element).find('.tabs').find('a').first().addClass('active');
         }
 
         this.isLoading(true);
@@ -127,7 +127,7 @@ export = function(page: chitu.Page) {
             model.status(args.status || '');
             return model.loadOrders().done((items) => items.length < site.config.pageSize)
         });
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     });
     //model.orderEvaluate.open({});
     //return c.scrollLoad(page,);

@@ -153,16 +153,16 @@ class Model {
     //===================================================================
     // 说明：页面上的控件
     receiptNode = () => {
-        return $(this.page.node).find('[name="Receipt"]')[0];
+        return $(this.page.element).find('[name="Receipt"]')[0];
     }
     province = () => {
-        return $(this.page.node).find('[name="Province"]');
+        return $(this.page.element).find('[name="Province"]');
     }
     city = () => {
-        return $(this.page.node).find('[name="City"]');
+        return $(this.page.element).find('[name="City"]');
     }
     county = () => {
-        return $(this.page.node).find('[name="County"]');
+        return $(this.page.element).find('[name="County"]');
     }
     //===================================================================
     // 说明：事件
@@ -224,7 +224,7 @@ export = function (page: chitu.Page) {
             });
     })
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
 
     return account.getProvinces().done(function (provinces) {

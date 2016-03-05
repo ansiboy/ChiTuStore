@@ -14,7 +14,7 @@ export = function(page: chitu.Page) {
     page.view = $.when(viewDeferred, loadjsDeferred);
     
     //ko.applyBindings(model, page.node());
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
     var queryArguments = {
         pageIndex: 0,

@@ -28,7 +28,7 @@ define(["require", "exports", 'Site', 'Services/WeiXin', 'Services/Info', 'Appli
             if (value === void 0) { value = undefined; }
             if (value === undefined) {
                 if (!this._description)
-                    this._description = $(this._page.node).children('div:visible').first().text().trim().substr(0, 40) + '...';
+                    this._description = $(this._page.element).children('div:visible').first().text().trim().substr(0, 40) + '...';
                 return this._description;
             }
             this._description = value;

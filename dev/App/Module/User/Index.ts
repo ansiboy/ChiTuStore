@@ -75,6 +75,6 @@ export = function (page: chitu.Page) {
         return result;
     });
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
 } 

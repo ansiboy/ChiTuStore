@@ -11,7 +11,7 @@ export = function(page: chitu.Page) {
     var result = shopping.getProductIntroduce(productId).done((data) => {
         if (model == null) {
             model = mapping.fromJS(data);
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         }
         else {
             mapping.fromJS(data, {}, model);

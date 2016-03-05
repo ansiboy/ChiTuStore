@@ -75,7 +75,7 @@ class Model {
 export = function (page: chitu.Page) {
 
     var model = new Model(page);
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
     page.load.add((sender:chitu.Page,args) => {
         return model.loadProducts().done((items) => {

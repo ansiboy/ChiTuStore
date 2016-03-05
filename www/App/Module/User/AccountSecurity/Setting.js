@@ -71,11 +71,11 @@ define(["require", "exports", 'Services/Auth', 'knockout.validation', 'Applicati
             model.step(Step.Verify);
         });
         requirejs(['UI/VerifyCodeButton'], function () {
-            ko.applyBindings(model, page.node.querySelector('[name="stepOne"]'));
-            ko.applyBindings(model, page.node.querySelector('[class="step"]'));
+            ko.applyBindings(model, page.element.querySelector('[name="stepOne"]'));
+            ko.applyBindings(model, page.element.querySelector('[class="step"]'));
         });
         model.after_next.add(function () {
-            var element = page.node.querySelector('[name="stepTwo"]');
+            var element = page.element.querySelector('[name="stepTwo"]');
             ko.cleanNode(element);
             next_step.execute(element, { mobile: model.mobile(), verifyCode: model.verifyCode(), smsId: model.smsId() });
         });

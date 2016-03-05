@@ -8,7 +8,7 @@ define(["require", "exports", 'Services/Info', 'Site'], function (require, expor
             currentCategory: ko.observable(),
         };
         page.viewChanged.add(function () {
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
             page.findControl('news').scrollLoad = (function (sender, args) {
                 return info.getArticles(select_args).done(function (items) {
                     for (var i = 0; i < items.length; i++) {

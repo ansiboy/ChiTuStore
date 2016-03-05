@@ -39,6 +39,6 @@ export = function(page: chitu.Page) {
                     model.loading(false);
                 });
         });
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     });
 } 

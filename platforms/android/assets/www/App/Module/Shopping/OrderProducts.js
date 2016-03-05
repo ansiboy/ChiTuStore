@@ -22,7 +22,7 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Shopp
                 var order = _this.order;
                 var data = {
                     orderId: order.Id(),
-                    remark: $(_this._page.node).find('[name="remark"]').val(),
+                    remark: $(_this._page.element).find('[name="remark"]').val(),
                     invoice: order.Invoice(),
                     address: order.ReceiptAddress(),
                     regionId: order.ReceiptRegionId()
@@ -124,7 +124,7 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Shopp
                 });
                 if (model.order == null) {
                     model.order = order;
-                    ko.applyBindings(model, page.node());
+                    ko.applyBindings(model, page.element);
                 }
                 else {
                     for (var key in order) {

@@ -118,11 +118,11 @@ export = function (page: chitu.Page) {
     });
 
     page.viewChanged.add(() => {
-        var e = page.node.querySelector('[type="file"]');
+        var e = page.element.querySelector('[type="file"]');
         var imageFileResize = new ImageFileResize(<HTMLInputElement>e, { maxWidth: 800, maxHeight: 800 }, { maxWidth: 100, maxHeight: 100 });
         imageFileResize.imageResized = image_resized
 
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
     });
 
     function image_resized(urls: string[], datas: string[], thumbs: string[]) {

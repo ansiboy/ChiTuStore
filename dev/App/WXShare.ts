@@ -44,7 +44,7 @@ class WXShareArguments { //= function () {
     description(value: string = undefined) {
         if (value === undefined) {
             if (!this._description)
-                this._description = $(this._page.node).children('div:visible').first().text().trim().substr(0, 40) + '...';
+                this._description = $(this._page.element).children('div:visible').first().text().trim().substr(0, 40) + '...';
             // this._description = $('.container :visible').text().trim().substr(0, 40) + '...';
 
             return this._description;

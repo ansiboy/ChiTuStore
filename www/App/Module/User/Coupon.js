@@ -8,7 +8,7 @@ define(["require", "exports", 'Services/Coupon'], function (require, exports, co
         requirejs(['UI/CouponListItem', 'css!content/User/Coupon'], function () { return loadjsDeferred.resolve(); });
         var viewDeferred = page.view;
         page.view = $.when(viewDeferred, loadjsDeferred);
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
         var queryArguments = {
             pageIndex: 0,
             status: 'available'

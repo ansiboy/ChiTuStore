@@ -49,7 +49,7 @@ define(["require", "exports", 'Application', 'Services/Account'], function (requ
                 }).done(function (items) {
                 });
             });
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
     };
 });

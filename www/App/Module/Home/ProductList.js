@@ -88,7 +88,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
         var page_view = page.view;
         page.view = $.when(page_view, chitu.Utility.loadjs(['UI/PromotionLabel', 'css!content/Home/ProductList']));
         page.viewChanged.add(function () {
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
         page['title'] = function (value) {
             if (page['topbar'])

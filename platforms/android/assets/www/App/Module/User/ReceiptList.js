@@ -82,7 +82,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'knockout
         });
         account.receiptInfoUpdated.add(on_receiptUpdated);
         account.receiptInfoInserted.add(on_receiptInserted);
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
     };
     return { func: func };
 });

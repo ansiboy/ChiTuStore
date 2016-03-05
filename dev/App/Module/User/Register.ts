@@ -90,7 +90,7 @@ export = function (page: chitu.Page) {
         }, 1000);
     }
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
     model.user.confirmPassword.extend({ equal: model.user.password });
     model.user.mobile.extend({

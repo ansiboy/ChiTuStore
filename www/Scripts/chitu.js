@@ -691,7 +691,7 @@ var chitu;
         DocumentScrollView.createElement = function (html, page) {
             var element = document.createElement('div');
             element.innerHTML = html;
-            page.node.appendChild(element);
+            page.element.appendChild(element);
             return element;
         };
         DocumentScrollView.prototype.scrollEndCheck = function () {
@@ -1257,8 +1257,8 @@ var chitu;
                 action.execute(_this);
                 if (_this.view) {
                     _this.view.done(function (html) {
-                        _this.node.innerHTML = html;
-                        _this._controls = _this.createControls(_this.node);
+                        _this.element.innerHTML = html;
+                        _this._controls = _this.createControls(_this.element);
                         _this.viewHtml = html;
                         _this.on_load(routeData.values());
                     });
@@ -1341,7 +1341,7 @@ var chitu;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Page.prototype, "node", {
+        Object.defineProperty(Page.prototype, "element", {
             get: function () {
                 return this._node;
             },
@@ -1477,12 +1477,12 @@ var chitu;
             this._previous = previous;
             this._app = app;
             this.gesture = new Gesture();
-            this._enableSwipeClose();
+            this._enableSwipeBack();
         }
         PageContainer.prototype.on_pageCreated = function (page) {
             return chitu.fireCallback(this.pageCreated, [this, page]);
         };
-        PageContainer.prototype._enableSwipeClose = function () {
+        PageContainer.prototype._enableSwipeBack = function () {
             var _this = this;
             var container = this;
             if (container.previous == null || this.enableSwipeClose == false)
@@ -1490,6 +1490,8 @@ var chitu;
             var previous_start_x;
             var previous_visible;
             var node = container.element;
+            var colse_position = $(window).width() / 2;
+            var horizontal_swipe_angle = 20;
             var pan = container.gesture.createPan(container.element);
             pan.start = function (e) {
                 node.style.webkitTransform = '';
@@ -1497,6 +1499,9 @@ var chitu;
                 var martix = new WebKitCSSMatrix(container.previous.element.style.webkitTransform);
                 previous_start_x = martix.m41;
                 if (chitu.ScrollView.scrolling == true)
+                    return false;
+                var d = Math.atan(Math.abs(e.deltaY / e.deltaX)) / 3.14159265 * 180;
+                if (d > horizontal_swipe_angle)
                     return false;
                 var result = (container.previous != null && (e.direction & Hammer.DIRECTION_RIGHT) != 0) &&
                     (_this.open_swipe == chitu.SwipeDirection.Left || _this.open_swipe == chitu.SwipeDirection.Right);
@@ -1520,7 +1525,7 @@ var chitu;
                 move(_this.previous.element).x(previous_start_x + e.deltaX * _this._previousOffsetRate).duration(0).end();
             };
             pan.end = function (e) {
-                if (e.deltaX > $(window).width() / 2) {
+                if (e.deltaX > colse_position) {
                     _this._app.back();
                     return;
                 }
@@ -1560,7 +1565,7 @@ var chitu;
                 case chitu.SwipeDirection.None:
                 default:
                     $(this._node).show();
-                    result = $.Deferred().resolve();
+                    on_end();
                     break;
                 case chitu.SwipeDirection.Down:
                     move(this.element).y(0 - container_height).duration(0).end();
@@ -1703,7 +1708,7 @@ var chitu;
         PageContainer.prototype.showPage = function (routeData, swipe) {
             var _this = this;
             var page = this.createPage(routeData);
-            this.element.appendChild(page.node);
+            this.element.appendChild(page.element);
             this._currentPage = page;
             page.on_showing(routeData.values());
             this.show(swipe).done(function () {

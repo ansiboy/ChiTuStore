@@ -74,12 +74,12 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
             },
             $privonce: function () {
                 if (!model._$privonce)
-                    model._$privonce = $(page.node).find('[name="province"]');
+                    model._$privonce = $(page.element).find('[name="province"]');
                 return model._$privonce;
             },
             $city: function () {
                 if (!model._$city)
-                    model._$city = $(page.node).find('[name="city"]');
+                    model._$city = $(page.element).find('[name="city"]');
                 return model._$city;
             },
             hideCity: function () {
@@ -104,7 +104,7 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
         model.userInfo.City.subscribe(function (value) { return model.currentCity(value); });
         model.userInfo.NickName.subscribe(function (value) { return model.currentNickName(value); });
         page.viewChanged.add(function () {
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         });
         page.load.add(function (sender, args) {
             model.field(args.field);

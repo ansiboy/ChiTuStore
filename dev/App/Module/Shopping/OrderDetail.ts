@@ -67,7 +67,7 @@ export = function (page: chitu.Page) {
     function order_loaded(order) {
         if (model.order == null) {
             model.order = order;
-            ko.applyBindings(model, page.node);
+            ko.applyBindings(model, page.element);
         }
 
         var js_data = mapping.toJS(order);

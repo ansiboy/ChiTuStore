@@ -31,6 +31,6 @@ define(["require", "exports", 'Application', 'knockout.validation'], function (r
             if (validation)
                 validation.showAllMessages(false);
         });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
     };
 });

@@ -81,7 +81,7 @@ class Model {
 
 export = function (page: chitu.Page) {
     var model = new Model();
-    page.viewChanged.add(() => ko.applyBindings(model, page.node));
+    page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
     station.hotKeywords().done((data) => {
         model.hotKeywords(data);

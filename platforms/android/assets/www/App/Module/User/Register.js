@@ -71,7 +71,7 @@ define(["require", "exports", 'Application', 'Services/Auth', 'Services/Member',
                 }
             }, 1000);
         }
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.node); });
+        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
         model.user.confirmPassword.extend({ equal: model.user.password });
         model.user.mobile.extend({
             validation: [{

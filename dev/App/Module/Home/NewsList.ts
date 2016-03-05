@@ -17,7 +17,7 @@ export = function(page: chitu.Page) {
 
 
     page.viewChanged.add(() => {
-        ko.applyBindings(model, page.node);
+        ko.applyBindings(model, page.element);
         (<chitu.ScrollView>page.findControl('news')).scrollLoad = (function(sender: chitu.Page, args) {
             return info.getArticles(select_args).done(function(items) {
                 for (var i = 0; i < items.length; i++) {
