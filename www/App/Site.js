@@ -215,5 +215,12 @@ define(["require", "exports"], function (require, exports) {
         return Site;
     })();
     var site = window['site'] = window['site'] || new Site();
+    if (site.env.isApp) {
+        document.addEventListener('deviceready', function () {
+            console.log('deviceready');
+        });
+        requirejs(['../cordova'], function () {
+        });
+    }
     return site;
 });

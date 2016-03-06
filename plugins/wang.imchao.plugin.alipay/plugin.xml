@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="wang.imchao.plugin.alipay"
+        version="0.9.0">
+
+  <name>AlipayPlugin</name>
+  <license>MIT license</license>
+  <description>支付宝支付插件，alipay payment</description>
+  <keywords>alipay, payment</keywords>
+  <repo>https://github.com/charleyw/cordova-plugin-alipay</repo>
+  <issue>https://github.com/charleyw/cordova-plugin-alipay/issues</issue>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+
+  <preference name="PARTNER_ID"/>
+  <preference name="SELLER_ACCOUNT"/>
+
+  <asset src="www/alipay.js" target="js/alipay.js"/>
+
+  <js-module src="www/alipay.js" name="alipay">
+    <clobbers target="alipay" />
+  </js-module>
+
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <preference name="partner" value="$PARTNER_ID" />
+      <preference name="seller" value="$SELLER_ACCOUNT" />
+      <preference name="private_key" value="MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANdkzic3UbpkVujt\n/d2H+HAq1vpVpyANaXxC4Pll+fF57PldChJgqBzstTkxvCfgl80EMBFomZw0UUwB\nrJrg7e77iSmD7HnsHzY0PYbPEFU2M4xtxeVf4Ysg1tJuFf8TkxDLN3PR/3xft2sQ\nensRBq9XIyTcmDv9rNDUgb3HPCXLAgMBAAECgYB0KIHgtj2WBmy0OzyQDrbVTtUW\ntcBmUbVUdQC8ntkW98jrhdhbptKinqjwyjiNTNqwjpSZns5QZgp9sd1yvOCy5p5D\nEql1Z+1W32wLo2EmAAdhccCqGpCj3rdoYH9N6yxXQU6g/50mbRFvkg8refItrZoc\nnCHlVL68ZGAX209d2QJBAOxmhr3xMl0oOgGJjUNs10oaF3OElpIRMkzD5PJ2HIfh\nnCw+uRKfBkwNiK3xv/v4vFDvAvKg6HvsPhVLKgqjwB0CQQDpQGwqqrY4BJ5VdtdE\nX5Nw2hbQTRYjUM3E2LSQ0/fwXa8E3wctV/FdC+c912dVmEUmfuzelU51+zxZF/cY\n7mkHAkAE/Rjk0z0z2BB5TdTMUnSsnKZYCrk+tdww4IVpVHK/r1QjXuN68B4q5rI2\nsX5Sq+oVbyXJxvmA+/hHbMGjXddFAkAOE4AzlvfGK6kueSyGiMoKDm9ABNboLLEu\nRvGmp9QXol+0iI0TVHJRbi13Uu9+f+D0cMZ0rEf+4LmEmuijjYezAkEAp8mchS9h\nqqzLXTGazasJmNzSD9MPd6Vl3Ox49xVpAHxPJuX8XFYYe71rmv/9Gty/3ot7tjiE\nTjmjCGGzJjyhVA==" />
+      <feature name="AliPay">
+        <param name="android-package" value="wang.imchao.plugin.alipay.AliPayPlugin"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <!-- alipay sdk begin -->
+      <activity android:name="com.alipay.sdk.app.H5PayActivity"
+        android:configChanges="orientation|keyboardHidden|navigation"
+        android:exported="false" android:screenOrientation="behind"
+        android:windowSoftInputMode="adjustResize|stateHidden">
+      </activity>
+      <!-- alipay sdk end -->
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+      <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+      <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </config-file>
+
+    <source-file src="src/android/libs/alipaySDK-20150724.jar" target-dir="libs"/>
+
+    <source-file src="src/android/AliPayPlugin.java" target-dir="src/wang/imchao/plugin/alipay"/>
+    <source-file src="src/android/PayResult.java" target-dir="src/wang/imchao/plugin/alipay"/>
+    <source-file src="src/android/Base64.java" target-dir="src/wang/imchao/plugin/alipay"/>
+    <source-file src="src/android/SignUtils.java" target-dir="src/wang/imchao/plugin/alipay"/>
+  </platform>
+
+  <platform name="ios">
+    <config-file target="config.xml" parent="/widget">
+      <preference name="partner" value="$PARTNER_ID" />
+      <preference name="seller" value="$SELLER_ACCOUNT" />
+      <preference name="private_key" value="MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANdkzic3UbpkVujt\n/d2H+HAq1vpVpyANaXxC4Pll+fF57PldChJgqBzstTkxvCfgl80EMBFomZw0UUwB\nrJrg7e77iSmD7HnsHzY0PYbPEFU2M4xtxeVf4Ysg1tJuFf8TkxDLN3PR/3xft2sQ\nensRBq9XIyTcmDv9rNDUgb3HPCXLAgMBAAECgYB0KIHgtj2WBmy0OzyQDrbVTtUW\ntcBmUbVUdQC8ntkW98jrhdhbptKinqjwyjiNTNqwjpSZns5QZgp9sd1yvOCy5p5D\nEql1Z+1W32wLo2EmAAdhccCqGpCj3rdoYH9N6yxXQU6g/50mbRFvkg8refItrZoc\nnCHlVL68ZGAX209d2QJBAOxmhr3xMl0oOgGJjUNs10oaF3OElpIRMkzD5PJ2HIfh\nnCw+uRKfBkwNiK3xv/v4vFDvAvKg6HvsPhVLKgqjwB0CQQDpQGwqqrY4BJ5VdtdE\nX5Nw2hbQTRYjUM3E2LSQ0/fwXa8E3wctV/FdC+c912dVmEUmfuzelU51+zxZF/cY\n7mkHAkAE/Rjk0z0z2BB5TdTMUnSsnKZYCrk+tdww4IVpVHK/r1QjXuN68B4q5rI2\nsX5Sq+oVbyXJxvmA+/hHbMGjXddFAkAOE4AzlvfGK6kueSyGiMoKDm9ABNboLLEu\nRvGmp9QXol+0iI0TVHJRbi13Uu9+f+D0cMZ0rEf+4LmEmuijjYezAkEAp8mchS9h\nqqzLXTGazasJmNzSD9MPd6Vl3Ox49xVpAHxPJuX8XFYYe71rmv/9Gty/3ot7tjiE\nTjmjCGGzJjyhVA==" />
+      <feature name="AliPay">
+        <param name="ios-package" value="AlipayPlugin" />
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+      <array>
+          <dict>
+              <key>CFBundleURLName</key>
+              <string>alipay</string>
+              <key>CFBundleURLSchemes</key>
+              <array>
+                  <string>a$PARTNER_ID</string>
+              </array>
+          </dict>
+      </array>
+    </config-file>
+
+    <framework src="CoreTelephony.framework" weak="true" />
+    <framework src="Security.framework" weak="true" />
+    <framework src="SystemConfiguration.framework" weak="true" />
+
+    <framework src="src/ios/lib/AlipaySDK.framework" custom="true" />
+    <framework src="src/ios/lib/openssl.framework" custom="true" />
+
+    <header-file src="src/ios/AlipayPlugin.h"/>
+    <source-file src="src/ios/AlipayPlugin.m"/>
+
+    <header-file src="src/ios/Order.h"/>
+    <source-file src="src/ios/Order.m"/>
+
+    <header-file src="src/ios/Util/DataSigner.h"/>
+    <header-file src="src/ios/Util/NSDataEx.h"/>
+    <header-file src="src/ios/Util/RSADataSigner.h"/>
+    <header-file src="src/ios/Util/openssl_wrapper.h"/>
+
+    <source-file src="src/ios/Util/DataSigner.m"/>
+    <source-file src="src/ios/Util/NSDataEx.m"/>
+    <source-file src="src/ios/Util/RSADataSigner.m"/>
+    <source-file src="src/ios/Util/openssl_wrapper.m"/>
+
+  </platform>
+</plugin>

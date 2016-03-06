@@ -14,5 +14,17 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "wang.imchao.plugin.alipay": {
+        "source": {
+            "type": "local",
+            "path": "/Users/MaiShu/git/ChiTuStore/plugins/cordova-plugin-alipay"
+        },
+        "is_top_level": true,
+        "variables": {
+            "PARTNER_ID": "2088002027634004",
+            "SELLER_ACCOUNT": "ansiboy@163.com",
+            "PRIVATE_KEY": "MIICWwIBAAKBgQCr+WN74ISjoZ+CkxdkDEynFAhJB4n/trfobiHHmDDqRbQ/ScTintmtV3EeFjXVsimIFxHKPrGIKlRT7ZZwEAeROC8MDt+eaYhSZ4krt/yY+l1Jw4CsVnxDAs4qI5Pe9xAS+kSmI7w38pjWhP0htIAWOW9nl4AnMIKvaxKO45SjkL9wIDAQABnAoGAIx43QYm0rFGJ6DkvUp/sW0YM9xTSCmT+ozkyLrcWbhCz4SSoT+fZZYpCM29nR9/uam0WU96I2s5czYWPWYYlX7DRDtzLLxLy8HGiZxYprRnh1hhh5JIwJKt59RB7nbZa2hjUdpeBMvGEIHT31nFR5pkWIhduz6MggwGtXIyAK4HECQQDelEjt1EnnF+dDni2UEw6M9Xyr1b0w/Fcom97Ft0PdG8H1ZXHthM++TA8oYldbsl4qU6vATvLYdxYIFneP8SQvavAkEAxcvlxkSXsbbVAKvRlHjFomRc2R2/Evehp6BX+5H0Uio+9HfpeTeun2/MLn99XXt0sZiu0U3LYGuWxDybUM5mROQJADn0EikapUNujeCgYuUiq1ZHeT/+gnrPKUKBkzeXyCvCFnZ2u3tEoXLDCw9Qy74sayhKMOYZqFGEcFAaowoFWvjQJAZw/Kn9fgfonXFnsfoOBiFwgvRZT/eo59sF8+wiGCQkY95piAlAwhEkE6fq/nPqJpN3B7BnowmgGMO98kslHo3R4QJAPppvaZkEblTNzHwz50CbINeoDqc8YerMWEbXJ3z4HWcYnLttXx0JAkUDVXcSZ6eYV7bDgwsZelu3U4C+T3ydO8Q=="
+        }
     }
 }

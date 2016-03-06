@@ -15,6 +15,17 @@
 		3047A5121AB8059700498E2A /* build-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A50F1AB8059700498E2A /* build-debug.xcconfig */; };
 		3047A5131AB8059700498E2A /* build-release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A5101AB8059700498E2A /* build-release.xcconfig */; };
 		3047A5141AB8059700498E2A /* build.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A5111AB8059700498E2A /* build.xcconfig */; };
+		230604376A68485E8B26C1ED /* AlipayPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 910FFB33F1134AA28D27DF39 /* AlipayPlugin.m */; };
+		43DF0DB21A6B41A6872E387B /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C1CEABF0D140E7896435D6 /* Order.m */; };
+		AAE164D9294F4DBC874492FC /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 53588F5BEE8A45D9AD631525 /* DataSigner.m */; };
+		50B0DB1659A04E8D8D34E56E /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 5253ED59C3E94D1F9E0D08D5 /* NSDataEx.m */; };
+		EDDC83DCB3FB48449A204FBE /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A7E9B329914B379AA34998 /* RSADataSigner.m */; };
+		DEFA471F8C80493C82E3D38A /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C23C2EE4FB4A98A3C7130B /* openssl_wrapper.m */; };
+		D3EBD51EEEF24E6195D759E2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DF5C03C71B4BD18C1D604C /* CoreTelephony.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		530AC31C865D43CFA30169D8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0923498CB84C4904A2427AFA /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		307C4BD381A042708CCA3442 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1D9AF7B85A4065AD3B03AA /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C8C5BEAD92404A06A13821D2 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370A48633CA8422F9162741B /* AlipaySDK.framework */; };
+		18CFB06DC8B54DF49A604837 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DF3C5F7D0847D681AA6FC6 /* openssl.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +64,23 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ChiTuStore/config.xml; sourceTree = "<group>"; };
+		910FFB33F1134AA28D27DF39 /* AlipayPlugin.m */ = {isa = PBXFileReference; name = "AlipayPlugin.m"; path = "wang.imchao.plugin.alipay/AlipayPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		D2C1CEABF0D140E7896435D6 /* Order.m */ = {isa = PBXFileReference; name = "Order.m"; path = "wang.imchao.plugin.alipay/Order.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		53588F5BEE8A45D9AD631525 /* DataSigner.m */ = {isa = PBXFileReference; name = "DataSigner.m"; path = "wang.imchao.plugin.alipay/DataSigner.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		5253ED59C3E94D1F9E0D08D5 /* NSDataEx.m */ = {isa = PBXFileReference; name = "NSDataEx.m"; path = "wang.imchao.plugin.alipay/NSDataEx.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		81A7E9B329914B379AA34998 /* RSADataSigner.m */ = {isa = PBXFileReference; name = "RSADataSigner.m"; path = "wang.imchao.plugin.alipay/RSADataSigner.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		04C23C2EE4FB4A98A3C7130B /* openssl_wrapper.m */ = {isa = PBXFileReference; name = "openssl_wrapper.m"; path = "wang.imchao.plugin.alipay/openssl_wrapper.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		1EAF34B169AE499DA848E4E5 /* AlipayPlugin.h */ = {isa = PBXFileReference; name = "AlipayPlugin.h"; path = "wang.imchao.plugin.alipay/AlipayPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		F5A38A11DE344B5AB1444BA0 /* Order.h */ = {isa = PBXFileReference; name = "Order.h"; path = "wang.imchao.plugin.alipay/Order.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		030B59329BAC44168C192915 /* DataSigner.h */ = {isa = PBXFileReference; name = "DataSigner.h"; path = "wang.imchao.plugin.alipay/DataSigner.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		55D260C316814C0CA580A9FE /* NSDataEx.h */ = {isa = PBXFileReference; name = "NSDataEx.h"; path = "wang.imchao.plugin.alipay/NSDataEx.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		1778814938264D42BF11F64C /* RSADataSigner.h */ = {isa = PBXFileReference; name = "RSADataSigner.h"; path = "wang.imchao.plugin.alipay/RSADataSigner.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		443C3211E9A54A4D83E4EDA4 /* openssl_wrapper.h */ = {isa = PBXFileReference; name = "openssl_wrapper.h"; path = "wang.imchao.plugin.alipay/openssl_wrapper.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		51DF5C03C71B4BD18C1D604C /* CoreTelephony.framework */ = {isa = PBXFileReference; name = "CoreTelephony.framework"; path = "System/Library/Frameworks/CoreTelephony.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		0923498CB84C4904A2427AFA /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		2C1D9AF7B85A4065AD3B03AA /* SystemConfiguration.framework */ = {isa = PBXFileReference; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		370A48633CA8422F9162741B /* AlipaySDK.framework */ = {isa = PBXFileReference; name = "AlipaySDK.framework"; path = "ChiTuStore/Plugins/wang.imchao.plugin.alipay/AlipaySDK.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		B0DF3C5F7D0847D681AA6FC6 /* openssl.framework */ = {isa = PBXFileReference; name = "openssl.framework"; path = "ChiTuStore/Plugins/wang.imchao.plugin.alipay/openssl.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +89,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
+				D3EBD51EEEF24E6195D759E2 /* CoreTelephony.framework in Frameworks */,
+				530AC31C865D43CFA30169D8 /* Security.framework in Frameworks */,
+				307C4BD381A042708CCA3442 /* SystemConfiguration.framework in Frameworks */,
+				C8C5BEAD92404A06A13821D2 /* AlipaySDK.framework in Frameworks */,
+				18CFB06DC8B54DF49A604837 /* openssl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +162,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				51DF5C03C71B4BD18C1D604C /* CoreTelephony.framework */,
+				0923498CB84C4904A2427AFA /* Security.framework */,
+				2C1D9AF7B85A4065AD3B03AA /* SystemConfiguration.framework */,
+				370A48633CA8422F9162741B /* AlipaySDK.framework */,
+				B0DF3C5F7D0847D681AA6FC6 /* openssl.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -154,6 +192,18 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				910FFB33F1134AA28D27DF39 /* AlipayPlugin.m */,
+				D2C1CEABF0D140E7896435D6 /* Order.m */,
+				53588F5BEE8A45D9AD631525 /* DataSigner.m */,
+				5253ED59C3E94D1F9E0D08D5 /* NSDataEx.m */,
+				81A7E9B329914B379AA34998 /* RSADataSigner.m */,
+				04C23C2EE4FB4A98A3C7130B /* openssl_wrapper.m */,
+				1EAF34B169AE499DA848E4E5 /* AlipayPlugin.h */,
+				F5A38A11DE344B5AB1444BA0 /* Order.h */,
+				030B59329BAC44168C192915 /* DataSigner.h */,
+				55D260C316814C0CA580A9FE /* NSDataEx.h */,
+				1778814938264D42BF11F64C /* RSADataSigner.h */,
+				443C3211E9A54A4D83E4EDA4 /* openssl_wrapper.h */,
 			);
 			name = Plugins;
 			path = ChiTuStore/Plugins;
@@ -276,6 +326,12 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				230604376A68485E8B26C1ED /* AlipayPlugin.m in Sources */,
+				43DF0DB21A6B41A6872E387B /* Order.m in Sources */,
+				AAE164D9294F4DBC874492FC /* DataSigner.m in Sources */,
+				50B0DB1659A04E8D8D34E56E /* NSDataEx.m in Sources */,
+				EDDC83DCB3FB48449A204FBE /* RSADataSigner.m in Sources */,
+				DEFA471F8C80493C82E3D38A /* openssl_wrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +369,11 @@
 				PRODUCT_NAME = ChiTuStore;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"ChiTuStore/Plugins/wang.imchao.plugin.alipay\"",
+					"\"ChiTuStore/Plugins/wang.imchao.plugin.alipay\"",
+				);
 			};
 			name = Debug;
 		};
@@ -336,6 +397,11 @@
 				PRODUCT_NAME = ChiTuStore;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"ChiTuStore/Plugins/wang.imchao.plugin.alipay\"",
+					"\"ChiTuStore/Plugins/wang.imchao.plugin.alipay\"",
+				);
 			};
 			name = Release;
 		};
@@ -363,6 +429,11 @@
 				PRODUCT_NAME = ChiTuStore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"ChiTuStore/Plugins/wang.imchao.plugin.alipay\"",
+					"\"ChiTuStore/Plugins/wang.imchao.plugin.alipay\"",
+				);
 			};
 			name = Debug;
 		};
@@ -389,6 +460,11 @@
 				PRODUCT_NAME = ChiTuStore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"ChiTuStore/Plugins/wang.imchao.plugin.alipay\"",
+					"\"ChiTuStore/Plugins/wang.imchao.plugin.alipay\"",
+				);
 			};
 			name = Release;
 		};

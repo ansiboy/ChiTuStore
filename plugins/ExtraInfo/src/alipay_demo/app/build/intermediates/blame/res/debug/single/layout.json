@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/build/intermediates/res/merged/debug/layout/pay_main.xml",
+        "source": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/src/main/res/layout/pay_main.xml"
+    },
+    {
+        "merged": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/build/intermediates/res/merged/debug/layout/pay_external.xml",
+        "source": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/src/main/res/layout/pay_external.xml"
+    }
+]

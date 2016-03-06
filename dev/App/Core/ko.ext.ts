@@ -3,31 +3,8 @@ import ko = require('knockout');
 import $ = require('jquery');
 import site = require('Site');
 
-var ToastDialogHtml =
-    '<div class="modal fade"> \
-    <div class="modal-dialog"> \
-        <div class="modal-content"> \
-            <div class="modal-body"> \
-                <h5 data-bind="html:text"></h5> \
-            </div> \
-        </div> \
-    </div> \
-</div>';
-var ConfirmDialogHtml =
-    '<div class="modal fade"> \
-    <div class="modal-dialog"> \
-        <div class="modal-content"> \
-            <div class="modal-body"> \
-                <h5 data-bind="html:text"></h5> \
-            </div> \
-            <div class="modal-footer"> \
-                <button data-bind="click:cancel" type="button" class="btn btn-default" data-dismiss="modal">取消</button> \
-                <button data-bind="click:ok" type="button" class="btn btn-primary">确认</button> \
-            </div> \
-        </div> \
-    </div> \
-</div>';
-
+//=====================================================================
+// 说明：实现数据格式化
 Number.prototype['toFormattedString'] = function(format) {
     var reg = new RegExp('^C[0-9]+');
     if (reg.test(format)) {
@@ -171,6 +148,36 @@ ko.bindingHandlers['href'] = {
         href(element, valueAccessor);
     }
 };
+//===============================================================================
+
+
+//===============================================================================
+// 说明：实现对话框
+var ToastDialogHtml =
+    '<div class="modal fade"> \
+    <div class="modal-dialog"> \
+        <div class="modal-content"> \
+            <div class="modal-body"> \
+                <h5 data-bind="html:text"></h5> \
+            </div> \
+        </div> \
+    </div> \
+</div>';
+var ConfirmDialogHtml =
+    '<div class="modal fade"> \
+    <div class="modal-dialog"> \
+        <div class="modal-content"> \
+            <div class="modal-body"> \
+                <h5 data-bind="html:text"></h5> \
+            </div> \
+            <div class="modal-footer"> \
+                <button data-bind="click:cancel" type="button" class="btn btn-default" data-dismiss="modal">取消</button> \
+                <button data-bind="click:ok" type="button" class="btn btn-primary">确认</button> \
+            </div> \
+        </div> \
+    </div> \
+</div>';
+
 function getDialogConfig(element, name) {
     var dlg = $(element).attr(name);
 
@@ -287,21 +294,16 @@ ko.bindingHandlers.click = {
         return _click.init(element, valueAccessor, allBindings, viewModel, bindingContext);
     }
 };
-
+//===============================================================================
 
 //===============================================================================
 // 说明：处理图片的懒加载。
-// TODO：在窗口内的图片才显示，使用 getClientRects 或 getBoundingClientRect 可以获得图片的位置。
+// TODO：在窗口内的图片才显示，使用 getClientRects 或 getBoundingClientRect 可以获得图片的位置，或 jquery offset。
 function getImageUrl(src) {
-    /// <param name="src" type="String"/>
     // 说明：替换图片路径
     if (src.substr(0, 1) == '/') {
         src = site.config.imageBaseUrl + src;
     }
-    //else if (src.length > org_site.length && src.substr(0, org_site.length) == org_site) {
-    //    src = site.config.imageBaseUrl + src.substr(org_site.length);
-    //}
-
     return src;
 }
 
@@ -404,13 +406,15 @@ ko.bindingHandlers.attr = (function() {
     }
 })();
 
-function processImageElement(element) {
+function processImageElement(element:HTMLElement) {
+    var PREVIEW_IMAGE_DEFAULT_WIDTH = 200;
+    var PREVIEW_IMAGE_DEFAULT_HEIGHT = 200;
+    
     var src = $(element).attr('src');
-
     $(element).addClass('img-full');
-
-    var img_width = 200;
-    var img_height = 200;
+    
+    var img_width = PREVIEW_IMAGE_DEFAULT_WIDTH;
+    var img_height = PREVIEW_IMAGE_DEFAULT_HEIGHT;
     var match = src.match(/_\d+_\d+/);
     if (match && match.length > 0) {
         var arr = match[0].split('_');
@@ -438,18 +442,26 @@ function processImageElement(element) {
 var _html = ko.bindingHandlers.html;
 ko.bindingHandlers.html = {
     'update': function(element, valueAccessor, allBindings) {
-
+        
         var result = _html.update(element, valueAccessor, allBindings);
-
         var $img = $(element).find('img');
         $img.each(function() {
            processImageElement(this);
         });
         
-        tryUpdateScrollView(element);
-
         return result;
     }
+}
+
+//===============================================================================
+// 说明：实现 IScrollView 的刷新
+
+var html_update = ko.bindingHandlers.html.update;
+ko.bindingHandlers.html.update = function(element, valueAccessor, allBindings) {
+    
+    var result = html_update.apply(ko.bindingHandlers.html, [element, valueAccessor, allBindings]);
+    tryUpdateScrollView(element);
+    return result;
 }
 
 var foreach_update = ko.bindingHandlers.foreach.update;
@@ -491,6 +503,8 @@ function refreshScrollView(scroll_view: chitu.IScrollView) {
 
     $(scroll_view.element).data('timeid', timeid);
 }
+
+//===============================================================================
 
 //if (app) {
 

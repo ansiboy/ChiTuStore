@@ -18,6 +18,11 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <config-file target="config.xml" parent="/*">
+            <feature name="ExtraInfo">
+                <param name="android-package" value="com.maishu.extrainfo.ExtraInfo"/>
+            </feature>
+        </config-file>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

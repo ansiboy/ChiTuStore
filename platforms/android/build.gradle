@@ -243,6 +243,7 @@ dependencies {
     releaseCompile project(path: 'CordovaLib', configuration: 'release')
     // SUB-PROJECT DEPENDENCIES END
     compile files('libs/systembartint-1.0.4.jar')
+    compile files('libs/alipaySDK-20150724.jar')
 }
 
 def promptForReleaseKeyPassword() {

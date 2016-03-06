@@ -39,3 +39,7 @@
   float: left;
   padding: 10px 0 8px 12px;
 }
+.Home-NewsList img {
+  width: 100%;
+  height: auto;
+}

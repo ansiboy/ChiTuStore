@@ -173,7 +173,7 @@ class SiteEnvironment {
     /// <summary>
     /// 判断是否为 WEB
     /// </summary>
-    get isWeb():boolean{
+    get isWeb(): boolean {
         return !this.isApp;
     }
     /// <summary>
@@ -225,9 +225,20 @@ class Site {
     }
 }
 
+
+
+
 var site: Site = window['site'] = window['site'] || new Site();
-
-
 export = site;
 
 
+if (site.env.isApp) {
+    document.addEventListener('deviceready', function() {
+        console.log('deviceready');
+    
+    });
+
+    requirejs(['../cordova'], function() {
+
+    });
+}

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/msp_demo_title_bg.png",
+        "source": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/src/main/res/drawable-hdpi/msp_demo_title_bg.png"
+    },
+    {
+        "merged": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/msp_demo_title.png",
+        "source": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/src/main/res/drawable-hdpi/msp_demo_title.png"
+    },
+    {
+        "merged": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/msp_icon.png",
+        "source": "/Users/MaiShu/git/ChiTuStore/plugins/ExtraInfo/src/alipay_demo/app/src/main/res/drawable-hdpi/msp_icon.png"
+    }
+]

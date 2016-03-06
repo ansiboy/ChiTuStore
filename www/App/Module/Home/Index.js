@@ -12,6 +12,19 @@ define(["require", "exports", 'knockout', 'Services/Service', 'Services/Home', '
             brands: ko.observableArray(),
             advertItems: ko.observableArray(),
             homeProducts: ko.observableArray(),
+            pay: function () {
+                window.alipay.pay({
+                    tradeNo: 'g1239aaga1142f',
+                    subject: "测试标题",
+                    body: "我是测试内容",
+                    price: 0.01,
+                    notifyUrl: "http://your.server.notify.url"
+                }, function (successResults) {
+                    alert(successResults);
+                }, function (errorResults) {
+                    alert(errorResults);
+                });
+            }
         };
         function page_load(sender, args) {
             var result = home.homeProducts(homeProductQueryArguments.pageIndex)

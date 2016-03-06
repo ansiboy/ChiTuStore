@@ -16,6 +16,34 @@
                             "xml": "<preference name=\"CordovaWebViewEngine\" value=\"CDVWKWebViewEngine\" />",
                             "count": 1
                         }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<preference name=\"partner\" value=\"2088002027634004\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"seller\" value=\"ansiboy@163.com\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"private_key\" value=\"MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANdkzic3UbpkVujt\n/d2H+HAq1vpVpyANaXxC4Pll+fF57PldChJgqBzstTkxvCfgl80EMBFomZw0UUwB\nrJrg7e77iSmD7HnsHzY0PYbPEFU2M4xtxeVf4Ysg1tJuFf8TkxDLN3PR/3xft2sQ\nensRBq9XIyTcmDv9rNDUgb3HPCXLAgMBAAECgYB0KIHgtj2WBmy0OzyQDrbVTtUW\ntcBmUbVUdQC8ntkW98jrhdhbptKinqjwyjiNTNqwjpSZns5QZgp9sd1yvOCy5p5D\nEql1Z+1W32wLo2EmAAdhccCqGpCj3rdoYH9N6yxXQU6g/50mbRFvkg8refItrZoc\nnCHlVL68ZGAX209d2QJBAOxmhr3xMl0oOgGJjUNs10oaF3OElpIRMkzD5PJ2HIfh\nnCw+uRKfBkwNiK3xv/v4vFDvAvKg6HvsPhVLKgqjwB0CQQDpQGwqqrY4BJ5VdtdE\nX5Nw2hbQTRYjUM3E2LSQ0/fwXa8E3wctV/FdC+c912dVmEUmfuzelU51+zxZF/cY\n7mkHAkAE/Rjk0z0z2BB5TdTMUnSsnKZYCrk+tdww4IVpVHK/r1QjXuN68B4q5rI2\nsX5Sq+oVbyXJxvmA+/hHbMGjXddFAkAOE4AzlvfGK6kueSyGiMoKDm9ABNboLLEu\nRvGmp9QXol+0iI0TVHJRbi13Uu9+f+D0cMZ0rEf+4LmEmuijjYezAkEAp8mchS9h\nqqzLXTGazasJmNzSD9MPd6Vl3Ox49xVpAHxPJuX8XFYYe71rmv/9Gty/3ot7tjiE\nTjmjCGGzJjyhVA==\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AliPay\"><param name=\"ios-package\" value=\"AlipayPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "CFBundleURLTypes": [
+                        {
+                            "xml": "<array><dict><key>CFBundleURLName</key><string>alipay</string><key>CFBundleURLSchemes</key><array><string>a2088002027634004</string></array></dict></array>",
+                            "count": 1
+                        }
                     ]
                 }
             }
@@ -27,6 +55,11 @@
         },
         "cordova-plugin-wkwebview-engine": {
             "PACKAGE_NAME": "com.maishu.chitustore"
+        },
+        "wang.imchao.plugin.alipay": {
+            "PARTNER_ID": "2088002027634004",
+            "SELLER_ACCOUNT": "ansiboy@163.com",
+            "PACKAGE_NAME": "com.maishu.chitustore"
         }
     },
     "dependent_plugins": {},
@@ -37,6 +70,14 @@
             "pluginId": "cordova-plugin-wkwebview-engine",
             "clobbers": [
                 "cordova.exec"
+            ]
+        },
+        {
+            "file": "plugins/wang.imchao.plugin.alipay/www/alipay.js",
+            "id": "wang.imchao.plugin.alipay.alipay",
+            "pluginId": "wang.imchao.plugin.alipay",
+            "clobbers": [
+                "alipay"
             ]
         }
     ]

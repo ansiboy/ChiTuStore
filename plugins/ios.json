@@ -12,6 +12,11 @@
         },
         "cordova-plugin-wkwebview-engine": {
             "PACKAGE_NAME": "com.maishu.chitustore"
+        },
+        "wang.imchao.plugin.alipay": {
+            "PARTNER_ID": "2088002027634004",
+            "SELLER_ACCOUNT": "ansiboy@163.com",
+            "PACKAGE_NAME": "com.maishu.chitustore"
         }
     },
     "dependent_plugins": {}

@@ -1,26 +1,4 @@
 define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, exports, ko, $, site) {
-    var ToastDialogHtml = '<div class="modal fade"> \
-    <div class="modal-dialog"> \
-        <div class="modal-content"> \
-            <div class="modal-body"> \
-                <h5 data-bind="html:text"></h5> \
-            </div> \
-        </div> \
-    </div> \
-</div>';
-    var ConfirmDialogHtml = '<div class="modal fade"> \
-    <div class="modal-dialog"> \
-        <div class="modal-content"> \
-            <div class="modal-body"> \
-                <h5 data-bind="html:text"></h5> \
-            </div> \
-            <div class="modal-footer"> \
-                <button data-bind="click:cancel" type="button" class="btn btn-default" data-dismiss="modal">取消</button> \
-                <button data-bind="click:ok" type="button" class="btn btn-primary">确认</button> \
-            </div> \
-        </div> \
-    </div> \
-</div>';
     Number.prototype['toFormattedString'] = function (format) {
         var reg = new RegExp('^C[0-9]+');
         if (reg.test(format)) {
@@ -149,6 +127,28 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
             href(element, valueAccessor);
         }
     };
+    var ToastDialogHtml = '<div class="modal fade"> \
+    <div class="modal-dialog"> \
+        <div class="modal-content"> \
+            <div class="modal-body"> \
+                <h5 data-bind="html:text"></h5> \
+            </div> \
+        </div> \
+    </div> \
+</div>';
+    var ConfirmDialogHtml = '<div class="modal fade"> \
+    <div class="modal-dialog"> \
+        <div class="modal-content"> \
+            <div class="modal-body"> \
+                <h5 data-bind="html:text"></h5> \
+            </div> \
+            <div class="modal-footer"> \
+                <button data-bind="click:cancel" type="button" class="btn btn-default" data-dismiss="modal">取消</button> \
+                <button data-bind="click:ok" type="button" class="btn btn-primary">确认</button> \
+            </div> \
+        </div> \
+    </div> \
+</div>';
     function getDialogConfig(element, name) {
         var dlg = $(element).attr(name);
         var config;
@@ -288,10 +288,12 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
         };
     })();
     function processImageElement(element) {
+        var PREVIEW_IMAGE_DEFAULT_WIDTH = 200;
+        var PREVIEW_IMAGE_DEFAULT_HEIGHT = 200;
         var src = $(element).attr('src');
         $(element).addClass('img-full');
-        var img_width = 200;
-        var img_height = 200;
+        var img_width = PREVIEW_IMAGE_DEFAULT_WIDTH;
+        var img_height = PREVIEW_IMAGE_DEFAULT_HEIGHT;
         var match = src.match(/_\d+_\d+/);
         if (match && match.length > 0) {
             var arr = match[0].split('_');
@@ -320,9 +322,14 @@ define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, 
             $img.each(function () {
                 processImageElement(this);
             });
-            tryUpdateScrollView(element);
             return result;
         }
+    };
+    var html_update = ko.bindingHandlers.html.update;
+    ko.bindingHandlers.html.update = function (element, valueAccessor, allBindings) {
+        var result = html_update.apply(ko.bindingHandlers.html, [element, valueAccessor, allBindings]);
+        tryUpdateScrollView(element);
+        return result;
     };
     var foreach_update = ko.bindingHandlers.foreach.update;
     ko.bindingHandlers.foreach.update = function (element, valueAccessor, allBindings, viewModel, bindingContext) {

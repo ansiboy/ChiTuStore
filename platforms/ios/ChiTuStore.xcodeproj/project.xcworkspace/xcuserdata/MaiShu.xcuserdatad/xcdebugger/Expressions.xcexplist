@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[AlipayPlugin pay:]:AlipayPlugin.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[CDVIntentAndNavigationFilter parserDidStartDocument:]:CDVIntentAndNavigationFilter.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.allowNavigations">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CDVWhitelist addWhiteListEntry:]:CDVWhitelist.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[RSADataSigner formatPrivateKey:]:RSADataSigner.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "result">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CDVIntentAndNavigationFilter shouldOverrideLoadWithRequest:navigationType:]:CDVIntentAndNavigationFilter.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[self.allowIntentsWhitelist URLIsAllowed:url]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

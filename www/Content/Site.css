@@ -47,26 +47,9 @@ dl dd {
   margin: 0;
   box-sizing: border-box;
 }
-.img-full,
-.full {
-  height: auto;
-  width: 100%;
-}
 .lg-block {
   width: 100%;
   display: block;
-}
-.full-img img {
-  max-width: 100%;
-  height: auto;
-}
-.full-img,
-.full-img p,
-.full-img span {
-  word-wrap: break-word;
-}
-.full-img p {
-  background-color: transparent !important;
 }
 .border-no {
   border: none !important;

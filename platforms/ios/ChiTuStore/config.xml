@@ -28,6 +28,30 @@
         <param name="ios-package" value="CDVGestureHandler" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="CDVWKWebViewEngine">
+        <param name="ios-package" value="CDVWKWebViewEngine" />
+    </feature>
+    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+    <preference name="partner" value="2088002027634004" />
+    <preference name="seller" value="ansiboy@163.com" />
+    <preference name="private_key" value="MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANdkzic3UbpkVujt
+/d2H+HAq1vpVpyANaXxC4Pll+fF57PldChJgqBzstTkxvCfgl80EMBFomZw0UUwB
+rJrg7e77iSmD7HnsHzY0PYbPEFU2M4xtxeVf4Ysg1tJuFf8TkxDLN3PR/3xft2sQ
+ensRBq9XIyTcmDv9rNDUgb3HPCXLAgMBAAECgYB0KIHgtj2WBmy0OzyQDrbVTtUW
+tcBmUbVUdQC8ntkW98jrhdhbptKinqjwyjiNTNqwjpSZns5QZgp9sd1yvOCy5p5D
+Eql1Z+1W32wLo2EmAAdhccCqGpCj3rdoYH9N6yxXQU6g/50mbRFvkg8refItrZoc
+nCHlVL68ZGAX209d2QJBAOxmhr3xMl0oOgGJjUNs10oaF3OElpIRMkzD5PJ2HIfh
+nCw+uRKfBkwNiK3xv/v4vFDvAvKg6HvsPhVLKgqjwB0CQQDpQGwqqrY4BJ5VdtdE
+X5Nw2hbQTRYjUM3E2LSQ0/fwXa8E3wctV/FdC+c912dVmEUmfuzelU51+zxZF/cY
+7mkHAkAE/Rjk0z0z2BB5TdTMUnSsnKZYCrk+tdww4IVpVHK/r1QjXuN68B4q5rI2
+sX5Sq+oVbyXJxvmA+/hHbMGjXddFAkAOE4AzlvfGK6kueSyGiMoKDm9ABNboLLEu
+RvGmp9QXol+0iI0TVHJRbi13Uu9+f+D0cMZ0rEf+4LmEmuijjYezAkEAp8mchS9h
+qqzLXTGazasJmNzSD9MPd6Vl3Ox49xVpAHxPJuX8XFYYe71rmv/9Gty/3ot7tjiE
+TjmjCGGzJjyhVA==" />
+    <feature name="AliPay">
+        <param name="ios-package" value="AlipayPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
     <name>ChiTuStore</name>
@@ -45,5 +69,6 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="webviewbounce" value="false" />
 </widget>
