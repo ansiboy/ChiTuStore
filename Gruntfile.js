@@ -1,9 +1,11 @@
 ﻿
+var src_root = 'src';
 var dest_root = 'www';
-var src_root = 'dev';
+
+var www_browser = 'platforms/browser';
 var www_ios = 'platforms/ios'
 var www_android = 'platforms/android/assets'
-var js_files = [''];
+
 var ts_options = {
     module: 'amd',
     target: 'es5',
@@ -50,7 +52,13 @@ module.exports = function (grunt) {
                     expand: true,
                     src: dest_root + '/**/*.*',
                     dest: www_android,
-                }]
+                },
+                {
+                    expand: true,
+                    src: dest_root + '/**/*.*',
+                    dest: www_browser,
+                },
+                ]
             }
         },
         less: {
@@ -85,6 +93,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.registerTask('default', ['typescript:app', 'copy', 'less', 'clean']);//, 'less'
-    //grunt.registerTask('default', ['typescript:app']);
+    grunt.registerTask('default', ['typescript:app', 'copy', 'less', 'clean']);
 };

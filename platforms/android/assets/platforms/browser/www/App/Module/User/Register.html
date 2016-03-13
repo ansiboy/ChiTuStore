@@ -1,0 +1,79 @@
+﻿<!--<nav class="navbar navbar-default topBar" role="navigation" style="min-height:inherit;padding:0px;margin-bottom:0px;">
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4" style="text-align: center">
+        <h4>会员注册</h4>
+    </div>
+</nav>-->
+<div class="container" style="padding-top:70px;">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <input class="form-control" type="text" name="Mobile" data-bind="value:user.mobile" placeholder="请输入手机号码" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-6">
+                <input data-bind="value:user.verifyCode" type="text" name="VerifyCode" class="form-control" placeholder="验证码" />
+            </div>
+            <div class="col-xs-6">
+                <button data-bind="click:sendVerifyCode, disable:leftSeconds()>0, text:leftSeconds() == 0 ? '发送验证码' : '发送验证码('+ leftSeconds()+')'" type="button" class="btn btn-block btn-warning">发送验证码</button>
+            </div>
+            <div class="col-xs-12">
+                <span class="validationMessage" data-bind="validationMessage: user.verifyCode"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <input data-bind="value:user.password" type="password" class="form-control" placeholder="请输入密码" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <input data-bind="value:user.confirmPassword" type="password" class="form-control" placeholder="请再一次输入密码" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <button data-bind="click:register" type="button" class="btn btn-primary btn-block">立即注册</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--<form method="post">
+    <div class="container address">
+        <div class="row">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th><label for="Mobile" class="light">手机：</label></th>
+                    <td><input type="text" name="Mobile" id="Text1" class="lg-block" data-bind="value:user.mobile" placeholder="请输入手机号码" autofocus></td>
+                </tr>
+                <tr>
+                    <th><label for="VerifyCode" class="light">验证码：</label></th>
+                    <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="border-no no-padding">
+                            <tr>
+                                <td width="50%" class="border-no padding-t-0 padding-b-0"><input type="text" name="VerifyCode" id="Text2" class="lg-block" placeholder="验证码" /></td>
+                                <td width="50%" class="border-no no-padding"><button data-bind="click:sendVerifyCode,disable:leftSeconds()>0, text:leftSeconds() == 0 ? '发送验证码':$.format('发送验证码({0})', leftSeconds())" type="button" class="btn lg-block bg-orange verification"></button></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="Password" class="light">密码：</label></th>
+                    <td><input type="password" name="Password" class="lg-block" data-bind="value:user.password" placeholder="请输入密码" /></td>
+                </tr>
+                <tr>
+                    <th><label for="ConfirmPassword" class="light">确认密码：</label></th>
+                    <td><input type="password" name="ConfirmPassword" class="lg-block" placeholder="请再一次输入密码" /></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="container padding-tb-15">
+        <div class="row padding-15"><button id="Button2" data-bind="click:register" type="button" class="btn bg-blue lg-block">立即注册</button></div>
+        <h5 class="row padding-10 text-center">
+            <a class="lg-block" href="#User_Login">返回登录</a>
+        </h5>
+    </div>·
+</form>-->

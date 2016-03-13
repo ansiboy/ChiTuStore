@@ -1,0 +1,56 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-xs-4">
+            <img data-bind="attr:{src:productImageUrl}"
+                 class="img-responsive img-thumbnail">
+        </div>
+        <div class="col-xs-8" style="padding-left:0;">
+            <label>评分</label>
+            <div data-bind="foreach:starts">
+                <i data-bind="attr:{'class':selected()?'icon-star':'icon-star-empty'},click:$parent.switchStart,tap:$parent.switchStart"
+                   class="icon-star"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row evaluation">
+        <div class="col-xs-12">
+            <textarea data-bind="value:evaluation, attr:{placeholder:'长度在' + minWordCount + '至' + maxWordCount + '字之间'}" class="form-control" placeholder="长度在10至100字之间"></textarea>
+            <div data-bind="text:maxWordCount" class="word-num"></div>
+        </div>
+    </div>
+    <div class="row anonymous">
+        <div class="col-xs-12 checkbox">
+            <label>
+                <input data-bind="checked:anonymous" type="checkbox" />
+                匿名评价
+            </label>
+        </div>
+    </div>
+    <div class="row pictures">
+        <div class="col-xs-12">
+            <!-- ko foreach:imageUrls -->
+            <div data-bind="click:$parent.showImagePage,tap:$parent.showImagePage" class="pull-left item">
+                <img data-bind="attr:{src:$data}" />
+            </div>
+            <!-- /ko -->
+            <div class="pull-left item" style="">
+                <input type="file" accept="image/*" multiple />
+                <i class="icon-camera"></i>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row tips">
+        <div class="col-xs-12">
+            最多可上传<span data-bind="text:maxImageCount"></span>张图片
+        </div>
+    </div>-->
+    <!--<div ch-part="header" class="bg-primary topbar" style="">
+        <a href="javascript:app.back" class="leftButton" style="padding-right:20px;padding-left:20px;margin-left:-20px;height:50px;">
+            <i class="icon-chevron-left"></i>
+        </a>
+        <h4>评价晒单</h4>
+    </div>-->
+    <div ch-part="footer" class="container" style="padding-top:10px; padding-bottom:10px;height:50px;">
+        <button data-bind="click:submit,tap:submit" class="btn btn-primary btn-block" data-dialog="confirm:'确定要发表评价吗？'">提交</button>
+    </div>
+</div>

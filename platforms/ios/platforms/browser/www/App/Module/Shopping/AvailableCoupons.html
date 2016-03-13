@@ -1,0 +1,19 @@
+﻿<div class="container">
+    <!-- ko foreach:coupons-->
+    <div data-bind="click:$parent.selectCoupon">
+        <hr class="row" />
+        <div class="pull-left">
+            <div data-bind="money:Discount" style="font-size:24px;"></div>
+            <!--<div data-bind="html:StatusText" style="padding-left:4px;"></div>-->
+        </div>
+        <div class="pull-right" style="padding-top:4px;">
+            <div data-bind="html:Title"></div>
+            <div style="padding-top:6px;">
+                <span style="padding-right:8px;">有效期</span><span data-bind="text:['{0:d}',ValidBegin]"></span> 至 <span data-bind="text:['{0:d}',ValidEnd]"></span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr class="row" />
+    </div>
+    <!-- /ko -->
+</div>

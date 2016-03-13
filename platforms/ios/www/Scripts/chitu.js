@@ -265,6 +265,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Application = require('Application');
 var chitu;
 (function (chitu) {
     (function (OS) {
@@ -329,20 +330,6 @@ var chitu;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Environment.prototype, "isApp", {
-            get: function () {
-                return navigator.userAgent.indexOf("Html5Plus") >= 0;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Environment.prototype, "isWeb", {
-            get: function () {
-                return !this.isApp;
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(Environment.prototype, "isDegrade", {
             get: function () {
                 if ((this.isWeiXin || this.osVersion <= 4) && this.isAndroid)
@@ -381,7 +368,6 @@ var chitu;
         });
         return Environment;
     })();
-    chitu.Environment = Environment;
     var ControlFactory = (function () {
         function ControlFactory() {
         }
