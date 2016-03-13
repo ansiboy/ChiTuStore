@@ -44,13 +44,7 @@ declare namespace chitu {
         back(args?: any): JQueryPromise<any>;
     }
 }
-declare var Application: any;
 declare namespace chitu {
-    enum OS {
-        ios = 0,
-        android = 1,
-        other = 2,
-    }
     class ControlFactory {
         static createControls(element: HTMLElement, page: Page): Array<Control>;
         static createControl(element: HTMLElement, page: Page): Control;

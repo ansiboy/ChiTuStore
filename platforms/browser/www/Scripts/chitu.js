@@ -265,15 +265,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Application = require('Application');
 var chitu;
 (function (chitu) {
+    var OS;
     (function (OS) {
         OS[OS["ios"] = 0] = "ios";
         OS[OS["android"] = 1] = "android";
         OS[OS["other"] = 2] = "other";
-    })(chitu.OS || (chitu.OS = {}));
-    var OS = chitu.OS;
+    })(OS || (OS = {}));
     var scroll_types = {
         div: 'div',
         iscroll: 'iscroll',

@@ -160,8 +160,12 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
                             createHeaderNode(container, DEFAULT_WITH_BACK)
                                 .done(function (node) { return setHeaderTitle(node, '收货地址'); });
                             break;
-                        case 'RechargeList':
+                        case 'Recharge':
                             createHeaderNode(container, DEFAULT_WITH_BACK)
+                                .done(function (node) { return setHeaderTitle(node, '充值'); });
+                            break;
+                        case 'RechargeList':
+                            createHeaderNode(container, 'UI/Headers/RechargeList')
                                 .done(function (node) { return setHeaderTitle(node, '充值记录'); });
                             break;
                     }

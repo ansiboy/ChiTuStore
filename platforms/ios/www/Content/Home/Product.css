@@ -136,3 +136,18 @@
 .immersion .product-panel nav .nav-tabs {
   top: 15px;
 }
+.Home-ProductDetail scroller,
+.Home-ProductDetail scroll-view[scroll-type="div"],
+.Home-ProductDetail scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 50px;
+}
+.Home-ProductDetail.immersion scroller,
+.Home-ProductDetail.immersion scroll-view[scroll-type="div"],
+.Home-ProductDetail.immersion scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 65px;
+}
+.Home-ProductDetail img {
+  height: auto;
+  display: block;
+  width: 100%;
+}

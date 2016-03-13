@@ -68,10 +68,6 @@
     right: 0px;
     bottom: 50px;
 
-
-    
-
-
     .cust-prop {
         border: 1px solid @brand-primary;
         margin-bottom: 8px;
@@ -146,9 +142,8 @@
         height: @header-height;
         font-size: @topbar-font-size;
         position: absolute;
-        //top: 0;
         width: 100%;
-        height: @header-height;// + @immersion-height; 
+        height: @header-height;
         
         .nav-tabs {
             border-bottom: none;
@@ -169,39 +164,11 @@
     
 }
 
-// .product-detail {
-//     background-color: white;
-//     width: 100%;
-//     overflow-y: auto;
-//     overflow-x: hidden;
-// 
-//     .wrapper {
-//         z-index: @zindex-modal;
-//     }
-// 
-//     .pulldown {
-//         height: 50px;
-//         padding-top: 14px;
-//         text-align: center;
-//         background-color: @gray-lighter;
-//     }
-// 
-//     .container {
-//         padding-top: 20px;
-//     }
-// 
-//     .spin {
-//         /*margin-top: 140px;
-//             position: relative;*/
-//         width: 100%;
-//         text-align: center;
-//         padding-top: 100px;
-// 
-// 
-//         .icon-spinner {
-//             color: @brand-primary;
-//             font-size: 140px;
-//         }
-//     }
-//     
-// }
+.Home-ProductDetail {
+    .scrollViewTopPadding(@header-height);
+    img {
+            height: auto;
+            display: block;
+            width: 100%;
+    }
+}

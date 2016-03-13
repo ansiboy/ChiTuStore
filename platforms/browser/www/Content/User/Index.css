@@ -1,16 +1,6 @@
 .User-Index scroller,
 .User-Index scroll-view[scroll-type="div"],
 .User-Index scroll-view[scroll-type="iscroll"] scroller {
-  padding-top: 50px;
-}
-.User-Index.immersion scroller,
-.User-Index.immersion scroll-view[scroll-type="div"],
-.User-Index.immersion scroll-view[scroll-type="iscroll"] scroller {
-  padding-top: 65px;
-}
-.User-Index scroller,
-.User-Index scroll-view[scroll-type="div"],
-.User-Index scroll-view[scroll-type="iscroll"] scroller {
   padding-bottom: 50px;
 }
 .User-Index .container {
@@ -23,20 +13,10 @@
 .User-Index .userInfo {
   background-image: url(../../Images/APP/bg_user.png);
   background-size: 100% 100%;
-  padding: 40px 20px 40px 20px;
+  padding: 90px 20px 40px 20px;
 }
 .User-Index .userInfo .score {
   color: white;
-  /*
-            .price {
-                position: relative;
-                right: -20px;
-            }
-
-            .icon-chevron-right {
-                position: relative;
-                right: -60px;
-            }*/
 }
 .User-Index .userInfo .score .name {
   position: relative;
@@ -66,4 +46,7 @@
 }
 .User-Index .container .order-bar .name {
   margin-top: 6px;
+}
+.User-Index .immersion .userInfo {
+  padding-top: 105px;
 }

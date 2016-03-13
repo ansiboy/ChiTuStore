@@ -3,7 +3,7 @@
 
 .User-Index {
     
-    .scrollViewTopPadding(@header-height);
+    //.scrollViewTopPadding(@header-height);
     .scrollViewBottomPadding(@menu-height);
     
     .container {
@@ -14,10 +14,11 @@
         padding-bottom: @menu-height;
     }
 
+    @userInfo-paddingTop: @header-height + 40px;
     .userInfo {
         background-image: url(../../Images/APP/bg_user.png);
         background-size: 100% 100%;
-        padding: 40px 20px 40px 20px;
+        padding: @userInfo-paddingTop 20px 40px 20px;
 
         .score {
             color: white;
@@ -31,16 +32,6 @@
             h5 {
                 text-align: right;
             }
-            /*
-            .price {
-                position: relative;
-                right: -20px;
-            }
-
-            .icon-chevron-right {
-                position: relative;
-                right: -60px;
-            }*/
         }
 
         .blance {
@@ -68,5 +59,9 @@
         .name {
             margin-top: 6px;
         }
+    }
+    
+    .immersion .userInfo{
+        padding-top: @userInfo-paddingTop + @immersion-height;
     }
 }

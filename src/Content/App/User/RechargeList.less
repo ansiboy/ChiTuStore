@@ -1,18 +1,12 @@
 ﻿@import "../Variables.less";
 
 .User-RechargeList {
-    .page-content {
-        padding-top: @header-height + 10px;
-    }
+    .scrollViewTopPadding(@header-height + @v-padding);
 
-    &.low .page-content {
-        margin-top: @v-padding;
-    }
-
-    [name='btn_recharge'] {
-        top: -36px;
-        right: 4px;
-        float: right;
-        position: relative;
-    }
+    // [name='btn_recharge'] {
+    //     top: -36px;
+    //     right: 4px;
+    //     float: right;
+    //     position: relative;
+    // }
 }

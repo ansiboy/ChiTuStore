@@ -182,8 +182,12 @@ class PageContainerFactory {
                         createHeaderNode(container, DEFAULT_WITH_BACK)
                             .done((node) => setHeaderTitle(node, '收货地址'));
                         break;
-                    case 'RechargeList':
+                    case 'Recharge':
                         createHeaderNode(container, DEFAULT_WITH_BACK)
+                            .done((node) => setHeaderTitle(node, '充值'));
+                        break;
+                    case 'RechargeList':
+                        createHeaderNode(container, 'UI/Headers/RechargeList')
                             .done((node) => setHeaderTitle(node, '充值记录'));
                         break;
                 }

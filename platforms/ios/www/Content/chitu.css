@@ -73,8 +73,7 @@ scroll-view[scroll-type="div"] {
   background-color: white;
 }
 .page-container .spin {
-  padding-top: 100px;
-  top: 50%;
+  padding-top: 150px;
 }
 .page-container .spin .icon-spinner {
   color: #BF0705;

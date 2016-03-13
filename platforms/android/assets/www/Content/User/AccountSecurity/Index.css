@@ -1,6 +1,9 @@
 .AccountSecurity-Index .container {
   padding-top: 50px;
 }
+.AccountSecurity-Index.immersion .container {
+  padding-top: 65px;
+}
 .AccountSecurity-Index .list-group i {
   position: relative;
   top: 50%;
