@@ -70,7 +70,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChiTuStore/Plugins/wang.imchao.plugin.alipay/openssl_wrapper.m"
@@ -96,6 +96,22 @@
             startingLineNumber = "70"
             endingLineNumber = "70"
             landmarkName = "-signString:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ChiTuStore/Plugins/wang.imchao.plugin.alipay/AlipayPlugin.m"
+            timestampString = "479573054.023338"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "-failWithCallbackID:withMessage:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

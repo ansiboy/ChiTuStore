@@ -23,9 +23,11 @@
                     </div>
                     <div style="margin-left:110px;">
                         <div style="line-height:22px;">
-                            <promotion-label params="value:ko.unwrap(Type)" style="display:inline;"></promotion-label>
-                            <span data-bind="text:Name,attr:{href:'#Home_Product_' + ko.unwrap(ProductId)}"></span>
-                            <span data-bind="visible:ko.unwrap(Score) > 0">（积分兑换）</span>
+                            <a data-bind="attr:{href:'#Home_Product_' + ko.unwrap(ProductId)}" href="javascript:">
+                                <promotion-label params="value:ko.unwrap(Type)" style="display:inline;"></promotion-label>
+                                <span data-bind="text:Name,attr:{href:'#Home_Product_' + ko.unwrap(ProductId)}"></span>
+                                <span data-bind="visible:ko.unwrap(Score) > 0">（积分兑换）</span>
+                            </a>
                         </div>
                         <div style="margin-top:10px;">
                             <div class="pull-left" style="padding:0px;margin-top:0px;">

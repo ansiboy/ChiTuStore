@@ -1476,7 +1476,7 @@ var chitu;
             var previous_visible;
             var node = container.element;
             var colse_position = $(window).width() / 2;
-            var horizontal_swipe_angle = 20;
+            var horizontal_swipe_angle = 35;
             var pan = container.gesture.createPan(container.element);
             pan.start = function (e) {
                 node.style.webkitTransform = '';
