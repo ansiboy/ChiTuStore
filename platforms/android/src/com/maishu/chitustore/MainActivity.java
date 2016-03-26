@@ -39,11 +39,19 @@ public class MainActivity extends CordovaActivity
         loadUrl(launchUrl);
 //        setTheme(android.R.style.Theme_NoTitleBar);
         initWindow();
+
+
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    //@TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void initWindow() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = this.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -54,4 +62,9 @@ public class MainActivity extends CordovaActivity
             window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
+
+//    @TargetApi(Build.VERSION_CODES.KITKAT)
+//    private  void initWindow(){
+//
+//    }
 }

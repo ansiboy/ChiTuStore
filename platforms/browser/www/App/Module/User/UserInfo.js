@@ -26,8 +26,8 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
         return Model;
     })();
     return function (page) {
-        $(page['topbar'].element).find('a').remove();
-        page['topbar'].createLeftButton('icon-chevron-left', function () { return location.href = '#User_Index'; });
+        // $((<TopBar>page['topbar']).element).find('a').remove();
+        // (<TopBar>page['topbar']).createLeftButton('icon-chevron-left', () => location.href = '#User_Index');
         var model = new Model();
         page.viewChanged.add(function () {
             var e = page.element.querySelector('[type="file"]');

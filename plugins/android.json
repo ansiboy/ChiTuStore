@@ -17,6 +17,9 @@
             "PARTNER_ID": "2088002027634004",
             "SELLER_ACCOUNT": "ansiboy@163.com",
             "PACKAGE_NAME": "com.maishu.chitustore"
+        },
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "com.maishu.chitustore"
         }
     },
     "dependent_plugins": {}

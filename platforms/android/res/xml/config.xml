@@ -7,24 +7,16 @@
     </feature>
     <preference name="partner" value="2088002027634004" />
     <preference name="seller" value="ansiboy@163.com" />
-    <preference name="private_key" value="MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANdkzic3UbpkVujt
-/d2H+HAq1vpVpyANaXxC4Pll+fF57PldChJgqBzstTkxvCfgl80EMBFomZw0UUwB
-rJrg7e77iSmD7HnsHzY0PYbPEFU2M4xtxeVf4Ysg1tJuFf8TkxDLN3PR/3xft2sQ
-ensRBq9XIyTcmDv9rNDUgb3HPCXLAgMBAAECgYB0KIHgtj2WBmy0OzyQDrbVTtUW
-tcBmUbVUdQC8ntkW98jrhdhbptKinqjwyjiNTNqwjpSZns5QZgp9sd1yvOCy5p5D
-Eql1Z+1W32wLo2EmAAdhccCqGpCj3rdoYH9N6yxXQU6g/50mbRFvkg8refItrZoc
-nCHlVL68ZGAX209d2QJBAOxmhr3xMl0oOgGJjUNs10oaF3OElpIRMkzD5PJ2HIfh
-nCw+uRKfBkwNiK3xv/v4vFDvAvKg6HvsPhVLKgqjwB0CQQDpQGwqqrY4BJ5VdtdE
-X5Nw2hbQTRYjUM3E2LSQ0/fwXa8E3wctV/FdC+c912dVmEUmfuzelU51+zxZF/cY
-7mkHAkAE/Rjk0z0z2BB5TdTMUnSsnKZYCrk+tdww4IVpVHK/r1QjXuN68B4q5rI2
-sX5Sq+oVbyXJxvmA+/hHbMGjXddFAkAOE4AzlvfGK6kueSyGiMoKDm9ABNboLLEu
-RvGmp9QXol+0iI0TVHJRbi13Uu9+f+D0cMZ0rEf+4LmEmuijjYezAkEAp8mchS9h
-qqzLXTGazasJmNzSD9MPd6Vl3Ox49xVpAHxPJuX8XFYYe71rmv/9Gty/3ot7tjiE
-TjmjCGGzJjyhVA==" />
+    <preference name="private_key" value="MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANdkzic3UbpkVujt&#xA;/d2H+HAq1vpVpyANaXxC4Pll+fF57PldChJgqBzstTkxvCfgl80EMBFomZw0UUwB&#xA;rJrg7e77iSmD7HnsHzY0PYbPEFU2M4xtxeVf4Ysg1tJuFf8TkxDLN3PR/3xft2sQ&#xA;ensRBq9XIyTcmDv9rNDUgb3HPCXLAgMBAAECgYB0KIHgtj2WBmy0OzyQDrbVTtUW&#xA;tcBmUbVUdQC8ntkW98jrhdhbptKinqjwyjiNTNqwjpSZns5QZgp9sd1yvOCy5p5D&#xA;Eql1Z+1W32wLo2EmAAdhccCqGpCj3rdoYH9N6yxXQU6g/50mbRFvkg8refItrZoc&#xA;nCHlVL68ZGAX209d2QJBAOxmhr3xMl0oOgGJjUNs10oaF3OElpIRMkzD5PJ2HIfh&#xA;nCw+uRKfBkwNiK3xv/v4vFDvAvKg6HvsPhVLKgqjwB0CQQDpQGwqqrY4BJ5VdtdE&#xA;X5Nw2hbQTRYjUM3E2LSQ0/fwXa8E3wctV/FdC+c912dVmEUmfuzelU51+zxZF/cY&#xA;7mkHAkAE/Rjk0z0z2BB5TdTMUnSsnKZYCrk+tdww4IVpVHK/r1QjXuN68B4q5rI2&#xA;sX5Sq+oVbyXJxvmA+/hHbMGjXddFAkAOE4AzlvfGK6kueSyGiMoKDm9ABNboLLEu&#xA;RvGmp9QXol+0iI0TVHJRbi13Uu9+f+D0cMZ0rEf+4LmEmuijjYezAkEAp8mchS9h&#xA;qqzLXTGazasJmNzSD9MPd6Vl3Ox49xVpAHxPJuX8XFYYe71rmv/9Gty/3ot7tjiE&#xA;TjmjCGGzJjyhVA==" />
     <feature name="AliPay">
         <param name="android-package" value="wang.imchao.plugin.alipay.AliPayPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
+    <preference default="17+" name="xwalkVersion" />
+    <preference default="--disable-pull-to-refresh-effect" name="xwalkCommandLine" />
+    <preference default="embedded" name="xwalkMode" />
+    <preference default="true" name="xwalkMultipleApk" />
     <allow-intent href="market:*" />
     <config-file parent="/*" target="config.xml">
     </config-file>
@@ -45,4 +37,8 @@ TjmjCGGzJjyhVA==" />
     <allow-intent href="geo:*" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="webviewbounce" value="false" />
+    <preference name="xwalkVersion" value="17+" />
+    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
+    <preference name="xwalkMode" value="embedded" />
+    <preference name="xwalkMultipleApk" value="true" />
 </widget>

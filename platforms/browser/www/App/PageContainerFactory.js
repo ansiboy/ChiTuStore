@@ -168,6 +168,20 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
                             createHeaderNode(container, 'UI/Headers/RechargeList')
                                 .done(function (node) { return setHeaderTitle(node, '充值记录'); });
                             break;
+                        case 'UserInfoItemEdit':
+                            var title = "&nbsp;";
+                            switch (routeData.values().field) {
+                                case 'Region':
+                                    title = '地区';
+                                    break;
+                            }
+                            createHeaderNode(container, DEFAULT_WITH_BACK)
+                                .done(function (node) { return setHeaderTitle(node, title); });
+                            break;
+                        case 'UserInfo':
+                            createHeaderNode(container, DEFAULT_WITH_BACK)
+                                .done(function (node) { return setHeaderTitle(node, '用户信息'); });
+                            break;
                     }
                     break;
                 case 'Error':

@@ -48,8 +48,8 @@ class Model {
 export = function (page: chitu.Page) {
 
 
-    $((<TopBar>page['topbar']).element).find('a').remove();
-    (<TopBar>page['topbar']).createLeftButton('icon-chevron-left', () => location.href = '#User_Index');
+    // $((<TopBar>page['topbar']).element).find('a').remove();
+    // (<TopBar>page['topbar']).createLeftButton('icon-chevron-left', () => location.href = '#User_Index');
 
     var model = new Model();
 

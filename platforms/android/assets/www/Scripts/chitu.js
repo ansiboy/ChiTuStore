@@ -52,6 +52,7 @@ var chitu;
             if (!obj) {
                 console.warn(chitu.Utility.format('加载活动“{1}.{0}”失败。', actionName, routeData.values().controller));
                 result.reject();
+                return;
             }
             var func = obj.func || obj;
             if (!$.isFunction(func))
@@ -1476,7 +1477,7 @@ var chitu;
             var previous_visible;
             var node = container.element;
             var colse_position = $(window).width() / 2;
-            var horizontal_swipe_angle = 40;
+            var horizontal_swipe_angle = 35;
             var pan = container.gesture.createPan(container.element);
             pan.start = function (e) {
                 node.style.webkitTransform = '';
@@ -2011,3 +2012,9 @@ var chitu;
     })();
     chitu.Utility = Utility;
 })(chitu || (chitu = {}));
+
+if (typeof define == "function") { 
+                        define(function(require, factory) { 
+                            return chitu;
+                        }); 
+                    } 

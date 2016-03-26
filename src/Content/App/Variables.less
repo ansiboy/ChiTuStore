@@ -32,6 +32,19 @@
     }
 }
 
+.containerTopPadding(@padding){
+    
+    .container {
+        padding-top: @padding;
+    }
+    &.immersion {
+        .container {
+            padding-top: @padding + @immersion-height;
+        }
+    }
+    
+}
+
 .topbarTop(@top){
     top-bar {
         top: @top;

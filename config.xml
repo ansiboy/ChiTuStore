@@ -18,9 +18,9 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <config-file target="config.xml" parent="/*">
+        <config-file parent="/*" target="config.xml">
             <feature name="ExtraInfo">
-                <param name="android-package" value="com.maishu.extrainfo.ExtraInfo"/>
+                <param name="android-package" value="com.maishu.extrainfo.ExtraInfo" />
             </feature>
         </config-file>
     </platform>
@@ -30,4 +30,8 @@
     </platform>
     <preference name="DisallowOverscroll" value="true" />
     <preference name="webviewbounce" value="false" />
+    <preference name="xwalkVersion" value="17+" />
+    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
+    <preference name="xwalkMode" value="embedded" />
+    <preference name="xwalkMultipleApk" value="true" />
 </widget>

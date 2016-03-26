@@ -14,25 +14,7 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
         Region: '地区'
     };
     return function (page) {
-        var topbar = page['topbar'];
-        $(topbar.element).find('a').remove();
-        topbar.createLeftButton('icon-chevron-left', function () {
-            if (model.isCity) {
-                model.hideCity();
-            }
-            else {
-                model.back();
-            }
-        });
-        var save_btn = topbar.createRightButton('', function () {
-            var obj = $.extend(mapping.toJS(model.userInfo), { NickName: model.currentNickName });
-            member.setUserInfo(obj).done(function () {
-                model.userInfo.NickName(model.currentNickName());
-                model.back();
-            });
-        });
-        save_btn.innerHTML = '保存';
-        $(save_btn).hide();
+        // var topbar: TopBar = (<TopBar>page['topbar']);
         var model = {
             _$privonce: null,
             _$city: null,
@@ -111,10 +93,6 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
             model.currentProvince(model.userInfo.Province());
             model.currentCity(model.userInfo.City());
             model.currentNickName(model.userInfo.NickName());
-            topbar.title(titles[args.field]);
-            if (args.field == 'NickName') {
-                $(save_btn).show();
-            }
             return $.Deferred().resolve();
         });
         return account.getProvinces().pipe(function (data) {

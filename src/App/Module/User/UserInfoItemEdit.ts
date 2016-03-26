@@ -29,29 +29,29 @@ var titles = {
 export = function (page: chitu.Page) {
 
 
-    var topbar: TopBar = (<TopBar>page['topbar']);
+    // var topbar: TopBar = (<TopBar>page['topbar']);
 
-    $(topbar.element).find('a').remove();
-    topbar.createLeftButton('icon-chevron-left', () => {
-        if (model.isCity) {
-            //$city.hide('slow');
-            //$privonce.show('slow');
-            model.hideCity();
-        }
-        else {
-            model.back();
-        }
-    });
+    // $(topbar.element).find('a').remove();
+    // topbar.createLeftButton('icon-chevron-left', () => {
+    //     if (model.isCity) {
+    //         //$city.hide('slow');
+    //         //$privonce.show('slow');
+    //         model.hideCity();
+    //     }
+    //     else {
+    //         model.back();
+    //     }
+    // });
 
-    var save_btn = topbar.createRightButton('', () => {
-        var obj = $.extend(mapping.toJS(model.userInfo), { NickName: model.currentNickName });
-        member.setUserInfo(obj).done(() => {
-            model.userInfo.NickName(model.currentNickName());
-            model.back();
-        });
-    });
-    save_btn.innerHTML = '保存';
-    $(save_btn).hide();
+    // var save_btn = topbar.createRightButton('', () => {
+    //     var obj = $.extend(mapping.toJS(model.userInfo), { NickName: model.currentNickName });
+    //     member.setUserInfo(obj).done(() => {
+    //         model.userInfo.NickName(model.currentNickName());
+    //         model.back();
+    //     });
+    // });
+    // save_btn.innerHTML = '保存';
+    // $(save_btn).hide();
 
 
 
@@ -149,11 +149,11 @@ export = function (page: chitu.Page) {
         model.currentCity(model.userInfo.City());
         model.currentNickName(model.userInfo.NickName());
 
-        topbar.title(titles[args.field]);
+        //topbar.title(titles[args.field]);
 
-        if (args.field == 'NickName') {
-            $(save_btn).show();
-        }
+        // if (args.field == 'NickName') {
+        //     $(save_btn).show();
+        // }
 
         return $.Deferred().resolve();
     });

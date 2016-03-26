@@ -190,6 +190,21 @@ class PageContainerFactory {
                         createHeaderNode(container, 'UI/Headers/RechargeList')
                             .done((node) => setHeaderTitle(node, '充值记录'));
                         break;
+                    case 'UserInfoItemEdit':
+                        //debugger;
+                        var title = "&nbsp;"
+                        switch (routeData.values().field) {
+                            case 'Region':
+                                title = '地区';
+                                break;
+                        }
+                        createHeaderNode(container, DEFAULT_WITH_BACK)
+                            .done((node) => setHeaderTitle(node, title));
+                        break;
+                    case 'UserInfo':
+                        createHeaderNode(container, DEFAULT_WITH_BACK)
+                            .done((node) => setHeaderTitle(node, '用户信息'));
+                        break;
                 }
                 break;
             case 'Error':
@@ -228,6 +243,13 @@ class PageContainerFactory {
 
         //if (site.env.isApp && site.env.isIOS)
         $(c.element).addClass('immersion');
+
+        // var a = {
+        //     page: {
+        //         name: '',
+        //         left: {}
+        //     }
+        // }
 
         return c;
     }

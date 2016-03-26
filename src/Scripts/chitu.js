@@ -52,6 +52,7 @@ var chitu;
             if (!obj) {
                 console.warn(chitu.Utility.format('加载活动“{1}.{0}”失败。', actionName, routeData.values().controller));
                 result.reject();
+                return;
             }
             var func = obj.func || obj;
             if (!$.isFunction(func))
@@ -2011,3 +2012,9 @@ var chitu;
     })();
     chitu.Utility = Utility;
 })(chitu || (chitu = {}));
+
+if (typeof define == "function") { 
+                        define(function(require, factory) { 
+                            return chitu;
+                        }); 
+                    } 

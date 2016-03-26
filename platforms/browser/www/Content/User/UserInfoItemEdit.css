@@ -9,6 +9,12 @@
         }
     }*/
 }
+.User-UserInfoItemEdit .container {
+  padding-top: 50px;
+}
+.User-UserInfoItemEdit.immersion .container {
+  padding-top: 65px;
+}
 .User-UserInfoItemEdit .page-content {
   background-color: #eeeeee;
   padding-top: 50px;

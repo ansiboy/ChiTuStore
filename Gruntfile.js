@@ -15,7 +15,7 @@ var ts_options = {
         src_root + "/Scripts/typings/*.ts"
     ]
 };
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     grunt.initConfig({
         typescript: {
             app: {
@@ -48,16 +48,16 @@ module.exports = function (grunt) {
                     src: dest_root + '/**/*.*',
                     dest: www_ios,
                 },
-                {
-                    expand: true,
-                    src: dest_root + '/**/*.*',
-                    dest: www_android,
-                },
-                {
-                    expand: true,
-                    src: dest_root + '/**/*.*',
-                    dest: www_browser,
-                },
+                    {
+                        expand: true,
+                        src: dest_root + '/**/*.*',
+                        dest: www_android,
+                    },
+                    {
+                        expand: true,
+                        src: dest_root + '/**/*.*',
+                        dest: www_browser,
+                    },
                 ]
             }
         },
@@ -85,7 +85,7 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            css: ['dev/Content/**/*.css'] // 清除编辑器自动生成的 CSS 文件
+            css: [src_root + '/Content/**/*.css'] // 清除编辑器自动生成的 CSS 文件
         }
     });
 
