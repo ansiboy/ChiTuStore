@@ -1,7 +1,3 @@
-/Web/bin
-/Web/obj
-/Web/.settings
-/Web/.idea
-/Web/.vscode
-/*.suo
-/packages
+/www
+/platforms/android/assets/www
+/platforms/ios/www
