@@ -1,27 +1,32 @@
-/// <reference path="../../../Scripts/typings/knockout.d.ts"/>
-/// <reference path="../../../Scripts/typings/knockout.mapping.d.ts"/>
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Services/Info', 'Application', 'knockout.mapping'], function (require, exports, info, app, mapping) {
     requirejs(['css!content/Home/News']);
-    return function (page) {
-        var model = {
-            news: null,
-            back: function () {
-                app.back().fail(function () {
-                    app.redirect('Home_NewsList');
-                });
-            },
-            category: ko.observable()
+    var NewsPage = (function (_super) {
+        __extends(NewsPage, _super);
+        function NewsPage() {
+            _super.call(this);
+            this.model = {
+                news: null,
+                back: function () {
+                    app.back().fail(function () {
+                        app.redirect('Home_NewsList');
+                    });
+                },
+                category: ko.observable()
+            };
+            this.load.add(this.page_load);
+        }
+        NewsPage.prototype.page_load = function (sender, args) {
+            return info.getArticleById(args.id).done(function (news) {
+                sender.model.news = mapping.fromJS(news);
+                ko.applyBindings(sender.model, sender.element);
+            });
         };
-        var id = page.routeData.values().id;
-        var result = info.getArticleById(id).done(function (news) {
-            if (model.news == null) {
-                model.news = mapping.fromJS(news);
-                ko.applyBindings(model, page.element);
-            }
-            else {
-                mapping.fromJS(news, {}, model.news);
-            }
-        });
-        page.viewChanged.add(function () { return page.findControl('news').load.add(function () { return result; }); });
-    };
+        return NewsPage;
+    })(chitu.Page);
+    return NewsPage;
 });

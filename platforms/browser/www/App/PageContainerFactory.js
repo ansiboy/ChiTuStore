@@ -1,4 +1,4 @@
-define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/ShoppingCart', 'knockout'], function (require, exports, shopping, auth, shoppingCart, ko) {
+define(["require", "exports", 'chitu', 'Services/Shopping', 'Services/Auth', 'Services/ShoppingCart', 'knockout'], function (require, exports, chitu, shopping, auth, shoppingCart, ko) {
     var DEFAULT_HEADER_PATH = 'UI/Headers/Default';
     var DEFAULT_WITH_BACK = 'UI/Headers/DefaultWithBack';
     function generateProductHeader(headerNode, routeData) {
@@ -15,7 +15,7 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
                 shopping.favorProduct(ko.unwrap(_this.product.Id), ko.unwrap(_this.product.Name));
             }
         };
-        var productId = routeData.values().id;
+        var productId = routeData.values.id;
         auth.whenLogin(function () { return shopping.isFavored(productId).done(function (value) { return model.isFavored(value); }); });
         ko.applyBindings(model, headerNode);
     }
@@ -36,8 +36,8 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
         function PageContainerFactory() {
         }
         PageContainerFactory.createContainerHeader = function (routeData, container) {
-            var controller = routeData.values().controller;
-            var action = routeData.values().action;
+            var controller = routeData.values.controller;
+            var action = routeData.values.action;
             var header_path = DEFAULT_HEADER_PATH;
             var header_title;
             switch (controller) {
@@ -50,11 +50,11 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
                             break;
                         case 'Setting':
                             var title;
-                            if (routeData.values().type == 'MobileBinding')
+                            if (routeData.values.type == 'MobileBinding')
                                 title = '手机绑定';
-                            else if (routeData.values().type == 'LoginPassword')
+                            else if (routeData.values.type == 'LoginPassword')
                                 title = '登录密码';
-                            else if (routeData.values().type == 'PaymentPassword')
+                            else if (routeData.values.type == 'PaymentPassword')
                                 title = '支付密码';
                             createHeaderNode(container, DEFAULT_WITH_BACK).done(function (node) {
                                 setHeaderTitle(node, title);
@@ -98,7 +98,7 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
                             });
                             break;
                         case 'ProductList':
-                            $.when(createHeaderNode(container, DEFAULT_WITH_BACK), shopping.getCategory(routeData.values().name))
+                            $.when(createHeaderNode(container, DEFAULT_WITH_BACK), shopping.getCategory(routeData.values.id))
                                 .done(function (node, category) {
                                 setHeaderTitle(node, category.Name);
                             });
@@ -170,7 +170,7 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
                             break;
                         case 'UserInfoItemEdit':
                             var title = "&nbsp;";
-                            switch (routeData.values().field) {
+                            switch (routeData.values.field) {
                                 case 'Region':
                                     title = '地区';
                                     break;
@@ -193,8 +193,8 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
             }
         };
         PageContainerFactory.createContainerFooter = function (routeData, container) {
-            var controller = routeData.values().controller;
-            var action = routeData.values().action;
+            var controller = routeData.values.controller;
+            var action = routeData.values.action;
             if ((controller == 'Home' && action == 'Index') || (controller == 'Home' && action == 'Class') ||
                 (controller == 'Home' && action == 'NewsList') || (controller == 'User' && action == 'Index') ||
                 (controller == 'Shopping' && action == 'ShoppingCart')) {
@@ -203,7 +203,7 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
         };
         PageContainerFactory.createInstance = function (app, routeData, previous) {
             var c = chitu.PageContainerFactory.createInstance(app, routeData, previous);
-            $(c.element).addClass(routeData.values().controller + '-' + routeData.values().action);
+            $(c.element).addClass(routeData.values.controller + '-' + routeData.values.action);
             PageContainerFactory.createContainerHeader(routeData, c);
             PageContainerFactory.createContainerFooter(routeData, c);
             $(c.element).addClass('immersion');
@@ -230,7 +230,7 @@ define(["require", "exports", 'Services/Shopping', 'Services/Auth', 'Services/Sh
             shoppingCart.info.itemsCount.subscribe(updateProductsCount);
             this.loadHTML().done(function (html) {
                 _this.node.innerHTML = html;
-                var args = routeData.values();
+                var args = routeData.values;
                 var $tab = $(_this.node).find('[name="' + args.controller + '_' + args.action + '"]');
                 if ($tab.length > 0) {
                     $tab.addClass('active');

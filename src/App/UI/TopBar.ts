@@ -63,7 +63,7 @@ class TitleBar {
 
 
 function defaultTitle(page: chitu.Page): string {
-    var values = page.routeData.values();
+    var values = page.routeData.values;
     var controller = values.controller;
     var action = values.action;
     var titles = {
@@ -118,8 +118,8 @@ function defaultTitle(page: chitu.Page): string {
 
 function page_created(sender, page: chitu.Page) {
     /// <param name="page" type="chitu.Page"/>
-    var controller = page.routeData.values().controller;
-    var action = page.routeData.values().action;
+    var controller = page.routeData.values.controller;
+    var action = page.routeData.values.action;
 
     //var page_container = <chitu.WebPageContainer>page.container;
     if ((controller == 'Home' && (action == 'Class'))) {//action == 'Index' ||

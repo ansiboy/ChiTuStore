@@ -3,7 +3,6 @@
 import account = require('Services/Account');
 import shopping = require('Services/Shopping');
 
-import Page = require('Core/Page');
 import ProductEvaluatePage = require('Module/Shopping/ProductEvaluate');
 import app = require('Application');
 import services = require('Services/Service');

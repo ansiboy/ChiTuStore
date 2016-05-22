@@ -1,5 +1,3 @@
-/// <reference path='../Scripts/typings/require.d.ts'/>
-/// <reference path='../Scripts/typings/jquery.d.ts'/>
 requirejs.config({
     urlArgs: "bust=46",
     shim: {

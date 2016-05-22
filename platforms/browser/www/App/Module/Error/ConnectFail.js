@@ -1,17 +1,34 @@
-define(["require", "exports", 'Application'], function (require, exports, app) {
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+define(["require", "exports", 'chitu', 'Site'], function (require, exports, chitu, site) {
     requirejs(['css!sc/Error/ConnectFail']);
-    return function (page) {
-        page.load.add(function (sender, args) {
-            page['return_url'] = args.hash;
-        });
-        page['redirec'] = function () {
-            var url = (page['return_url'] || '#Home_Index').substr(1);
-            app.showPage(url, {});
-        };
-        page.viewChanged.add(function () { return ko.applyBindings(page, page.element); });
-        var topbar = page['topbar'];
-        if (topbar) {
-            $(topbar.element).find('.leftButton').hide();
+    var Model = (function () {
+        function Model(page) {
+            this.redirectUrl = ko.observable();
         }
-    };
+        Model.prototype.redirec = function () {
+            var url = this.redirectUrl();
+            if (!url)
+                url = site.config.defaultUrl;
+            location.hash = '#' + url;
+        };
+        return Model;
+    })();
+    var ConnectFailPage = (function (_super) {
+        __extends(ConnectFailPage, _super);
+        function ConnectFailPage() {
+            _super.call(this);
+            this.model = new Model(this);
+            this.load.add(this.page_load);
+        }
+        ConnectFailPage.prototype.page_load = function (sender, args) {
+            sender.model.redirectUrl(location.hash.substr(1));
+            ko.applyBindings(sender.model, sender.element);
+        };
+        return ConnectFailPage;
+    })(chitu.Page);
+    return ConnectFailPage;
 });

@@ -1,4 +1,5 @@
 
+import chitu = require('chitu');
 import shopping = require('Services/Shopping');
 import auth = require('Services/Auth');
 
@@ -27,7 +28,7 @@ function generateProductHeader(headerNode: HTMLElement, routeData: chitu.RouteDa
         }
     };
 
-    var productId = routeData.values().id;
+    var productId = routeData.values.id;
     auth.whenLogin(() => shopping.isFavored(productId).done((value) => model.isFavored(value)));
 
     ko.applyBindings(model, headerNode);
@@ -40,7 +41,7 @@ function createHeaderNode(container: chitu.PageContainer, header_path: string): 
     container.element.appendChild(header_node);
 
 
-    chitu.Utility.loadjs(['text!' + header_path + '.html', 'css!sc/Headers.css']).done(function(html) {
+    chitu.Utility.loadjs(['text!' + header_path + '.html', 'css!sc/Headers.css']).done(function (html) {
         header_node.innerHTML = html;
         result.resolve(header_node);
     });
@@ -56,28 +57,30 @@ class PageContainerFactory {
     static createContainerHeader(routeData: chitu.RouteData, container: chitu.PageContainer) {
 
 
-        var controller = routeData.values().controller;
-        var action = routeData.values().action;
+
+        var controller = routeData.values.controller;
+        var action = routeData.values.action;
+
         var header_path = DEFAULT_HEADER_PATH;
         var header_title: JQueryPromise<string>;
         switch (controller) {
             case 'AccountSecurity':
                 switch (action) {
                     case 'Index':
-                        createHeaderNode(container, DEFAULT_WITH_BACK).done(function(node: HTMLElement) {
+                        createHeaderNode(container, DEFAULT_WITH_BACK).done(function (node: HTMLElement) {
                             setHeaderTitle(node, '账户安全');
                         });
                         break;
                     case 'Setting':
                         var title: string;// = routeData.values().type == 'MobileBinding' ? '手机绑定' : '';
-                        if (routeData.values().type == 'MobileBinding')
+                        if (routeData.values.type == 'MobileBinding')
                             title = '手机绑定';
-                        else if (routeData.values().type == 'LoginPassword')
+                        else if (routeData.values.type == 'LoginPassword')
                             title = '登录密码';
-                        else if (routeData.values().type == 'PaymentPassword')
+                        else if (routeData.values.type == 'PaymentPassword')
                             title = '支付密码';
 
-                        createHeaderNode(container, DEFAULT_WITH_BACK).done(function(node: HTMLElement) {
+                        createHeaderNode(container, DEFAULT_WITH_BACK).done(function (node: HTMLElement) {
                             setHeaderTitle(node, title);
                         });
                         break;
@@ -94,18 +97,18 @@ class PageContainerFactory {
                         createHeaderNode(container, header_path);
                         break;
                     case 'NewsList':
-                        createHeaderNode(container, DEFAULT_HEADER_PATH).done(function(node: HTMLElement) {
+                        createHeaderNode(container, DEFAULT_HEADER_PATH).done(function (node: HTMLElement) {
                             setHeaderTitle(node, '微资讯');
                         });
                         break;
                     case 'News':
-                        createHeaderNode(container, DEFAULT_WITH_BACK).done(function(node: HTMLElement) {
+                        createHeaderNode(container, DEFAULT_WITH_BACK).done(function (node: HTMLElement) {
                             setHeaderTitle(node, '资讯详情');
                         });
                         break;
                     case 'Product':
                         header_path = 'UI/Headers/Home_Product';
-                        createHeaderNode(container, header_path).done(function(node) {
+                        createHeaderNode(container, header_path).done(function (node) {
                             generateProductHeader(node, routeData);
                         });
                         break;
@@ -114,19 +117,19 @@ class PageContainerFactory {
                             .done((node) => setHeaderTitle(node, '产品评价'));
                         break;
                     case 'ProductDetail':
-                        createHeaderNode(container, DEFAULT_WITH_BACK).done(function(node: HTMLElement) {
+                        createHeaderNode(container, DEFAULT_WITH_BACK).done(function (node: HTMLElement) {
                             setHeaderTitle(node, '产品详情');
                         });
                         break;
                     case 'ProductList':
-                        $.when(createHeaderNode(container, DEFAULT_WITH_BACK), shopping.getCategory(routeData.values().name))
-                            .done(function(node: HTMLElement, category) {
+                        $.when(createHeaderNode(container, DEFAULT_WITH_BACK), shopping.getCategory(routeData.values.id))
+                            .done(function (node: HTMLElement, category) {
                                 setHeaderTitle(node, category.Name);
                             })
                         break;
                     case 'Search':
                         header_path = 'UI/Headers/Home_Search';
-                        createHeaderNode(container, header_path).done(function(node) {
+                        createHeaderNode(container, header_path).done(function (node) {
                             //generateProductHeader(node, routeData);
                         });
                         break;
@@ -193,7 +196,7 @@ class PageContainerFactory {
                     case 'UserInfoItemEdit':
                         //debugger;
                         var title = "&nbsp;"
-                        switch (routeData.values().field) {
+                        switch (routeData.values.field) {
                             case 'Region':
                                 title = '地区';
                                 break;
@@ -209,7 +212,7 @@ class PageContainerFactory {
                 break;
             case 'Error':
                 createHeaderNode(container, DEFAULT_WITH_BACK)
-                    .done(function(node) {
+                    .done(function (node) {
                         setHeaderTitle(node, '网络错误');
                     });
                 break;
@@ -226,8 +229,8 @@ class PageContainerFactory {
         // }
     }
     static createContainerFooter(routeData: chitu.RouteData, container: chitu.PageContainer) {
-        var controller = routeData.values().controller;
-        var action = routeData.values().action;
+        var controller = routeData.values.controller;
+        var action = routeData.values.action;
         if ((controller == 'Home' && action == 'Index') || (controller == 'Home' && action == 'Class') ||
             (controller == 'Home' && action == 'NewsList') || (controller == 'User' && action == 'Index') ||
             (controller == 'Shopping' && action == 'ShoppingCart')) {
@@ -236,8 +239,9 @@ class PageContainerFactory {
 
     }
     static createInstance(app: chitu.Application, routeData: chitu.RouteData, previous: chitu.PageContainer): chitu.PageContainer {
+        //debugger;
         var c: chitu.PageContainer = chitu.PageContainerFactory.createInstance(app, routeData, previous);
-        $(c.element).addClass(routeData.values().controller + '-' + routeData.values().action);
+        $(c.element).addClass(routeData.values.controller + '-' + routeData.values.action);
         PageContainerFactory.createContainerHeader(routeData, c);
         PageContainerFactory.createContainerFooter(routeData, c);
 
@@ -281,7 +285,7 @@ class Menu {
 
         this.loadHTML().done((html) => {
             this.node.innerHTML = html;
-            var args = routeData.values();
+            var args = routeData.values;
             var $tab = $(this.node).find('[name="' + args.controller + '_' + args.action + '"]');
             if ($tab.length > 0) {
                 $tab.addClass('active');
@@ -295,7 +299,7 @@ class Menu {
             return $.Deferred<string>().resolve(menu_html);
 
         var deferred = $.Deferred<string>();
-        requirejs(['text!UI/Menu.html'], function(html) {
+        requirejs(['text!UI/Menu.html'], function (html) {
             menu_html = html;
             deferred.resolve(html);
         });

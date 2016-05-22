@@ -1,26 +1,24 @@
-﻿/// <reference path="../../../Scripts/typings/require.d.ts"/>
-/// <reference path="../../../Scripts/typings/knockout.d.ts"/>
-/// <reference path="../../../Scripts/typings/hammer.d.ts"/>
-/// <reference path="../../../Scripts/typings/move.d.ts"/>
-
+﻿
+import chitu = require('chitu');
 import ko = require('knockout');
 import app = require('Application');
 import services = require('Services/Service');
 import home = require('Services/Home');
 import Carousel = require('Core/Carousel');
 
-export = function(page: chitu.Page) {
-    //page.container.element.style.backgroundColor = 'red';
-    var homeProductQueryArguments = {
+chitu.Utility.loadjs(['UI/PromotionLabel', 'css!sc/Home/Index']);//
+
+class IndexPage extends chitu.Page {
+    private homeProductQueryArguments = {
         pageIndex: 0
     }
 
-    var model = {
+    private model = {
         name: ko.observable(''),
         brands: ko.observableArray(),
         advertItems: ko.observableArray(),
         homeProducts: ko.observableArray(),
-        pay: function() {
+        pay: function () {
             (<any>window).alipay.pay({
                 tradeNo: 'g1239aaga1142f',//tradeNo,
                 subject: "测试标题",
@@ -28,47 +26,58 @@ export = function(page: chitu.Page) {
                 price: 0.01,
                 notifyUrl: "http://your.server.notify.url"
             },
-            function(successResults) {
-                alert(successResults)
-            },
-            function(errorResults) {
-                alert(errorResults)
-            });
+                function (successResults) {
+                    alert(successResults)
+                },
+                function (errorResults) {
+                    alert(errorResults)
+                });
         }
     };
 
-    function page_load(sender: chitu.ScrollView, args) {
-        var result = home.homeProducts(homeProductQueryArguments.pageIndex)
-            .done(function(homeProducts: Array<any>) {
+    constructor() {
+        super();
+
+        //this.load.add(this.page_load);
+        this.viewChanged.add(this.page_viewChanged);
+    }
+
+    private page_load(sender: chitu.ScrollView | IndexPage, args) {
+        var page: IndexPage;
+        if (sender instanceof IndexPage)
+            page = <IndexPage>sender;
+        else
+            page = <IndexPage>((<chitu.ScrollView>sender).page);
+
+        var result = home.homeProducts(page.homeProductQueryArguments.pageIndex)
+            .done(function (homeProducts: Array<any>) {
                 for (var i = 0; i < homeProducts.length; i++) {
                     homeProducts[i].Url = '#Home_Product_' + homeProducts[i].ProductId;
-                    model.homeProducts.push(homeProducts[i]);
+                    page.model.homeProducts.push(homeProducts[i]);
                 }
 
-                homeProductQueryArguments.pageIndex++;
+                page.homeProductQueryArguments.pageIndex++;
                 args.enableScrollLoad = (homeProducts.length == services.defaultPageSize);
+                $(page.container.element).find('.page-loading').hide();
             });
 
         return result;
     }
 
-    var viewDeferred = page.view;
-    page.view = $.when(viewDeferred, chitu.Utility.loadjs(['UI/PromotionLabel', 'css!sc/Home/Index']));
+    private page_viewChanged(sender: IndexPage, args) {
+        ko.applyBindings(sender.model, sender.element);
+        var scroll_view = (<chitu.ScrollView>sender.findControl('products'));
+        scroll_view.scrollLoad = sender.page_load;
 
-    page.viewChanged.add((sender: chitu.Page, args) => {
-        ko.applyBindings(model, sender.element);
-        var scroll_view = (<chitu.ScrollView>page.findControl('products'));
-        scroll_view.scrollLoad = page_load;
-
-        var items_deferred = home.advertItems().done(function(advertItems) {
+        var items_deferred = home.advertItems().done(function (advertItems) {
             for (var i = 0; i < advertItems.length; i++) {
                 advertItems[i].index = i;
                 advertItems[i].LinkUrl = advertItems[i].LinkUrl;
-                model.advertItems.push(advertItems[i]);
+                sender.model.advertItems.push(advertItems[i]);
             }
 
             //requirejs(['Core/Carousel'], function(Carousel) {
-            var c = new Carousel($(page.element).find('[name="ad-swiper"]')[0]);
+            var c = new Carousel($(sender.element).find('[name="ad-swiper"]')[0]);
             scroll_view.scroll.add((sender, e) => {
                 //if (e.scrollTop < 0) {
                 c.pause = e.scrollTop < 0;
@@ -79,94 +88,7 @@ export = function(page: chitu.Page) {
             });
             //})
         });
-
-
-
-    });
-
-
-
-
+    }
 }
 
-
-// class MySwpier {
-//     private container: HTMLElement;
-//     private wrapper: HTMLElement;
-//     private sliders: Array<any>;
-//     private current_index: number = 0;
-//     private deltaX: number = 0;
-//     private timeIntervalId: number;
-// 
-//     constructor(element: HTMLElement) {
-//         this.container = element;
-//         this.wrapper = $(element).find('.swiper-wrapper')[0];
-//         this.sliders = $(element).find('.swiper-slide').map(function(index, element: HTMLElement) {
-//             $(element).width($(window).width());
-//             return {
-//                 element: element,
-//                 active: function() {
-//                     //this.element
-//                 }
-//             };
-//         }).toArray();
-//     }
-// 
-//     start() {
-//         if (this.isFirst && this.isLastest) {
-//             return;
-//         }
-// 
-//         var positive = true;//正向移动
-//         this.timeIntervalId = window.setInterval(() => {
-//             if (positive)
-//                 this.next();
-//             else
-//                 this.previous();
-// 
-//             if (this.isLastest)
-//                 positive = false;
-// 
-//             if (this.isFirst)
-//                 positive = true
-// 
-//         }, 1000);
-//     }
-// 
-//     stop() {
-//         console.log('stop');
-//         clearInterval(this.timeIntervalId);
-//     }
-// 
-//     get isLastest() {
-//         return this.current_index >= this.sliders.length - 1;
-//     }
-// 
-//     get isFirst() {
-//         return this.current_index <= 0;
-//     }
-// 
-//     next() {
-//         if (this.isLastest)
-//             return;
-// 
-//         var deltaX = $(this.sliders[this.current_index].element).width();
-//         this.deltaX = this.deltaX - deltaX;
-//         this.wrapper.style.transform = this.wrapper.style.webkitTransform
-//             = 'translateX(' + this.deltaX + 'px)';
-//         this.wrapper.style.webkitTransitionDuration = this.wrapper.style.transitionDuration = '0.3s';
-//         this.current_index = this.current_index + 1;
-//     }
-// 
-//     previous() {
-//         if (this.isFirst)
-//             return;
-// 
-//         var deltaX = $(this.sliders[this.current_index].element).width();
-//         this.deltaX = this.deltaX + deltaX;
-//         this.wrapper.style.transform = this.wrapper.style.webkitTransform
-//             = 'translateX(' + this.deltaX + 'px)';
-//         this.wrapper.style.webkitTransitionDuration = this.wrapper.style.transitionDuration = '0.3s';
-//         this.current_index = this.current_index - 1;
-//     }
-// }
+export = IndexPage;

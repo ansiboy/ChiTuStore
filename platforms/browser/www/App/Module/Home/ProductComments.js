@@ -4,7 +4,7 @@ define(["require", "exports", 'Services/Shopping'], function (require, exports, 
             comments: ko.observableArray()
         };
         page.load.add(function () {
-            return shopping.getProductComments(page.routeData.values().id, 10).done(function (comments) {
+            return shopping.getProductComments(page.routeData.values.id, 10).done(function (comments) {
                 return model.comments(comments);
             });
         });

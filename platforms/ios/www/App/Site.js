@@ -83,7 +83,7 @@ define(["require", "exports"], function (require, exports) {
         function SiteConfig() {
             this.storeName = '零食有约';
             this.pageSize = 10;
-            this.defaultUrl = 'Index';
+            this.defaultUrl = 'Home_Index';
             this.baseUrl = 'u.alinq.cn/test/Index.html';
             this.purchaseUrlFormat = 'pay/Purchase.html#{0}';
             this.cookiePrefix = 'lsyy';
@@ -206,8 +206,8 @@ define(["require", "exports"], function (require, exports) {
             this.env = new SiteEnvironment();
         }
         Site.prototype.isMenuPage = function (routeData) {
-            var controller = routeData.values().controller;
-            var action = routeData.values().action;
+            var controller = routeData.values.controller;
+            var action = routeData.values.action;
             var name = controller + '.' + action;
             return (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
                 name == 'Home.NewsList' || name == 'User.Index');

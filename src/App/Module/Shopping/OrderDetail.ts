@@ -1,4 +1,4 @@
-﻿import Page = require('Core/Page');
+﻿
 import shopping = require('Services/Shopping');
 import mapping = require('knockout.mapping');
 import account = require('Services/Account');

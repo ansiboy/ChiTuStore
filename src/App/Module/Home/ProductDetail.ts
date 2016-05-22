@@ -7,7 +7,7 @@ export = function(page: chitu.Page) {
 
     var model;
 
-    var productId = page.routeData.values().id;
+    var productId = page.routeData.values.id;
     var result = shopping.getProductIntroduce(productId).done((data) => {
         if (model == null) {
             model = mapping.fromJS(data);

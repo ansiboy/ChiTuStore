@@ -47,7 +47,7 @@ define(["require", "exports", 'Services/Auth', 'knockout.validation', 'Applicati
     return function (page) {
         //page.load.add(page_load);
         var next_step;
-        switch (page.routeData.values().type) {
+        switch (page.routeData.values.type) {
             case 'MobileBinding':
                 model.stepTwoName('手机绑定');
                 requirejs(['Module/User/AccountSecurity/MobileBinding'], function (result) {

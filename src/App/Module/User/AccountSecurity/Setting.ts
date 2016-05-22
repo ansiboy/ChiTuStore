@@ -76,7 +76,7 @@ export = function (page: chitu.Page) {
 
     var next_step: NextStep;
 
-    switch (page.routeData.values().type) {
+    switch (page.routeData.values.type) {
         case 'MobileBinding':
             model.stepTwoName('手机绑定');
             //(<TopBar>page['topbar']).title('手机绑定');

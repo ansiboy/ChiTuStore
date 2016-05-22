@@ -5,7 +5,7 @@ export = function (page: chitu.Page) {
         comments: ko.observableArray()
     }
     page.load.add(() => {
-        return shopping.getProductComments(page.routeData.values().id, 10).done((comments) => {
+        return shopping.getProductComments(page.routeData.values.id, 10).done((comments) => {
             return model.comments(comments);
         });
     })

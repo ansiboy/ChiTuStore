@@ -2,6 +2,7 @@
 import ko = require('knockout');
 import $ = require('jquery');
 import site = require('Site');
+import chitu = require('chitu');
 
 //=====================================================================
 // 说明：实现数据格式化

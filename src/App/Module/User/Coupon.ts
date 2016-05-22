@@ -10,8 +10,8 @@ export = function(page: chitu.Page) {
 
     var loadjsDeferred = $.Deferred();
     requirejs(['UI/CouponListItem', 'css!content/User/Coupon'], () => loadjsDeferred.resolve());
-    var viewDeferred = page.view;
-    page.view = $.when(viewDeferred, loadjsDeferred);
+    //var viewDeferred = page.view;
+    //page.view = $.when(viewDeferred, loadjsDeferred);
     
     //ko.applyBindings(model, page.node());
     page.viewChanged.add(() => ko.applyBindings(model, page.element));

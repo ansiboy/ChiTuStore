@@ -102,7 +102,7 @@ define(["require", "exports", 'Site', 'Services/WeiXin', 'Services/Info', 'Appli
         return args;
     }
     function page_shown(sender) {
-        var args = sender.routeData.values();
+        var args = sender.routeData.values;
         var pageName = sender.name.toLowerCase();
         var wx_args = createWxShareArguments(sender);
         var deferred = $.Deferred().resolve();

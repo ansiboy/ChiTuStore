@@ -1,25 +1,31 @@
-﻿import shopping = require('Services/Shopping');
+﻿import chitu = require('chitu');
+import shopping = require('Services/Shopping');
 
-export = function (page: chitu.Page) {
+chitu.Utility.loadjs(['css!content/Home/Class']);
 
-    var model = {
+class ClassPage extends chitu.Page {
+    private model = {
         categories: ko.observableArray(),
     }
 
-    page.load.add(function (sender, args) {
+    constructor() {
+        super();
+        this.load.add(this.page_load);
+    }
 
+    private page_load(sender: ClassPage, args) {
+        ko.applyBindings(sender.model, sender.element);
         return shopping.getCategories().done(function (items) {
             for (var i = 0; i < items.length; i++) {
                 if (!items[i].ImagePath) {
                     items[i].ImagePath = 'content/images/icon_01.png';
                 }
             }
-            model.categories(items);
+            sender.model.categories(items);
         });
-    });
+    }
+}
 
-    var page_view = page.view;
-    page.view = $.when(page_view, chitu.Utility.loadjs(['css!content/Home/Class']));
-    page.viewChanged.add(() => ko.applyBindings(model, page.element));
-};
+export = ClassPage;
+
 

@@ -1,4 +1,4 @@
-define(["require", "exports", 'knockout', 'jquery', 'Site'], function (require, exports, ko, $, site) {
+define(["require", "exports", 'knockout', 'jquery', 'Site', 'chitu'], function (require, exports, ko, $, site, chitu) {
     Number.prototype['toFormattedString'] = function (format) {
         var reg = new RegExp('^C[0-9]+');
         if (reg.test(format)) {

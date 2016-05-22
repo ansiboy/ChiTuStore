@@ -1,5 +1,4 @@
-﻿import Page = require('Core/Page')
-
+﻿
 interface ImagePreviewPageArguments {
     imageUrls: string[],
     currentIndex: number

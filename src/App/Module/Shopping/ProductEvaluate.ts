@@ -2,7 +2,6 @@
 /// <reference path='../../../Scripts/typings/knockout.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 
-import Page = require('Core/Page')
 import ko = require('knockout')
 import mapping = require('knockout.mapping')
 import account = require('Services/Account')

@@ -170,7 +170,7 @@ function createWxShareArguments(page: chitu.Page): WXShareArguments {
 }
 
 function page_shown(sender: chitu.Page) {
-    var args = sender.routeData.values();
+    var args = sender.routeData.values;
     var pageName = sender.name.toLowerCase();
     //var wx_args = createWxShareArguments();
     var wx_args: WXShareArguments = createWxShareArguments(sender);

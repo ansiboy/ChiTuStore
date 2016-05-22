@@ -20,7 +20,7 @@ define(["require", "exports", 'Services/ShoppingCart'], function (require, expor
             shoppingCart.info.itemsCount.subscribe(updateProductsCount);
             this.loadHTML().done(function (html) {
                 _this.node.innerHTML = html;
-                var args = routeData.values();
+                var args = routeData.values;
                 var $tab = $(_this.node).find('[name="' + args.controller + '_' + args.action + '"]');
                 if ($tab.length > 0) {
                     $tab.addClass('active');

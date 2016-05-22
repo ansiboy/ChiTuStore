@@ -105,7 +105,7 @@ class SiteStorage {
 class SiteConfig {
     storeName = '零食有约'
     pageSize = 10
-    defaultUrl = 'Index'
+    defaultUrl = 'Home_Index'
     baseUrl = 'u.alinq.cn/test/Index.html'
     purchaseUrlFormat = 'pay/Purchase.html#{0}'
 
@@ -217,8 +217,8 @@ class Site {
         this.env = new SiteEnvironment()
     }
     isMenuPage(routeData: chitu.RouteData): boolean {
-        var controller = routeData.values().controller;
-        var action = routeData.values().action;
+        var controller = routeData.values.controller;
+        var action = routeData.values.action;
         var name = controller + '.' + action;
         return (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
             name == 'Home.NewsList' || name == 'User.Index')

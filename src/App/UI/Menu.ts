@@ -31,7 +31,7 @@ class Menu {
 
         this.loadHTML().done((html) => {
             this.node.innerHTML = html;
-            var args = routeData.values();
+            var args = routeData.values;
             var $tab = $(this.node).find('[name="' + args.controller + '_' + args.action + '"]'); //$(document.getElementById(args.controller + '_' + args.action))
             if ($tab.length > 0) {
                 //$menu.find('a').removeClass('active');

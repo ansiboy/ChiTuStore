@@ -44,7 +44,7 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
         return TitleBar;
     })();
     function defaultTitle(page) {
-        var values = page.routeData.values();
+        var values = page.routeData.values;
         var controller = values.controller;
         var action = values.action;
         var titles = {
@@ -96,8 +96,8 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
         return title;
     }
     function page_created(sender, page) {
-        var controller = page.routeData.values().controller;
-        var action = page.routeData.values().action;
+        var controller = page.routeData.values.controller;
+        var action = page.routeData.values.action;
         if ((controller == 'Home' && (action == 'Class'))) {
             var file_name = controller + '_' + action + '.html';
             requirejs(['text!UI/Headers/' + file_name], function (html) {
