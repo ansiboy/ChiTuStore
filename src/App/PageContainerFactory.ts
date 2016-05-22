@@ -55,9 +55,7 @@ function setHeaderTitle(node: HTMLElement, title: string) {
 
 class PageContainerFactory {
     static createContainerHeader(routeData: chitu.RouteData, container: chitu.PageContainer) {
-
-
-
+        
         var controller = routeData.values.controller;
         var action = routeData.values.action;
 

@@ -3,7 +3,7 @@ import shopping = require('Services/Shopping');
 
 chitu.Utility.loadjs(['css!content/Home/Class']);
 
-class ClassPage extends chitu.Page {
+export = class ClassPage extends chitu.Page {
     private model = {
         categories: ko.observableArray(),
     }
@@ -25,7 +25,5 @@ class ClassPage extends chitu.Page {
         });
     }
 }
-
-export = ClassPage;
 
 

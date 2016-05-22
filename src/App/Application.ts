@@ -5,12 +5,13 @@ import PageContainerFactory = require('PageContainerFactory');
 chitu.Page.animationTime = site.config.pageAnimationTime;
 
 let urlParser = new chitu.UrlParser();
-urlParser.pathBase = '/store/App/Module/';
 let pareeUrl = urlParser.pareeUrl;
+
+urlParser.pathBase = '/store/App/Module/';
 urlParser.pareeUrl = function (url: string) {
     var a = document.createElement('a');
     a.href = url;
-    var routeData: chitu.RouteData = pareeUrl.apply(this, [url]); //pareeUrl(url);
+    var routeData: chitu.RouteData = pareeUrl.apply(this, [url]);
     var route_values = a.hash.substr(1).split('_');
     var MIN_PARTS_COUNT = 2;
     switch (routeData.pageName) {
@@ -26,6 +27,7 @@ urlParser.pareeUrl = function (url: string) {
     }
     return routeData;
 }
+
 var config: chitu.ApplicationConfig = {
     openSwipe: (routeData) => {
         if (site.env.isDegrade)
