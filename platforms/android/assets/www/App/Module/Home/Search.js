@@ -1,6 +1,8 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/chitu.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Site', 'Services/Station'], function (require, exports, site, station) {
     requirejs(['css!content/Home/Search']);
     var Status;
@@ -65,16 +67,23 @@ define(["require", "exports", 'Site', 'Services/Station'], function (require, ex
         }
         return Model;
     })();
-    return function (page) {
-        var model = new Model();
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
-        station.hotKeywords().done(function (data) {
-            model.hotKeywords(data);
-        });
-        page.load.add(function () {
+    return (function (_super) {
+        __extends(SearchPage, _super);
+        function SearchPage() {
+            var _this = this;
+            _super.call(this);
+            this.model = new Model();
+            this.load.add(this.page_load);
+            station.hotKeywords().done(function (data) {
+                _this.model.hotKeywords(data);
+            });
+        }
+        SearchPage.prototype.page_load = function (sender, args) {
+            ko.applyBindings(sender.model, sender.element);
             var data = site.storage.get_item('historyKeyword');
-            model.historyKeywords(site.storage.historyKeywords);
-            return model.search();
-        });
-    };
+            sender.model.historyKeywords(site.storage.historyKeywords);
+            return sender.model.search();
+        };
+        return SearchPage;
+    })(chitu.Page);
 });

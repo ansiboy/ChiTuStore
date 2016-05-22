@@ -1,5 +1,10 @@
 ///<reference path='../../../Scripts/typings/require.d.ts'/>
 /// <reference path='../../../Scripts/typings/chitu.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/ShoppingCart', 'Services/Shopping', 'Application'], function (require, exports, ko, mapping, shoppingCart, shopping, app) {
     requirejs(['css!content/Shopping/ShoppingCart', 'UI/PromotionLabel']);
     var DialogStaus;
@@ -17,13 +22,13 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
             var _this = this;
             this.updateDialogText = ko.observable(DialogText[DialogStaus.update]);
             this.increaseCount = function (item) {
-                if (status == Status.updating)
+                if (_this.status == Status.updating)
                     return;
                 var count = item.Count();
                 item.Count(new Number(count).valueOf() + 1);
             };
             this.decreaseCount = function (item) {
-                if (status == Status.updating)
+                if (_this.status == Status.updating)
                     return;
                 var count = item.Count();
                 if (count <= 1) {
@@ -102,13 +107,13 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                 _this.dialog.status(DialogStaus.update);
                 shoppingCart.updateItem(item).done(function (items) {
                     mapping.fromJS(items, _this.map_conf, _this.shoppingCartItems);
-                    status = Status.done;
+                    _this.status = Status.done;
                     _this.dialog.status(DialogStaus.success);
                 }).fail(function () {
                     _this.dialog.status(DialogStaus.fail);
                 });
             };
-            this.checkAll = function () {
+            this.checkAll = function (model) {
                 var allChecked = _this.allChecked();
                 _this.dialog.status(DialogStaus.update);
                 var result;
@@ -122,7 +127,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                 return result
                     .done(function (items) {
                     _this.dialog.status(DialogStaus.success);
-                    mapping.fromJS(items, _this.map_conf, _model.shoppingCartItems);
+                    mapping.fromJS(items, _this.map_conf, _this.shoppingCartItems);
                 })
                     .fail(function () { return _this.dialog.status(DialogStaus.fail); });
             };
@@ -211,7 +216,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                     element: $(this.page.element).find('[name="dlg_update"]')[0],
                     status: function (status) {
                         var text = DialogText[status];
-                        _model.updateDialogText(text);
+                        _this.updateDialogText(text);
                         if (status == DialogStaus.update) {
                             var top = ($(window).height() - 200) / 2;
                             $(_this.dialog.element).css('top', top + 'px')['modal']();
@@ -233,18 +238,18 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
         Status[Status["updating"] = 1] = "updating";
         Status[Status["done"] = 2] = "done";
     })(Status || (Status = {}));
-    var status;
-    var _model;
-    return function (page) {
-        var topbar = page['topbar'];
-        if (topbar != null) {
-            $(topbar.element).append('<a name="btn_remove" href="javascript:" data-bind="tap:removeItems,click:removeItems">删除</a>');
+    var ShoppingCartPage = (function (_super) {
+        __extends(ShoppingCartPage, _super);
+        function ShoppingCartPage() {
+            _super.call(this);
+            this.model = new Model(this);
+            this.load.add(this.page_load);
         }
-        var scroll_config = { pullDown: {} };
-        var model = _model = new Model(page);
-        page.viewChanged.add(function () {
-            page.findControl('shoppingcart').load.add(function () { return model.loadItems(); });
-            ko.applyBindings(model, page.element);
-        });
-    };
+        ShoppingCartPage.prototype.page_load = function (sender, args) {
+            sender.findControl('shoppingcart').load.add(function () { return sender.model.loadItems(); });
+            ko.applyBindings(sender.model, sender.element);
+        };
+        return ShoppingCartPage;
+    })(chitu.Page);
+    return ShoppingCartPage;
 });

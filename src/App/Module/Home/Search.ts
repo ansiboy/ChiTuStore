@@ -1,6 +1,4 @@
-﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/chitu.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
+﻿
 
 import site = require('Site');
 import station = require('Services/Station');
@@ -45,7 +43,7 @@ class Model {
                 .done((data: any[]) => {
                     this.products(data);
                     this.status(Status.complete);
-                
+
                     //==================================================
                     // 去掉重复的关键字
                     var keywords = new Array<string>();
@@ -79,18 +77,22 @@ class Model {
     }
 }
 
-export = function (page: chitu.Page) {
-    var model = new Model();
-    page.viewChanged.add(() => ko.applyBindings(model, page.element));
+export = class SearchPage extends chitu.Page {
+    private model: Model;
+    constructor() {
+        super();
+        this.model = new Model();
+        this.load.add(this.page_load);
 
-    station.hotKeywords().done((data) => {
-        model.hotKeywords(data);
-    });
+        station.hotKeywords().done((data) => {
+            this.model.hotKeywords(data);
+        });
+    }
 
-    page.load.add(() => {
+    private page_load(sender: SearchPage, args: any) {
+        ko.applyBindings(sender.model, sender.element);
         var data = site.storage.get_item<string[]>('historyKeyword');
-        model.historyKeywords(site.storage.historyKeywords);
-        return model.search();
-    });
-
+        sender.model.historyKeywords(site.storage.historyKeywords);
+        return sender.model.search();
+    }
 }

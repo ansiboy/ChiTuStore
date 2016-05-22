@@ -29,16 +29,17 @@ class Model {
     amount: KnockoutComputed<number>
     allChecked: KnockoutComputed<boolean>
     updateDialogText: KnockoutObservable<string> = ko.observable<string>(DialogText[DialogStaus.update])
+    status: Status;
 
     get map_conf(): any {
         var model = this;
         return {
-            key: function(data) {
+            key: function (data) {
                 return ko.utils.unwrapObservable(data.Id);
             },
-            create: function(options) {
+            create: function (options) {
                 var item = mapping.fromJS(options.data);
-                item.Count.subscribe(function(value) {
+                item.Count.subscribe(function (value) {
                     var count = new Number(value).valueOf() || 1;
                     if (count != this.Count())
                         this.Count(count);
@@ -110,7 +111,7 @@ class Model {
     }
 
     increaseCount = (item) => {
-        if (status == Status.updating)
+        if (this.status == Status.updating)
             return;
 
         var count = item.Count();
@@ -118,7 +119,7 @@ class Model {
     }
     decreaseCount = (item) => {
         /// <param name="item" type="models.orderDetail"/>
-        if (status == Status.updating)
+        if (this.status == Status.updating)
             return;
 
         var count = item.Count();
@@ -212,7 +213,7 @@ class Model {
         shoppingCart.updateItem(item).done((items) => {
             mapping.fromJS(items, this.map_conf, this.shoppingCartItems);
 
-            status = Status.done;
+            this.status = Status.done;
             this.dialog.status(DialogStaus.success);
             //this.page.refreshUI();
 
@@ -221,7 +222,7 @@ class Model {
         });
     }
 
-    checkAll = () => {
+    checkAll = (model: Model) => {
         var allChecked = this.allChecked();
         this.dialog.status(DialogStaus.update);
         var result: JQueryPromise<any>;
@@ -237,7 +238,7 @@ class Model {
         return result
             .done((items) => {
                 this.dialog.status(DialogStaus.success);
-                mapping.fromJS(items, this.map_conf, _model.shoppingCartItems);
+                mapping.fromJS(items, this.map_conf, this.shoppingCartItems);
 
             })
             .fail(() => this.dialog.status(DialogStaus.fail));
@@ -249,7 +250,7 @@ class Model {
             element: $(this.page.element).find('[name="dlg_update"]')[0],
             status: (status: DialogStaus) => {
                 var text = DialogText[status];
-                _model.updateDialogText(text);
+                this.updateDialogText(text);
 
                 if (status == DialogStaus.update) {
                     var top = ($(window).height() - 200) / 2;
@@ -276,25 +277,18 @@ enum Status {
     done
 }
 
-
-var status: Status;
-
-var _model: Model;
-export = function(page: chitu.Page) {
-    /// <param name="page" type="chitu.Page"/>
-    //_page = page;
-    var topbar = <TopBar>page['topbar'];
-    if (topbar != null) {
-        $(topbar.element).append('<a name="btn_remove" href="javascript:" data-bind="tap:removeItems,click:removeItems">删除</a>');
+class ShoppingCartPage extends chitu.Page {
+    private model: Model;
+    constructor() {
+        super();
+        this.model = new Model(this);
+        this.load.add(this.page_load);
     }
 
-    var scroll_config = { pullDown: {} };
-    var model = _model = new Model(page);
+    private page_load(sender: ShoppingCartPage, args: any) {
+        sender.findControl<chitu.ScrollView>('shoppingcart').load.add(() => sender.model.loadItems());
+        ko.applyBindings(sender.model, sender.element);
+    }
+}
 
-    page.viewChanged.add(() => {
-        page.findControl<chitu.ScrollView>('shoppingcart').load.add(() => model.loadItems());
-        ko.applyBindings(model, page.element);
-    });
-
-
-};
+export = ShoppingCartPage;
