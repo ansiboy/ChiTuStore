@@ -4,29 +4,31 @@ import PageContainerFactory = require('PageContainerFactory');
 
 chitu.Page.animationTime = site.config.pageAnimationTime;
 
-let urlParser = new chitu.UrlParser();
-let pareeUrl = urlParser.pareeUrl;
-
-urlParser.pathBase = '/store/App/Module/';
-urlParser.pareeUrl = function (url: string) {
-    var a = document.createElement('a');
-    a.href = url;
-    var routeData: chitu.RouteData = pareeUrl.apply(this, [url]);
-    var route_values = a.hash.substr(1).split('_');
-    var MIN_PARTS_COUNT = 2;
-    switch (routeData.pageName) {
-        case 'Home.ProductList':
-            routeData.values.type = route_values[2];
-            routeData.values.id = route_values[3];
-            break;
-        default:
-            if (route_values.length > MIN_PARTS_COUNT) {
-                routeData.values.id = route_values[2];
-            }
-            break;
+class UrlParser extends chitu.UrlParser {
+    pareeUrl(url: string): chitu.RouteData {
+        var a = document.createElement('a');
+        a.href = url;
+        
+        var routeData: chitu.RouteData = super.pareeUrl(url);
+        var route_values = a.hash.substr(1).split('_');
+        var MIN_PARTS_COUNT = 2;
+        switch (routeData.pageName) {
+            case 'Home.ProductList':
+                routeData.values.type = route_values[2];
+                routeData.values.id = route_values[3];
+                break;
+            default:
+                if (route_values.length > MIN_PARTS_COUNT) {
+                    routeData.values.id = route_values[2];
+                }
+                break;
+        }
+        return routeData;
     }
-    return routeData;
 }
+
+let urlParser = new UrlParser();
+urlParser.pathBase = '/store/App/Module/';
 
 var config: chitu.ApplicationConfig = {
     openSwipe: (routeData) => {
@@ -86,7 +88,7 @@ $(window).on('touchmove', function (e) {
     touch_move_time = Date.now();
 });
 
-var app = new chitu.Application(config);//site.env.isApp ? new SiteApplication(config) :
+var app = new chitu.Application(config);
 
 
 // var viewPath = '../App/Module/{controller}/{action}.html';

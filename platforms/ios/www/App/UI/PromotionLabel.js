@@ -1,4 +1,4 @@
-define(["require", "exports", 'knockout'], function (require, exports, ko) {
+define(["require", "exports", 'Site', 'Application', 'knockout'], function (require, exports, site, app, ko) {
     ko.components.register('promotion-label', {
         viewModel: function (params) {
             $.extend({ value: '' }, params || {});
@@ -6,6 +6,12 @@ define(["require", "exports", 'knockout'], function (require, exports, ko) {
             this.givenText = '满赠';
             this.reduceText = '满减';
             this.discountText = '满折';
+            var routeData = app.config.urlParser.pareeUrl(location.href);
+            if (site.env.isIPhone && routeData.pageName != 'Shopping.ShoppingCart') {
+                this.givenText = '赠';
+                this.reduceText = '减';
+                this.discountText = '折';
+            }
         },
         template: '<span data-bind="foreach:types"> \
         <span text="$data"></span>\

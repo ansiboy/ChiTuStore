@@ -9,12 +9,12 @@ ko.components.register('promotion-label', {
         this.givenText = '满赠';
         this.reduceText = '满减';
         this.discountText = '满折';
-        // var routeData = app.routes().getRouteData(location.hash.substr(1));
-        // if (site.env.isIPhone && chitu.Page.getPageName(routeData) != 'Shopping.ShoppingCart') {// && app.currentPage().name() == 'Home.Index'
-        //     this.givenText = '赠';
-        //     this.reduceText = '减';
-        //     this.discountText = '折';
-        // }
+        var routeData = app.config.urlParser.pareeUrl(location.href); 
+        if (site.env.isIPhone && routeData.pageName != 'Shopping.ShoppingCart') {
+            this.givenText = '赠';
+            this.reduceText = '减';
+            this.discountText = '折';
+        }
     },
     template:
     '<span data-bind="foreach:types"> \

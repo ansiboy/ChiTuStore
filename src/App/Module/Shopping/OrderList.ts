@@ -1,5 +1,4 @@
-﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
-
+﻿
 import account = require('Services/Account');
 import shopping = require('Services/Shopping');
 import app = require('Application');
@@ -14,10 +13,6 @@ var weixin = services['weixin'];
 
 requirejs(['css!content/Shopping/OrderList']);
 
-import CreateOrderDetailPage = require('Module/Shopping/OrderDetail');
-//import CreateImagePreview = require('UI/ImagePreview')
-
-//var page_args: chitu.PageLoadArguments = { loadType: chitu.PageLoadType.scroll };
 class Model {
     constructor(page: chitu.Page) {
         this.page = page;
@@ -54,7 +49,7 @@ class Model {
         })
     }
     cancelOrder = (item) => {
-        return account.cancelOrder(item.Id()).done(function(data) {
+        return account.cancelOrder(item.Id()).done(function (data) {
             item.Status(data.Status);
         });
     }
@@ -79,13 +74,9 @@ class Model {
             for (var i = 0; i < orders.length; i++) {
                 this.orders.push(orders[i]);
             }
-
-            if (this.page['iscroller']) {
-                this.page['iscroller'].refresh();
-            }
         });
     }
-    loadOrdersByStatus = (order_status): Function=> {
+    loadOrdersByStatus = (order_status): Function => {
         return (item, event) => {
             this.status(order_status);
             this.pageIndex = 0;
@@ -97,7 +88,7 @@ class Model {
     }
     isLoading = ko.observable(false)
     showOrder = (item) => {
-        app.redirect('Shopping_OrderDetail', { order: item });
+        app.redirect('#Shopping_OrderDetail', { order: item });
         //return this.orderDetail.open({ order: item });
     }
     showProduct = (item) => {
@@ -106,29 +97,30 @@ class Model {
         if (!productId) {
             productId = ko.unwrap(item.OrderDetails()[0].ProductId);
         }
-        return app.redirect('Home_Product_' + productId);
+        return app.redirect('#Home_Product_' + productId);
     }
     //evaluate = (item) => {
     //    this.orderEvaluate.open({ order: item });
     //}
 }
 
+class OrderListPage extends chitu.Page {
+    private model: Model;
+    constructor() {
+        super();
+        this.model = new Model(this);
+        this.load.add(this.page_load);
+    }
 
-export = function(page: chitu.Page) {
+    private page_load(sender: OrderListPage, args: any) {
+        ko.applyBindings(sender.model, sender.element);
 
-    // page.load.add(function (sender: chitu.Page, args: any) {
-    //     model.status(args.status || '');
-    //     return model.loadOrders().done((items) => items.length < site.config.pageSize);
-    // });
-
-    var model = new Model(page);
-    page.viewChanged.add(() => {
-        page.findControl('order-list').load.add((sender: chitu.Page, args: any) => {
-            model.status(args.status || '');
-            return model.loadOrders().done((items) => items.length < site.config.pageSize)
-        });
-        ko.applyBindings(model, page.element);
-    });
-    //model.orderEvaluate.open({});
-    //return c.scrollLoad(page,);
+        return sender.findControl<chitu.ScrollView>('order-list').scrollLoad = function () {
+            sender.model.status(args.status || '');
+            return sender.model.loadOrders().done((items) => items.length < site.config.pageSize);
+        }
+    }
 }
+
+export = OrderListPage;
+

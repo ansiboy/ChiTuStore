@@ -1,5 +1,13 @@
 ﻿
 requirejs(['css!content/User/Messages'], function () { });
-export = function (page: chitu.Page) {
-
+class MessagesPage extends chitu.Page {
+    constructor() {
+        super();
+    }
 }
+
+export = MessagesPage;
+
+// export = function (page: chitu.Page) {
+
+// }

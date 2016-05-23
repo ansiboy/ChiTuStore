@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 define(["require", "exports", 'chitu', 'Services/Shopping'], function (require, exports, chitu, shopping) {
     chitu.Utility.loadjs(['css!content/Home/Class']);
-    var ClassPage = (function (_super) {
+    return (function (_super) {
         __extends(ClassPage, _super);
         function ClassPage() {
             _super.call(this);
@@ -27,5 +27,4 @@ define(["require", "exports", 'chitu', 'Services/Shopping'], function (require, 
         };
         return ClassPage;
     })(chitu.Page);
-    return ClassPage;
 });

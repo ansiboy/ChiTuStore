@@ -1,4 +1,8 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Application', 'knockout.mapping', 'Site', 'Services/Service'], function (require, exports, account, shopping, app, mapping, site, services) {
     var weixin = services['weixin'];
     requirejs(['css!content/Shopping/OrderList']);
@@ -45,9 +49,6 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
                     for (var i = 0; i < orders.length; i++) {
                         _this.orders.push(orders[i]);
                     }
-                    if (_this.page['iscroller']) {
-                        _this.page['iscroller'].refresh();
-                    }
                 });
             };
             this.loadOrdersByStatus = function (order_status) {
@@ -61,7 +62,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
             };
             this.isLoading = ko.observable(false);
             this.showOrder = function (item) {
-                app.redirect('Shopping_OrderDetail', { order: item });
+                app.redirect('#Shopping_OrderDetail', { order: item });
             };
             this.showProduct = function (item) {
                 debugger;
@@ -69,7 +70,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
                 if (!productId) {
                     productId = ko.unwrap(item.OrderDetails()[0].ProductId);
                 }
-                return app.redirect('Home_Product_' + productId);
+                return app.redirect('#Home_Product_' + productId);
             };
             this.page = page;
             this.page.closed.add(function () {
@@ -82,18 +83,21 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
         }
         return Model;
     })();
-    return function (page) {
-        // page.load.add(function (sender: chitu.Page, args: any) {
-        //     model.status(args.status || '');
-        //     return model.loadOrders().done((items) => items.length < site.config.pageSize);
-        // });
-        var model = new Model(page);
-        page.viewChanged.add(function () {
-            page.findControl('order-list').load.add(function (sender, args) {
-                model.status(args.status || '');
-                return model.loadOrders().done(function (items) { return items.length < site.config.pageSize; });
-            });
-            ko.applyBindings(model, page.element);
-        });
-    };
+    var OrderListPage = (function (_super) {
+        __extends(OrderListPage, _super);
+        function OrderListPage() {
+            _super.call(this);
+            this.model = new Model(this);
+            this.load.add(this.page_load);
+        }
+        OrderListPage.prototype.page_load = function (sender, args) {
+            ko.applyBindings(sender.model, sender.element);
+            return sender.findControl('order-list').scrollLoad = function () {
+                sender.model.status(args.status || '');
+                return sender.model.loadOrders().done(function (items) { return items.length < site.config.pageSize; });
+            };
+        };
+        return OrderListPage;
+    })(chitu.Page);
+    return OrderListPage;
 });

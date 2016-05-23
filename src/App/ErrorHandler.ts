@@ -8,7 +8,7 @@ services.error.add(function (error) {
         if (location.hash.length > 1)
             return_url = location.hash.substr(1);
 
-        return app.showPage('User_Login', { redirectUrl: return_url });
+        return app.showPage('#User_Login', { redirectUrl: return_url });
     };
     showError(error);
 });
@@ -25,7 +25,7 @@ function alert(msg) {
 }
 
 function showConnectFailPage() {
-    app.showPage('Error_ConnectFail', { hash: location.hash });
+    app.showPage('#Error_ConnectFail', { hash: location.hash });
 }
 
 

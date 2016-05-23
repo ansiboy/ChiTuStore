@@ -16,24 +16,11 @@ define(["require", "exports", 'chitu', 'knockout', 'Services/Service', 'Services
                 name: ko.observable(''),
                 brands: ko.observableArray(),
                 advertItems: ko.observableArray(),
-                homeProducts: ko.observableArray(),
-                pay: function () {
-                    window.alipay.pay({
-                        tradeNo: 'g1239aaga1142f',
-                        subject: "测试标题",
-                        body: "我是测试内容",
-                        price: 0.01,
-                        notifyUrl: "http://your.server.notify.url"
-                    }, function (successResults) {
-                        alert(successResults);
-                    }, function (errorResults) {
-                        alert(errorResults);
-                    });
-                }
+                homeProducts: ko.observableArray()
             };
-            this.viewChanged.add(this.page_viewChanged);
+            this.load.add(this.page_load);
         }
-        IndexPage.prototype.page_load = function (sender, args) {
+        IndexPage.prototype.scrollView_load = function (sender, args) {
             var page;
             if (sender instanceof IndexPage)
                 page = sender;
@@ -51,20 +38,17 @@ define(["require", "exports", 'chitu', 'knockout', 'Services/Service', 'Services
             });
             return result;
         };
-        IndexPage.prototype.page_viewChanged = function (sender, args) {
+        IndexPage.prototype.page_load = function (sender, args) {
             ko.applyBindings(sender.model, sender.element);
             var scroll_view = sender.findControl('products');
-            scroll_view.scrollLoad = sender.page_load;
-            var items_deferred = home.advertItems().done(function (advertItems) {
+            scroll_view.scrollLoad = sender.scrollView_load;
+            home.advertItems().done(function (advertItems) {
                 for (var i = 0; i < advertItems.length; i++) {
                     advertItems[i].index = i;
                     advertItems[i].LinkUrl = advertItems[i].LinkUrl;
                     sender.model.advertItems.push(advertItems[i]);
                 }
                 var c = new Carousel($(sender.element).find('[name="ad-swiper"]')[0]);
-                scroll_view.scroll.add(function (sender, e) {
-                    c.pause = e.scrollTop < 0;
-                });
             });
         };
         return IndexPage;

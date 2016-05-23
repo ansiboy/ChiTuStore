@@ -206,9 +206,7 @@ define(["require", "exports"], function (require, exports) {
             this.env = new SiteEnvironment();
         }
         Site.prototype.isMenuPage = function (routeData) {
-            var controller = routeData.values.controller;
-            var action = routeData.values.action;
-            var name = controller + '.' + action;
+            var name = routeData.pageName;
             return (name == 'Home.Index' || name == 'Home.Class' || name == 'Shopping.ShoppingCart' ||
                 name == 'Home.NewsList' || name == 'User.Index');
         };

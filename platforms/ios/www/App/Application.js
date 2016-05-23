@@ -1,27 +1,38 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'chitu', 'Site', 'PageContainerFactory'], function (require, exports, chitu, site, PageContainerFactory) {
     chitu.Page.animationTime = site.config.pageAnimationTime;
-    var urlParser = new chitu.UrlParser();
-    urlParser.pathBase = '/store/App/Module/';
-    var pareeUrl = urlParser.pareeUrl;
-    urlParser.pareeUrl = function (url) {
-        var a = document.createElement('a');
-        a.href = url;
-        var routeData = pareeUrl.apply(this, [url]);
-        var route_values = a.hash.substr(1).split('_');
-        var MIN_PARTS_COUNT = 2;
-        switch (routeData.pageName) {
-            case 'Home.ProductList':
-                routeData.values.type = route_values[2];
-                routeData.values.id = route_values[3];
-                break;
-            default:
-                if (route_values.length > MIN_PARTS_COUNT) {
-                    routeData.values.id = route_values[2];
-                }
-                break;
+    var UrlParser = (function (_super) {
+        __extends(UrlParser, _super);
+        function UrlParser() {
+            _super.apply(this, arguments);
         }
-        return routeData;
-    };
+        UrlParser.prototype.pareeUrl = function (url) {
+            var a = document.createElement('a');
+            a.href = url;
+            var routeData = _super.prototype.pareeUrl.call(this, url);
+            var route_values = a.hash.substr(1).split('_');
+            var MIN_PARTS_COUNT = 2;
+            switch (routeData.pageName) {
+                case 'Home.ProductList':
+                    routeData.values.type = route_values[2];
+                    routeData.values.id = route_values[3];
+                    break;
+                default:
+                    if (route_values.length > MIN_PARTS_COUNT) {
+                        routeData.values.id = route_values[2];
+                    }
+                    break;
+            }
+            return routeData;
+        };
+        return UrlParser;
+    })(chitu.UrlParser);
+    var urlParser = new UrlParser();
+    urlParser.pathBase = '/store/App/Module/';
     var config = {
         openSwipe: function (routeData) {
             if (site.env.isDegrade)

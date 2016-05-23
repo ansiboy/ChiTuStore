@@ -17,32 +17,15 @@ class IndexPage extends chitu.Page {
         name: ko.observable(''),
         brands: ko.observableArray(),
         advertItems: ko.observableArray(),
-        homeProducts: ko.observableArray(),
-        pay: function () {
-            (<any>window).alipay.pay({
-                tradeNo: 'g1239aaga1142f',//tradeNo,
-                subject: "测试标题",
-                body: "我是测试内容",
-                price: 0.01,
-                notifyUrl: "http://your.server.notify.url"
-            },
-                function (successResults) {
-                    alert(successResults)
-                },
-                function (errorResults) {
-                    alert(errorResults)
-                });
-        }
+        homeProducts: ko.observableArray()
     };
 
     constructor() {
         super();
-
-        //this.load.add(this.page_load);
-        this.viewChanged.add(this.page_viewChanged);
+        this.load.add(this.page_load);
     }
 
-    private page_load(sender: chitu.ScrollView | IndexPage, args) {
+    private scrollView_load(sender: chitu.ScrollView | IndexPage, args) {
         var page: IndexPage;
         if (sender instanceof IndexPage)
             page = <IndexPage>sender;
@@ -64,29 +47,19 @@ class IndexPage extends chitu.Page {
         return result;
     }
 
-    private page_viewChanged(sender: IndexPage, args) {
+    private page_load(sender: IndexPage, args) {
         ko.applyBindings(sender.model, sender.element);
         var scroll_view = (<chitu.ScrollView>sender.findControl('products'));
-        scroll_view.scrollLoad = sender.page_load;
+        scroll_view.scrollLoad = sender.scrollView_load;
 
-        var items_deferred = home.advertItems().done(function (advertItems) {
+        home.advertItems().done(function (advertItems) {
             for (var i = 0; i < advertItems.length; i++) {
                 advertItems[i].index = i;
                 advertItems[i].LinkUrl = advertItems[i].LinkUrl;
                 sender.model.advertItems.push(advertItems[i]);
             }
 
-            //requirejs(['Core/Carousel'], function(Carousel) {
             var c = new Carousel($(sender.element).find('[name="ad-swiper"]')[0]);
-            scroll_view.scroll.add((sender, e) => {
-                //if (e.scrollTop < 0) {
-                c.pause = e.scrollTop < 0;
-                // }
-                // else {
-                //     c.pause = false;
-                // }
-            });
-            //})
         });
     }
 }

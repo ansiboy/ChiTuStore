@@ -1,33 +1,43 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Services/Auth', 'Application', 'knockout.validation'], function (require, exports, member, app, validation) {
     requirejs(['css!content/User/Login']);
-    exports.func = function (page) {
-        /// <param name="page" type="chitu.Page"/>
-        var redirectUrl = '';
-        var model = {
-            username: ko.observable().extend({ required: { message: '请输入用户名' } }),
-            password: ko.observable().extend({ required: { message: '请输入密码' } }),
-            val: undefined,
-            login: function () {
-                if (!model['isValid']()) {
-                    model.val.showAllMessages();
-                    return;
-                }
-                return member.login(model.username(), model.password())
-                    .done(function (data) {
-                    if (redirectUrl)
-                        return app.showPage(redirectUrl, undefined);
-                    app.redirect('User_Index');
-                });
+    var PageModel = (function () {
+        function PageModel() {
+            this.username = ko.observable().extend({ required: { message: '请输入用户名' } });
+            this.password = ko.observable().extend({ required: { message: '请输入密码' } });
+            this.val = validation.group(this);
+        }
+        PageModel.prototype.login = function (model) {
+            if (!model['isValid']()) {
+                model.val.showAllMessages();
+                return;
             }
+            return member.login(model.username(), model.password())
+                .done(function (data) {
+                if (this.redirectUrl)
+                    return app.showPage(this.redirectUrl, undefined);
+                app.redirect('#User_Index');
+            });
         };
-        page.load.add(function (sender, args) {
-            redirectUrl = args.redirectUrl;
-            model.val = validation.group(model);
-        });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
-    };
+        return PageModel;
+    })();
+    var LoginPage = (function (_super) {
+        __extends(LoginPage, _super);
+        function LoginPage() {
+            _super.call(this);
+            this.redirectUrl = '';
+            this.model = new PageModel();
+            this.load.add(this.page_load);
+        }
+        LoginPage.prototype.page_load = function (sender, args) {
+            sender.redirectUrl = args.redirectUrl;
+            ko.applyBindings(sender.model, sender.element);
+        };
+        return LoginPage;
+    })(chitu.Page);
+    return LoginPage;
 });
