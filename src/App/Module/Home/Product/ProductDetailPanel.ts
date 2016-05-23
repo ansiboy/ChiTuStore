@@ -1,7 +1,4 @@
-﻿/// <reference path='../../../../Scripts/typings/move.d.ts' />
-/// <reference path='../../../../Scripts/typings/iscroll.d.ts' />
-/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
-
+﻿
 import move = require('move');
 import site = require('Site');
 import Hammer = require('hammer');

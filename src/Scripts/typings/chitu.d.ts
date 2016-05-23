@@ -25,8 +25,8 @@ declare namespace chitu {
         urlParser?: UrlParser;
     }
     class Application {
-        pageCreating: chitu.Callback;
-        pageCreated: chitu.Callback;
+        pageCreating: Callback<Application, any>;
+        pageCreated: Callback<Application, Page>;
         private _config;
         private _runned;
         private zindex;
@@ -70,7 +70,7 @@ declare namespace chitu {
         private _page;
         private static ControlTags;
         protected _name: string;
-        load: Callback;
+        load: Callback<{}, {}>;
         parent: Control;
         constructor(element: HTMLElement, page: Page);
         private createChildren(element, page);
@@ -80,7 +80,7 @@ declare namespace chitu {
         children: ControlCollection;
         name: string;
         page: Page;
-        protected fireEvent(callback: chitu.Callback, args: any): JQueryPromise<any>;
+        protected fireEvent<S, A>(callback: chitu.Callback<S, A>, args: any): JQueryPromise<any>;
         on_load(args: Object): JQueryPromise<any>;
         static register(tagName: string, createControlMethod: (new (element: HTMLElement, page: Page) => Control) | ((element: HTMLElement, page: Page) => Control)): void;
         static createControl(element: HTMLElement, page: Page): Control;
@@ -99,8 +99,8 @@ declare namespace chitu {
     class ScrollView extends Control {
         private _bottomLoading;
         static scrolling: boolean;
-        scroll: Callback;
-        scrollEnd: Callback;
+        scroll: Callback<ScrollView, any>;
+        scrollEnd: Callback<ScrollView, any>;
         scrollLoad: (sender: ScrollView, args) => JQueryPromise<any>;
         constructor(element: HTMLElement, page: Page);
         on_load(args: any): JQueryPromise<any>;
@@ -153,17 +153,20 @@ declare namespace chitu {
     }
 }
 declare namespace chitu {
-    class Callback {
+    interface EventCallback<S, A> {
+        (sender: S, args: A): JQueryPromise<any> | void;
+    }
+    class Callback<S, A> {
         source: any;
         constructor(source: any);
-        add(func: Function): void;
+        add(func: EventCallback<S, A>): void;
         remove(func: Function): void;
         has(func: Function): boolean;
         fireWith(context: any, args: any): any;
         fire(arg1?: any, arg2?: any, arg3?: any, arg4?: any): any;
     }
-    function Callbacks(options?: any): Callback;
-    function fireCallback(callback: chitu.Callback, args: Array<any>): JQueryPromise<any>;
+    function Callbacks<S, A>(options?: any): Callback<S, A>;
+    function fireCallback<S, A>(callback: chitu.Callback<S, A>, args: Array<any>): JQueryPromise<any>;
 }
 declare namespace chitu {
     enum PageLoadType {
@@ -215,15 +218,15 @@ declare namespace chitu {
         private _viewHtml;
         private _loading;
         private _controls;
-        preLoad: Callback;
-        load: Callback;
-        closing: Callback;
-        closed: Callback;
-        showing: Callback;
-        shown: Callback;
-        hiding: Callback;
-        hidden: Callback;
-        viewChanged: Callback;
+        preLoad: Callback<Page, any>;
+        load: Callback<Page, any>;
+        closing: Callback<Page, any>;
+        closed: Callback<{}, {}>;
+        showing: Callback<{}, {}>;
+        shown: Callback<{}, {}>;
+        hiding: Callback<{}, {}>;
+        hidden: Callback<{}, {}>;
+        viewChanged: Callback<{}, {}>;
         constructor();
         initialize(container: PageContainer, pageInfo: RouteData, args: any, previous?: chitu.Page): void;
         private createControls(element);
@@ -236,7 +239,7 @@ declare namespace chitu {
         container: PageContainer;
         hide(swipe?: SwipeDirection): JQueryPromise<any>;
         findControl<T extends Control>(name: string): T;
-        private fireEvent(callback, args);
+        private fireEvent<S, A>(callback, args);
         on_load(args: Object): JQueryPromise<any>;
         on_closing(args: any): JQueryPromise<any>;
         on_closed(args: any): JQueryPromise<any>;
@@ -261,7 +264,7 @@ declare namespace chitu {
         private open_swipe;
         enableSwipeClose: boolean;
         gesture: Gesture;
-        pageCreated: chitu.Callback;
+        pageCreated: chitu.Callback<PageContainer, Page>;
         constructor(app: Application, previous?: PageContainer);
         on_pageCreated(page: chitu.Page): JQueryPromise<any>;
         private _enableSwipeBack();
