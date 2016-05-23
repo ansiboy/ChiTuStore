@@ -78,7 +78,7 @@
             this._config.urlParser = this._config.urlParser || new UrlParser();
         }
         Application.prototype.on_pageCreating = function () {
-            return chitu.fireCallback(this.pageCreating, [this]);
+            return chitu.fireCallback(this.pageCreating, [this, {}]);
         };
         Application.prototype.on_pageCreated = function (page) {
             return chitu.fireCallback(this.pageCreated, [this, page]);
@@ -181,10 +181,11 @@
             if (routeData == null) {
                 throw chitu.Errors.noneRouteMatched(url);
             }
+            routeData.values = $.extend(routeData.values, args || {});
             var container = this.createPageContainer(routeData);
             container.pageCreated.add(function (sender, page) { return _this.on_pageCreated(page); });
             var swipe = this.config.openSwipe(routeData);
-            var result = container.showPage(routeData, args, swipe);
+            var result = container.showPage(routeData, swipe);
             return result;
         };
         Application.prototype.createPageNode = function () {
@@ -923,7 +924,7 @@ var chitu;
             return this.source.has(func);
         };
         Callback.prototype.fireWith = function (context, args) {
-            return this.source.fire(context, args);
+            return this.source.fireWith(context, args);
         };
         Callback.prototype.fire = function (arg1, arg2, arg3, arg4) {
             return this.source.fire(arg1, arg2, arg3);
@@ -1067,7 +1068,8 @@ var chitu;
     }
     chitu.Callbacks = Callbacks;
     function fireCallback(callback, args) {
-        var results = callback.fire.apply(callback, args);
+        var context = args[0];
+        var results = callback.fireWith(context, args);
         var deferreds = [];
         for (var i = 0; i < results.length; i++) {
             if (chitu.Utility.isDeferred(results[i]))
@@ -1145,7 +1147,7 @@ var chitu;
             this.hidden = ns.Callbacks();
             this.viewChanged = ns.Callbacks();
         }
-        Page.prototype.initialize = function (container, pageInfo, args, previous) {
+        Page.prototype.initialize = function (container, pageInfo, previous) {
             if (!container)
                 throw e.argumentNull('container');
             if (pageInfo == null)
@@ -1571,37 +1573,36 @@ var chitu;
             }
             return result;
         };
-        PageContainer.prototype.createPage = function (pageInfo, args) {
+        PageContainer.prototype.createPage = function (routeData) {
             var _this = this;
-            var view_deferred = this.createViewDeferred(pageInfo);
-            var action_deferred = this.createActionDeferred(pageInfo);
+            var view_deferred = this.createViewDeferred(routeData);
+            var action_deferred = this.createActionDeferred(routeData);
             var result = $.Deferred();
             var previousPage;
             if (this._pages.length > 0)
                 previousPage = this._pages[this._pages.length - 1];
             $.when(action_deferred, view_deferred).done(function (pageType, html) {
-                args = args || {};
                 var page = new pageType();
-                page.initialize(_this, pageInfo, args, previousPage);
+                page.initialize(_this, routeData, previousPage);
                 _this.on_pageCreated(page);
                 _this._pages.push(page);
                 _this._pages[page.name] = page;
                 result.resolve(page);
                 page.element.innerHTML = html;
                 page.view = html;
-                page.on_load(pageInfo.values).done(function () {
+                page.on_load(routeData.values).done(function () {
                     _this.hideLoading();
                 });
             }).fail(function (err) {
                 result.reject();
                 console.log(err);
-                throw chitu.Errors.createPageFail(pageInfo.pageName);
+                throw chitu.Errors.createPageFail(routeData.pageName);
             });
             return result;
         };
-        PageContainer.prototype.showPage = function (routeData, args, swipe) {
+        PageContainer.prototype.showPage = function (routeData, swipe) {
             var _this = this;
-            return this.createPage(routeData, args)
+            return this.createPage(routeData)
                 .done(function (page) {
                 _this.element.appendChild(page.element);
                 _this._currentPage = page;

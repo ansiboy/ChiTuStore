@@ -9,8 +9,8 @@ define(["require", "exports", 'chitu', 'Site'], function (require, exports, chit
         function Model(page) {
             this.redirectUrl = ko.observable();
         }
-        Model.prototype.redirec = function () {
-            var url = this.redirectUrl();
+        Model.prototype.redirec = function (model) {
+            var url = model.redirectUrl();
             if (!url)
                 url = site.config.defaultUrl;
             location.hash = '#' + url;

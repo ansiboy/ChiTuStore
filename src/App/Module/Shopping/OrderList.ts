@@ -115,7 +115,7 @@ class OrderListPage extends chitu.Page {
     private page_load(sender: OrderListPage, args: any) {
         ko.applyBindings(sender.model, sender.element);
 
-        return sender.findControl<chitu.ScrollView>('order-list').scrollLoad = function () {
+        sender.findControl<chitu.ScrollView>('order-list').scrollLoad = function () {
             sender.model.status(args.status || '');
             return sender.model.loadOrders().done((items) => items.length < site.config.pageSize);
         }

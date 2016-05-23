@@ -228,7 +228,7 @@ declare namespace chitu {
         hidden: Callback<{}, {}>;
         viewChanged: Callback<{}, {}>;
         constructor();
-        initialize(container: PageContainer, pageInfo: RouteData, args: any, previous?: chitu.Page): void;
+        initialize(container: PageContainer, pageInfo: RouteData, previous?: chitu.Page): void;
         private createControls(element);
         view: string;
         routeData: RouteData;
@@ -283,8 +283,8 @@ declare namespace chitu {
         previous: PageContainer;
         private createActionDeferred(pageInfo);
         private createViewDeferred(pageInfo);
-        private createPage(pageInfo, args);
-        showPage<T extends Page>(routeData: RouteData, args: any, swipe: SwipeDirection): JQueryPromise<T>;
+        private createPage(routeData);
+        showPage<T extends Page>(routeData: RouteData, swipe: SwipeDirection): JQueryPromise<T>;
     }
     class PageContainerFactory {
         private _app;

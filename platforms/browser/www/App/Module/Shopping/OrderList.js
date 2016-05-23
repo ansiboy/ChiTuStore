@@ -92,7 +92,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
         }
         OrderListPage.prototype.page_load = function (sender, args) {
             ko.applyBindings(sender.model, sender.element);
-            return sender.findControl('order-list').scrollLoad = function () {
+            sender.findControl('order-list').scrollLoad = function () {
                 sender.model.status(args.status || '');
                 return sender.model.loadOrders().done(function (items) { return items.length < site.config.pageSize; });
             };
