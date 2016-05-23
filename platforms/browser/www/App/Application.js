@@ -1,8 +1,8 @@
 define(["require", "exports", 'chitu', 'Site', 'PageContainerFactory'], function (require, exports, chitu, site, PageContainerFactory) {
     chitu.Page.animationTime = site.config.pageAnimationTime;
     var urlParser = new chitu.UrlParser();
-    urlParser.pathBase = '/store/App/Module/';
     var pareeUrl = urlParser.pareeUrl;
+    urlParser.pathBase = '/store/App/Module/';
     urlParser.pareeUrl = function (url) {
         var a = document.createElement('a');
         a.href = url;

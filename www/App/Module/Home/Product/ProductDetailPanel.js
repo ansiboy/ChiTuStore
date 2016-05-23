@@ -1,6 +1,3 @@
-/// <reference path='../../../../Scripts/typings/move.d.ts' />
-/// <reference path='../../../../Scripts/typings/iscroll.d.ts' />
-/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
 define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'knockout', 'iscroll', 'knockout.mapping'], function (require, exports, move, site, Hammer, shopping, ko, IScroll, mapping) {
     var show_time = site.config.pageAnimationTime;
     var ProductDetailPanel = (function () {
