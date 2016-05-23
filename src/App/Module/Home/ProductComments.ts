@@ -1,15 +1,22 @@
 ﻿import shopping = require('Services/Shopping');
 
-export = function (page: chitu.Page) {
-    var model = {
+class ProductCommentsPage extends chitu.Page {
+    private model = {
         comments: ko.observableArray()
     }
-    page.load.add(() => {
-        return shopping.getProductComments(page.routeData.values.id, 10).done((comments) => {
-            return model.comments(comments);
+    constructor() {
+        super();
+        this.load.add(this.page_load);
+    }
+
+    private page_load(sender: ProductCommentsPage, args) {
+        ko.applyBindings(sender.model, sender.element)
+        return shopping.getProductComments(args.id, 10).done((comments) => {
+            return sender.model.comments(comments);
         });
-    })
+    }
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.element));
+}
 
-} 
+export =ProductCommentsPage;
+

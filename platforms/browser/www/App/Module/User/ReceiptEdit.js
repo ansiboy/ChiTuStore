@@ -1,8 +1,8 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
-/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Services/Account', 'Application'], function (require, exports, ko_val, mapping, account, app) {
     requirejs(['css!content/User/ReceiptEdit']);
     var province_none = { Name: '请选择省' };
@@ -147,44 +147,50 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
         }
         return Model;
     })();
-    return function (page) {
-        /// <param name="page" type="chitu.Page"/>
-        var model = new Model(page);
-        page.load.add(function (sender, args) {
+    var ReceiptEditPage = (function (_super) {
+        __extends(ReceiptEditPage, _super);
+        function ReceiptEditPage() {
+            _super.call(this);
+            var model = this.model = new Model(this);
+            account.getProvinces().done(function (provinces) {
+                model.provinces.push(province_none);
+                for (var i = 0; i < provinces.length; i++) {
+                    model.provinces.push(provinces[i]);
+                }
+            });
+            this.load.add(this.page_load);
+        }
+        ReceiptEditPage.prototype.page_load = function (sender, args) {
+            //function ( {
             /// args 参数说明：
             /// 1. receipt:   编辑操作
             /// 2. receipts:  添加操作
             if (!args.id) {
                 var obj = mapping.toJS(new Receipt());
-                mapping.fromJS(obj, {}, model.receipt);
+                mapping.fromJS(obj, {}, sender.model.receipt);
                 return;
             }
-            return account.getReceiptInfo(args.id)
-                .done(function (data) {
-                mapping.fromJS(data, {}, model.receipt);
-                var receipt = model.receipt;
+            return account.getReceiptInfo(args.id).done(function (data) {
+                mapping.fromJS(data, {}, sender.model.receipt);
+                var receipt = sender.model.receipt;
                 var provinceId = data.ProvinceId;
                 var cityId = data.CityId;
                 var countyId = data.CountyId;
-                model['receipts'] = args.receipts;
-                model.enableProvince();
-                return model.loadCities(provinceId).pipe(function () {
-                    model.receipt.CityId(cityId);
-                    model.onCityChanged();
-                    return model.loadCounties(cityId);
+                sender.model['receipts'] = args.receipts;
+                sender.model.enableProvince();
+                return sender.model.loadCities(provinceId)
+                    .pipe(function () {
+                    sender.model.receipt.CityId(cityId);
+                    sender.model.onCityChanged();
+                    return sender.model.loadCounties(cityId);
                 })
                     .done(function () {
-                    model.receipt.CountyId(countyId);
-                    model.onCountyChanged();
+                    sender.model.receipt.CountyId(countyId);
+                    sender.model.onCountyChanged();
                 });
             });
-        });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
-        return account.getProvinces().done(function (provinces) {
-            model.provinces.push(province_none);
-            for (var i = 0; i < provinces.length; i++) {
-                model.provinces.push(provinces[i]);
-            }
-        });
-    };
+        };
+        return ReceiptEditPage;
+    })(chitu.Page);
+    return ReceiptEditPage;
 });

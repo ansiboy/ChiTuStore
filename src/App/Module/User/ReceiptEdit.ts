@@ -1,10 +1,4 @@
-﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
-/// <reference path='../../../Scripts/typings/chitu.d.ts' />
-
-import ko_val = require('knockout.validation');
+﻿import ko_val = require('knockout.validation');
 import mapping = require('knockout.mapping');
 import account = require('Services/Account');
 import site = require('Site');
@@ -185,54 +179,109 @@ class Model {
     }
 }
 
+class ReceiptEditPage extends chitu.Page {
+    private model: Model;
+    constructor() {
+        super();
+        let model = this.model = new Model(this);
 
-export = function (page: chitu.Page) {
-    /// <param name="page" type="chitu.Page"/>
+        account.getProvinces().done(function (provinces) {
+            model.provinces.push(province_none);
+            for (var i = 0; i < provinces.length; i++) {
+                model.provinces.push(provinces[i]);
+            }
 
-    var model = new Model(page);
-    page.load.add(function (sender, args) {
+        });
+        
+        this.load.add(this.page_load);
+    }
+
+    private page_load(sender: ReceiptEditPage, args) {
+        //function ( {
         /// args 参数说明：
         /// 1. receipt:   编辑操作
         /// 2. receipts:  添加操作
 
         if (!args.id) {
             var obj = mapping.toJS(new Receipt());
-            mapping.fromJS(obj, {}, model.receipt);
+            mapping.fromJS(obj, {}, sender.model.receipt);
             return;
         }
 
-        return account.getReceiptInfo(args.id)
-            .done(function (data) {
-                mapping.fromJS(data, {}, model.receipt);
-                var receipt = model.receipt;
-                var provinceId = data.ProvinceId;
-                var cityId = data.CityId;
-                var countyId = data.CountyId;
+        return account.getReceiptInfo(args.id).done(function (data) {
+            mapping.fromJS(data, {}, sender.model.receipt);
+            var receipt = sender.model.receipt;
+            var provinceId = data.ProvinceId;
+            var cityId = data.CityId;
+            var countyId = data.CountyId;
 
-                model['receipts'] = args.receipts;
+            sender.model['receipts'] = args.receipts;
 
-                model.enableProvince();
-                return model.loadCities(provinceId).pipe(function () {
-                    model.receipt.CityId(cityId);
-                    model.onCityChanged();
-                    return model.loadCounties(cityId);
+            sender.model.enableProvince();
+            return sender.model.loadCities(provinceId)
+                .pipe(function () {
+                    sender.model.receipt.CityId(cityId);
+                    sender.model.onCityChanged();
+                    return sender.model.loadCounties(cityId);
                 })
-                    .done(function () {
-                        model.receipt.CountyId(countyId);
-                        model.onCountyChanged();
-                    })
-            });
-    })
+                .done(function () {
+                    sender.model.receipt.CountyId(countyId);
+                    sender.model.onCountyChanged();
+                })
+        });
+        //}
+    }
+}
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.element));
+export = ReceiptEditPage;
+
+// function (page: chitu.Page) {
+//     /// <param name="page" type="chitu.Page"/>
+
+//     var model = new Model(page);
+//     page.load.add(function (sender, args) {
+//         /// args 参数说明：
+//         /// 1. receipt:   编辑操作
+//         /// 2. receipts:  添加操作
+
+//         if (!args.id) {
+//             var obj = mapping.toJS(new Receipt());
+//             mapping.fromJS(obj, {}, model.receipt);
+//             return;
+//         }
+
+//         return account.getReceiptInfo(args.id)
+//             .done(function (data) {
+//                 mapping.fromJS(data, {}, model.receipt);
+//                 var receipt = model.receipt;
+//                 var provinceId = data.ProvinceId;
+//                 var cityId = data.CityId;
+//                 var countyId = data.CountyId;
+
+//                 model['receipts'] = args.receipts;
+
+//                 model.enableProvince();
+//                 return model.loadCities(provinceId).pipe(function () {
+//                     model.receipt.CityId(cityId);
+//                     model.onCityChanged();
+//                     return model.loadCounties(cityId);
+//                 })
+//                     .done(function () {
+//                         model.receipt.CountyId(countyId);
+//                         model.onCountyChanged();
+//                     })
+//             });
+//     })
+
+//     page.viewChanged.add(() => ko.applyBindings(model, page.element));
 
 
-    return account.getProvinces().done(function (provinces) {
-        model.provinces.push(province_none);
-        for (var i = 0; i < provinces.length; i++) {
-            model.provinces.push(provinces[i]);
-        }
+//     return account.getProvinces().done(function (provinces) {
+//         model.provinces.push(province_none);
+//         for (var i = 0; i < provinces.length; i++) {
+//             model.provinces.push(provinces[i]);
+//         }
 
-    });
+//     });
 
-} 
+// } 

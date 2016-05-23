@@ -1,3 +1,8 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Application', 'Services/Account'], function (require, exports, app, account) {
     requirejs(['css!content/User/RechargeList']);
     function extendItem(item) {
@@ -18,38 +23,39 @@ define(["require", "exports", 'Application', 'Services/Account'], function (requ
             item.Score = '+' + item.Score;
         }
     }
-    return function (page) {
-        /// <param name="page" type="chitu.Page"/>
-        var pageIndex = 0;
-        var topbar = page['topbar'];
-        if (topbar) {
-            var div = document.createElement('div');
-            $(topbar.element).append('<a name="btn_recharge" class="rightButton" href="#User_Recharge" style="padding-top:4px;">充值</a>');
+    var RechargeListPage = (function (_super) {
+        __extends(RechargeListPage, _super);
+        function RechargeListPage() {
+            _super.call(this);
+            this.pageIndex = 0;
+            this.model = {
+                rechargeRecords: ko.observableArray(),
+                back: function () {
+                    app.back().fail(function () {
+                        app.redirect('User_Index');
+                    });
+                },
+                recharge: function () {
+                    window.location.href = '#User_Recharge';
+                },
+                firstLoad: undefined
+            };
+            this.load.add(this.page_load);
         }
-        var model = {
-            rechargeRecords: ko.observableArray(),
-            back: function () {
-                app.back().fail(function () {
-                    app.redirect('User_Index');
-                });
-            },
-            recharge: function () {
-                window.location.href = '#User_Recharge';
-            },
-            firstLoad: undefined
-        };
-        page.viewChanged.add(function () {
-            page.findControl('recharge').load.add(function () {
+        RechargeListPage.prototype.page_load = function (sender, args) {
+            ko.applyBindings(sender.model, sender.element);
+            sender.findControl('recharge').load.add(function () {
                 return account.getBalanceDetails().done(function (records) {
-                    pageIndex = pageIndex + 1;
+                    sender.pageIndex = sender.pageIndex + 1;
                     for (var i = 0; i < records.length; i++) {
                         extendItem(records[i]);
-                        model.rechargeRecords.push(records[i]);
+                        sender.model.rechargeRecords.push(records[i]);
                     }
                 }).done(function (items) {
                 });
             });
-            ko.applyBindings(model, page.element);
-        });
-    };
+        };
+        return RechargeListPage;
+    })(chitu.Page);
+    return RechargeListPage;
 });
