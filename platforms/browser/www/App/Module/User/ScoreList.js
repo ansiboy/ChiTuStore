@@ -25,9 +25,9 @@ define(["require", "exports", 'Services/Account', 'Site'], function (require, ex
     }
     var ScoreListPage = (function (_super) {
         __extends(ScoreListPage, _super);
-        function ScoreListPage() {
+        function ScoreListPage(html) {
             var _this = this;
-            _super.call(this);
+            _super.call(this, html);
             this.load.add(function (sender, args) {
                 ko.applyBindings(model, _this.element);
                 model.loading(true);

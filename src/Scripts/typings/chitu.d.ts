@@ -4,6 +4,7 @@ declare namespace chitu {
         viewPath: string;
         values: any;
         pageName: string;
+        resource?: string[];
     }
     class UrlParser {
         private path_string;
@@ -80,7 +81,6 @@ declare namespace chitu {
         children: ControlCollection;
         name: string;
         page: Page;
-        protected fireEvent<S, A>(callback: chitu.Callback<S, A>, args: any): JQueryPromise<any>;
         on_load(args: Object): JQueryPromise<any>;
         static register(tagName: string, createControlMethod: (new (element: HTMLElement, page: Page) => Control) | ((element: HTMLElement, page: Page) => Control)): void;
         static createControl(element: HTMLElement, page: Page): Control;
@@ -102,6 +102,7 @@ declare namespace chitu {
         scroll: Callback<ScrollView, any>;
         scrollEnd: Callback<ScrollView, any>;
         scrollLoad: (sender: ScrollView, args) => JQueryPromise<any>;
+        scrollBottom: Callback<ScrollView, any>;
         constructor(element: HTMLElement, page: Page);
         on_load(args: any): JQueryPromise<any>;
         protected on_scrollEnd(args: ScrollArguments): JQueryPromise<any>;
@@ -166,7 +167,7 @@ declare namespace chitu {
         fire(arg1?: any, arg2?: any, arg3?: any, arg4?: any): any;
     }
     function Callbacks<S, A>(options?: any): Callback<S, A>;
-    function fireCallback<S, A>(callback: chitu.Callback<S, A>, args: Array<any>): JQueryPromise<any>;
+    function fireCallback<S, A>(callback: chitu.Callback<S, A>, sender: S, args: A): JQueryPromise<any>;
 }
 declare namespace chitu {
     enum PageLoadType {
@@ -193,7 +194,7 @@ declare namespace chitu {
         Document = 2,
     }
     interface PageConstructor {
-        new (): Page;
+        new (html: string): Page;
     }
     class Page {
         static animationTime: number;
@@ -226,8 +227,8 @@ declare namespace chitu {
         shown: Callback<{}, {}>;
         hiding: Callback<{}, {}>;
         hidden: Callback<{}, {}>;
-        constructor();
-        initialize(container: PageContainer, pageInfo: RouteData, html: string, previous?: chitu.Page): void;
+        constructor(html: string);
+        initialize(container: PageContainer, pageInfo: RouteData, previous?: chitu.Page): void;
         private createControls(element);
         routeData: RouteData;
         name: string;
@@ -237,7 +238,7 @@ declare namespace chitu {
         container: PageContainer;
         hide(swipe?: SwipeDirection): JQueryPromise<any>;
         findControl<T extends Control>(name: string): T;
-        private fireEvent<S, A>(callback, args);
+        private fireEvent<A>(callback, args);
         on_load(args: Object): JQueryPromise<any>;
         on_closing(args: any): JQueryPromise<any>;
         on_closed(args: any): JQueryPromise<any>;

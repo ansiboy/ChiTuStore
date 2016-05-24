@@ -25,8 +25,8 @@ define(["require", "exports", 'Application', 'Services/Account'], function (requ
     }
     var RechargeListPage = (function (_super) {
         __extends(RechargeListPage, _super);
-        function RechargeListPage() {
-            _super.call(this);
+        function RechargeListPage(html) {
+            _super.call(this, html);
             this.pageIndex = 0;
             this.model = {
                 rechargeRecords: ko.observableArray(),

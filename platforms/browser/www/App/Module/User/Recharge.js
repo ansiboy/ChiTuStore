@@ -1,6 +1,3 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -58,9 +55,9 @@ define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Serv
     var validation = ko_val.group(model);
     var RechargePage = (function (_super) {
         __extends(RechargePage, _super);
-        function RechargePage() {
+        function RechargePage(html) {
             var _this = this;
-            _super.call(this);
+            _super.call(this, html);
             this.load.add(function () { return ko.applyBindings(model, _this.element); });
         }
         return RechargePage;

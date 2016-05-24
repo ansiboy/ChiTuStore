@@ -67,8 +67,8 @@ class PageModel {
 
 class ReceiptListPage extends chitu.Page {
     private model: PageModel;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.model = new PageModel(this);
         this.load.add(this.page_load);
     }

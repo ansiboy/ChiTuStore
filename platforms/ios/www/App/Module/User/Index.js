@@ -7,8 +7,8 @@ define(["require", "exports", 'Application', 'Services/Account', 'Services/Membe
     requirejs(['css!content/User/Index']);
     return (function (_super) {
         __extends(UserIndexPage, _super);
-        function UserIndexPage() {
-            _super.call(this);
+        function UserIndexPage(html) {
+            _super.call(this, html);
             this.model = {
                 groups: [],
                 showItemPage: function (item) {

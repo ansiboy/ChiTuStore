@@ -7,8 +7,8 @@ define(["require", "exports"], function (require, exports) {
     requirejs(['css!content/User/Messages'], function () { });
     var MessagesPage = (function (_super) {
         __extends(MessagesPage, _super);
-        function MessagesPage() {
-            _super.call(this);
+        function MessagesPage(html) {
+            _super.call(this, html);
         }
         return MessagesPage;
     })(chitu.Page);

@@ -19,8 +19,8 @@ define(["require", "exports", 'chitu', 'Site'], function (require, exports, chit
     })();
     var ConnectFailPage = (function (_super) {
         __extends(ConnectFailPage, _super);
-        function ConnectFailPage() {
-            _super.call(this);
+        function ConnectFailPage(html) {
+            _super.call(this, html);
             this.model = new Model(this);
             this.load.add(this.page_load);
         }

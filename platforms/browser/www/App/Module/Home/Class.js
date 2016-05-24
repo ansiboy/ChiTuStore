@@ -7,8 +7,8 @@ define(["require", "exports", 'chitu', 'Services/Shopping'], function (require, 
     chitu.Utility.loadjs(['css!content/Home/Class']);
     return (function (_super) {
         __extends(ClassPage, _super);
-        function ClassPage() {
-            _super.call(this);
+        function ClassPage(html) {
+            _super.call(this, html);
             this.model = {
                 categories: ko.observableArray(),
             };

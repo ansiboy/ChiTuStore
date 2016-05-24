@@ -7,8 +7,8 @@ define(["require", "exports", 'Services/Info', 'Application', 'knockout.mapping'
     requirejs(['css!content/Home/News']);
     var NewsPage = (function (_super) {
         __extends(NewsPage, _super);
-        function NewsPage() {
-            _super.call(this);
+        function NewsPage(html) {
+            _super.call(this, html);
             this.model = {
                 news: null,
                 back: function () {

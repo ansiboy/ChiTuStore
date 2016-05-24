@@ -66,8 +66,8 @@ var validation = ko_val.group(model);
 //     page.viewChanged.add(() => ko.applyBindings(model, page.element));
 // }
 class RechargePage extends chitu.Page {
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.load.add(() => ko.applyBindings(model, this.element));
     }
 }

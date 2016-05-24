@@ -73,8 +73,8 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
     chitu.Utility.loadjs(['css!content/Home/Product', 'UI/Promotion']);
     var ProductPage = (function (_super) {
         __extends(ProductPage, _super);
-        function ProductPage() {
-            _super.call(this);
+        function ProductPage(html) {
+            _super.call(this, html);
             this.model = new ProductModel(this);
             this.load.add(this.page_load);
         }

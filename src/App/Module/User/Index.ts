@@ -33,8 +33,8 @@ export = class UserIndexPage extends chitu.Page {
 
     private score_menu_item = { name: '我的积分', url: '#User_ScoreList', value: ko.observable() };
 
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
 
 
         var i = 0;

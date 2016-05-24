@@ -240,8 +240,8 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
     })(Status || (Status = {}));
     var ShoppingCartPage = (function (_super) {
         __extends(ShoppingCartPage, _super);
-        function ShoppingCartPage() {
-            _super.call(this);
+        function ShoppingCartPage(html) {
+            _super.call(this, html);
             this.model = new Model(this);
             this.load.add(this.page_load);
         }

@@ -6,8 +6,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 define(["require", "exports", 'Services/Shopping'], function (require, exports, shopping) {
     var ProductCommentsPage = (function (_super) {
         __extends(ProductCommentsPage, _super);
-        function ProductCommentsPage() {
-            _super.call(this);
+        function ProductCommentsPage(html) {
+            _super.call(this, html);
             this.model = {
                 comments: ko.observableArray()
             };

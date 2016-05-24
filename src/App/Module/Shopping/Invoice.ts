@@ -33,8 +33,8 @@ class PageModel {
 }
 class InvoicePage extends chitu.Page {
     private model: PageModel;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.model = new PageModel(this);
         this.load.add((sender: InvoicePage, args) => {
             ko.applyBindings(sender.model, sender.element);

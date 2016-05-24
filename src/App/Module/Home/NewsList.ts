@@ -13,8 +13,8 @@ class NewsListPage extends chitu.Page {
         currentCategory: ko.observable(),
     };
     
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.load.add(this.page_load);
     }
 

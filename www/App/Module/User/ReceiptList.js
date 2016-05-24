@@ -60,8 +60,8 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'knockout
     })();
     var ReceiptListPage = (function (_super) {
         __extends(ReceiptListPage, _super);
-        function ReceiptListPage() {
-            _super.call(this);
+        function ReceiptListPage(html) {
+            _super.call(this, html);
             this.model = new PageModel(this);
             this.load.add(this.page_load);
         }

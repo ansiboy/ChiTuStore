@@ -111,8 +111,8 @@ class PageModel {
 class RegisterPage extends chitu.Page {
     private model: PageModel;
 
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.model = new PageModel();
         this.load.add((sender: RegisterPage, args) => {
             ko.applyBindings(sender.model, sender.element)

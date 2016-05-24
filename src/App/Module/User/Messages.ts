@@ -1,8 +1,8 @@
 ﻿
 requirejs(['css!content/User/Messages'], function () { });
 class MessagesPage extends chitu.Page {
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
     }
 }
 

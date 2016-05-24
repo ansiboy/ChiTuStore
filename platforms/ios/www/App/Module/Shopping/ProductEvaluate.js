@@ -90,9 +90,9 @@ define(["require", "exports", 'knockout', 'Services/Account', 'Core/ImageFileRes
     })();
     var ProductEvaluatePage = (function (_super) {
         __extends(ProductEvaluatePage, _super);
-        function ProductEvaluatePage() {
+        function ProductEvaluatePage(html) {
             var _this = this;
-            _super.call(this);
+            _super.call(this, html);
             this.model = new Model(this);
             this.load.add(function (sender, args) {
                 sender.model.productImageUrl(args.productImageUrl);

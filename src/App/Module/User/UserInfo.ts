@@ -45,8 +45,8 @@ class Model {
 
 class UserInfoPage extends chitu.Page {
     private model: Model;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.model = new Model();
 
         this.load.add((page: UserInfoPage, args) => {

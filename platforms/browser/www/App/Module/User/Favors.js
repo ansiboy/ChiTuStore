@@ -7,8 +7,8 @@ define(["require", "exports", 'Services/Shopping'], function (require, exports, 
     requirejs(['css!content/User/Favors']);
     return (function (_super) {
         __extends(FavorPage, _super);
-        function FavorPage() {
-            _super.call(this);
+        function FavorPage(html) {
+            _super.call(this, html);
             this.config = {
                 pullDown: {}
             };

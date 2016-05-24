@@ -20,8 +20,8 @@ class IndexPage extends chitu.Page {
         homeProducts: ko.observableArray()
     };
 
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.load.add(this.page_load);
     }
 

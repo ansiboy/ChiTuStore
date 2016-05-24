@@ -85,8 +85,8 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
     })();
     var OrderListPage = (function (_super) {
         __extends(OrderListPage, _super);
-        function OrderListPage() {
-            _super.call(this);
+        function OrderListPage(html) {
+            _super.call(this, html);
             this.model = new Model(this);
             this.load.add(this.page_load);
         }

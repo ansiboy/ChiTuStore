@@ -7,8 +7,8 @@ define(["require", "exports", 'Services/Info', 'Site', 'chitu'], function (requi
     requirejs(['css!content/Home/NewsList']);
     var NewsListPage = (function (_super) {
         __extends(NewsListPage, _super);
-        function NewsListPage() {
-            _super.call(this);
+        function NewsListPage(html) {
+            _super.call(this, html);
             this.select_args = { categoryName: '', pageIndex: 0 };
             this.scroll_end = false;
             this.model = {

@@ -42,8 +42,8 @@ class RechargeListPage extends chitu.Page {
         firstLoad: undefined
     }
 
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.load.add(this.page_load);
     }
 

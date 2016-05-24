@@ -30,8 +30,8 @@ define(["require", "exports", 'Application', 'knockout.validation'], function (r
     })();
     var InvoicePage = (function (_super) {
         __extends(InvoicePage, _super);
-        function InvoicePage() {
-            _super.call(this);
+        function InvoicePage(html) {
+            _super.call(this, html);
             this.model = new PageModel(this);
             this.load.add(function (sender, args) {
                 ko.applyBindings(sender.model, sender.element);

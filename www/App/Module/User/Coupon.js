@@ -42,8 +42,8 @@ define(["require", "exports", 'Services/Coupon'], function (require, exports, co
     })();
     var CouponPage = (function (_super) {
         __extends(CouponPage, _super);
-        function CouponPage() {
-            _super.call(this);
+        function CouponPage(html) {
+            _super.call(this, html);
             this.model = new PageModel(this);
             this.load.add(this.page_load);
         }

@@ -81,8 +81,8 @@ chitu.Utility.loadjs(['css!content/Home/Product', 'UI/Promotion']);
 
 class ProductPage extends chitu.Page {
     private model: ProductModel;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
 
         //var productId = this.routeData.values.id;
         //auth.whenLogin(() => shopping.isFavored(productId).done((value) => this.model.isFavored(value)));

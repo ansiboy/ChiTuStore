@@ -95,8 +95,8 @@ define(["require", "exports", 'Application', 'Services/Auth', 'Services/Member',
     })();
     var RegisterPage = (function (_super) {
         __extends(RegisterPage, _super);
-        function RegisterPage() {
-            _super.call(this);
+        function RegisterPage(html) {
+            _super.call(this, html);
             this.model = new PageModel();
             this.load.add(function (sender, args) {
                 ko.applyBindings(sender.model, sender.element);

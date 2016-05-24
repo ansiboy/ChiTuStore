@@ -79,8 +79,8 @@ class Model {
 
 export = class SearchPage extends chitu.Page {
     private model: Model;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.model = new Model();
         this.load.add(this.page_load);
 

@@ -97,8 +97,8 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
     })();
     var ProductListPage = (function (_super) {
         __extends(ProductListPage, _super);
-        function ProductListPage() {
-            _super.call(this);
+        function ProductListPage(html) {
+            _super.call(this, html);
             this.model = new PageModel(this);
             this.load.add(this.page_load);
         }

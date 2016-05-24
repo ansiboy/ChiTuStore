@@ -69,9 +69,9 @@ define(["require", "exports", 'Site', 'Services/Station'], function (require, ex
     })();
     return (function (_super) {
         __extends(SearchPage, _super);
-        function SearchPage() {
+        function SearchPage(html) {
             var _this = this;
-            _super.call(this);
+            _super.call(this, html);
             this.model = new Model();
             this.load.add(this.page_load);
             station.hotKeywords().done(function (data) {

@@ -7,8 +7,8 @@ define(["require", "exports", 'chitu', 'knockout', 'Services/Service', 'Services
     chitu.Utility.loadjs(['UI/PromotionLabel', 'css!sc/Home/Index']);
     var IndexPage = (function (_super) {
         __extends(IndexPage, _super);
-        function IndexPage() {
-            _super.call(this);
+        function IndexPage(html) {
+            _super.call(this, html);
             this.homeProductQueryArguments = {
                 pageIndex: 0
             };

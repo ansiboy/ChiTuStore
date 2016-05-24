@@ -5,8 +5,8 @@ import IScroll = require('iscroll');
 
 class ProductDetailPage extends chitu.Page {
     private model;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.load.add(this.page_load);
     }
 

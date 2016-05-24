@@ -106,8 +106,8 @@ class Model {
 
 class OrderListPage extends chitu.Page {
     private model: Model;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.model = new Model(this);
         this.load.add(this.page_load);
     }

@@ -26,8 +26,8 @@ function extendItem(item) {
 }
 
 class ScoreListPage extends chitu.Page {
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.load.add((sender, args) => {
             ko.applyBindings(model, this.element);
             model.loading(true);

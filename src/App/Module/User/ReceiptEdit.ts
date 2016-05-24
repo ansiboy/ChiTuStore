@@ -181,8 +181,8 @@ class Model {
 
 class ReceiptEditPage extends chitu.Page {
     private model: Model;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         let model = this.model = new Model(this);
 
         account.getProvinces().done(function (provinces) {

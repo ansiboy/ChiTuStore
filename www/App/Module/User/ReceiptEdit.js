@@ -149,8 +149,8 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
     })();
     var ReceiptEditPage = (function (_super) {
         __extends(ReceiptEditPage, _super);
-        function ReceiptEditPage() {
-            _super.call(this);
+        function ReceiptEditPage(html) {
+            _super.call(this, html);
             var model = this.model = new Model(this);
             account.getProvinces().done(function (provinces) {
                 model.provinces.push(province_none);

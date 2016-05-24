@@ -27,8 +27,8 @@ define(["require", "exports", 'Services/Auth', 'Application', 'knockout.validati
     })();
     var LoginPage = (function (_super) {
         __extends(LoginPage, _super);
-        function LoginPage() {
-            _super.call(this);
+        function LoginPage(html) {
+            _super.call(this, html);
             this.redirectUrl = '';
             this.model = new PageModel();
             this.load.add(this.page_load);

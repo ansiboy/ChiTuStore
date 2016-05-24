@@ -56,8 +56,8 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Servi
     })();
     var EvaluationPage = (function (_super) {
         __extends(EvaluationPage, _super);
-        function EvaluationPage() {
-            _super.call(this);
+        function EvaluationPage(html) {
+            _super.call(this, html);
             this.model = new Model(this);
             this.load.add(this.page_load);
         }

@@ -32,8 +32,8 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
     })();
     var UserInfoPage = (function (_super) {
         __extends(UserInfoPage, _super);
-        function UserInfoPage() {
-            _super.call(this);
+        function UserInfoPage(html) {
+            _super.call(this, html);
             this.model = new Model();
             this.load.add(function (page, args) {
                 var e = page.element.querySelector('[type="file"]');

@@ -111,8 +111,8 @@ class Model {
 
 class ProductEvaluatePage extends chitu.Page {
     private model: Model;
-    constructor() {
-        super();
+    constructor(html) {
+        super(html);
         this.model = new Model(this);
         this.load.add((sender: ProductEvaluatePage, args) => {
             sender.model.productImageUrl(args.productImageUrl);

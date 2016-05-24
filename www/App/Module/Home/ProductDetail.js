@@ -6,8 +6,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 define(["require", "exports", 'Services/Shopping', 'knockout.mapping'], function (require, exports, shopping, mapping) {
     var ProductDetailPage = (function (_super) {
         __extends(ProductDetailPage, _super);
-        function ProductDetailPage() {
-            _super.call(this);
+        function ProductDetailPage(html) {
+            _super.call(this, html);
             this.load.add(this.page_load);
         }
         ProductDetailPage.prototype.page_load = function (sender, args) {
