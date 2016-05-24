@@ -196,7 +196,7 @@ define(["require", "exports", 'knockout', 'jquery', 'Site', 'chitu'], function (
                     });
                 }
                 deferred = deferred.pipe(function () {
-                    var result = $.isFunction(value) ? value(viewModel, event) : value;
+                    var result = $.isFunction(value) ? value.apply(viewModel, [viewModel, event]) : value;
                     if (result && $.isFunction(result.always)) {
                         $(element).attr('disabled', 'disabled');
                         $(element).addClass('disabled');
@@ -229,8 +229,10 @@ define(["require", "exports", 'knockout', 'jquery', 'Site', 'chitu'], function (
                 });
                 return deferred;
             };
-        }, { _element: element, _valueAccessor: valueAccessor, _allBindings: allBindings,
-            _viewModel: viewModel, _bindingContext: bindingContext, _value: value });
+        }, {
+            _element: element, _valueAccessor: valueAccessor, _allBindings: allBindings,
+            _viewModel: viewModel, _bindingContext: bindingContext, _value: value
+        });
     }
     var _click = ko.bindingHandlers.click;
     ko.bindingHandlers.click = {

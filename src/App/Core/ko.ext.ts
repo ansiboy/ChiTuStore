@@ -6,7 +6,7 @@ import chitu = require('chitu');
 
 //=====================================================================
 // 说明：实现数据格式化
-Number.prototype['toFormattedString'] = function(format) {
+Number.prototype['toFormattedString'] = function (format) {
     var reg = new RegExp('^C[0-9]+');
     if (reg.test(format)) {
         var num = format.substr(1);
@@ -15,7 +15,7 @@ Number.prototype['toFormattedString'] = function(format) {
     return this;
 };
 
-Date.prototype['toFormattedString'] = function(format) {
+Date.prototype['toFormattedString'] = function (format) {
     switch (format) {
         case 'd':
             return chitu.Utility.format("{0}-{1}-{2}", this.getFullYear(), this.getMonth() + 1, this.getDate());
@@ -32,7 +32,7 @@ Date.prototype['toFormattedString'] = function(format) {
     return this.toString();
 };
 
-var formatString = function(useLocale, args) {
+var formatString = function (useLocale, args) {
     //TODO: 验证数组
     for (var i = 1; i < args.length; i++) {
         args[i] = ko.unwrap(args[i]);
@@ -97,7 +97,7 @@ var formatString = function(useLocale, args) {
     return result;
 }
 
-var money = function(element, valueAccessor) {
+var money = function (element, valueAccessor) {
     var str;
     var value = valueAccessor();
     if (value < 0) {
@@ -109,14 +109,14 @@ var money = function(element, valueAccessor) {
     element.innerHTML = str;
 };
 ko.bindingHandlers['money'] = {
-    init: function(element, valueAccessor) {
+    init: function (element, valueAccessor) {
         money(element, valueAccessor);
     },
-    update: function(element, valueAccessor) {
+    update: function (element, valueAccessor) {
         money(element, valueAccessor);
     }
 };
-var text = function(element: HTMLElement, valueAccessor) {
+var text = function (element: HTMLElement, valueAccessor) {
     var value = valueAccessor();
     var str = $.isArray(value) ? formatString(true, value) : ko.unwrap(value);
     //debugger;
@@ -124,14 +124,14 @@ var text = function(element: HTMLElement, valueAccessor) {
     //ko.utils.setTextContent(element, str);
 }
 ko.bindingHandlers.text = {
-    init: function(element, valueAccessor) {
+    init: function (element, valueAccessor) {
         return text(element, valueAccessor);
     },
-    update: function(element, valueAccessor) {
+    update: function (element, valueAccessor) {
         return text(element, valueAccessor);
     }
 };
-var href = function(element, valueAccessor) {
+var href = function (element, valueAccessor) {
     var value = valueAccessor();
     if ($.isArray(value)) {
         var str = formatString(true, value);
@@ -142,10 +142,10 @@ var href = function(element, valueAccessor) {
     }
 };
 ko.bindingHandlers['href'] = {
-    init: function(element, valueAccessor) {
+    init: function (element, valueAccessor) {
         href(element, valueAccessor);
     },
-    update: function(element, valueAccessor) {
+    update: function (element, valueAccessor) {
         href(element, valueAccessor);
     }
 };
@@ -200,7 +200,7 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
         return valueAccessor;
     }
 
-    return $.proxy(function() {
+    return $.proxy(function () {
         var element = this._element;
         var valueAccessor = this._valueAccessor;
         var allBindings = this._allBindings;
@@ -208,14 +208,14 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
         var bindingContext = this._bindingContext;
         var value = this._value;
 
-        return function(viewModel) {
+        return function (viewModel) {
 
             var deferred: JQueryPromise<any> = $.Deferred<any>().resolve();
 
             var dialog_config = getDialogConfig(element, 'data-dialog');
             if (dialog_config.confirm) {
                 var content = dialog_config.confirm;
-                deferred = deferred.pipe(function() {
+                deferred = deferred.pipe(function () {
                     var result = $.Deferred();
 
                     var html = ConfirmDialogHtml;
@@ -223,11 +223,11 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
 
                     var model = {
                         text: content,
-                        ok: function() {
+                        ok: function () {
                             $(node)['modal']('hide');
                             result.resolve();
                         },
-                        cancel: function() {
+                        cancel: function () {
                             result.reject();
                         }
                     }
@@ -238,27 +238,27 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
             }
             //}
 
-            deferred = deferred.pipe(function() {
-                var result = $.isFunction(value) ? value(viewModel, event) : value;
+            deferred = deferred.pipe(function () {
+                var result = $.isFunction(value) ? (<Function>value).apply(viewModel, [viewModel, event]) : value;
                 if (result && $.isFunction(result.always)) {
                     $(element).attr('disabled', 'disabled');
                     $(element).addClass('disabled');
                     result.element = element;
 
-                    result.always(function() {
+                    result.always(function () {
                         $(element).removeAttr('disabled');
                         $(element).removeClass('disabled');
                     });
 
                     //===============================================
                     // 超时去掉按钮禁用，防止 always 不起作用。 
-                    setTimeout($.proxy(function() {
+                    setTimeout($.proxy(function () {
                         $(this._element).removeAttr('disabled');
                         $(this._element).removeClass('disabled');
                     }, { _element: element }), 1000 * 20);
                     //===============================================
 
-                    result.done(function() {
+                    result.done(function () {
                         if (dialog_config.toast) {
                             var content = dialog_config.toast;
                             var html = ToastDialogHtml;
@@ -268,7 +268,7 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
                                 text: content
                             }
 
-                            window.setTimeout(function() {
+                            window.setTimeout(function () {
                                 $(node)['modal']('hide');
                                 $(node).remove();
                             }, 1000);
@@ -284,13 +284,15 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
             return deferred;
         };
     },
-    { _element: element, _valueAccessor: valueAccessor, _allBindings: allBindings, 
-      _viewModel: viewModel, _bindingContext: bindingContext, _value: value });
+        {
+            _element: element, _valueAccessor: valueAccessor, _allBindings: allBindings,
+            _viewModel: viewModel, _bindingContext: bindingContext, _value: value
+        });
 }
 
 var _click = ko.bindingHandlers.click;
 ko.bindingHandlers.click = {
-    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         valueAccessor = translateClickAccessor(element, valueAccessor, allBindings, viewModel, bindingContext);
         return _click.init(element, valueAccessor, allBindings, viewModel, bindingContext);
     }
@@ -387,16 +389,16 @@ function getPreviewImage(img_width, img_height) {
 }
 
 var _attr = ko.bindingHandlers.attr;
-ko.bindingHandlers.attr = (function() {
+ko.bindingHandlers.attr = (function () {
     return {
-        'update': function(element, valueAccessor, allBindings) {
+        'update': function (element, valueAccessor, allBindings) {
             var result = _attr.update(element, valueAccessor, allBindings);
             if (element.tagName == 'IMG') {
 
                 var value = ko.utils.unwrapObservable(valueAccessor()) || {};
-                ko.utils['objectForEach'](value, function(attrName, attrValue) {
+                ko.utils['objectForEach'](value, function (attrName, attrValue) {
                     var src = ko.unwrap(attrValue);
-                    if (attrName == 'src' && src != null){
+                    if (attrName == 'src' && src != null) {
                         processImageElement(element);
                         return false;
                     }
@@ -407,13 +409,13 @@ ko.bindingHandlers.attr = (function() {
     }
 })();
 
-function processImageElement(element:HTMLElement) {
+function processImageElement(element: HTMLElement) {
     var PREVIEW_IMAGE_DEFAULT_WIDTH = 200;
     var PREVIEW_IMAGE_DEFAULT_HEIGHT = 200;
-    
+
     var src = $(element).attr('src');
     $(element).addClass('img-full');
-    
+
     var img_width = PREVIEW_IMAGE_DEFAULT_WIDTH;
     var img_height = PREVIEW_IMAGE_DEFAULT_HEIGHT;
     var match = src.match(/_\d+_\d+/);
@@ -432,7 +434,7 @@ function processImageElement(element:HTMLElement) {
     var image = new Image();
     image['element'] = element;
     image['updateScrollView'] = match == null || match.length == 0;
-    image.onload = function() {
+    image.onload = function () {
         $(this['element']).attr('src', this.src);
         if (image['updateScrollView'] == true)
             tryUpdateScrollView(this['element']);
@@ -442,14 +444,14 @@ function processImageElement(element:HTMLElement) {
 
 var _html = ko.bindingHandlers.html;
 ko.bindingHandlers.html = {
-    'update': function(element, valueAccessor, allBindings) {
-        
+    'update': function (element, valueAccessor, allBindings) {
+
         var result = _html.update(element, valueAccessor, allBindings);
         var $img = $(element).find('img');
-        $img.each(function() {
-           processImageElement(this);
+        $img.each(function () {
+            processImageElement(this);
         });
-        
+
         return result;
     }
 }
@@ -458,22 +460,22 @@ ko.bindingHandlers.html = {
 // 说明：实现 IScrollView 的刷新
 
 var html_update = ko.bindingHandlers.html.update;
-ko.bindingHandlers.html.update = function(element, valueAccessor, allBindings) {
-    
+ko.bindingHandlers.html.update = function (element, valueAccessor, allBindings) {
+
     var result = html_update.apply(ko.bindingHandlers.html, [element, valueAccessor, allBindings]);
     tryUpdateScrollView(element);
     return result;
 }
 
 var foreach_update = ko.bindingHandlers.foreach.update;
-ko.bindingHandlers.foreach.update = function(element, valueAccessor, allBindings, viewModel, bindingContext){
+ko.bindingHandlers.foreach.update = function (element, valueAccessor, allBindings, viewModel, bindingContext) {
     tryUpdateScrollView(element);
-    var result = foreach_update.apply(ko.bindingHandlers.foreach, [element,valueAccessor,allBindings,viewModel,bindingContext]);
+    var result = foreach_update.apply(ko.bindingHandlers.foreach, [element, valueAccessor, allBindings, viewModel, bindingContext]);
     return result;
-} 
+}
 
 var visible_update = ko.bindingHandlers.visible.update;
-ko.bindingHandlers.visible.update = function(element, valueAccessor) {
+ko.bindingHandlers.visible.update = function (element, valueAccessor) {
     tryUpdateScrollView(element);
     var result = visible_update.apply(ko.bindingHandlers.visible, [element, valueAccessor]);
     return result;
@@ -497,7 +499,7 @@ function refreshScrollView(scroll_view: chitu.IScrollView) {
         window.clearTimeout(<number>timeid);
     }
 
-    timeid = window.setTimeout(function() {
+    timeid = window.setTimeout(function () {
         console.log('refresh scroll view. ' + $(scroll_view.element).attr('name'));
         scroll_view.refresh();
     }, 30);
@@ -582,9 +584,9 @@ function refreshScrollView(scroll_view: chitu.IScrollView) {
 //}
 
 ko.bindingHandlers['tap'] = {
-    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         valueAccessor = translateClickAccessor(element, valueAccessor, allBindings, viewModel, bindingContext);
-        $(element).on("tap", $.proxy(function(event) {
+        $(element).on("tap", $.proxy(function (event) {
 
             this._valueAccessor()(viewModel, event);
 

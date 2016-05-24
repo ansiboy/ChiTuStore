@@ -12,8 +12,8 @@ class Model {
         this.redirectUrl = ko.observable<string>();
     }
 
-    public redirec() {
-        var url = this.redirectUrl();
+    public redirec(model: Model) {
+        var url = model.redirectUrl();
         if (!url)
             url = site.config.defaultUrl;
 
