@@ -1,15 +1,10 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.validation', 'knockout.mapping', 'Core/ImageFileResize', 'Application', 'Site'], function (require, exports, member, services, ko_val, mapping, ImageFileResize, app, site) {
-    requirejs(['css!content/User/UserInfo', 'css!content/css/fontdiao']);
+    requirejs(['css!content/css/fontdiao']);
     var Model = (function () {
         function Model() {
             var _this = this;
@@ -61,4 +56,5 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
         }
         return UserInfoPage;
     })(chitu.Page);
+    return UserInfoPage;
 });

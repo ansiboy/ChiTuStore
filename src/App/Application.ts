@@ -32,7 +32,7 @@ class UrlParser extends chitu.UrlParser {
 }
 
 let urlParser = new UrlParser();
-urlParser.pathBase = '/store/App/Module/';
+urlParser.pathBase = 'mod/';
 
 var config: chitu.ApplicationConfig = {
     openSwipe: (routeData) => {

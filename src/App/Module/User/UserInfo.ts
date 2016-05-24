@@ -1,10 +1,4 @@
-﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
-
-import member = require('Services/Member');
+﻿import member = require('Services/Member');
 import account = require('Services/Account');
 import services = require('Services/Service');
 import ko_val = require('knockout.validation');
@@ -15,7 +9,7 @@ import ImageFileResize = require('Core/ImageFileResize')
 import app = require('Application');
 import site = require('Site');
 
-requirejs(['css!content/User/UserInfo', 'css!content/css/fontdiao']);
+requirejs(['css!content/css/fontdiao']);
 
 
 class Model {
@@ -79,6 +73,8 @@ class UserInfoPage extends chitu.Page {
         })
     }
 }
+
+export = UserInfoPage;
 
 
 

@@ -34,7 +34,7 @@ define(["require", "exports", 'chitu', 'Site', 'PageContainerFactory'], function
         return UrlParser;
     })(chitu.UrlParser);
     var urlParser = new UrlParser();
-    urlParser.pathBase = '/store/App/Module/';
+    urlParser.pathBase = 'mod/';
     var config = {
         openSwipe: function (routeData) {
             if (site.env.isDegrade)

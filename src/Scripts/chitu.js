@@ -41,7 +41,7 @@
             var path = controller + '/' + action;
             var page_name = controller + '.' + action;
             var result = {
-                actionPath: this.pathBase + path + '.js',
+                actionPath: this.pathBase + path,
                 viewPath: this.pathBase + path + '.html',
                 values: this._parameters,
                 pageName: page_name,
@@ -892,6 +892,9 @@ var chitu;
             var msg = chitu.Utility.format('Create page "{0}" fail.', pageName);
             return new Error(msg);
         };
+        Errors.actionTypeError = function (pageName) {
+            var msg = chitu.Utility.format('Export of \'{0}\' page is expect chitu.Page type.', pageName);
+        };
         return Errors;
     })();
     chitu.Errors = Errors;
@@ -1568,6 +1571,8 @@ var chitu;
                 previousPage = this._pages[this._pages.length - 1];
             $.when(action_deferred, view_deferred).done(function (pageType, html) {
                 var page = new pageType(html);
+                if (!(page instanceof chitu.Page))
+                    throw chitu.Errors.actionTypeError(routeData.pageName);
                 page.initialize(_this, routeData, previousPage);
                 _this.on_pageCreated(page);
                 _this._pages.push(page);
