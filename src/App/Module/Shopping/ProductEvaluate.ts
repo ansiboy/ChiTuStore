@@ -109,30 +109,59 @@ class Model {
     }
 }
 
-export = function (page: chitu.Page) {
-    var model = new Model(page);
-    page.load.add((sender, args) => {
-        model.productImageUrl(args.productImageUrl);
-        model.orderDetailId(args.orderDetailId);
-    });
+class ProductEvaluatePage extends chitu.Page {
+    private model: Model;
+    constructor() {
+        super();
+        this.model = new Model(this);
+        this.load.add((sender: ProductEvaluatePage, args) => {
+            sender.model.productImageUrl(args.productImageUrl);
+            sender.model.orderDetailId(args.orderDetailId);
 
-    page.viewChanged.add(() => {
-        var e = page.element.querySelector('[type="file"]');
-        var imageFileResize = new ImageFileResize(<HTMLInputElement>e, { maxWidth: 800, maxHeight: 800 }, { maxWidth: 100, maxHeight: 100 });
-        imageFileResize.imageResized = image_resized
+            var e = sender.element.querySelector('[type="file"]');
+            var imageFileResize = new ImageFileResize(<HTMLInputElement>e, { maxWidth: 800, maxHeight: 800 }, { maxWidth: 100, maxHeight: 100 });
+            imageFileResize.imageResized = $.proxy(sender.image_resized, this);
 
-        ko.applyBindings(model, page.element);
-    });
+            ko.applyBindings(sender.model, sender.element);
+        });
+    }
 
-    function image_resized(urls: string[], datas: string[], thumbs: string[]) {
+    image_resized(urls: string[], datas: string[], thumbs: string[]) {
         for (var i = 0; i < urls.length; i++)
-            model.imageUrls.push(urls[i]);
+            this.model.imageUrls.push(urls[i]);
 
         for (var i = 0; i < datas.length; i++)
-            model.imageDatas.push(datas[i]);
+            this.model.imageDatas.push(datas[i]);
 
         for (var i = 0; i < thumbs.length; i++)
-            model.imageThumbs.push(thumbs[i]);
+            this.model.imageThumbs.push(thumbs[i]);
     }
 }
+
+// function (page: chitu.Page) {
+//     var model = new Model(page);
+//     page.load.add((sender, args) => {
+//         model.productImageUrl(args.productImageUrl);
+//         model.orderDetailId(args.orderDetailId);
+//     });
+
+//     page.viewChanged.add(() => {
+//         var e = page.element.querySelector('[type="file"]');
+//         var imageFileResize = new ImageFileResize(<HTMLInputElement>e, { maxWidth: 800, maxHeight: 800 }, { maxWidth: 100, maxHeight: 100 });
+//         imageFileResize.imageResized = image_resized
+
+//         ko.applyBindings(model, page.element);
+//     });
+
+//     function image_resized(urls: string[], datas: string[], thumbs: string[]) {
+//         for (var i = 0; i < urls.length; i++)
+//             model.imageUrls.push(urls[i]);
+
+//         for (var i = 0; i < datas.length; i++)
+//             model.imageDatas.push(datas[i]);
+
+//         for (var i = 0; i < thumbs.length; i++)
+//             model.imageThumbs.push(thumbs[i]);
+//     }
+// }
 

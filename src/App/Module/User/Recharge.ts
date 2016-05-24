@@ -1,7 +1,4 @@
-﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-
+﻿
 import app = require('Application')
 import recharge = require('Services/Recharge')
 import services = require('Services/Service')
@@ -25,10 +22,10 @@ class Model {
             price: 0.01,
             notifyUrl: "http://your.server.notify.url"
         },
-            function(successResults) {
+            function (successResults) {
                 result.resolve();
             },
-            function(errorResults) {
+            function (errorResults) {
                 alert(errorResults.memo);
                 result.reject();
             });
@@ -42,7 +39,7 @@ class Model {
         }
 
         var self = this;
-        return recharge.createRechargeRecord(this.amount()).done(function(args) {
+        return recharge.createRechargeRecord(this.amount()).done(function (args) {
             var out_trade_no = args.Id.replace(/\-/g, '');
 
             if (site.env.isWeiXin) {
@@ -50,7 +47,7 @@ class Model {
 
                 var notify_url = services.config.weixinServiceUrl + 'WeiXin/RechargePurchase/' + services.config.appToken;
 
-                return services['weixin'].pay(openid, notify_url, out_trade_no, site.config.storeName, args.Amount).done(function() {
+                return services['weixin'].pay(openid, notify_url, out_trade_no, site.config.storeName, args.Amount).done(function () {
                     app.back();
                 });
             }
@@ -65,7 +62,12 @@ class Model {
 var model = new Model();
 var validation = ko_val.group(model);
 
-export = function(page: chitu.Page) {
-    page.viewChanged.add(() => ko.applyBindings(model, page.element));
+// export = function(page: chitu.Page) {
+//     page.viewChanged.add(() => ko.applyBindings(model, page.element));
+// }
+class RechargePage extends chitu.Page {
+    constructor() {
+        super();
+        this.load.add(() => ko.applyBindings(model, this.element));
+    }
 }
-

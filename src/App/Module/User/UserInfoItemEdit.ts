@@ -1,12 +1,4 @@
-﻿/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
-/// <reference path='../../../Scripts/typings/move.d.ts' />
-/// <reference path='../../../Scripts/typings/iscroll.d.ts' />
-
-
+﻿
 import TopBar = require('UI/TopBar');
 import app = require('Application');
 import member = require('Services/Member');
@@ -137,13 +129,9 @@ export = function (page: chitu.Page) {
     model.userInfo.City.subscribe((value) => model.currentCity(value));
     model.userInfo.NickName.subscribe((value) => model.currentNickName(value));
 
-
-    page.viewChanged.add(() => {
-        ko.applyBindings(model, page.element);
-    });
-
-
     page.load.add((sender, args) => {
+        ko.applyBindings(model, page.element);
+
         model.field(args.field);
         model.currentProvince(model.userInfo.Province());
         model.currentCity(model.userInfo.City());

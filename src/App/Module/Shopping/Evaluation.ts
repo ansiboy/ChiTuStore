@@ -69,17 +69,33 @@ class Model {
 
 }
 
+class EvaluationPage extends chitu.Page {
+    private model: Model;
+    constructor() {
+        super();
+        this.model = new Model(this);
+        this.load.add(this.page_load);
+    }
 
-
-export = function (page: chitu.Page) {
-
-    var model = new Model(page);
-    page.viewChanged.add(() => ko.applyBindings(model, page.element));
-
-    page.load.add((sender:chitu.Page,args) => {
-        return model.loadProducts().done((items) => {
+    private page_load(sender: EvaluationPage, args: any) {
+        ko.applyBindings(sender.model, sender.element)
+             return sender.model.loadProducts().done((items) => {
             args.enableScrollLoad = items.length < services.defaultPageSize;
         });
-    });
-
+    }
 }
+
+export = EvaluationPage;
+
+// export = function (page: chitu.Page) {
+
+//     var model = new Model(page);
+//     page.viewChanged.add(() => ko.applyBindings(model, page.element));
+
+//     page.load.add((sender: chitu.Page, args) => {
+//         return model.loadProducts().done((items) => {
+//             args.enableScrollLoad = items.length < services.defaultPageSize;
+//         });
+//     });
+
+// }

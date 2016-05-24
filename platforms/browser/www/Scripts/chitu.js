@@ -1145,18 +1145,19 @@ var chitu;
             this.shown = ns.Callbacks();
             this.hiding = ns.Callbacks();
             this.hidden = ns.Callbacks();
-            this.viewChanged = ns.Callbacks();
         }
-        Page.prototype.initialize = function (container, pageInfo, previous) {
+        Page.prototype.initialize = function (container, pageInfo, html, previous) {
             if (!container)
                 throw e.argumentNull('container');
             if (pageInfo == null)
                 throw e.argumentNull('pageInfo');
             this._pageContainer = container;
             this._node = document.createElement('page');
+            this._node.innerHTML = html;
             $(this._node).data('page', this);
             this._prevous = previous;
             this._routeData = pageInfo;
+            this._controls = this.createControls(this.element);
         };
         Page.prototype.createControls = function (element) {
             this._controls = chitu.ControlFactory.createControls(element, this);
@@ -1166,18 +1167,6 @@ var chitu;
             }
             return this._controls;
         };
-        Object.defineProperty(Page.prototype, "view", {
-            get: function () {
-                return this._viewHtml;
-            },
-            set: function (value) {
-                this._viewHtml = value;
-                this._controls = this.createControls(this.element);
-                this.on_viewChanged({});
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(Page.prototype, "routeData", {
             get: function () {
                 return this._routeData;
@@ -1273,9 +1262,6 @@ var chitu;
         };
         Page.prototype.on_hidden = function (args) {
             return this.fireEvent(this.hidden, args);
-        };
-        Page.prototype.on_viewChanged = function (args) {
-            return this.fireEvent(this.viewChanged, args);
         };
         Page.animationTime = 300;
         return Page;
@@ -1583,13 +1569,11 @@ var chitu;
                 previousPage = this._pages[this._pages.length - 1];
             $.when(action_deferred, view_deferred).done(function (pageType, html) {
                 var page = new pageType();
-                page.initialize(_this, routeData, previousPage);
+                page.initialize(_this, routeData, html, previousPage);
                 _this.on_pageCreated(page);
                 _this._pages.push(page);
                 _this._pages[page.name] = page;
                 result.resolve(page);
-                page.element.innerHTML = html;
-                page.view = html;
                 page.on_load(routeData.values).done(function () {
                     _this.hideLoading();
                 });

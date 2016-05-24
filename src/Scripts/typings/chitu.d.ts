@@ -226,11 +226,9 @@ declare namespace chitu {
         shown: Callback<{}, {}>;
         hiding: Callback<{}, {}>;
         hidden: Callback<{}, {}>;
-        viewChanged: Callback<{}, {}>;
         constructor();
-        initialize(container: PageContainer, pageInfo: RouteData, previous?: chitu.Page): void;
+        initialize(container: PageContainer, pageInfo: RouteData, html: string, previous?: chitu.Page): void;
         private createControls(element);
-        view: string;
         routeData: RouteData;
         name: string;
         element: HTMLElement;
@@ -247,7 +245,6 @@ declare namespace chitu {
         on_shown(args: any): JQueryPromise<any>;
         on_hiding(args: any): JQueryPromise<any>;
         on_hidden(args: any): JQueryPromise<any>;
-        on_viewChanged(args: any): JQueryPromise<any>;
     }
 }
 declare namespace chitu {

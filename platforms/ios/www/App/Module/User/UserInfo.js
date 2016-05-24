@@ -3,6 +3,11 @@
 /// <reference path='../../../Scripts/typings/knockout.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.validation', 'knockout.mapping', 'Core/ImageFileResize', 'Application', 'Site'], function (require, exports, member, services, ko_val, mapping, ImageFileResize, app, site) {
     requirejs(['css!content/User/UserInfo', 'css!content/css/fontdiao']);
     var Model = (function () {
@@ -25,34 +30,35 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
         }
         return Model;
     })();
-    return function (page) {
-        // $((<TopBar>page['topbar']).element).find('a').remove();
-        // (<TopBar>page['topbar']).createLeftButton('icon-chevron-left', () => location.href = '#User_Index');
-        var model = new Model();
-        page.viewChanged.add(function () {
-            var e = page.element.querySelector('[type="file"]');
-            var imageFileResize = new ImageFileResize(e, { maxWidth: 100, maxHeight: 100 });
-            imageFileResize.imageResized = function (urls, thumbs1, thumbs2) {
-                model.userInfo.HeadImageUrl(thumbs1[0]);
-                member.setUserInfo(mapping.toJS(model.userInfo));
-            };
-            ko.applyBindings(model, page.element);
-        });
-        page.load.add(function (sender, args) {
-            if (args.code) {
-                services['weixin'].getUserInfo(args.code).done(function (data) {
-                    var userInfo = {
-                        City: data.City,
-                        Province: data.Province,
-                        Country: data.Country,
-                        Gender: data.Sex == 1 ? 'Male' : (data.Sex == 2 ? 'Female' : 'None'),
-                        HeadImageUrl: data.HeadImgUrl,
-                        NickName: data.NickName
-                    };
-                    mapping.fromJS(userInfo, {}, model.userInfo);
-                    member.setUserInfo(userInfo);
-                });
-            }
-        });
-    };
+    var UserInfoPage = (function (_super) {
+        __extends(UserInfoPage, _super);
+        function UserInfoPage() {
+            _super.call(this);
+            this.model = new Model();
+            this.load.add(function (page, args) {
+                var e = page.element.querySelector('[type="file"]');
+                var imageFileResize = new ImageFileResize(e, { maxWidth: 100, maxHeight: 100 });
+                imageFileResize.imageResized = function (urls, thumbs1, thumbs2) {
+                    page.model.userInfo.HeadImageUrl(thumbs1[0]);
+                    member.setUserInfo(mapping.toJS(page.model.userInfo));
+                };
+                ko.applyBindings(page.model, page.element);
+                if (args.code) {
+                    services['weixin'].getUserInfo(args.code).done(function (data) {
+                        var userInfo = {
+                            City: data.City,
+                            Province: data.Province,
+                            Country: data.Country,
+                            Gender: data.Sex == 1 ? 'Male' : (data.Sex == 2 ? 'Female' : 'None'),
+                            HeadImageUrl: data.HeadImgUrl,
+                            NickName: data.NickName
+                        };
+                        mapping.fromJS(userInfo, {}, page.model.userInfo);
+                        member.setUserInfo(userInfo);
+                    });
+                }
+            });
+        }
+        return UserInfoPage;
+    })(chitu.Page);
 });

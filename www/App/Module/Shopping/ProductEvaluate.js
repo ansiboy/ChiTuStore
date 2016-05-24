@@ -1,6 +1,11 @@
 /// <reference path='../../../Scripts/typings/require.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'knockout', 'Services/Account', 'Core/ImageFileResize', 'UI/ImagePreview', 'Site', 'Application'], function (require, exports, ko, account, ImageFileResize, ImagePreviewer, site, app) {
     requirejs(['css!content/Shopping/ProductEvaluate']);
     var Start = (function () {
@@ -83,25 +88,29 @@ define(["require", "exports", 'knockout', 'Services/Account', 'Core/ImageFileRes
         }
         return Model;
     })();
-    return function (page) {
-        var model = new Model(page);
-        page.load.add(function (sender, args) {
-            model.productImageUrl(args.productImageUrl);
-            model.orderDetailId(args.orderDetailId);
-        });
-        page.viewChanged.add(function () {
-            var e = page.element.querySelector('[type="file"]');
-            var imageFileResize = new ImageFileResize(e, { maxWidth: 800, maxHeight: 800 }, { maxWidth: 100, maxHeight: 100 });
-            imageFileResize.imageResized = image_resized;
-            ko.applyBindings(model, page.element);
-        });
-        function image_resized(urls, datas, thumbs) {
-            for (var i = 0; i < urls.length; i++)
-                model.imageUrls.push(urls[i]);
-            for (var i = 0; i < datas.length; i++)
-                model.imageDatas.push(datas[i]);
-            for (var i = 0; i < thumbs.length; i++)
-                model.imageThumbs.push(thumbs[i]);
+    var ProductEvaluatePage = (function (_super) {
+        __extends(ProductEvaluatePage, _super);
+        function ProductEvaluatePage() {
+            var _this = this;
+            _super.call(this);
+            this.model = new Model(this);
+            this.load.add(function (sender, args) {
+                sender.model.productImageUrl(args.productImageUrl);
+                sender.model.orderDetailId(args.orderDetailId);
+                var e = sender.element.querySelector('[type="file"]');
+                var imageFileResize = new ImageFileResize(e, { maxWidth: 800, maxHeight: 800 }, { maxWidth: 100, maxHeight: 100 });
+                imageFileResize.imageResized = $.proxy(sender.image_resized, _this);
+                ko.applyBindings(sender.model, sender.element);
+            });
         }
-    };
+        ProductEvaluatePage.prototype.image_resized = function (urls, datas, thumbs) {
+            for (var i = 0; i < urls.length; i++)
+                this.model.imageUrls.push(urls[i]);
+            for (var i = 0; i < datas.length; i++)
+                this.model.imageDatas.push(datas[i]);
+            for (var i = 0; i < thumbs.length; i++)
+                this.model.imageThumbs.push(thumbs[i]);
+        };
+        return ProductEvaluatePage;
+    })(chitu.Page);
 });

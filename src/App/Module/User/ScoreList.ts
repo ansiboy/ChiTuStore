@@ -25,33 +25,53 @@ function extendItem(item) {
     }
 }
 
-export = function(page: chitu.Page) {
-    //page.load.add(() => {
-    //    return account.getScoreDetails().done((data) => {
-    //        for (var i = 0; i < data.length; i++) {
-    //            extendItem(data[i]);
-    //        }
-    //        model.scoreRecords(data);
-    //    })
-    //});
+class ScoreListPage extends chitu.Page {
+    constructor() {
+        super();
+        this.load.add((sender, args) => {
+            ko.applyBindings(model, this.element);
+            model.loading(true);
+            return account.getScoreDetails().done((data) => {
+                for (var i = 0; i < data.length; i++) {
+                    extendItem(data[i]);
+                }
+                model.scoreRecords(data);
+                model.loading(false);
+                args.enableScrollLoad = data.length == site.config.pageSize;
+            })
+        });
+    }
+}
 
-    //window.setTimeout(() => model.scoreRecords.removeAll());
+export = ScoreListPage;
 
-    page.viewChanged.add(() => ko.applyBindings(model, page.element));
+// export = function (page: chitu.Page) {
+//     //page.load.add(() => {
+//     //    return account.getScoreDetails().done((data) => {
+//     //        for (var i = 0; i < data.length; i++) {
+//     //            extendItem(data[i]);
+//     //        }
+//     //        model.scoreRecords(data);
+//     //    })
+//     //});
 
-    page.load.add(function(sender: chitu.Page, args) {
-        model.loading(true);
-        //debugger;
-        //var result = $.Deferred().resolve().done(() => model.loading(false)); //<LoadListPromise<any>>($.Deferred() { loadCompleted: true });
-        //result['loadCompleted'] = true;
-        //return result;
-        return account.getScoreDetails().done((data) => {
-            for (var i = 0; i < data.length; i++) {
-                extendItem(data[i]);
-            }
-            model.scoreRecords(data);
-            model.loading(false);
-            args.enableScrollLoad = data.length == site.config.pageSize;
-        })
-    });
-} 
+//     //window.setTimeout(() => model.scoreRecords.removeAll());
+
+//     page.viewChanged.add(() => ko.applyBindings(model, page.element));
+
+//     page.load.add(function (sender: chitu.Page, args) {
+//         model.loading(true);
+//         //debugger;
+//         //var result = $.Deferred().resolve().done(() => model.loading(false)); //<LoadListPromise<any>>($.Deferred() { loadCompleted: true });
+//         //result['loadCompleted'] = true;
+//         //return result;
+//         return account.getScoreDetails().done((data) => {
+//             for (var i = 0; i < data.length; i++) {
+//                 extendItem(data[i]);
+//             }
+//             model.scoreRecords(data);
+//             model.loading(false);
+//             args.enableScrollLoad = data.length == site.config.pageSize;
+//         })
+//     });
+// } 

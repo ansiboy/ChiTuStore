@@ -1,6 +1,11 @@
 /// <reference path='../../../Scripts/typings/require.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.d.ts' />
 /// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Service', 'knockout.validation', 'Site'], function (require, exports, app, recharge, services, ko_val, site) {
     requirejs(['css!content/User/Recharge']);
     var Model = (function () {
@@ -51,7 +56,13 @@ define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Serv
     })();
     var model = new Model();
     var validation = ko_val.group(model);
-    return function (page) {
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
-    };
+    var RechargePage = (function (_super) {
+        __extends(RechargePage, _super);
+        function RechargePage() {
+            var _this = this;
+            _super.call(this);
+            this.load.add(function () { return ko.applyBindings(model, _this.element); });
+        }
+        return RechargePage;
+    })(chitu.Page);
 });

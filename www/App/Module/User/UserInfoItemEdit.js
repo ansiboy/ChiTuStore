@@ -1,10 +1,3 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/jquery.cookie.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.mapping.d.ts' />
-/// <reference path='../../../Scripts/typings/move.d.ts' />
-/// <reference path='../../../Scripts/typings/iscroll.d.ts' />
 define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/Account'], function (require, exports, member, mapping, account) {
     requirejs(['css!content/User/UserInfoItemEdit']);
     var province_none = { Name: '请选择省' };
@@ -85,10 +78,8 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
         model.userInfo.Province.subscribe(function (value) { return model.currentProvince(value); });
         model.userInfo.City.subscribe(function (value) { return model.currentCity(value); });
         model.userInfo.NickName.subscribe(function (value) { return model.currentNickName(value); });
-        page.viewChanged.add(function () {
-            ko.applyBindings(model, page.element);
-        });
         page.load.add(function (sender, args) {
+            ko.applyBindings(model, page.element);
             model.field(args.field);
             model.currentProvince(model.userInfo.Province());
             model.currentCity(model.userInfo.City());

@@ -1,57 +1,67 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../Scripts/typings/chitu.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Services/Coupon'], function (require, exports, coupon) {
-    return function (page) {
-        var loadjsDeferred = $.Deferred();
-        requirejs(['UI/CouponListItem', 'css!content/User/Coupon'], function () { return loadjsDeferred.resolve(); });
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
-        var queryArguments = {
-            pageIndex: 0,
-            status: 'available'
+    requirejs(['UI/CouponListItem', 'css!content/User/Coupon']);
+    var PageModel = (function () {
+        function PageModel(page) {
+            this.queryArguments = {
+                pageIndex: 0,
+                status: 'available'
+            };
+            this.coupons = ko.observableArray();
+            this.loading = ko.observable(false);
+            this.firstLoad = undefined;
+            this.status = ko.observable(this.queryArguments.status);
+            this.page = page;
+        }
+        PageModel.prototype.loadAvailable = function (model) {
+            model.queryArguments.status = 'available';
+            model.queryArguments.pageIndex = 0;
+            model.status(model.queryArguments.status);
+            model.coupons.removeAll();
+            return model.page.on_load({ loadType: chitu.PageLoadType.scroll });
         };
-        var model = {
-            coupons: ko.observableArray(),
-            loading: ko.observable(false),
-            firstLoad: undefined,
-            status: ko.observable(queryArguments.status),
-            loadAvailable: function () {
-                queryArguments.status = 'available';
-                queryArguments.pageIndex = 0;
-                model.status(queryArguments.status);
-                model.coupons.removeAll();
-                return page.on_load({ loadType: chitu.PageLoadType.scroll });
-            },
-            loadUsed: function () {
-                queryArguments.status = 'used';
-                queryArguments.pageIndex = 0;
-                model.status(queryArguments.status);
-                model.coupons.removeAll();
-                return page.on_load({ loadType: chitu.PageLoadType.scroll });
-            },
-            loadExprired: function () {
-                queryArguments.status = 'exprired';
-                queryArguments.pageIndex = 0;
-                model.status(queryArguments.status);
-                model.coupons.removeAll();
-                return page.on_load({ loadType: chitu.PageLoadType.scroll });
-            }
+        PageModel.prototype.loadUsed = function (model) {
+            model.queryArguments.status = 'used';
+            model.queryArguments.pageIndex = 0;
+            model.status(model.queryArguments.status);
+            model.coupons.removeAll();
+            return model.page.on_load({ loadType: chitu.PageLoadType.scroll });
         };
-        model.coupons.removeAll();
-        queryArguments.pageIndex = 0;
-        page.viewChanged.add(function () {
-            page.findControl('coupons').load.add(function () {
-                model.loading(true);
-                var result = coupon.getMyCoupons(queryArguments).done(function (data) {
+        PageModel.prototype.loadExprired = function (model) {
+            model.queryArguments.status = 'exprired';
+            model.queryArguments.pageIndex = 0;
+            model.status(model.queryArguments.status);
+            model.coupons.removeAll();
+            return model.page.on_load({ loadType: chitu.PageLoadType.scroll });
+        };
+        return PageModel;
+    })();
+    var CouponPage = (function (_super) {
+        __extends(CouponPage, _super);
+        function CouponPage() {
+            _super.call(this);
+            this.model = new PageModel(this);
+            this.load.add(this.page_load);
+        }
+        CouponPage.prototype.page_load = function (sender, args) {
+            ko.applyBindings(sender.model, sender.element);
+            sender.findControl('coupons').load.add(function () {
+                sender.model.loading(true);
+                var result = coupon.getMyCoupons(sender.model.queryArguments).done(function (data) {
                     $(data).each(function () {
-                        model.coupons.push(this);
+                        sender.model.coupons.push(this);
                     });
-                    model.loading(false);
-                    queryArguments.pageIndex = queryArguments.pageIndex + 1;
+                    sender.model.loading(false);
+                    sender.model.queryArguments.pageIndex = sender.model.queryArguments.pageIndex + 1;
                 });
                 return result;
             });
-        });
-    };
+        };
+        return CouponPage;
+    })(chitu.Page);
+    return CouponPage;
 });

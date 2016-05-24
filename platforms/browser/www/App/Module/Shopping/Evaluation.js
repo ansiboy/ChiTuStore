@@ -1,4 +1,9 @@
 /// <reference path='../../../Scripts/typings/require.d.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Services/Account', 'Application', 'Services/Service'], function (require, exports, account, app, services) {
     requirejs(['css!content/Shopping/Evaluation']);
     var Model = (function () {
@@ -49,13 +54,20 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Servi
         }
         return Model;
     })();
-    return function (page) {
-        var model = new Model(page);
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
-        page.load.add(function (sender, args) {
-            return model.loadProducts().done(function (items) {
+    var EvaluationPage = (function (_super) {
+        __extends(EvaluationPage, _super);
+        function EvaluationPage() {
+            _super.call(this);
+            this.model = new Model(this);
+            this.load.add(this.page_load);
+        }
+        EvaluationPage.prototype.page_load = function (sender, args) {
+            ko.applyBindings(sender.model, sender.element);
+            return sender.model.loadProducts().done(function (items) {
                 args.enableScrollLoad = items.length < services.defaultPageSize;
             });
-        });
-    };
+        };
+        return EvaluationPage;
+    })(chitu.Page);
+    return EvaluationPage;
 });

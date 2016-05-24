@@ -1,3 +1,8 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Services/Account', 'Site'], function (require, exports, account, site) {
     requirejs(['css!content/User/ScoreList']);
     var model = {
@@ -18,26 +23,25 @@ define(["require", "exports", 'Services/Account', 'Site'], function (require, ex
             item.Score = '+' + item.Score;
         }
     }
-    return function (page) {
-        //page.load.add(() => {
-        //    return account.getScoreDetails().done((data) => {
-        //        for (var i = 0; i < data.length; i++) {
-        //            extendItem(data[i]);
-        //        }
-        //        model.scoreRecords(data);
-        //    })
-        //});
-        page.viewChanged.add(function () { return ko.applyBindings(model, page.element); });
-        page.load.add(function (sender, args) {
-            model.loading(true);
-            return account.getScoreDetails().done(function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    extendItem(data[i]);
-                }
-                model.scoreRecords(data);
-                model.loading(false);
-                args.enableScrollLoad = data.length == site.config.pageSize;
+    var ScoreListPage = (function (_super) {
+        __extends(ScoreListPage, _super);
+        function ScoreListPage() {
+            var _this = this;
+            _super.call(this);
+            this.load.add(function (sender, args) {
+                ko.applyBindings(model, _this.element);
+                model.loading(true);
+                return account.getScoreDetails().done(function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        extendItem(data[i]);
+                    }
+                    model.scoreRecords(data);
+                    model.loading(false);
+                    args.enableScrollLoad = data.length == site.config.pageSize;
+                });
             });
-        });
-    };
+        }
+        return ScoreListPage;
+    })(chitu.Page);
+    return ScoreListPage;
 });
