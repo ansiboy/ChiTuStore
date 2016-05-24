@@ -1,7 +1,7 @@
 ﻿import chitu = require('chitu');
 import shopping = require('Services/Shopping');
 
-chitu.Utility.loadjs(['css!content/Home/Class']);
+//chitu.Utility.loadjs(['css!content/Home/Class']);
 
 export = class ClassPage extends chitu.Page {
     private model = {

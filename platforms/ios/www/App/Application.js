@@ -27,6 +27,8 @@ define(["require", "exports", 'chitu', 'Site', 'PageContainerFactory'], function
                     }
                     break;
             }
+            var css_path = chitu.Utility.format('css!content/{0}/{1}', route_values[0], route_values[1]);
+            routeData.resource = [css_path];
             return routeData;
         };
         return UrlParser;

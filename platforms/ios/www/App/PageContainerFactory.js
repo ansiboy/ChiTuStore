@@ -23,7 +23,7 @@ define(["require", "exports", 'chitu', 'Services/Shopping', 'Services/Auth', 'Se
         var result = $.Deferred();
         var header_node = document.createElement('header');
         container.element.appendChild(header_node);
-        chitu.Utility.loadjs(['text!' + header_path + '.html', 'css!sc/Headers.css']).done(function (html) {
+        chitu.Utility.loadjs('text!' + header_path + '.html', 'css!sc/Headers.css').done(function (html) {
             header_node.innerHTML = html;
             result.resolve(header_node);
         });

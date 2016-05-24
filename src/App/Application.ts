@@ -8,7 +8,7 @@ class UrlParser extends chitu.UrlParser {
     pareeUrl(url: string): chitu.RouteData {
         var a = document.createElement('a');
         a.href = url;
-        
+
         var routeData: chitu.RouteData = super.pareeUrl(url);
         var route_values = a.hash.substr(1).split('_');
         var MIN_PARTS_COUNT = 2;
@@ -23,6 +23,10 @@ class UrlParser extends chitu.UrlParser {
                 }
                 break;
         }
+
+        var css_path = chitu.Utility.format('css!content/{0}/{1}', route_values[0], route_values[1]);
+        routeData.resource = [css_path];
+        
         return routeData;
     }
 }

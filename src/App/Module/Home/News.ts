@@ -1,11 +1,8 @@
-﻿
-
-import info = require('Services/Info');
+﻿import info = require('Services/Info');
 import site = require('Site');
 import app = require('Application');
 import mapping = require('knockout.mapping');
 
-requirejs(['css!content/Home/News']);
 class NewsPage extends chitu.Page {
     private model = {
         news: null,

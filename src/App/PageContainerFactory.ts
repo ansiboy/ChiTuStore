@@ -41,7 +41,7 @@ function createHeaderNode(container: chitu.PageContainer, header_path: string): 
     container.element.appendChild(header_node);
 
 
-    chitu.Utility.loadjs(['text!' + header_path + '.html', 'css!sc/Headers.css']).done(function (html) {
+    chitu.Utility.loadjs('text!' + header_path + '.html', 'css!sc/Headers.css').done(function (html) {
         header_node.innerHTML = html;
         result.resolve(header_node);
     });

@@ -70,7 +70,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
         });
         return ProductModel;
     })();
-    chitu.Utility.loadjs(['css!content/Home/Product', 'UI/Promotion']);
+    chitu.Utility.loadjs('UI/Promotion');
     var ProductPage = (function (_super) {
         __extends(ProductPage, _super);
         function ProductPage(html) {
@@ -145,7 +145,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
                 $next_item = $active_item.next('scroll-view');
                 $prev_item = $active_item.prev('scroll-view');
             };
-            return $.when(shopping.getProduct(args.id), services.shopping.getProductStock(args.id), shopping.getProductComments(args.id, 4), chitu.Utility.loadjs([]))
+            return $.when(shopping.getProduct(args.id), services.shopping.getProductStock(args.id), shopping.getProductComments(args.id, 4))
                 .done(function (product, stock, comments) {
                 product.Stock = stock.Quantity != null ? stock.Quantity : 1000000;
                 sender.model.comments(comments);

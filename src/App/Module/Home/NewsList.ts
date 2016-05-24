@@ -2,8 +2,6 @@
 import site = require('Site');
 import chitu = require('chitu');
 
-requirejs(['css!content/Home/NewsList']);
-
 class NewsListPage extends chitu.Page {
     private select_args = { categoryName: '', pageIndex: 0 };
     private scroll_end = false;

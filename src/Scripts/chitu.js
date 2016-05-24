@@ -532,7 +532,6 @@ var chitu;
             _super.call(this, element, page);
             this.scroll = chitu.Callbacks();
             this.scrollEnd = chitu.Callbacks();
-            this.scrollBottom = chitu.Callbacks();
             this.scrollEnd.add(ScrollView.page_scrollEnd);
             var $status_bar = $(element).find('STATUS-BAR');
             if ($status_bar.length > 0) {
@@ -593,7 +592,6 @@ var chitu;
                     }
                 });
             }
-            chitu.fireCallback(sender.scrollBottom, sender, args);
         };
         ScrollView.scrolling = false;
         return ScrollView;
@@ -1584,7 +1582,7 @@ var chitu;
                 throw chitu.Errors.createPageFail(routeData.pageName);
             });
             if (routeData.resource != null && routeData.resource.length > 0) {
-                chitu.Utility.loadjs(routeData.resource);
+                chitu.Utility.loadjs.apply(chitu.Utility, routeData.resource);
             }
             return result;
         };
@@ -1753,7 +1751,11 @@ var chitu;
             var txt = this.format.apply(this, arguments);
             console.log(txt);
         };
-        Utility.loadjs = function (modules) {
+        Utility.loadjs = function () {
+            var modules = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                modules[_i - 0] = arguments[_i];
+            }
             var deferred = $.Deferred();
             requirejs(modules, function () {
                 var args = [];

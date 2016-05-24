@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'chitu', 'knockout', 'Services/Service', 'Services/Home', 'Core/Carousel'], function (require, exports, chitu, ko, services, home, Carousel) {
-    chitu.Utility.loadjs(['UI/PromotionLabel', 'css!sc/Home/Index']);
+    chitu.Utility.loadjs('UI/PromotionLabel');
     var IndexPage = (function (_super) {
         __extends(IndexPage, _super);
         function IndexPage(html) {
@@ -18,14 +18,12 @@ define(["require", "exports", 'chitu', 'knockout', 'Services/Service', 'Services
                 advertItems: ko.observableArray(),
                 homeProducts: ko.observableArray()
             };
+            this.findControl('products').scrollLoad = IndexPage.scrollView_load;
             this.load.add(this.page_load);
+            ko.applyBindings(this.model, this.element);
         }
-        IndexPage.prototype.scrollView_load = function (sender, args) {
-            var page;
-            if (sender instanceof IndexPage)
-                page = sender;
-            else
-                page = (sender.page);
+        IndexPage.scrollView_load = function (sender, args) {
+            var page = sender.page;
             var result = home.homeProducts(page.homeProductQueryArguments.pageIndex)
                 .done(function (homeProducts) {
                 for (var i = 0; i < homeProducts.length; i++) {
@@ -34,15 +32,11 @@ define(["require", "exports", 'chitu', 'knockout', 'Services/Service', 'Services
                 }
                 page.homeProductQueryArguments.pageIndex++;
                 args.enableScrollLoad = (homeProducts.length == services.defaultPageSize);
-                $(page.container.element).find('.page-loading').hide();
             });
             return result;
         };
         IndexPage.prototype.page_load = function (sender, args) {
-            ko.applyBindings(sender.model, sender.element);
-            var scroll_view = sender.findControl('products');
-            scroll_view.scrollLoad = sender.scrollView_load;
-            home.advertItems().done(function (advertItems) {
+            return home.advertItems().done(function (advertItems) {
                 for (var i = 0; i < advertItems.length; i++) {
                     advertItems[i].index = i;
                     advertItems[i].LinkUrl = advertItems[i].LinkUrl;

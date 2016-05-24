@@ -77,7 +77,7 @@ class ProductModel {
     }
 }
 
-chitu.Utility.loadjs(['css!content/Home/Product', 'UI/Promotion']);
+chitu.Utility.loadjs('UI/Promotion');
 
 class ProductPage extends chitu.Page {
     private model: ProductModel;
@@ -179,7 +179,7 @@ class ProductPage extends chitu.Page {
         }
 
         return $.when(shopping.getProduct(args.id), services.shopping.getProductStock(args.id),
-            shopping.getProductComments(args.id, 4), chitu.Utility.loadjs([]))
+            shopping.getProductComments(args.id, 4))
 
             .done(function (product: any, stock, comments) {
                 product.Stock = stock.Quantity != null ? stock.Quantity : 1000000; //如果 Quantity 没有，则不限库存

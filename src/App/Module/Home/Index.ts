@@ -6,7 +6,7 @@ import services = require('Services/Service');
 import home = require('Services/Home');
 import Carousel = require('Core/Carousel');
 
-chitu.Utility.loadjs(['UI/PromotionLabel', 'css!sc/Home/Index']);//
+chitu.Utility.loadjs('UI/PromotionLabel');
 
 class IndexPage extends chitu.Page {
     private homeProductQueryArguments = {
@@ -22,16 +22,16 @@ class IndexPage extends chitu.Page {
 
     constructor(html) {
         super(html);
+
+        this.findControl<chitu.ScrollView>('products').scrollLoad = IndexPage.scrollView_load;
         this.load.add(this.page_load);
+
+        ko.applyBindings(this.model, this.element);
     }
 
-    private scrollView_load(sender: chitu.ScrollView | IndexPage, args) {
-        var page: IndexPage;
-        if (sender instanceof IndexPage)
-            page = <IndexPage>sender;
-        else
-            page = <IndexPage>((<chitu.ScrollView>sender).page);
-
+    private static scrollView_load(sender: chitu.ScrollView, args) {
+        var page = <IndexPage>sender.page;
+        
         var result = home.homeProducts(page.homeProductQueryArguments.pageIndex)
             .done(function (homeProducts: Array<any>) {
                 for (var i = 0; i < homeProducts.length; i++) {
@@ -41,18 +41,13 @@ class IndexPage extends chitu.Page {
 
                 page.homeProductQueryArguments.pageIndex++;
                 args.enableScrollLoad = (homeProducts.length == services.defaultPageSize);
-                $(page.container.element).find('.page-loading').hide();
             });
 
         return result;
     }
 
     private page_load(sender: IndexPage, args) {
-        ko.applyBindings(sender.model, sender.element);
-        var scroll_view = (<chitu.ScrollView>sender.findControl('products'));
-        scroll_view.scrollLoad = sender.scrollView_load;
-
-        home.advertItems().done(function (advertItems) {
+        return home.advertItems().done(function (advertItems) {
             for (var i = 0; i < advertItems.length; i++) {
                 advertItems[i].index = i;
                 advertItems[i].LinkUrl = advertItems[i].LinkUrl;
