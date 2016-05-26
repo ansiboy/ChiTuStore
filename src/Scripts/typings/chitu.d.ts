@@ -279,7 +279,7 @@ declare namespace chitu {
         currentPage: Page;
         pages: Array<Page>;
         previous: PageContainer;
-        private createActionDeferred(pageInfo);
+        private createActionDeferred(routeData);
         private createViewDeferred(pageInfo);
         private createPage(routeData);
         showPage<T extends Page>(routeData: RouteData, swipe: SwipeDirection): JQueryPromise<T>;
