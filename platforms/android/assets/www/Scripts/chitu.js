@@ -1519,17 +1519,17 @@ var chitu;
             enumerable: true,
             configurable: true
         });
-        PageContainer.prototype.createActionDeferred = function (pageInfo) {
-            var url = pageInfo.actionPath;
+        PageContainer.prototype.createActionDeferred = function (routeData) {
+            var url = routeData.actionPath;
             var result = $.Deferred();
             requirejs([url], function (Type) {
                 if (!Type) {
-                    console.warn(chitu.Utility.format('加载活动“{0}”失败。', pageInfo.pageName));
+                    console.warn(chitu.Utility.format('加载活动“{0}”失败。', routeData.pageName));
                     result.reject();
                     return;
                 }
-                if (!$.isFunction(Type))
-                    throw chitu.Errors.modelFileExpecteFunction(pageInfo.pageName);
+                if (!$.isFunction(Type) || Type.prototype == null)
+                    throw chitu.Errors.actionTypeError(routeData.pageName);
                 result.resolve(Type);
             }, function (err) { return result.reject(err); });
             return result;

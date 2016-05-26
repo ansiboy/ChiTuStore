@@ -1,9 +1,4 @@
-﻿///<reference path='../../../../Scripts/typings/require.d.ts'/>
-///<reference path='../../../../Scripts/typings/move.d.ts'/>
-///<reference path='../../../../Scripts/typings/iscroll.d.ts'/>
-///<reference path='../../../../Scripts/typings/chitu.d.ts'/>
-
-import move = require('move');
+﻿import move = require('move');
 import site = require('Site');
 import ko = require('knockout');
 import shopping = require('Services/Shopping');

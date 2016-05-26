@@ -1,7 +1,3 @@
-///<reference path='../../../../Scripts/typings/require.d.ts'/>
-///<reference path='../../../../Scripts/typings/move.d.ts'/>
-///<reference path='../../../../Scripts/typings/iscroll.d.ts'/>
-///<reference path='../../../../Scripts/typings/chitu.d.ts'/>
 define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', 'iscroll', 'knockout.mapping'], function (require, exports, move, site, ko, shopping, IScroll, mapping) {
     var ProductPanelModel = (function () {
         function ProductPanelModel(panel, parent_model) {
