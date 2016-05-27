@@ -13,7 +13,6 @@ class ServiceConfig {
 
 
 class Services {
-
     private _config: ServiceConfig;
     get defaultPageSize(): number {
         return site.config.pageSize;
