@@ -12,6 +12,7 @@ class UrlParser extends chitu.UrlParser {
         var routeData: chitu.RouteData = super.pareeUrl(url);
         var route_values = a.hash.substr(1).split('_');
         var MIN_PARTS_COUNT = 2;
+
         switch (routeData.pageName) {
             case 'Home.ProductList':
                 routeData.values.type = route_values[2];
@@ -21,11 +22,16 @@ class UrlParser extends chitu.UrlParser {
                 routeData.values.field = route_values[2];
                 break;
             default:
-                if (route_values.length > MIN_PARTS_COUNT) {
+                if (route_values[0] == 'AccountSecurity') {
+                     routeData.values.type = route_values[2];
+                } else if (route_values.length > MIN_PARTS_COUNT) {
                     routeData.values.id = route_values[2];
                 }
                 break;
         }
+
+        //            case 'AccountSecurity':
+
 
         var css_path = chitu.Utility.format('css!content/{0}/{1}', route_values[0], route_values[1]);
         routeData.resource = [css_path];

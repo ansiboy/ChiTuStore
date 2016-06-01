@@ -1,6 +1,4 @@
-﻿/// <reference path='../../../../Scripts/typings/jquery.d.ts' />
-/// <reference path='../../../../Scripts/typings/knockout.validation.d.ts' />
-/// <reference path='../../../../Scripts/typings/chitu.d.ts' />
+﻿
 
 import ko_val = require('knockout.validation');
 import member = require('Services/Member');
@@ -81,10 +79,15 @@ class Model {
         }, 1000);
     }
 }
+export class AccountSecurityResetPasswordPage extends chitu.Page {
+    constructor(html) {
+        super(html);
+        ko.applyBindings(new Model(), this.element);
+    }
+}
+// export =function (page: chitu.Page) {
+//     page.load.add(() => { });
 
-export =function (page: chitu.Page) {
-    page.load.add(() => { });
-
-    var model = new Model();
-    ko.applyBindings(model, page.element);
-} 
+//     var model = new Model();
+//     ko.applyBindings(model, page.element);
+// } 

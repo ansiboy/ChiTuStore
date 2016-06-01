@@ -47,7 +47,7 @@ export = class UserIndexPage extends chitu.Page {
 
 
         this.model.groups[i++] = [
-            { name: '账户安全', url: '#User_AccountSecurity_Index', value: '' },
+            { name: '账户安全', url: '#AccountSecurity_Index', value: '' },
             //{ name: '修改密码', url: '#User_ModifyPassword', value: ko.observable() },
         ];
 
