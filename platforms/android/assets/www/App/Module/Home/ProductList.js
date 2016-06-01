@@ -46,7 +46,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
         ;
         PageModel.prototype.back = function () {
             return app.back().fail(function () {
-                app.redirect('Home_Class');
+                app.redirect('#Home_Class');
             });
         };
         PageModel.prototype.loadProducts = function (clear) {

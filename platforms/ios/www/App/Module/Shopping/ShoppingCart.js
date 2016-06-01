@@ -76,7 +76,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
                 var deferred = $.Deferred();
                 shopping.createOrder(productIds, quantities)
                     .done(function (order) {
-                    app.redirect('Shopping_OrderProducts_' + order.Id());
+                    app.redirect('#Shopping_OrderProducts_' + order.Id());
                     deferred.resolve(order);
                 })
                     .fail(function (data) {

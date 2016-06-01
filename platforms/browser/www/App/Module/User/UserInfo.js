@@ -12,7 +12,7 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
             this.userInfo = member.currentUserInfo;
             this.edit = function (name) {
                 return function () {
-                    app.redirect('User_UserInfoItemEdit_' + name);
+                    app.redirect('#User_UserInfoItemEdit_' + name);
                 };
             };
             this.userInfo.Gender.extend({ required: true });

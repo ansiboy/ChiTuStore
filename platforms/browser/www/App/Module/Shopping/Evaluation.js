@@ -38,7 +38,7 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Servi
                 };
             };
             this.evaluate = function (item) {
-                var evaluatePage = app.redirect('Shopping_ProductEvaluate', { orderDetailId: item.OrderDetailId, productImageUrl: item.ImageUrl });
+                var evaluatePage = app.redirect('#Shopping_ProductEvaluate', { orderDetailId: item.OrderDetailId, productImageUrl: item.ImageUrl });
                 evaluatePage['submited'] = function () {
                     debugger;
                     item.Status('Evaluated');
@@ -46,7 +46,7 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Servi
             };
             this.showProduct = function (item) {
                 debugger;
-                return app.redirect('Home_Product_' + ko.unwrap(item.Id));
+                return app.redirect('#Home_Product_' + ko.unwrap(item.Id));
             };
             this.page = page;
             page.closed.add(function () {

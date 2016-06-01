@@ -12,40 +12,7 @@ define(["require", "exports", 'Site', 'jquery'], function (require, exports, sit
     })();
     var Services = (function () {
         function Services() {
-            var _this = this;
             this.error = $.Callbacks();
-            this.callMethod = function (serviceUrl, method, data) {
-                if (data === void 0) { data = undefined; }
-                return (function (service, serviceUrl, method, data) {
-                    if (data === void 0) { data = undefined; }
-                    data = data || {};
-                    if (serviceUrl == null)
-                        throw new Error('The service url is not setted.');
-                    var ajax;
-                    var url = serviceUrl + method;
-                    data = $.extend({
-                        '$token': site.storage.token,
-                        '$appToken': services.config.appToken,
-                    }, data);
-                    var options = {
-                        url: url,
-                        data: data,
-                        method: 'post',
-                        dataType: 'json',
-                        traditional: true
-                    };
-                    ajax = $.ajax(options);
-                    var element = ajax['element'];
-                    ajax['element'] = function () {
-                        return element;
-                    };
-                    return ajax;
-                })(_this, serviceUrl, method, data);
-            };
-            this.callRemoteMethod = function (method, data) {
-                if (data === void 0) { data = undefined; }
-                return _this.callMethod(services.config.serviceUrl, method, data);
-            };
         }
         Object.defineProperty(Services.prototype, "defaultPageSize", {
             get: function () {
@@ -63,6 +30,38 @@ define(["require", "exports", 'Site', 'jquery'], function (require, exports, sit
             enumerable: true,
             configurable: true
         });
+        Services.prototype.callMethod = function (serviceUrl, method, data) {
+            if (data === void 0) { data = undefined; }
+            return (function (service, serviceUrl, method, data) {
+                if (data === void 0) { data = undefined; }
+                data = data || {};
+                if (serviceUrl == null)
+                    throw new Error('The service url is not setted.');
+                var ajax;
+                var url = serviceUrl + method;
+                data = $.extend({
+                    '$token': site.storage.token,
+                    '$appToken': services.config.appToken,
+                }, data);
+                var options = {
+                    url: url,
+                    data: data,
+                    method: 'post',
+                    dataType: 'json',
+                    traditional: true
+                };
+                ajax = $.ajax(options);
+                var element = ajax['element'];
+                ajax['element'] = function () {
+                    return element;
+                };
+                return ajax;
+            })(this, serviceUrl, method, data);
+        };
+        Services.prototype.callRemoteMethod = function (method, data) {
+            if (data === void 0) { data = undefined; }
+            return this.callMethod(services.config.serviceUrl, method, data);
+        };
         Services.prototype.loadList = function (serviceUrl, method, data) {
             if (data === void 0) { data = undefined; }
             var defferd = this.callMethod(serviceUrl, method, data);

@@ -66,7 +66,7 @@ define(["require", "exports", 'Application', 'Services/Auth', 'Services/Member',
         };
         PageModel.prototype.back = function () {
             app.back().fail(function () {
-                app.redirect('Home_Index');
+                app.redirect('#Home_Index');
             });
         };
         PageModel.prototype.sendVerifyCode = function (model) {

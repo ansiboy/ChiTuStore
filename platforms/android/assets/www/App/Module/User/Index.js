@@ -12,8 +12,8 @@ define(["require", "exports", 'Application', 'Services/Account', 'Services/Membe
             this.model = {
                 groups: [],
                 showItemPage: function (item) {
-                    if (item.url == 'User_Logout') {
-                        return app.redirect('Home_Index');
+                    if (item.url == '#User_Logout') {
+                        return app.redirect('#Home_Index');
                     }
                     return app.redirect(item.url);
                 },
