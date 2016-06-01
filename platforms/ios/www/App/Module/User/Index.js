@@ -40,7 +40,7 @@ define(["require", "exports", 'Application', 'Services/Account', 'Services/Membe
                 { name: '我的优惠券', url: '#User_Coupon', value: ko.observable() },
             ];
             this.model.groups[i++] = [
-                { name: '账户安全', url: '#User_AccountSecurity_Index', value: '' },
+                { name: '账户安全', url: '#AccountSecurity_Index', value: '' },
             ];
             if (!services['weixin']) {
                 this.model.groups[this.model.groups.length - 1].push({ name: '退出', url: '#User_Index_Logout', value: ko.observable() });
