@@ -24,7 +24,7 @@ class Services {
         return this._config;
     }
     error = $.Callbacks()
-    callMethod = (serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<any> => {
+    callMethod(serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<any> {
 
         return (function (service: Services, serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<any> {
 
@@ -60,7 +60,7 @@ class Services {
 
 
     }
-    callRemoteMethod = (method: string, data: Object = undefined): JQueryPromise<any> => {
+    callRemoteMethod(method: string, data: Object = undefined): JQueryPromise<any> {
         return this.callMethod(services.config.serviceUrl, method, data);
     }
 
