@@ -10,9 +10,9 @@ export = class UserIndexPage extends chitu.Page {
     private model = {
         groups: [],
         showItemPage: function (item) {
-            if (item.url == 'User_Logout') {
+            if (item.url == '#User_Logout') {
                 //account.logout();
-                return app.redirect('Home_Index');
+                return app.redirect('#Home_Index');
             }
             return app.redirect(item.url);
         },

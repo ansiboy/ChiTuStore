@@ -52,7 +52,7 @@ class PageModel {
     brands = ko.observableArray();
     back() {
         return app.back().fail(function () {
-            app.redirect('Home_Class');
+            app.redirect('#Home_Class');
         });
     }
     isFilteByCategory = ko.observable();

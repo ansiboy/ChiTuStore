@@ -62,7 +62,7 @@ class PageModel {
     }
     back() {
         app.back().fail(function () {
-            app.redirect('Home_Index')
+            app.redirect('#Home_Index')
         });
     }
     sendVerifyCode(model: PageModel) {

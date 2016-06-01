@@ -51,7 +51,7 @@ class ProductModel {
     }
     back = () => {
         app.back().fail(() => {
-            app.redirect('Home_ProductList_category_' + ko.unwrap(this['product'].ProductCategoryId));
+            app.redirect('#Home_ProductList_category_' + ko.unwrap(this['product'].ProductCategoryId));
         });
     }
     showPanel = () => {

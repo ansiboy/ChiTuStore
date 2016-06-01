@@ -33,7 +33,7 @@ class RechargeListPage extends chitu.Page {
         rechargeRecords: ko.observableArray(),
         back: function () {
             app.back().fail(function () {
-                app.redirect('User_Index');
+                app.redirect('#User_Index');
             });
         },
         recharge: function () {

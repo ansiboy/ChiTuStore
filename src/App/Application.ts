@@ -17,6 +17,9 @@ class UrlParser extends chitu.UrlParser {
                 routeData.values.type = route_values[2];
                 routeData.values.id = route_values[3];
                 break;
+            case 'User.UserInfoItemEdit':
+                routeData.values.field = route_values[2];
+                break;
             default:
                 if (route_values.length > MIN_PARTS_COUNT) {
                     routeData.values.id = route_values[2];
@@ -26,7 +29,7 @@ class UrlParser extends chitu.UrlParser {
 
         var css_path = chitu.Utility.format('css!content/{0}/{1}', route_values[0], route_values[1]);
         routeData.resource = [css_path];
-        
+
         return routeData;
     }
 }

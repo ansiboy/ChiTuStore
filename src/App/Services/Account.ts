@@ -161,7 +161,7 @@ class AccountService {
         var old_count: KnockoutObservable<number>;
         var new_count: KnockoutObservable<number>;
 
-        var get_counter = (status: string): KnockoutObservable<number>=> {
+        var get_counter = (status: string): KnockoutObservable<number> => {
             var counter: KnockoutObservable<number>
             switch (status) {
                 case 'WaitingForPayment':
@@ -210,10 +210,12 @@ class AccountService {
         });
         return result;
     }
-    deleteReceiptInfo = (receiptInfoId) => {
-        /// <summary>删除收件地址</summary>
-        /// <param name="receiptInfoId" type="String"/>
-        /// <returns type="jQuery.Deferred"/>
+
+    /**
+     * @param string receiptInfoId 收货地址编号
+     * @returns JQueryPromise<any>
+     */
+    deleteReceiptInfo(receiptInfoId: string): JQueryPromise<any> {
         var result = services.callRemoteMethod('Address/DeleteReceiptInfo', { receiptInfoId: receiptInfoId });
         return result;
     }
@@ -241,24 +243,19 @@ class AccountService {
 
         return result;
     }
-    setDefaultReceipt = (receiptInfoId) => {
-        /// <summary>设置默认收件地址</summary>
-        /// <param name="receiptInfoId" type="String"/>
-        /// <returns type="jQuery.Deferred"/>
+    /**
+     * 设置默认的收货地址
+     * param string receiptInfoId 收货地址编号
+     */
+    setDefaultReceipt(receiptInfoId): JQueryPromise<any> {
         var result = services.callRemoteMethod('Address/SetDefaultReceiptInfo', { receiptInfoId: receiptInfoId });
         return result;
     }
-    getCoupons = () => {
-        /// <returns type="jQuery.Deferred"/>
-
-        var args = {};
-        var result = services.callRemoteMethod('Coupon/GetCoupons', args);
-
-        return result;
-    }
+    /**
+     * 获取用户的优惠券
+     * returns JQueryPromise<any[]>
+     */
     getMyCoupons = () => {
-        /// <returns type="jQuery.Deferred"/>
-
         var args = {};
         var result = services.callRemoteMethod('Coupon/GetMyCoupons', args);
 
@@ -274,16 +271,11 @@ class AccountService {
         var result = services.callRemoteMethod('Coupon/UseCouponCode', args);
         return result;
     }
-    getProvinces = () => {
-        /// <summary>获取省</summary>
-        /// <returns type="jQuery.Deferred"/>
+    getProvinces(): JQueryPromise<any[]> {
         var result = services.callRemoteMethod('Address/GetProvinces', {});
         return result;
     }
-    getCities = (province) => {
-        /// <summary>获取城市</summary>
-        /// <param name="province" type="String"/>
-
+    getCities(province): JQueryPromise<any[]> {
         var guidRule = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
         if (guidRule.test(province))
             return services.callRemoteMethod('Address/GetCities', { provinceId: province });
@@ -326,7 +318,7 @@ class AccountService {
 
         return result;
     }
-    confirmReceived = (orderId: string): JQueryPromise<any>=> {
+    confirmReceived = (orderId: string): JQueryPromise<any> => {
         /// <summary>确认已收到货</summary>
         /// <param name="orderId" type="String"/>
         var result = services.callMethod(services.config.serviceUrl, 'Order/ConfirmReceived', { orderId: orderId })
@@ -336,7 +328,7 @@ class AccountService {
             });
         return result;
     }
-    cancelOrder = (orderId) => {
+    cancelOrder = (orderId): JQueryPromise<any> => {
         /// <summary>取消订单</summary>
         /// <param name="orderId" type="String"/>
         /// <returns type="jQuery.Deferred"/>
@@ -356,19 +348,12 @@ class AccountService {
             .done(() => {
                 this.orderStatusChanged('WaitingForPayment', 'Paid');
             });
-        //.done(() => {
-        //    //this.Status('Paid');
-        //    if (this['order'])
-        //        this['order'].Status('Paid');
-
-        //    //window.location.href = '#Shopping_OrderList';
-        //});
     }
 
-    /// <summary>
-    /// 评价晒单
-    /// </summary>
-    evaluateProduct = (orderDetailId: string, score: number, evaluation: string, anonymous: boolean, imageDatas: string, imageThumbs: string) => {
+    /**
+     * 评价晒单
+     */
+    evaluateProduct(orderDetailId: string, score: number, evaluation: string, anonymous: boolean, imageDatas: string, imageThumbs: string){
         var data = { orderDetailId, evaluation, imageDatas, score, imageThumbs, anonymous };
         var result = services.callMethod(services.config.serviceUrl, 'Product/EvaluateProduct', data).done(() => {
             var count = this.orderInfo.evaluateCount();
@@ -392,11 +377,10 @@ class AccountService {
 
         return deferred;
     }
+    /**
+     * 发送修改密码的验证码
+     */
     sendChangePasswordVerifyCode = (mobile) => {
-        //return $.ajax({
-        //    url: '/VerifyCode/SendChangePassword',
-        //    data: { mobile: mobile }
-        //});
         return services.callRemoteMethod('VerifyCode/SendChangePassword', { mobile: mobile });
     }
     bind = (username, password) => {
@@ -413,13 +397,18 @@ class AccountService {
 
         });
     }
+    /**
+     * 获取用户账户的余额
+     */
     getBalance = () => {
         return services.callMethod(services.config.accountServiceUrl, 'Account/GetAccount').then(function (data) {
             return (new Number(data.Balance)).valueOf();
         });
     }
+    /**
+     * 获取用户信息
+     */
     userInfo = () => {
-        /// <returns type="jQuery.Deferred"/>
         return services.callRemoteMethod('User/GetUserInfo');
     }
     orderInfo = new OrderInfo()

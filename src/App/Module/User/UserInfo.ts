@@ -32,7 +32,7 @@ class Model {
     userInfo = member.currentUserInfo
     edit = (name: string) => {
         return () => {
-            app.redirect('User_UserInfoItemEdit_' + name);
+            app.redirect('#User_UserInfoItemEdit_' + name);
         }
     }
 }

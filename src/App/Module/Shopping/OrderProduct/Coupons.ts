@@ -44,7 +44,7 @@ class Model {
     }
     open = (orderId: string) => {
 
-        return $.when(coupon.getAvailableCoupons(orderId), this.html_load).done((coupons) => {
+        return $.when<any>(coupon.getAvailableCoupons(orderId), this.html_load).done((coupons) => {
             debugger;
             var m = move(this.dialog_element)
             m.x($(window).width()).duration(0).end();

@@ -76,10 +76,10 @@ class Model {
             });
     }
     showInvoice = () => {
-        return app.redirect('Shopping_Invoice', { order: this.order });
+        return app.redirect('#Shopping_Invoice', { order: this.order });
     }
     showReceipts = () => {
-        return app.redirect('User_ReceiptList', { order: this.order });
+        return app.redirect('#User_ReceiptList', { order: this.order });
     }
     showCoupons = () => {
         return avalibleCoupons.open(ko.unwrap(this.order.Id));
