@@ -4,9 +4,7 @@ import chitu = require('chitu');
 class ScrollViewGesture {
     private container: chitu.PageContainer;
     private page: chitu.Page;
-    // private $active_item: JQuery;
-    // private $next_item: JQuery;
-    // private $prev_item: JQuery;
+
     private active_item: chitu.ScrollView;
     private next_item: chitu.ScrollView;
     private prev_item: chitu.ScrollView;
