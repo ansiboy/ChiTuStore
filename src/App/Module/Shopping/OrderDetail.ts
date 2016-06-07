@@ -6,9 +6,9 @@ import account = require('Services/Account');
 requirejs(['css!content/Shopping/OrderDetail']);
 
 class Model {
-    private page: OrderDetailPage
+    private page: chitu.Page
 
-    constructor(page: OrderDetailPage) {
+    constructor(page: chitu.Page) {
         this.page = page;
     }
 
@@ -42,16 +42,40 @@ class Model {
     }
 }
 
-class OrderDetailPage {
-    orderUpdated = $.Callbacks()
-    sorce: chitu.Page
+// class OrderDetailPage {
+//     orderUpdated = $.Callbacks()
+//     sorce: chitu.Page
 
-    constructor(source: chitu.Page) {
-        this.sorce = source;
+//     constructor(source: chitu.Page) {
+//         this.sorce = source;
+//     }
+
+//     hide() {
+//         this.sorce.hide();
+//     }
+// }
+
+class OrderDetailPage extends chitu.Page {
+    private model: Model;
+    constructor(html) {
+        super(html);
+        this.model = new Model(this);
+        this.load.add(this.page_load);
     }
 
-    hide() {
-        this.sorce.hide();
+    private page_load(sender, args) {
+        return shopping.getOrder(ko.unwrap(args.order.Id))
+            .done((order) => this.order_loaded(order));//$.when(, deferred);
+    }
+
+    private order_loaded(order) {
+        if (this.model.order == null) {
+            this.model.order = order;
+            ko.applyBindings(this.model, this.element);
+        }
+
+        var js_data = mapping.toJS(order);
+        mapping.fromJS(js_data, {}, this.model.order);
     }
 }
 
