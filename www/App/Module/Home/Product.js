@@ -21,7 +21,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'Services/Shop
             };
             this.back = function () {
                 app.back().fail(function () {
-                    app.redirect('Home_ProductList_category_' + ko.unwrap(_this['product'].ProductCategoryId));
+                    app.redirect('#Home_ProductList_category_' + ko.unwrap(_this['product'].ProductCategoryId));
                 });
             };
             this.showPanel = function () {

@@ -9,7 +9,7 @@ class HomeService {
         var result = services.callMethod(services.config.siteServiceUrl, 'UI/GetMenus');
         return result;
     }
-    advertItems() {
+    advertItems():JQueryPromise<any[]> {
         var result = services.callMethod(services.config.siteServiceUrl, 'Home/GetAdvertItems');
         return result;
     }

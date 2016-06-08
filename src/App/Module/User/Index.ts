@@ -10,9 +10,9 @@ export = class UserIndexPage extends chitu.Page {
     private model = {
         groups: [],
         showItemPage: function (item) {
-            if (item.url == 'User_Logout') {
+            if (item.url == '#User_Logout') {
                 //account.logout();
-                return app.redirect('Home_Index');
+                return app.redirect('#Home_Index');
             }
             return app.redirect(item.url);
         },
@@ -47,7 +47,7 @@ export = class UserIndexPage extends chitu.Page {
 
 
         this.model.groups[i++] = [
-            { name: '账户安全', url: '#User_AccountSecurity_Index', value: '' },
+            { name: '账户安全', url: '#AccountSecurity_Index', value: '' },
             //{ name: '修改密码', url: '#User_ModifyPassword', value: ko.observable() },
         ];
 

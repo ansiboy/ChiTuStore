@@ -824,8 +824,6 @@ var chitu;
             return new Error(msg);
         };
         Errors.paramTypeError = function (paramName, expectedType) {
-            /// <param name="paramName" type="String"/>
-            /// <param name="expectedType" type="String"/>
             var msg = chitu.Utility.format('The param "{0}" is expected "{1}" type.', paramName, expectedType);
             return new Error(msg);
         };
@@ -894,6 +892,7 @@ var chitu;
         };
         Errors.actionTypeError = function (pageName) {
             var msg = chitu.Utility.format('Export of \'{0}\' page is expect chitu.Page type.', pageName);
+            return new Error(msg);
         };
         return Errors;
     })();

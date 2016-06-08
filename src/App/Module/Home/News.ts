@@ -8,7 +8,7 @@ class NewsPage extends chitu.Page {
         news: null,
         back: function () {
             app.back().fail(function () {
-                app.redirect('Home_NewsList');
+                app.redirect('#Home_NewsList');
             });
         },
         category: ko.observable()

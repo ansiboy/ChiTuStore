@@ -25,7 +25,7 @@ class Coupon {
 
         return result;
     }
-    getAvailableCoupons = (orderId) => {
+    getAvailableCoupons(orderId):JQueryPromise<any[]> {
         return services.callMethod(services.config.serviceUrl, 'Coupon/GetAvailableCouponCodes', { orderId: orderId })
             .then((data) => {
                 $(data).each((i, item) => this.extendCoupon(item));

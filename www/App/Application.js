@@ -21,8 +21,14 @@ define(["require", "exports", 'chitu', 'Site', 'PageContainerFactory'], function
                     routeData.values.type = route_values[2];
                     routeData.values.id = route_values[3];
                     break;
+                case 'User.UserInfoItemEdit':
+                    routeData.values.field = route_values[2];
+                    break;
                 default:
-                    if (route_values.length > MIN_PARTS_COUNT) {
+                    if (route_values[0] == 'AccountSecurity') {
+                        routeData.values.type = route_values[2];
+                    }
+                    else if (route_values.length > MIN_PARTS_COUNT) {
                         routeData.values.id = route_values[2];
                     }
                     break;

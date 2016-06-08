@@ -11,13 +11,6 @@ define(["require", "exports", 'Site', 'Services/Service'], function (require, ex
                 }, result));
                 return result;
             };
-            this.getAvailableCoupons = function (orderId) {
-                return services.callMethod(services.config.serviceUrl, 'Coupon/GetAvailableCouponCodes', { orderId: orderId })
-                    .then(function (data) {
-                    $(data).each(function (i, item) { return _this.extendCoupon(item); });
-                    return data;
-                });
-            };
         }
         Coupon.prototype.extendCoupon = function (coupon) {
             if (coupon.UsedDateTime) {
@@ -29,6 +22,14 @@ define(["require", "exports", 'Site', 'Services/Service'], function (require, ex
             else {
                 coupon.StatusText = '未使用';
             }
+        };
+        Coupon.prototype.getAvailableCoupons = function (orderId) {
+            var _this = this;
+            return services.callMethod(services.config.serviceUrl, 'Coupon/GetAvailableCouponCodes', { orderId: orderId })
+                .then(function (data) {
+                $(data).each(function (i, item) { return _this.extendCoupon(item); });
+                return data;
+            });
         };
         return Coupon;
     })();

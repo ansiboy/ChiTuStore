@@ -150,7 +150,7 @@ declare namespace chitu {
         static parameterRequireField(fileName: any, parameterName: any): Error;
         static viewCanntNull(): Error;
         static createPageFail(pageName: string): Error;
-        static actionTypeError(pageName: string): void;
+        static actionTypeError(pageName: string): Error;
     }
 }
 declare namespace chitu {

@@ -179,10 +179,6 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 });
                 return result;
             };
-            this.deleteReceiptInfo = function (receiptInfoId) {
-                var result = services.callRemoteMethod('Address/DeleteReceiptInfo', { receiptInfoId: receiptInfoId });
-                return result;
-            };
             this.saveReceiptInfo = function (receiptInfo) {
                 /// <summary>保存用户的收货地址</summary>
                 /// <param name="receiptInfo" type="models.receiptInfo"/>
@@ -203,18 +199,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 });
                 return result;
             };
-            this.setDefaultReceipt = function (receiptInfoId) {
-                var result = services.callRemoteMethod('Address/SetDefaultReceiptInfo', { receiptInfoId: receiptInfoId });
-                return result;
-            };
-            this.getCoupons = function () {
-                /// <returns type="jQuery.Deferred"/>
-                var args = {};
-                var result = services.callRemoteMethod('Coupon/GetCoupons', args);
-                return result;
-            };
             this.getMyCoupons = function () {
-                /// <returns type="jQuery.Deferred"/>
                 var args = {};
                 var result = services.callRemoteMethod('Coupon/GetMyCoupons', args);
                 return result;
@@ -227,19 +212,6 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 var args = { code: coupon.code() };
                 var result = services.callRemoteMethod('Coupon/UseCouponCode', args);
                 return result;
-            };
-            this.getProvinces = function () {
-                var result = services.callRemoteMethod('Address/GetProvinces', {});
-                return result;
-            };
-            this.getCities = function (province) {
-                /// <summary>获取城市</summary>
-                /// <param name="province" type="String"/>
-                var guidRule = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-                if (guidRule.test(province))
-                    return services.callRemoteMethod('Address/GetCities', { provinceId: province });
-                return services.callRemoteMethod('Address/GetCities', { provinceName: province });
-                ;
             };
             this.getCounties = function (city) {
                 var cityId;
@@ -294,14 +266,6 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                     _this.orderStatusChanged('WaitingForPayment', 'Paid');
                 });
             };
-            this.evaluateProduct = function (orderDetailId, score, evaluation, anonymous, imageDatas, imageThumbs) {
-                var data = { orderDetailId: orderDetailId, evaluation: evaluation, imageDatas: imageDatas, score: score, imageThumbs: imageThumbs, anonymous: anonymous };
-                var result = services.callMethod(services.config.serviceUrl, 'Product/EvaluateProduct', data).done(function () {
-                    var count = _this.orderInfo.evaluateCount();
-                    _this.orderInfo.evaluateCount(count - 1);
-                });
-                return result;
-            };
             this.getSquareCode = function () {
                 var deferred = $.Deferred();
                 services.callRemoteMethod('ShouTao/SquareCodeTicket').done(function (args) {
@@ -342,6 +306,34 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
             };
             this.orderInfo = new OrderInfo();
         }
+        AccountService.prototype.deleteReceiptInfo = function (receiptInfoId) {
+            var result = services.callRemoteMethod('Address/DeleteReceiptInfo', { receiptInfoId: receiptInfoId });
+            return result;
+        };
+        AccountService.prototype.setDefaultReceipt = function (receiptInfoId) {
+            var result = services.callRemoteMethod('Address/SetDefaultReceiptInfo', { receiptInfoId: receiptInfoId });
+            return result;
+        };
+        AccountService.prototype.getProvinces = function () {
+            var result = services.callRemoteMethod('Address/GetProvinces', {});
+            return result;
+        };
+        AccountService.prototype.getCities = function (province) {
+            var guidRule = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            if (guidRule.test(province))
+                return services.callRemoteMethod('Address/GetCities', { provinceId: province });
+            return services.callRemoteMethod('Address/GetCities', { provinceName: province });
+            ;
+        };
+        AccountService.prototype.evaluateProduct = function (orderDetailId, score, evaluation, anonymous, imageDatas, imageThumbs) {
+            var _this = this;
+            var data = { orderDetailId: orderDetailId, evaluation: evaluation, imageDatas: imageDatas, score: score, imageThumbs: imageThumbs, anonymous: anonymous };
+            var result = services.callMethod(services.config.serviceUrl, 'Product/EvaluateProduct', data).done(function () {
+                var count = _this.orderInfo.evaluateCount();
+                _this.orderInfo.evaluateCount(count - 1);
+            });
+            return result;
+        };
         AccountService.prototype.getToCommentProducts = function () {
             var result = services.callMethod(services.config.serviceUrl, 'Product/GetToCommentProducts')
                 .done(function () {

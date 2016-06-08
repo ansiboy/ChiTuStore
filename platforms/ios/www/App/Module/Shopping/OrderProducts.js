@@ -48,10 +48,10 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Shopp
                 });
             };
             this.showInvoice = function () {
-                return app.redirect('Shopping_Invoice', { order: _this.order });
+                return app.redirect('#Shopping_Invoice', { order: _this.order });
             };
             this.showReceipts = function () {
-                return app.redirect('User_ReceiptList', { order: _this.order });
+                return app.redirect('#User_ReceiptList', { order: _this.order });
             };
             this.showCoupons = function () {
                 return avalibleCoupons.open(ko.unwrap(_this.order.Id));

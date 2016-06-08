@@ -173,7 +173,7 @@ class Model {
         var deferred = $.Deferred();
         shopping.createOrder(productIds, quantities)
             .done((order) => {
-                app.redirect('Shopping_OrderProducts_' + order.Id());
+                app.redirect('#Shopping_OrderProducts_' + order.Id());
                 deferred.resolve(order);
             })
             .fail((data) => {

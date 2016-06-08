@@ -14,13 +14,16 @@ class Model {
     })
     mobileBindingUrl = ko.computed<string>(() => {
         if (!this.mobile()) {
-            return '#User_AccountSecurity_MobileSetting';
+            return '#AccountSecurity_MobileSetting';
         }
-        return '#User_AccountSecurity_Setting_MobileBinding';
+        return '#AccountSecurity_Setting_MobileBinding';
     })
 }
-export = function (page: chitu.Page) {
-    var model = new Model();
-    ko.applyBindings(model, page.element);
-
+export = class AccountSecurityIndexPage extends chitu.Page {
+    private model: Model;
+    constructor(html) {
+        super(html);
+        this.model = new Model();
+        ko.applyBindings(this.model, this.element);
+    }
 }
