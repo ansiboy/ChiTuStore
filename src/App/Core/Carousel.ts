@@ -33,20 +33,20 @@ class Carousel {
         // });
 
         $(this.activeItem()).addClass('active');
-        hammer.on('panstart', (e: PanEvent) => this.panstart(e))
-            .on('panmove', (e: PanEvent) => this.panmove(e))
-            .on('panend', (e: PanEvent) => this.panend(e));
+        hammer.on('panstart', (e: Hammer.PanEvent) => this.panstart(e))
+            .on('panmove', (e: Hammer.PanEvent) => this.panmove(e))
+            .on('panend', (e: Hammer.PanEvent) => this.panend(e));
 
         this.play();
     }
 
-    private panstart(e: PanEvent) {
+    private panstart(e: Hammer.PanEvent) {
         if (this.is_pause)
             return false;
 
         this.stop();
     }
-    private panmove(e: PanEvent) {
+    private panmove(e: Hammer.PanEvent) {
         if ((e.direction & Hammer.DIRECTION_VERTICAL) != 0) {
             console.log('DIRECTION_VERTICAL');
         }
@@ -68,7 +68,7 @@ class Carousel {
             move(this.prevItem()).x(e.deltaX - this.window_width).duration(0).end();
         }
     }
-    private panend(e: PanEvent) {
+    private panend(e: Hammer.PanEvent) {
         if (this.paned == false)
             return;
 
