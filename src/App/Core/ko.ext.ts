@@ -500,7 +500,7 @@ function refreshScrollView(scroll_view: chitu.IScrollView) {
     }
 
     timeid = window.setTimeout(function () {
-        console.log('refresh scroll view. ' + $(scroll_view.element).attr('name'));
+        //console.log('refresh scroll view. ' + $(scroll_view.element).attr('name'));
         scroll_view.refresh();
     }, 30);
 
