@@ -1,4 +1,10 @@
-﻿
+﻿/// <reference path="../Scripts/typings/hammer.d.ts"/>
+/// <reference path="../Scripts/typings/move.d.ts"/>
+/// <reference path="../Scripts/typings/jquery.d.ts"/>
+/// <reference path="../Scripts/typings/jquery.cookie.d.ts"/>
+/// <reference path="../Scripts/typings/iscroll.d.ts"/>
+/// <reference path="../Scripts/typings/swiper.d.ts"/>
+
 requirejs.config({
     urlArgs: "bust=46",
     shim: {
