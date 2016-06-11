@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Application', 'knockout.validation'], function (require, exports, app, ko_val) {
+    "use strict";
     requirejs(['css!content/Shopping/Invoice']);
     var PageModel = (function () {
         function PageModel(page) {
@@ -27,7 +28,7 @@ define(["require", "exports", 'Application', 'knockout.validation'], function (r
             app.back();
         };
         return PageModel;
-    })();
+    }());
     var InvoicePage = (function (_super) {
         __extends(InvoicePage, _super);
         function InvoicePage(html) {
@@ -44,5 +45,5 @@ define(["require", "exports", 'Application', 'knockout.validation'], function (r
         InvoicePage.prototype.page_load = function (sender, args) {
         };
         return InvoicePage;
-    })(chitu.Page);
+    }(chitu.Page));
 });

@@ -1,6 +1,5 @@
-//===============================================
-// 说明：用来显现加载状态的窗口
 define(["require", "exports", 'Application'], function (require, exports, app) {
+    "use strict";
     var $loadingForm = $('#loadingForm');
     function on_shown() {
         if (window['bootbox'])

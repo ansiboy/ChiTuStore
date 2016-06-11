@@ -1,4 +1,5 @@
 define(["require", "exports", 'Site', 'Services/Service'], function (require, exports, site, services) {
+    "use strict";
     var Coupon = (function () {
         function Coupon() {
             var _this = this;
@@ -32,7 +33,7 @@ define(["require", "exports", 'Site', 'Services/Service'], function (require, ex
             });
         };
         return Coupon;
-    })();
+    }());
     services['coupon'] = services['coupon'] || new Coupon();
     return services['coupon'];
 });

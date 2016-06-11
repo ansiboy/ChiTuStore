@@ -1,4 +1,5 @@
 define(["require", "exports", 'Services/Service', 'Site'], function (require, exports, services, site) {
+    "use strict";
     var InfoService = (function () {
         function InfoService() {
         }
@@ -15,7 +16,7 @@ define(["require", "exports", 'Services/Service', 'Site'], function (require, ex
             return result;
         };
         return InfoService;
-    })();
+    }());
     window['services']['info'] = window['services']['info'] || new InfoService();
     return window['services']['info'];
 });

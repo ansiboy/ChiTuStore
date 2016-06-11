@@ -1,4 +1,5 @@
 define(["require", "exports", 'Application'], function (require, exports, app) {
+    "use strict";
     var TitleBar = (function () {
         function TitleBar(element) {
             if (element == null)
@@ -42,7 +43,7 @@ define(["require", "exports", 'Application'], function (require, exports, app) {
             return $btn[0];
         };
         return TitleBar;
-    })();
+    }());
     function defaultTitle(page) {
         var values = page.routeData.values;
         var controller = values.controller;

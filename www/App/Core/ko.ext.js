@@ -1,4 +1,5 @@
 define(["require", "exports", 'knockout', 'jquery', 'Site', 'chitu'], function (require, exports, ko, $, site, chitu) {
+    "use strict";
     Number.prototype['toFormattedString'] = function (format) {
         var reg = new RegExp('^C[0-9]+');
         if (reg.test(format)) {
@@ -362,7 +363,6 @@ define(["require", "exports", 'knockout', 'jquery', 'Site', 'chitu'], function (
             window.clearTimeout(timeid);
         }
         timeid = window.setTimeout(function () {
-            console.log('refresh scroll view. ' + $(scroll_view.element).attr('name'));
             scroll_view.refresh();
         }, 30);
         $(scroll_view.element).data('timeid', timeid);

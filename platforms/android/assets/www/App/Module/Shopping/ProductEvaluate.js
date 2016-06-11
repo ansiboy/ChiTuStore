@@ -1,19 +1,17 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'knockout', 'Services/Account', 'Core/ImageFileResize', 'UI/ImagePreview', 'Site', 'Application'], function (require, exports, ko, account, ImageFileResize, ImagePreviewer, site, app) {
+    "use strict";
     requirejs(['css!content/Shopping/ProductEvaluate']);
     var Start = (function () {
         function Start() {
             this.selected = ko.observable(true);
         }
         return Start;
-    })();
+    }());
     var Model = (function () {
         function Model(page) {
             var _this = this;
@@ -87,7 +85,7 @@ define(["require", "exports", 'knockout', 'Services/Account', 'Core/ImageFileRes
             });
         }
         return Model;
-    })();
+    }());
     var ProductEvaluatePage = (function (_super) {
         __extends(ProductEvaluatePage, _super);
         function ProductEvaluatePage(html) {
@@ -112,5 +110,5 @@ define(["require", "exports", 'knockout', 'Services/Account', 'Core/ImageFileRes
                 this.model.imageThumbs.push(thumbs[i]);
         };
         return ProductEvaluatePage;
-    })(chitu.Page);
+    }(chitu.Page));
 });

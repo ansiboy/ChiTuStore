@@ -1,4 +1,10 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'Services/Shopping', 'knockout.mapping', 'Services/Account'], function (require, exports, shopping, mapping, account) {
+    "use strict";
     requirejs(['css!content/Shopping/OrderDetail']);
     var Model = (function () {
         function Model(page) {
@@ -32,30 +38,28 @@ define(["require", "exports", 'Services/Shopping', 'knockout.mapping', 'Services
             this.page = page;
         }
         return Model;
-    })();
-    var OrderDetailPage = (function () {
-        function OrderDetailPage(source) {
+    }());
+    var OrderDetailPage = (function (_super) {
+        __extends(OrderDetailPage, _super);
+        function OrderDetailPage(html) {
+            _super.call(this, html);
             this.orderUpdated = $.Callbacks();
-            this.sorce = source;
+            this.model = new Model(this);
+            this.load.add(this.page_load);
         }
-        OrderDetailPage.prototype.hide = function () {
-            this.sorce.hide();
+        OrderDetailPage.prototype.page_load = function (sender, args) {
+            var _this = this;
+            return shopping.getOrder(ko.unwrap(args.order.Id))
+                .done(function (order) { return _this.order_loaded(order); });
         };
-        return OrderDetailPage;
-    })();
-    return function (page) {
-        page.load.add(page_load);
-        var model = new Model(new OrderDetailPage(page));
-        function page_load(sender, args) {
-            return shopping.getOrder(ko.unwrap(args.order.Id)).done(order_loaded);
-        }
-        function order_loaded(order) {
-            if (model.order == null) {
-                model.order = order;
-                ko.applyBindings(model, page.element);
+        OrderDetailPage.prototype.order_loaded = function (order) {
+            if (this.model.order == null) {
+                this.model.order = order;
+                ko.applyBindings(this.model, this.element);
             }
             var js_data = mapping.toJS(order);
-            mapping.fromJS(js_data, {}, model.order);
-        }
-    };
+            mapping.fromJS(js_data, {}, this.model.order);
+        };
+        return OrderDetailPage;
+    }(chitu.Page));
 });

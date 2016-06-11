@@ -1,7 +1,5 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../../Scripts/typings/knockout.validation.d.ts' />
 define(["require", "exports", 'Services/Account', 'Application', 'Services/Shopping', 'Services/ShoppingCart', 'Services/Coupon', 'knockout.validation', 'knockout.mapping', 'Module/Shopping/OrderProduct/Coupons'], function (require, exports, account, app, shopping, shoppingCart, coupon, ko_val, mapping, AvalibleCoupons) {
+    "use strict";
     requirejs(['css!content/Shopping/OrderProducts'], function () { });
     var avalibleCoupons = new AvalibleCoupons();
     var Model = (function () {
@@ -59,9 +57,8 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Shopp
             this._page = page;
         }
         return Model;
-    })();
+    }());
     return function (page) {
-        /// <param name="page" type="chitu.Page"/>
         var validation;
         var model = new Model(page);
         avalibleCoupons.couponCodeSelected = function (coupon) {
@@ -72,7 +69,6 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Shopp
         };
         var orderId;
         page.load.add(function (sender, args) {
-            /// <param name="sender" type="chitu.Page"/>
             if (orderId == args.id)
                 return;
             orderId = args.id;

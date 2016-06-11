@@ -1,4 +1,5 @@
 define(["require", "exports", 'move', 'text!Module/Home/ProductList/ProductsFilter.html', 'iscroll', 'Site'], function (require, exports, move, html, IScroll, site) {
+    "use strict";
     var win_width = $(window).width();
     var width = win_width * site.config.panelWithRate;
     var $html = $(html).appendTo($('#footer'));

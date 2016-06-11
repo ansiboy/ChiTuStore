@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Account', 'Site'], function (require, exports, account, site) {
+    "use strict";
     requirejs(['css!content/User/ScoreList']);
     var model = {
         scoreRecords: ko.observableArray(),
@@ -42,6 +43,6 @@ define(["require", "exports", 'Services/Account', 'Site'], function (require, ex
             });
         }
         return ScoreListPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return ScoreListPage;
 });

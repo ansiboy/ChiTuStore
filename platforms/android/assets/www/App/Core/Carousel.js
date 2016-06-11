@@ -1,4 +1,5 @@
 define(["require", "exports", 'hammer', 'move'], function (require, exports, Hammer, move) {
+    "use strict";
     var animateTime = 400;
     var Carousel = (function () {
         function Carousel(element) {
@@ -196,6 +197,6 @@ define(["require", "exports", 'hammer', 'move'], function (require, exports, Ham
             }, 2000);
         };
         return Carousel;
-    })();
+    }());
     return Carousel;
 });

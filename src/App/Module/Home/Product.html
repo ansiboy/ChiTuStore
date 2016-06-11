@@ -1,4 +1,4 @@
-﻿<scroll-view name="product" class="active">
+﻿<scroll-view name="product" class="active" next="detail" below='detail3'>
     <div class="container">
         <div name="productImages" class="swiper-container" style="padding-top: 10px;">
             <div data-bind="foreach: product.ImageUrls" class="swiper-wrapper">
@@ -99,7 +99,20 @@
     <hr />
     <a data-bind="attr:{href:'#Home_ProductDetail_' + ko.unwrap(product.Id)}" class="btn btn-default btn-block btn-large">点击查看图文详情</a>
 </scroll-view>
-<scroll-view name="detail" style="transform: translateX(100%);">
+<scroll-view name="detail3" style="transform: translateY(100%);" above="product">
+    <div class="container">
+        <div style="height:50px;">
+            Detail3
+        </div>
+        <div style="height:50px;">
+            Detail3
+        </div>
+        <div style="height:50px;">
+            Detail3
+        </div>
+    </div>
+</scroll-view>
+<scroll-view name="detail" style="transform: translateX(100%);" next="detail2" prev="product">
     <div class="container">
         <div style="height:50px;">
             Hello World
@@ -148,7 +161,7 @@
         </div>
     </div>
 </scroll-view>
-<scroll-view name="detail2" style="transform: translateX(200%);">
+<scroll-view name="detail2" style="transform: translateX(200%);" prev="detail">
     <div class="container">
         <div style="height:50px;">
             Detail Detail Detail
@@ -205,7 +218,7 @@
             <span data-bind="text:shoppingCartNumber,visible:shoppingCartNumber" class="badge bg-primary"></span>
         </a>
         <button name="btn_add" class="btn btn-primary pull-right" data-bind="tap: addToShoppingCart,click: addToShoppingCart, enable: ko.unwrap(product.Stock) > 0, text:ko.unwrap(product.Stock) > 0 ? '加入购物车' : '已经售磬'"
-        data-dialog="toast:'成功添加到购物车'">
+            data-dialog="toast:'成功添加到购物车'">
             加入购物车
         </button>
     </nav>

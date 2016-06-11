@@ -1,4 +1,5 @@
 define(["require", "exports", 'Services/Coupon', 'move', 'Site', 'iscroll'], function (require, exports, coupon, move, site, IScroll) {
+    "use strict";
     var show_time = site.config.pageAnimationTime;
     var Model = (function () {
         function Model() {
@@ -44,6 +45,6 @@ define(["require", "exports", 'Services/Coupon', 'move', 'Site', 'iscroll'], fun
             });
         }
         return Model;
-    })();
+    }());
     return Model;
 });

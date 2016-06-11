@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Services/Account', 'Application'], function (require, exports, ko_val, mapping, account, app) {
+    "use strict";
     requirejs(['css!content/User/ReceiptEdit']);
     var province_none = { Name: '请选择省' };
     var city_none = { Name: '请选择城市' };
@@ -56,7 +57,7 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
             }, this);
         }
         return Receipt;
-    })();
+    }());
     var Model = (function () {
         function Model(page) {
             var _this = this;
@@ -69,7 +70,6 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
                 _this.province().removeAttr('disabled');
             };
             this.loadCities = function (provinceId) {
-                /// <returns type="jQuery.Deferred"/>
                 _this.city().attr('disabled', 'disabled');
                 _this.county().attr('disabled', 'disabled');
                 if (_this.isEmptyId(provinceId))
@@ -86,7 +86,6 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
                 return result;
             };
             this.loadCounties = function (cityId) {
-                /// <returns type="jQuery.Deferred"/>
                 _this.county().attr('disabled', 'disabled');
                 if (_this.isEmptyId(cityId))
                     return $.Deferred().resolve();
@@ -146,7 +145,7 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
             this.page = page;
         }
         return Model;
-    })();
+    }());
     var ReceiptEditPage = (function (_super) {
         __extends(ReceiptEditPage, _super);
         function ReceiptEditPage(html) {
@@ -161,10 +160,6 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
             this.load.add(this.page_load);
         }
         ReceiptEditPage.prototype.page_load = function (sender, args) {
-            //function ( {
-            /// args 参数说明：
-            /// 1. receipt:   编辑操作
-            /// 2. receipts:  添加操作
             if (!args.id) {
                 var obj = mapping.toJS(new Receipt());
                 mapping.fromJS(obj, {}, sender.model.receipt);
@@ -191,6 +186,6 @@ define(["require", "exports", 'knockout.validation', 'knockout.mapping', 'Servic
             });
         };
         return ReceiptEditPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return ReceiptEditPage;
 });

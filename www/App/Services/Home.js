@@ -1,11 +1,9 @@
 define(["require", "exports", 'Services/Service', 'Site'], function (require, exports, services, site) {
+    "use strict";
     var HomeService = (function () {
         function HomeService() {
         }
         HomeService.prototype.getMenus = function () {
-            /// <summary>
-            /// 获取系统设置的菜单
-            /// </summary>
             var result = services.callMethod(services.config.siteServiceUrl, 'UI/GetMenus');
             return result;
         };
@@ -27,7 +25,7 @@ define(["require", "exports", 'Services/Service', 'Site'], function (require, ex
             return result;
         };
         return HomeService;
-    })();
+    }());
     window['services']['home'] = window['services']['home'] || new HomeService();
     return window['services']['home'];
 });

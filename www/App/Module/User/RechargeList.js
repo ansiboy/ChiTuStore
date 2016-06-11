@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Application', 'Services/Account'], function (require, exports, app, account) {
+    "use strict";
     requirejs(['css!content/User/RechargeList']);
     function extendItem(item) {
         item.TypeText = ko.computed(function () {
@@ -56,6 +57,6 @@ define(["require", "exports", 'Application', 'Services/Account'], function (requ
             });
         };
         return RechargeListPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return RechargeListPage;
 });

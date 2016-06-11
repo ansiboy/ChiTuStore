@@ -1,10 +1,11 @@
 define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], function (require, exports, services, auth, ko) {
+    "use strict";
     var ShoppingCartInfo = (function () {
         function ShoppingCartInfo() {
             this.itemsCount = ko.observable(0);
         }
         return ShoppingCartInfo;
-    })();
+    }());
     var ShoppingCartService = (function () {
         function ShoppingCartService() {
             var _this = this;
@@ -22,8 +23,6 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], 
                 return data;
             };
             this.getItem = function (productId) {
-                /// <param name="productId">产品编号</param>
-                /// <returns type="jQuery.Deferred"/>
                 var result = $.Deferred();
                 for (var i = 0; i < _this._items.length; i++) {
                     if (ko.unwrap(_this._items[i].ProductId) == productId) {
@@ -33,13 +32,6 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], 
                 return result.reject();
             };
             this.addItem = function (product, count) {
-                /// <param name="product" type="models.product">
-                /// 添加到购物车的产品
-                /// </param>
-                /// <param name="count" type="Number">
-                /// 产品的数量
-                /// </param>
-                /// <returns type="jQuery.Deferred"/>
                 var self = _this;
                 var productId = ko.unwrap(product.Id);
                 var result = services.callRemoteMethod('ShoppingCart/AddItem', { productId: productId, count: count })
@@ -51,13 +43,6 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], 
                 return result;
             };
             this.updateItem = function (item) {
-                /// <summary>
-                /// 更新购物车产品的数量
-                /// </summary>
-                /// <param name="item">
-                /// 购物车中的项
-                /// </param>
-                /// <returns type="jQuery.Deferred"/>
                 var self = _this;
                 var productId = ko.unwrap(item.ProductId);
                 var count = ko.unwrap(item.Count);
@@ -71,12 +56,6 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], 
                 return result;
             };
             this.removeItems = function (productIds) {
-                /// <summary>
-                /// 移除购物车中的多个产品
-                /// </summary>
-                /// <param name="productIds" type="Array">
-                /// 要移除产品的编号
-                /// </param>
                 var self = _this;
                 var result = services.callMethod(services.config.serviceUrl, 'ShoppingCart/RemoveItems', { productIds: productIds })
                     .then(function (data) { return _this.processData(data); });
@@ -84,8 +63,6 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], 
                 return result;
             };
             this.getItems = function () {
-                /// <summary>
-                /// 获取购物车中的产品
                 if (_this._getItemsResult)
                     return _this._getItemsResult;
                 var self = _this;
@@ -99,9 +76,6 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], 
                 return _this._getItemsResult;
             };
             this.getProductsCount = function () {
-                /// <summary>
-                /// 获取购物车中产品的总数
-                /// </summary>
                 return services.callMethod(services.config.serviceUrl, 'ShoppingCart/GetProductsCount');
             };
             this.selectAll = function () {
@@ -121,7 +95,7 @@ define(["require", "exports", 'Services/Service', 'Services/Auth', 'knockout'], 
             });
         };
         return ShoppingCartService;
-    })();
+    }());
     var shoppingCart = window['services']['shoppingCart'] = (window['services']['shoppingCart'] || new ShoppingCartService());
     return shoppingCart;
 });

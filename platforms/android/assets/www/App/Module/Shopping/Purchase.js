@@ -1,6 +1,6 @@
 define(["require", "exports", 'Services/Shopping', 'Services/Account'], function (require, exports, shopping, account) {
+    "use strict";
     return function (page) {
-        /// <param name="page" type="chitu.Page"/>
         var model = {
             order: null,
             purchase: function () {

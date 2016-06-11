@@ -1,4 +1,5 @@
 define(["require", "exports", 'Services/Service'], function (require, exports, services) {
+    "use strict";
     var SiteService = (function () {
         function SiteService() {
             this.searchProducts = function (searchText, pageIndex) {
@@ -14,7 +15,7 @@ define(["require", "exports", 'Services/Service'], function (require, exports, s
             };
         }
         return SiteService;
-    })();
+    }());
     var siteService = window['services']['station'] = window['services']['station'] || new SiteService();
     return siteService;
 });

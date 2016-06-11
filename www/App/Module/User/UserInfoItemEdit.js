@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/Account'], function (require, exports, member, mapping, account) {
+    "use strict";
     requirejs(['css!content/User/UserInfoItemEdit']);
     var province_none = { Name: '请选择省' };
     var titles = {
@@ -78,7 +79,7 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
         };
         ;
         return PageModel;
-    })();
+    }());
     var UserInfoItemEditPage = (function (_super) {
         __extends(UserInfoItemEditPage, _super);
         function UserInfoItemEditPage(html) {
@@ -105,6 +106,6 @@ define(["require", "exports", 'Services/Member', 'knockout.mapping', 'Services/A
             });
         }
         return UserInfoItemEditPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return UserInfoItemEditPage;
 });

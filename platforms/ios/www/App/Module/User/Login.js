@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Auth', 'Application', 'knockout.validation'], function (require, exports, member, app, validation) {
+    "use strict";
     requirejs(['css!content/User/Login']);
     var PageModel = (function () {
         function PageModel() {
@@ -24,7 +25,7 @@ define(["require", "exports", 'Services/Auth', 'Application', 'knockout.validati
             });
         };
         return PageModel;
-    })();
+    }());
     var LoginPage = (function (_super) {
         __extends(LoginPage, _super);
         function LoginPage(html) {
@@ -38,6 +39,6 @@ define(["require", "exports", 'Services/Auth', 'Application', 'knockout.validati
             ko.applyBindings(sender.model, sender.element);
         };
         return LoginPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return LoginPage;
 });

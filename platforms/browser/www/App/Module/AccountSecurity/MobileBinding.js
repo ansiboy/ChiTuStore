@@ -1,4 +1,5 @@
 define(["require", "exports", 'Services/Member', 'knockout.validation', 'Application'], function (require, exports, member, ko_val, app) {
+    "use strict";
     requirejs(['css!content/User/AccountSecurity/MobileBinding']);
     var Model = (function () {
         function Model(data) {
@@ -64,7 +65,7 @@ define(["require", "exports", 'Services/Member', 'knockout.validation', 'Applica
             }, 1000);
         };
         return Model;
-    })();
+    }());
     var MobileBinding = (function () {
         function MobileBinding() {
             var _this = this;
@@ -87,6 +88,6 @@ define(["require", "exports", 'Services/Member', 'knockout.validation', 'Applica
             });
         };
         return MobileBinding;
-    })();
+    }());
     return new MobileBinding();
 });

@@ -1,7 +1,5 @@
-/// <reference path="../../Scripts/typings/jquery.d.ts"/>
-/// <reference path="../../Scripts/typings/knockout.d.ts"/>
-/// <reference path="../../Scripts/typings/knockout.mapping.d.ts"/>
 define(["require", "exports"], function (require, exports) {
+    "use strict";
     ko.components.register('coupon-list-item', {
         viewModel: function (params) {
             $.extend(this, params.value);

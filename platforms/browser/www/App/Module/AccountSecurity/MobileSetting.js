@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Auth', 'Services/Member', 'knockout.validation'], function (require, exports, auth, member, ko_val) {
+    "use strict";
     var PageModel = (function () {
         function PageModel() {
             this.mobile = ko.observable();
@@ -32,7 +33,7 @@ define(["require", "exports", 'Services/Auth', 'Services/Member', 'knockout.vali
             return result;
         };
         return PageModel;
-    })();
+    }());
     return (function (_super) {
         __extends(AccountSecurityMobileSettingPage, _super);
         function AccountSecurityMobileSettingPage(html) {
@@ -44,5 +45,5 @@ define(["require", "exports", 'Services/Auth', 'Services/Member', 'knockout.vali
             });
         }
         return AccountSecurityMobileSettingPage;
-    })(chitu.Page);
+    }(chitu.Page));
 });

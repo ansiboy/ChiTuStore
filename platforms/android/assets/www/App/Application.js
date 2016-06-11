@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'chitu', 'Site', 'PageContainerFactory'], function (require, exports, chitu, site, PageContainerFactory) {
+    "use strict";
     chitu.Page.animationTime = site.config.pageAnimationTime;
     var UrlParser = (function (_super) {
         __extends(UrlParser, _super);
@@ -38,7 +39,7 @@ define(["require", "exports", 'chitu', 'Site', 'PageContainerFactory'], function
             return routeData;
         };
         return UrlParser;
-    })(chitu.UrlParser);
+    }(chitu.UrlParser));
     var urlParser = new UrlParser();
     urlParser.pathBase = 'mod/';
     var config = {

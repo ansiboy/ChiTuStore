@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'chitu', 'Site'], function (require, exports, chitu, site) {
+    "use strict";
     requirejs(['css!sc/Error/ConnectFail']);
     var Model = (function () {
         function Model(page) {
@@ -16,7 +17,7 @@ define(["require", "exports", 'chitu', 'Site'], function (require, exports, chit
             location.hash = '#' + url;
         };
         return Model;
-    })();
+    }());
     var ConnectFailPage = (function (_super) {
         __extends(ConnectFailPage, _super);
         function ConnectFailPage(html) {
@@ -29,6 +30,6 @@ define(["require", "exports", 'chitu', 'Site'], function (require, exports, chit
             ko.applyBindings(sender.model, sender.element);
         };
         return ConnectFailPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return ConnectFailPage;
 });

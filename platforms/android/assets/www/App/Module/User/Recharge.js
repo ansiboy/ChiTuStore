@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Service', 'knockout.validation', 'Site'], function (require, exports, app, recharge, services, ko_val, site) {
+    "use strict";
     requirejs(['css!content/User/Recharge']);
     var Model = (function () {
         function Model() {
@@ -50,7 +51,7 @@ define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Serv
             };
         }
         return Model;
-    })();
+    }());
     var model = new Model();
     var validation = ko_val.group(model);
     var RechargePage = (function (_super) {
@@ -61,5 +62,5 @@ define(["require", "exports", 'Application', 'Services/Recharge', 'Services/Serv
             this.load.add(function () { return ko.applyBindings(model, _this.element); });
         }
         return RechargePage;
-    })(chitu.Page);
+    }(chitu.Page));
 });

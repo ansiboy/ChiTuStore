@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Auth', 'knockout', 'Services/Service'], function (require, exports, auth, ko, services) {
+    "use strict";
     requirejs(['css!content/User/AccountSecurity/Index']);
     var Model = (function () {
         function Model() {
@@ -22,7 +23,7 @@ define(["require", "exports", 'Services/Auth', 'knockout', 'Services/Service'], 
             });
         }
         return Model;
-    })();
+    }());
     return (function (_super) {
         __extends(AccountSecurityIndexPage, _super);
         function AccountSecurityIndexPage(html) {
@@ -31,5 +32,5 @@ define(["require", "exports", 'Services/Auth', 'knockout', 'Services/Service'], 
             ko.applyBindings(this.model, this.element);
         }
         return AccountSecurityIndexPage;
-    })(chitu.Page);
+    }(chitu.Page));
 });

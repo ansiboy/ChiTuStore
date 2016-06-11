@@ -1,4 +1,5 @@
 define(["require", "exports", 'Site', 'Application', 'knockout'], function (require, exports, site, app, ko) {
+    "use strict";
     ko.components.register('promotion-label', {
         viewModel: function (params) {
             $.extend({ value: '' }, params || {});

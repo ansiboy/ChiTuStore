@@ -10,12 +10,13 @@ var ts_options = {
     module: 'amd',
     target: 'es5',
     removeComments: true,
+    sourceMap: false,
     references: [
         src_root + "/Scripts/typings/*.d.ts",
         src_root + "/Scripts/typings/*.ts"
     ]
 };
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     grunt.initConfig({
         ts: {
             app: {

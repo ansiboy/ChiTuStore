@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Application', 'Services/Auth', 'Services/Member', 'Services/Service', 'knockout.validation', 'knockout.mapping', 'knockout'], function (require, exports, app, auth, member, services, ko_val, mapping, ko) {
+    "use strict";
     var PageModel = (function () {
         function PageModel() {
             var _this = this;
@@ -92,7 +93,7 @@ define(["require", "exports", 'Application', 'Services/Auth', 'Services/Member',
             }, 1000);
         };
         return PageModel;
-    })();
+    }());
     var RegisterPage = (function (_super) {
         __extends(RegisterPage, _super);
         function RegisterPage(html) {
@@ -103,6 +104,6 @@ define(["require", "exports", 'Application', 'Services/Auth', 'Services/Member',
             });
         }
         return RegisterPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return RegisterPage;
 });

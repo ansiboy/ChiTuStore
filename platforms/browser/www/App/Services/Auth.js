@@ -1,4 +1,5 @@
 define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], function (require, exports, site, services, CryptoJS, ko) {
+    "use strict";
     var AuthService = (function () {
         function AuthService() {
             var _this = this;
@@ -49,7 +50,7 @@ define(["require", "exports", 'Site', 'Services/Service', 'md5', 'knockout'], fu
             return services.callMethod(services.config.memberServiceUrl, 'Member/GetMember');
         };
         return AuthService;
-    })();
+    }());
     window['services']['auth'] = window['services']['auth'] || new AuthService();
     return (window['services']['auth']);
 });

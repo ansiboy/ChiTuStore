@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Account', 'Services/Shopping', 'knockout.mapping', 'Application'], function (require, exports, account, shopping, mapping, app) {
+    "use strict";
     requirejs(['css!content/User/ReceiptList']);
     var PageModel = (function () {
         function PageModel(page) {
@@ -57,7 +58,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'knockout
             });
         };
         return PageModel;
-    })();
+    }());
     var ReceiptListPage = (function (_super) {
         __extends(ReceiptListPage, _super);
         function ReceiptListPage(html) {
@@ -75,6 +76,6 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'knockout
             });
         };
         return ReceiptListPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return ReceiptListPage;
 });

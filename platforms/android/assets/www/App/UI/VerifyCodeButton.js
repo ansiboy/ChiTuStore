@@ -1,7 +1,5 @@
-/// <reference path='../../Scripts/typings/jquery.d.ts' />
-/// <reference path='../../Scripts/typings/knockout.d.ts' />
-/// <reference path='../../Scripts/typings/knockout.validation.d.ts' />
 define(["require", "exports", 'knockout', 'Services/Member', 'knockout.validation', 'Site'], function (require, exports, ko, member, ko_val, site) {
+    "use strict";
     var Model = (function () {
         function Model(args) {
             var _this = this;
@@ -98,7 +96,7 @@ define(["require", "exports", 'knockout', 'Services/Member', 'knockout.validatio
             configurable: true
         });
         return Model;
-    })();
+    }());
     ko.components.register('verify-code-button', {
         viewModel: function (params) {
             if (params.checkMobile == null)

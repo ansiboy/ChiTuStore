@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Application', 'knockout.mapping', 'Site', 'Services/Service'], function (require, exports, account, shopping, app, mapping, site, services) {
+    "use strict";
     var weixin = services['weixin'];
     requirejs(['css!content/Shopping/OrderList']);
     var Model = (function () {
@@ -82,7 +83,7 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
             }
         }
         return Model;
-    })();
+    }());
     var OrderListPage = (function (_super) {
         __extends(OrderListPage, _super);
         function OrderListPage(html) {
@@ -98,6 +99,6 @@ define(["require", "exports", 'Services/Account', 'Services/Shopping', 'Applicat
             };
         };
         return OrderListPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return OrderListPage;
 });

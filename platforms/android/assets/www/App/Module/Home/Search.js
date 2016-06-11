@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Site', 'Services/Station'], function (require, exports, site, station) {
+    "use strict";
     requirejs(['css!content/Home/Search']);
     var Status;
     (function (Status) {
@@ -66,7 +67,7 @@ define(["require", "exports", 'Site', 'Services/Station'], function (require, ex
             });
         }
         return Model;
-    })();
+    }());
     return (function (_super) {
         __extends(SearchPage, _super);
         function SearchPage(html) {
@@ -85,5 +86,5 @@ define(["require", "exports", 'Site', 'Services/Station'], function (require, ex
             return sender.model.search();
         };
         return SearchPage;
-    })(chitu.Page);
+    }(chitu.Page));
 });
