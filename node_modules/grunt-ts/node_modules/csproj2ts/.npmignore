@@ -1,0 +1,17 @@
+.idea/
+.tscache/
+bin/
+obj/
+tests/
+typings/
+.gitattributes
+.gitignore
+*.csproj
+*.user
+*.ts
+*.sln
+*.suo
+tsconfig.json
+tsd.json
+gruntfile.js
+!csproj2ts.d.ts
