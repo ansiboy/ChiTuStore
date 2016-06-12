@@ -21,7 +21,7 @@ class ScrollViewGesture {
     on_release: (deltaX: number, deltaY: number) => boolean;
 
     /** 滚动视图改变时调用 */
-    viewChanged = chitu.Callbacks<ScrollViewGesture, { view: chitu.ScrollView }>();
+    viewChanged = chitu.Callbacks<ScrollViewGesture, { view: chitu.ScrollView, prev: chitu.ScrollView }>();
 
     constructor(scroll_view: chitu.ScrollView) {
         if (scroll_view == null) throw chitu.Errors.argumentNull('scroll_view');
@@ -164,15 +164,15 @@ class ScrollViewGesture {
     }
 
     private set_activeItem(active_item: chitu.ScrollView) {
-        //new GesturePull(active_item);
         if (active_item == null) throw chitu.Errors.argumentNull('active_item');
 
+        let prev_view = this.active_item;
         if (this.active_item != null) {
             this.active_item.scroll.remove(this.on_scroll);
         }
         this.active_item = active_item;
         this.active_item.scroll.add(this.on_scroll);
-        chitu.fireCallback(this.viewChanged, this, { view: active_item });
+        chitu.fireCallback(this.viewChanged, this, { view: active_item, prev: prev_view });
 
         var pos = $(this.active_item.element).position();
         this.next_item_pos = this.container_width;
