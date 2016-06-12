@@ -1,5 +1,5 @@
 ﻿<scroll-view name="product" class="active" next="detail" below='image-text'>
-    <scroller style="padding-bottom:0px;">
+    <scroller style="">
         <div class="container">
             <div name="productImages" class="swiper-container">
                 <div data-bind="foreach: product.ImageUrls" class="swiper-wrapper">
@@ -98,9 +98,11 @@
         </div>
 
         <hr />
-        <a data-bind="attr:{href:'#Home_ProductDetail_' + ko.unwrap(product.Id)}" class="btn btn-default btn-block btn-large">点击查看图文详情</a>
         <div class="pull-up-bar">
-            <h4 data-bind='text:productPullUpText' class="text-center"></h4>
+            <h4 class="text-center">
+                <i class="icon-chevron-up"></i>
+                <span data-bind="text:productPullUpText">上拉查看图文详情</span>
+            </h4>
         </div>
     </scroller>
 </scroll-view>

@@ -142,6 +142,7 @@ class ProductPage extends chitu.Page {
 
     private view_changed(sender: ScrollViewGesture, args: { view: chitu.ScrollView }) {
         // TODO:切换视图，加载数据
+        this.model.productPullUpText(PRODUCT_PULL_UP_DEFAULT_TEXT);
     }
 
     private view_scroll(sender: chitu.ScrollView, args: chitu.ScrollArguments) {
