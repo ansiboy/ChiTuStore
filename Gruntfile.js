@@ -10,14 +10,15 @@ var ts_options = {
     module: 'amd',
     target: 'es5',
     removeComments: true,
+    sourceMap: false,
     references: [
         src_root + "/Scripts/typings/*.d.ts",
         src_root + "/Scripts/typings/*.ts"
     ]
 };
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     grunt.initConfig({
-        typescript: {
+        ts: {
             app: {
                 src: [src_root + '/App/**/*.ts'],
                 dest: dest_root + '/App',
@@ -89,9 +90,9 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-typescript');
+    grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.registerTask('default', ['typescript:app', 'copy', 'less', 'clean']);
+    grunt.registerTask('default', ['ts:app', 'copy', 'less', 'clean']);
 };

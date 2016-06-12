@@ -1,4 +1,5 @@
 define(["require", "exports", 'Site', 'Services/WeiXin', 'Services/Info', 'Application', 'jweixin', 'Services/Shopping'], function (require, exports, site, weixin, info, app, wx, shopping) {
+    "use strict";
     var WXShareArguments = (function () {
         function WXShareArguments(page) {
             this._page = page;
@@ -43,7 +44,7 @@ define(["require", "exports", 'Site', 'Services/WeiXin', 'Services/Info', 'Appli
             this._title = value;
         };
         return WXShareArguments;
-    })();
+    }());
     ;
     var wx_ready = $.Deferred();
     var args_changed = $.Deferred();
@@ -162,7 +163,6 @@ define(["require", "exports", 'Site', 'Services/WeiXin', 'Services/Info', 'Appli
         }
     }
     app.pageCreated.add(function (sender, page) {
-        /// <param name="page" type="chitu.Page"/>
         page.showing.add(function (sender, args) {
             if ($.inArray(sender.name.toLowerCase(), ['home.news', 'home.product']) < 0) {
                 document.title = site.config.storeName;

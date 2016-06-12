@@ -1,4 +1,5 @@
 define(["require", "exports", 'Services/Service', 'Site'], function (require, exports, services, site) {
+    "use strict";
     var WeiXinService = (function () {
         function WeiXinService() {
             var _this = this;
@@ -91,7 +92,7 @@ define(["require", "exports", 'Services/Service', 'Site'], function (require, ex
             };
         }
         return WeiXinService;
-    })();
+    }());
     var weixin = services['weixin'] = services['weixin'] || new WeiXinService();
     if (!weixin.openid() || !site.storage.token) {
         site.cookies.returnUrl(window.location.href);

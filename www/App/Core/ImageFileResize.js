@@ -1,10 +1,10 @@
-///<reference path='../../Scripts/typings/jquery.d.ts'/>
 define(["require", "exports"], function (require, exports) {
+    "use strict";
     var ImageFileResizeResult = (function () {
         function ImageFileResizeResult() {
         }
         return ImageFileResizeResult;
-    })();
+    }());
     var ImageFileResize = (function () {
         function ImageFileResize(fileUploadElement, thumb1, thumb2) {
             var _this = this;
@@ -89,6 +89,6 @@ define(["require", "exports"], function (require, exports) {
             return canvas.toDataURL("image/jpeg", 0.7);
         };
         return ImageFileResize;
-    })();
+    }());
     return ImageFileResize;
 });

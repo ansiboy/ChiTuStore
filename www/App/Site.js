@@ -1,4 +1,5 @@
 define(["require", "exports"], function (require, exports) {
+    "use strict";
     var OS;
     (function (OS) {
         OS[OS["ios"] = 0] = "ios";
@@ -34,7 +35,7 @@ define(["require", "exports"], function (require, exports) {
             return site.config.cookiePrefix + "_" + name;
         };
         return SiteCookies;
-    })();
+    }());
     var SiteStorage = (function () {
         function SiteStorage() {
         }
@@ -78,7 +79,7 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         return SiteStorage;
-    })();
+    }());
     var SiteConfig = (function () {
         function SiteConfig() {
             this.storeName = '零食有约';
@@ -100,7 +101,7 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         return SiteConfig;
-    })();
+    }());
     var SiteEnvironment = (function () {
         function SiteEnvironment() {
             var userAgent = navigator.userAgent;
@@ -195,7 +196,7 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         return SiteEnvironment;
-    })();
+    }());
     var Site = (function () {
         function Site() {
             this.ready_funcs = [];
@@ -211,7 +212,7 @@ define(["require", "exports"], function (require, exports) {
                 name == 'Home.NewsList' || name == 'User.Index');
         };
         return Site;
-    })();
+    }());
     var site = window['site'] = window['site'] || new Site();
     if (site.env.isApp) {
         document.addEventListener('deviceready', function () {

@@ -1,4 +1,5 @@
 define(["require", "exports"], function (require, exports) {
+    "use strict";
     var Model = (function () {
         function Model(page) {
             var _this = this;
@@ -13,7 +14,7 @@ define(["require", "exports"], function (require, exports) {
             this.page = page;
         }
         return Model;
-    })();
+    }());
     var ImagePreviewer = (function () {
         function ImagePreviewer(element) {
             var _this = this;
@@ -82,6 +83,6 @@ define(["require", "exports"], function (require, exports) {
             return page;
         };
         return ImagePreviewer;
-    })();
+    }());
     return ImagePreviewer;
 });

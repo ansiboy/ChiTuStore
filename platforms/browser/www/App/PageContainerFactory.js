@@ -1,4 +1,5 @@
 define(["require", "exports", 'chitu', 'Services/Shopping', 'Services/Auth', 'Services/ShoppingCart', 'knockout'], function (require, exports, chitu, shopping, auth, shoppingCart, ko) {
+    "use strict";
     var DEFAULT_HEADER_PATH = 'UI/Headers/Default';
     var DEFAULT_WITH_BACK = 'UI/Headers/DefaultWithBack';
     function generateProductHeader(headerNode, routeData) {
@@ -210,7 +211,7 @@ define(["require", "exports", 'chitu', 'Services/Shopping', 'Services/Auth', 'Se
             return c;
         };
         return PageContainerFactory;
-    })();
+    }());
     var menu_html;
     var Menu = (function () {
         function Menu(parentNode, routeData) {
@@ -249,6 +250,6 @@ define(["require", "exports", 'chitu', 'Services/Shopping', 'Services/Auth', 'Se
             return deferred;
         };
         return Menu;
-    })();
+    }());
     return PageContainerFactory;
 });

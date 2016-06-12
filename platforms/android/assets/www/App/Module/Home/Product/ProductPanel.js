@@ -1,8 +1,5 @@
-///<reference path='../../../../Scripts/typings/require.d.ts'/>
-///<reference path='../../../../Scripts/typings/move.d.ts'/>
-///<reference path='../../../../Scripts/typings/iscroll.d.ts'/>
-///<reference path='../../../../Scripts/typings/chitu.d.ts'/>
 define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', 'iscroll', 'knockout.mapping'], function (require, exports, move, site, ko, shopping, IScroll, mapping) {
+    "use strict";
     var ProductPanelModel = (function () {
         function ProductPanelModel(panel, parent_model) {
             var _this = this;
@@ -63,7 +60,7 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
             this.parent_model = parent_model;
         }
         return ProductPanelModel;
-    })();
+    }());
     var ProductPanel = (function () {
         function ProductPanel(page, model) {
             var _this = this;
@@ -160,6 +157,6 @@ define(["require", "exports", 'move', 'Site', 'knockout', 'Services/Shopping', '
             this.node.style.display = 'block';
         };
         return ProductPanel;
-    })();
+    }());
     return ProductPanel;
 });

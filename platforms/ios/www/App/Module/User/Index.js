@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Application', 'Services/Account', 'Services/Member', 'Services/Service'], function (require, exports, app, account, member, services) {
+    "use strict";
     requirejs(['css!content/User/Index']);
     return (function (_super) {
         __extends(UserIndexPage, _super);
@@ -65,5 +66,5 @@ define(["require", "exports", 'Application', 'Services/Account', 'Services/Membe
             return result;
         };
         return UserIndexPage;
-    })(chitu.Page);
+    }(chitu.Page));
 });

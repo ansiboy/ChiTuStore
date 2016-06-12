@@ -1,6 +1,6 @@
 define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Services/Auth', 'knockout.mapping'], function (require, exports, site, services, ko, CryptoJS, auth, mapping) {
+    "use strict";
     function call(method, data) {
-        /// <returns type="jQuery.Deferred"/>
         if (data === void 0) { data = undefined; }
         return services.callMethod(services.config.memberServiceUrl, method, data);
     }
@@ -9,16 +9,6 @@ define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Se
     var user_name = 'username';
     var MemberService = (function () {
         function MemberService() {
-            //var site_ready = $.Deferred();
-            //site.ready(() => {
-            //    site_ready.resolve();
-            //})
-            //debugger;
-            //this.isLogined().done((login_result) => {
-            //    if (login_result) {
-            //        this.logined.fire();
-            //    }
-            //});
             var _this = this;
             this._userInfo = {};
             this.currentUserInfo = {
@@ -66,8 +56,6 @@ define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Se
             return call('Member/BindMobile', data);
         };
         MemberService.prototype.register = function (user, verifyCode, smsId) {
-            /// <param name="user" type="models.user"/>
-            /// <returns type="jQuery.Deferred"/>
             if (user == null)
                 throw new Error('The argument of "user" cannt be null.');
             var data = user;
@@ -121,7 +109,7 @@ define(["require", "exports", 'Site', 'Services/Service', 'knockout', 'md5', 'Se
             return call('Member/ResetPassword', data);
         };
         return MemberService;
-    })();
+    }());
     window['services']['member'] = window['services']['member'] || new MemberService();
     return window['services']['member'];
 });

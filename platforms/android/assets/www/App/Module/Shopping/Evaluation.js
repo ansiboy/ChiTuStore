@@ -1,10 +1,10 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Account', 'Application', 'Services/Service'], function (require, exports, account, app, services) {
+    "use strict";
     requirejs(['css!content/Shopping/Evaluation']);
     var Model = (function () {
         function Model(page) {
@@ -53,7 +53,7 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Servi
             });
         }
         return Model;
-    })();
+    }());
     var EvaluationPage = (function (_super) {
         __extends(EvaluationPage, _super);
         function EvaluationPage(html) {
@@ -68,6 +68,6 @@ define(["require", "exports", 'Services/Account', 'Application', 'Services/Servi
             });
         };
         return EvaluationPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return EvaluationPage;
 });

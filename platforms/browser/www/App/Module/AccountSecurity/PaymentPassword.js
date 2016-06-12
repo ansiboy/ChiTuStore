@@ -1,4 +1,5 @@
 define(["require", "exports", 'knockout.validation', 'Services/Member', 'md5'], function (require, exports, ko_val, member, CryptoJS) {
+    "use strict";
     var Model = (function () {
         function Model(data) {
             var _this = this;
@@ -24,7 +25,7 @@ define(["require", "exports", 'knockout.validation', 'Services/Member', 'md5'], 
             this._val = ko_val.group(this);
         }
         return Model;
-    })();
+    }());
     var LoginPassword = (function () {
         function LoginPassword() {
             var _this = this;
@@ -47,6 +48,6 @@ define(["require", "exports", 'knockout.validation', 'Services/Member', 'md5'], 
             });
         };
         return LoginPassword;
-    })();
+    }());
     return new LoginPassword();
 });

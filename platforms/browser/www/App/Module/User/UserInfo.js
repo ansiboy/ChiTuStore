@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.validation', 'knockout.mapping', 'Core/ImageFileResize', 'Application', 'Site'], function (require, exports, member, services, ko_val, mapping, ImageFileResize, app, site) {
+    "use strict";
     requirejs(['css!content/css/fontdiao']);
     var Model = (function () {
         function Model() {
@@ -24,7 +25,7 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
             this.val = ko_val.group(this.userInfo);
         }
         return Model;
-    })();
+    }());
     var UserInfoPage = (function (_super) {
         __extends(UserInfoPage, _super);
         function UserInfoPage(html) {
@@ -55,6 +56,6 @@ define(["require", "exports", 'Services/Member', 'Services/Service', 'knockout.v
             });
         }
         return UserInfoPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return UserInfoPage;
 });

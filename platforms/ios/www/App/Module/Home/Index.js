@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'chitu', 'knockout', 'Services/Service', 'Services/Home', 'Core/Carousel'], function (require, exports, chitu, ko, services, home, Carousel) {
+    "use strict";
     chitu.Utility.loadjs('UI/PromotionLabel');
     var IndexPage = (function (_super) {
         __extends(IndexPage, _super);
@@ -46,6 +47,6 @@ define(["require", "exports", 'chitu', 'knockout', 'Services/Service', 'Services
             });
         };
         return IndexPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return IndexPage;
 });

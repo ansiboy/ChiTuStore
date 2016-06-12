@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Coupon'], function (require, exports, coupon) {
+    "use strict";
     requirejs(['UI/CouponListItem', 'css!content/User/Coupon']);
     var PageModel = (function () {
         function PageModel(page) {
@@ -39,7 +40,7 @@ define(["require", "exports", 'Services/Coupon'], function (require, exports, co
             return model.page.on_load({ loadType: chitu.PageLoadType.scroll });
         };
         return PageModel;
-    })();
+    }());
     var CouponPage = (function (_super) {
         __extends(CouponPage, _super);
         function CouponPage(html) {
@@ -62,6 +63,6 @@ define(["require", "exports", 'Services/Coupon'], function (require, exports, co
             });
         };
         return CouponPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return CouponPage;
 });

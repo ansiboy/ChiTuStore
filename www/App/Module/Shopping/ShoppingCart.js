@@ -1,11 +1,10 @@
-///<reference path='../../../Scripts/typings/require.d.ts'/>
-/// <reference path='../../../Scripts/typings/chitu.d.ts' />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/ShoppingCart', 'Services/Shopping', 'Application'], function (require, exports, ko, mapping, shoppingCart, shopping, app) {
+    "use strict";
     requirejs(['css!content/Shopping/ShoppingCart', 'UI/PromotionLabel']);
     var DialogStaus;
     (function (DialogStaus) {
@@ -231,7 +230,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
             configurable: true
         });
         return Model;
-    })();
+    }());
     var Status;
     (function (Status) {
         Status[Status["changed"] = 0] = "changed";
@@ -250,6 +249,6 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Shopping
             ko.applyBindings(sender.model, sender.element);
         };
         return ShoppingCartPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return ShoppingCartPage;
 });

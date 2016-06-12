@@ -1,6 +1,5 @@
-/// <reference path='../../Scripts/typings/require.d.ts'/>
-/// <reference path='../../Scripts/typings/knockout.d.ts'/>
 define(["require", "exports", 'Services/ShoppingCart'], function (require, exports, shoppingCart) {
+    "use strict";
     var menu_html;
     var Menu = (function () {
         function Menu(parentNode, routeData) {
@@ -39,5 +38,5 @@ define(["require", "exports", 'Services/ShoppingCart'], function (require, expor
             return deferred;
         };
         return Menu;
-    })();
+    }());
 });

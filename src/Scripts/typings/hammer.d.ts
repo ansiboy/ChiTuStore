@@ -1,42 +1,3 @@
-interface HammerRecognizerOptions {
-    direction?: number;
-    domEvents?: boolean;
-    threshold?: number;
-    enable?: boolean;
-}
-
-interface Point {
-    x: number,
-    y: number
-}
-
-interface PanEvent extends Event {
-    angle: number
-    center: Point
-    changedPointers: Array<any>
-    deltaTime: number
-    deltaX: number
-    deltaY: number
-    direction: number
-    distance: number
-    eventType: number
-    isFinal: boolean
-    isFirst: boolean
-    offsetDirection: number
-    pointerType: string
-    pointers: Array<any>
-    rotation: number
-    scale: number
-    srcEvent: TouchEvent
-    target: HTMLElement
-    timeStamp: number
-    type: string
-    velocity: number
-    velocityX: number
-    velocityY: number
-}
-
-
 declare module Hammer {
     const INPUT_START: number;
     const INPUT_MOVE: number;
@@ -60,10 +21,6 @@ declare module Hammer {
     const DIRECTION_HORIZONTAL: number;
     const DIRECTION_VERTICAL: number;
 
- 
-    // 
-
-    // 
     class Recognizer {
         'set'(options: HammerRecognizerOptions);
         state: number;
@@ -79,18 +36,56 @@ declare module Hammer {
     class Manager {
         constructor(element: HTMLElement);//, options: Object = undefined
         constructor(element: HTMLElement, options: Object);//, options: Object = undefined
-    
+
         element: HTMLElement;
         handlers: { [idnex: string]: Array<Function> };
         input: TouchInput;
 
-        on(event: string, callback: (event: any) => void);
-        'get'(recognizer: string): Recognizer;
+        on(event: 'pan'| 'panstart' | 'panend' | 'panup' | 'pandown' | 'panleft' | 'panright' , callback: (event: any) => void);
+        'get'(recognizer: 'pan' | 'pinch' | 'rotate' | 'swipe'): Recognizer;
         add(recognizer: Recognizer);
+    }
+
+    interface HammerRecognizerOptions {
+        direction?: number;
+        domEvents?: boolean;
+        threshold?: number;
+        enable?: boolean;
     }
 
     class Pan extends Recognizer {
         constructor(options?: HammerRecognizerOptions);
+    }
+
+    interface Point {
+        x: number,
+        y: number
+    }
+
+    interface PanEvent extends Event {
+        angle: number
+        center: Point
+        changedPointers: Array<any>
+        deltaTime: number
+        deltaX: number
+        deltaY: number
+        direction: number
+        distance: number
+        eventType: number
+        isFinal: boolean
+        isFirst: boolean
+        offsetDirection: number
+        pointerType: string
+        pointers: Array<any>
+        rotation: number
+        scale: number
+        srcEvent: TouchEvent
+        target: HTMLElement
+        timeStamp: number
+        type: string
+        velocity: number
+        velocityX: number
+        velocityY: number
     }
 }
 

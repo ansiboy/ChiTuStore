@@ -1,4 +1,5 @@
 define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service', 'Site'], function (require, exports, ko, mapping, services, site) {
+    "use strict";
     function translateOrder(source) {
         var order = mapping.fromJS(source);
         var orderDetails = order.OrderDetails();
@@ -127,7 +128,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
             this.evaluateCount = ko.observable(2);
         }
         return OrderInfo;
-    })();
+    }());
     var AccountService = (function () {
         function AccountService() {
             var _this = this;
@@ -169,7 +170,6 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 return result;
             };
             this.getReceiptInfos = function () {
-                /// <returns type="jQuery.Deferred"/>
                 var result = services.callRemoteMethod('Address/GetReceiptInfos', {}).then(function (items) {
                     var result = [];
                     for (var i = 0; i < items.length; i++) {
@@ -180,9 +180,6 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 return result;
             };
             this.saveReceiptInfo = function (receiptInfo) {
-                /// <summary>保存用户的收货地址</summary>
-                /// <param name="receiptInfo" type="models.receiptInfo"/>
-                /// <returns type="jQuery.Deferred"/>
                 var obj = mapping.toJS(receiptInfo);
                 obj.RegionId = receiptInfo.CountyId();
                 var self = _this;
@@ -363,7 +360,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
             return result;
         };
         return AccountService;
-    })();
+    }());
     var models;
     (function (models) {
         var user = (function () {
@@ -379,7 +376,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 this.openid = ko.observable();
             }
             return user;
-        })();
+        }());
         var ReceiptInfo = (function () {
             function ReceiptInfo() {
                 this.Address = ko.observable();
@@ -401,7 +398,7 @@ define(["require", "exports", 'knockout', 'knockout.mapping', 'Services/Service'
                 this.ProvinceName = ko.observable();
             }
             return ReceiptInfo;
-        })();
+        }());
     })(models || (models = {}));
     return (services['account'] = services['account'] || new AccountService());
 });

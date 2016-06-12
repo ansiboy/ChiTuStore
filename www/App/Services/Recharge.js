@@ -1,4 +1,5 @@
 define(["require", "exports", 'Services/Service'], function (require, exports, services) {
+    "use strict";
     var Recharge = (function () {
         function Recharge() {
         }
@@ -19,7 +20,7 @@ define(["require", "exports", 'Services/Service'], function (require, exports, s
             return result;
         };
         return Recharge;
-    })();
+    }());
     services['recharge'] = services['recharge'] || new Recharge();
     return services['recharge'];
 });

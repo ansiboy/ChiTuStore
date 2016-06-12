@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'knockout.validation', 'Services/Member'], function (require, exports, ko_val, member) {
+    "use strict";
     var Model = (function () {
         function Model() {
             var _this = this;
@@ -74,7 +75,7 @@ define(["require", "exports", 'knockout.validation', 'Services/Member'], functio
             this.validation = ko_val.group(this);
         }
         return Model;
-    })();
+    }());
     var AccountSecurityResetPasswordPage = (function (_super) {
         __extends(AccountSecurityResetPasswordPage, _super);
         function AccountSecurityResetPasswordPage(html) {
@@ -82,6 +83,6 @@ define(["require", "exports", 'knockout.validation', 'Services/Member'], functio
             ko.applyBindings(new Model(), this.element);
         }
         return AccountSecurityResetPasswordPage;
-    })(chitu.Page);
+    }(chitu.Page));
     exports.AccountSecurityResetPasswordPage = AccountSecurityResetPasswordPage;
 });

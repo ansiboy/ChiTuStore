@@ -1,4 +1,5 @@
 define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'knockout', 'iscroll', 'knockout.mapping'], function (require, exports, move, site, Hammer, shopping, ko, IScroll, mapping) {
+    "use strict";
     var show_time = site.config.pageAnimationTime;
     var ProductDetailPanel = (function () {
         function ProductDetailPanel(page) {
@@ -111,6 +112,6 @@ define(["require", "exports", 'move', 'Site', 'hammer', 'Services/Shopping', 'kn
             this._page.closed.add(this.on_pageClosed);
         }
         return ProductDetailPanel;
-    })();
+    }());
     return ProductDetailPanel;
 });

@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Shopping', 'knockout.mapping'], function (require, exports, shopping, mapping) {
+    "use strict";
     var ProductDetailPage = (function (_super) {
         __extends(ProductDetailPage, _super);
         function ProductDetailPage(html) {
@@ -24,6 +25,6 @@ define(["require", "exports", 'Services/Shopping', 'knockout.mapping'], function
             return result;
         };
         return ProductDetailPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return ProductDetailPage;
 });

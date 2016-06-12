@@ -1,4 +1,5 @@
 define(["require", "exports", 'Services/Service', 'Application', 'Site'], function (require, exports, services, app, site) {
+    "use strict";
     services.error.add(function (error) {
         if (error.Code == 'NotLogin' || error.Code == 'TokenRequired') {
             var return_url = '';

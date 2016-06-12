@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports"], function (require, exports) {
+    "use strict";
     requirejs(['css!content/User/Messages'], function () { });
     var MessagesPage = (function (_super) {
         __extends(MessagesPage, _super);
@@ -11,6 +12,6 @@ define(["require", "exports"], function (require, exports) {
             _super.call(this, html);
         }
         return MessagesPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return MessagesPage;
 });

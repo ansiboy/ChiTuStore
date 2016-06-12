@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Services/Auth', 'knockout.validation', 'Application'], function (require, exports, auth, ko_val, app) {
+    "use strict";
     requirejs(['css!content/User/AccountSecurity/Setting']);
     var Step;
     (function (Step) {
@@ -44,7 +45,7 @@ define(["require", "exports", 'Services/Auth', 'knockout.validation', 'Applicati
             app.back();
         };
         return Model;
-    })();
+    }());
     return (function (_super) {
         __extends(AccountSecuritySettingPage, _super);
         function AccountSecuritySettingPage(html) {
@@ -86,5 +87,5 @@ define(["require", "exports", 'Services/Auth', 'knockout.validation', 'Applicati
             });
         };
         return AccountSecuritySettingPage;
-    })(chitu.Page);
+    }(chitu.Page));
 });

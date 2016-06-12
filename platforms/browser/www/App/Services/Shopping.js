@@ -1,7 +1,5 @@
-///<reference path='../../Scripts/typings/jquery.d.ts'/>
-///<reference path='../../Scripts/typings/knockout.mapping.d.ts'/>
-///<reference path='../../Scripts/typings/Site.d.ts'/>
 define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], function (require, exports, services, site, mapping) {
+    "use strict";
     function translateOrder(source) {
         var order = mapping.fromJS(source);
         var orderDetails = order.OrderDetails();
@@ -137,8 +135,6 @@ define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], f
                 return services.callRemoteMethod('Order/UseCoupon', { orderId: orderId, couponCode: couponCode });
             };
             this.getMyOrders = function (status, pageIndex, lastDateTime) {
-                /// <summary>获取当前登录用户的订单</summary>
-                /// <param name="lastDateTime" type="Date"/>
                 var filters = [];
                 if (status) {
                     filters.push('Status=="' + status + '"');
@@ -207,7 +203,6 @@ define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], f
                 return result;
             };
             this.allowPurchase = function (orderId) {
-                /// <returns type="jQuery.Deferred"/>
                 var result = services.callRemoteMethod('Order/AllowPurchase', { orderId: orderId });
                 return result;
             };
@@ -255,7 +250,7 @@ define(["require", "exports", 'Services/Service', 'Site', 'knockout.mapping'], f
             return services.callMethod(services.config.serviceUrl, 'Product/UnFavorProduct', { productId: productId });
         };
         return ShoppingService;
-    })();
+    }());
     window['services']['shopping'] = window['services']['shopping'] || new ShoppingService();
     return window['services']['shopping'];
 });

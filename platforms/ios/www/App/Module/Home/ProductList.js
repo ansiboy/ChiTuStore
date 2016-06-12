@@ -1,10 +1,10 @@
-/// <reference path='../../../Scripts/typings/require.d.ts' />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapping', 'knockout', 'Site'], function (require, exports, app, shopping, mapping, ko, site) {
+    "use strict";
     requirejs(['UI/PromotionLabel', 'css!content/Home/ProductList']);
     var BRAND_NONE_NAME = '全部品牌';
     var PageModel = (function () {
@@ -94,7 +94,7 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
             });
         };
         return PageModel;
-    })();
+    }());
     var ProductListPage = (function (_super) {
         __extends(ProductListPage, _super);
         function ProductListPage(html) {
@@ -123,6 +123,6 @@ define(["require", "exports", 'Application', 'Services/Shopping', 'knockout.mapp
             });
         };
         return ProductListPage;
-    })(chitu.Page);
+    }(chitu.Page));
     return ProductListPage;
 });

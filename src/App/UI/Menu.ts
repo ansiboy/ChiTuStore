@@ -1,13 +1,8 @@
-﻿/// <reference path='../../Scripts/typings/require.d.ts'/>
-/// <reference path='../../Scripts/typings/knockout.d.ts'/>
-
-import app = require('Application');
+﻿import app = require('Application');
 import site = require('Site');
 import member = require('Services/Member');
 import shoppingCart = require('Services/ShoppingCart');
 import ko = require('knockout');
-
-//var services = { member: member, shoppingCart: shoppingCart };
 
 var menu_html: string;
 class Menu {
@@ -59,15 +54,6 @@ class Menu {
     }
 }
 
-// function page_created(sender, page: chitu.Page) {
-//     if (page.name == 'Home.Index' || page.name == 'Home.Class' || page.name == 'Shopping.ShoppingCart' ||
-//         page.name == 'Home.NewsList' || page.name == 'User.Index')
-//         page['menu'] = new Menu(page);
-// }
-// app.pageCreated.add(page_created);
-// 
-// if (app.currentPage())
-//     page_created(app, app.currentPage());
 
 
 
