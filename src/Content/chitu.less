@@ -63,10 +63,18 @@ scroll-view[scroll-type="div"] {
     width: 100%;
     height: 100%;
     position: absolute;
-    overflow-y: scroll;
     z-index: 100;
-    background-color: white;
-    -webkit-overflow-scrolling: touch;
+    scroller {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: absolute;
+        overflow-y: scroll;
+
+        background-color: white;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 .page-container {
