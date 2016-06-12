@@ -1,114 +1,5 @@
 import chitu = require('chitu');
 
-enum PullType {
-    none = 0,
-    up = 1,
-    down = 2,
-    any = 3
-}
-
-class GesturePull {
-    private hammer: Hammer.Manager;
-    private scrollView: chitu.ScrollView;
-    private pullType: PullType;
-    private is_vertical = false;
-    private pre_y: number;
-    private moved = false;
-    private elementScrollTop: number;
-
-    constructor(scrollView: chitu.ScrollView) {
-        this.scrollView = scrollView;
-        this.scrollView.scroll.add((sender, args) => {
-            //this.currentScrollArguments = args;
-            console.log(args);
-        });
-
-        let container_element = this.scrollView.page.container.element;
-        this.hammer = new Hammer.Manager(container_element);
-        this.hammer.add(new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL }));
-        this.hammer.on('pandown', $.proxy(this.on_pandown, this));
-        this.hammer.on('panup', $.proxy(this.on_panup, this));
-        this.hammer.on('panstart', $.proxy(this.on_panstart, this));
-        this.hammer.on('panend', $.proxy(this.on_panend, this));
-    }
-
-    private on_panstart(e: Hammer.PanEvent) {
-
-        this.pre_y = e.deltaY;
-        this.elementScrollTop = this.scrollView.element.scrollTop;
-        //==================================================
-        // 说明：计算角度，正切角要达到某个临界值，才认为是垂直。
-        let d = Math.atan(Math.abs(e.deltaY / e.deltaX)) / 3.14159265 * 180;
-        this.is_vertical = d >= 70;
-        //==================================================
-        //var args = this.currentScrollArguments;
-
-        let element = this.scrollView.element;
-        let enablePullDown = element.scrollTop == 0 && this.is_vertical;
-        let enablePullUp = (element.scrollHeight - element.scrollTop <= element.clientHeight) && this.is_vertical;
-        if (enablePullDown && enablePullUp) {
-            this.pullType = PullType.any;
-        }
-        else if (enablePullDown) {
-            this.pullType = PullType.down;
-        }
-        else if (enablePullUp) {
-            this.pullType = PullType.up;
-        }
-        else {
-            this.pullType = PullType.none
-        }
-
-    }
-
-    private on_pandown(e: Hammer.PanEvent) {
-        if (e.deltaY >= 0 && (this.pullType & PullType.any) == PullType.up) {
-            move(this.scrollView.element).y(0).duration(0).end();
-        }
-        else if (e.deltaY >= 0 && (this.pullType & PullType.any) == PullType.down) {
-            this.move(e);
-        }
-        else if (e.deltaY < 0 && (this.pullType & PullType.any) == PullType.up) {
-            this.move(e);
-        }
-    }
-
-    private on_panup(e: Hammer.PanEvent) {
-        if (e.deltaY <= 0 && (this.pullType & PullType.any) == PullType.down) {
-            move(this.scrollView.element).y(0).duration(0).end();
-        }
-        else if (e.deltaY <= 0 && (this.pullType & PullType.any) == PullType.up) {
-            this.move(e);
-        }
-        else if (e.deltaY > 0 && (this.pullType & PullType.any) == PullType.down) {
-            this.move(e);
-        }
-    }
-
-    private on_panend(e: Hammer.PanEvent) {
-        if (this.moved) {
-            $(this.scrollView.element).scrollTop(this.elementScrollTop);
-            move(this.scrollView.element).y(0).end();
-            this.moved = false;
-        }
-        this.scrollView.element.style.overflowY = 'scroll';
-    }
-
-    private move(e: Hammer.PanEvent) {
-        this.scrollView.element.style.overflowY = 'hidden';
-        console.log('deltaY:' + e.deltaY);
-        move(this.scrollView.element).y(e.deltaY).duration(0).end();
-        this.moved = true;
-
-        var args: chitu.ScrollArguments = {
-            scrollHeight: this.scrollView.element.scrollHeight,
-            clientHeight: this.scrollView.element.clientHeight,
-            scrollTop: e.deltaY - this.scrollView.element.scrollTop
-        }
-        this.scrollView['on_scroll'](args);
-    }
-}
-
 /** 通用手势切换 ScrollView */
 class ScrollViewGesture {
     private active_item: chitu.ScrollView;
@@ -157,14 +48,14 @@ class ScrollViewGesture {
             return false;
         };
 
-       
+
     }
 
     private on_panStart(e: Hammer.PanEvent) {
         let $active_item = $(this.active_item.element);
-        if (chitu.ScrollView.scrolling) {
-            return false;
-        }
+        // if (chitu.ScrollView.scrolling) {
+        //     return false;
+        // }
 
         //==================================================
         // 说明：计算角度，超过了水平滑动角度，则认为不是水平滑动。
@@ -272,7 +163,7 @@ class ScrollViewGesture {
     }
 
     private set_activeItem(active_item: chitu.ScrollView) {
-         new GesturePull(active_item);
+        //new GesturePull(active_item);
         if (active_item == null) throw chitu.Errors.argumentNull('active_item');
 
         if (this.active_item != null) {
