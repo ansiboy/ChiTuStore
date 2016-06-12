@@ -6,9 +6,9 @@ import account = require('Services/Account');
 requirejs(['css!content/Shopping/OrderDetail']);
 
 class Model {
-    private page: chitu.Page
+    private page: OrderDetailPage
 
-    constructor(page: chitu.Page) {
+    constructor(page: OrderDetailPage) {
         this.page = page;
     }
 
@@ -57,6 +57,8 @@ class Model {
 
 class OrderDetailPage extends chitu.Page {
     private model: Model;
+    orderUpdated = $.Callbacks();
+
     constructor(html) {
         super(html);
         this.model = new Model(this);
@@ -65,7 +67,7 @@ class OrderDetailPage extends chitu.Page {
 
     private page_load(sender, args) {
         return shopping.getOrder(ko.unwrap(args.order.Id))
-            .done((order) => this.order_loaded(order));//$.when(, deferred);
+            .done((order) => this.order_loaded(order));
     }
 
     private order_loaded(order) {
@@ -79,25 +81,27 @@ class OrderDetailPage extends chitu.Page {
     }
 }
 
-export = function (page: chitu.Page) {
-    page.load.add(page_load);
+export = OrderDetailPage;
 
-    var model = new Model(new OrderDetailPage(page));
+// export = function (page: chitu.Page) {
+//     page.load.add(page_load);
 
-    function page_load(sender, args) {
-        return shopping.getOrder(ko.unwrap(args.order.Id)).done(order_loaded);//$.when(, deferred);
-    }
+//     var model = new Model(new OrderDetailPage(page));
 
-    function order_loaded(order) {
-        if (model.order == null) {
-            model.order = order;
-            ko.applyBindings(model, page.element);
-        }
+//     function page_load(sender, args) {
+//         return shopping.getOrder(ko.unwrap(args.order.Id)).done(order_loaded);//$.when(, deferred);
+//     }
 
-        var js_data = mapping.toJS(order);
-        mapping.fromJS(js_data, {}, model.order);
-    }
-}
+//     function order_loaded(order) {
+//         if (model.order == null) {
+//             model.order = order;
+//             ko.applyBindings(model, page.element);
+//         }
+
+//         var js_data = mapping.toJS(order);
+//         mapping.fromJS(js_data, {}, model.order);
+//     }
+// }
 
 //class OrderDetailPage extends Page {
 //    private model = new Model(this)
