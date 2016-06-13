@@ -2,6 +2,7 @@
 import shopping = require('Services/Shopping');
 import mapping = require('knockout.mapping');
 import IScroll = require('iscroll');
+import chitu = require('chitu');
 
 class ProductDetailPage extends chitu.Page {
     private model;
