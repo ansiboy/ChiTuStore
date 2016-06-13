@@ -69,8 +69,6 @@
         </div>
         <!-- /ko -->
     </div>
-
-
     <hr data-bind="visible:comments().length>0" />
     <div class="container comments" data-bind="visible:comments().length>0">
         <a data-bind="attr:{href:'#Home_ProductComments_'+ko.unwrap(product.Id)}">
@@ -97,13 +95,20 @@
     </div>
 
     <hr />
-    <a data-bind="attr:{href:'#Home_ProductDetail_' + ko.unwrap(product.Id)}" class="btn btn-default btn-block btn-large">点击查看图文详情</a>
+    <!--<a data-bind="attr:{href:'#Home_ProductDetail_' + ko.unwrap(product.Id)}" class="btn btn-default btn-block btn-large">点击查看图文详情</a>-->
+    
+    <div>
+        <h4 class="text-center">上拉显示图文详情</h4>
+    </div>
 </scroll-view>
 <scroll-view name="detail3" style="transform: translateY(100%);" above="product">
+    <div>
+        <h4 class="text-center">下拉显示商品详情</h4>
+    </div>
     <div class="container">
         <div style="height:50px;">
             Detail3
-        </div>
+        </div>
         <div style="height:50px;">
             Detail3
         </div>

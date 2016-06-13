@@ -17,6 +17,7 @@ class ScrollViewGesture {
     private container_width: number;
     private container_height: number;
     private moveType: 'none' | 'horizontal' | 'vertical' = 'none';
+    private _offset: { up: number, down: number, left: number, right: number };
 
     on_release: (deltaX: number, deltaY: number) => boolean;
 
@@ -37,18 +38,31 @@ class ScrollViewGesture {
         pan.left = $.proxy(this.on_panLeft, this);
         pan.right = $.proxy(this.on_panRight, this);
         pan.end = $.proxy(this.on_panEnd, this);
+
+        this._offset = {
+            up: -100,
+            down: 100,
+            left: 0 - this.container_width/2,
+            right: this.container_width/2
+        }
+
         this.on_release = (deltaX: number, deltaY: number) => {
             if (deltaX != 0 && Math.abs(deltaX) / this.container_width >= 0.5) {
                 return true;
             }
-            else if (Math.abs(deltaY) >= 30) {
+            else if (deltaY != 0 && deltaY < this.offset.up) {
+                return true;
+            }
+            else if (deltaY != 0 && deltaY > this.offset.down) {
                 return true;
             }
 
             return false;
         };
+    }
 
-
+    get offset(): { up: number, down: number, left: number, right: number } {
+        return this._offset;
     }
 
     private on_panStart(e: Hammer.PanEvent) {
