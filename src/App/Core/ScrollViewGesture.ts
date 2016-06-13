@@ -1,5 +1,21 @@
 import chitu = require('chitu');
 
+class ScrollViewNode {
+    private _scrollView: chitu.ScrollView;
+    above: ScrollViewNode;
+    below: ScrollViewNode;
+    left: ScrollViewNode;
+    right: ScrollViewNode;
+
+    constructor(scrollView: chitu.ScrollView) {
+        this._scrollView = scrollView;
+    }
+
+    get scrollView(): chitu.ScrollView {
+        return this._scrollView;
+    }
+}
+
 /** 通用手势切换 ScrollView */
 class ScrollViewGesture {
     private active_item: chitu.ScrollView;
@@ -27,16 +43,9 @@ class ScrollViewGesture {
     constructor(scroll_view: chitu.ScrollView) {
         if (scroll_view == null) throw chitu.Errors.argumentNull('scroll_view');
 
-        scroll_view.load.add((sender: chitu.ScrollView, args) => this.on_scrollViewLoad(sender, args));//($.proxy(this.on_scrollViewLoad, this));
+        scroll_view.load.add((sender: chitu.ScrollView, args) => this.on_scrollViewLoad(sender, args));
 
         this.set_activeItem(scroll_view);
-        //<<<<<<< HEAD
-
-        // var pan = page_container.gesture.createPan();
-        // pan.start = $.proxy(this.on_panStart, this);
-        // pan.left = $.proxy(this.on_panLeft, this);
-        // pan.right = $.proxy(this.on_panRight, this);
-        // pan.end = $.proxy(this.on_panEnd, this);
 
         this._offset = {
             up: -100,
@@ -45,32 +54,28 @@ class ScrollViewGesture {
             right: this.container_width / 2
         }
 
-        //=======
-        //>>>>>>> ad1bd6516b94f59fb9763714833ba46b3bd9030a
         this.on_release = (deltaX: number, deltaY: number) => {
             if (deltaX != 0 && Math.abs(deltaX) / this.container_width >= 0.5) {
                 return true;
             }
-            //<<<<<<< HEAD
             else if (deltaY != 0 && deltaY < this.offset.up) {
                 return true;
             }
             else if (deltaY != 0 && deltaY > this.offset.down) {
-                //=======
-                //            else if (Math.abs(deltaY) >= 80) {
-                //>>>>>>> ad1bd6516b94f59fb9763714833ba46b3bd9030a
                 return true;
             }
 
             return false;
         };
     }
-    //<<<<<<< HEAD
+
+    private createNode(scrollView: chitu.ScrollView) {
+
+    }
 
     get offset(): { up: number, down: number, left: number, right: number } {
         return this._offset;
     }
-    //=======
 
     private on_scrollViewLoad(sender: chitu.ScrollView, args) {
         let page_container = sender.page.container;
@@ -84,7 +89,6 @@ class ScrollViewGesture {
         pan.left = $.proxy(this.on_panLeft, this);
         pan.right = $.proxy(this.on_panRight, this);
         pan.end = $.proxy(this.on_panEnd, this);
-        //>>>>>>> ad1bd6516b94f59fb9763714833ba46b3bd9030a
     }
 
     private on_panStart(e: Hammer.PanEvent) {
