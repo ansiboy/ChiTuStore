@@ -143,7 +143,7 @@ class ScrollViewGesture {
             this.processHorizontalMove(e.deltaX);
         }
         else if (this.moveType == "vertical" && this.scroll_args != null) {
-            let deltaY = this.scroll_args.clientHeight - (this.scroll_args.scrollTop + this.scroll_args.scrollHeight);
+            let deltaY = (this.scroll_args.scrollTop + this.scroll_args.scrollHeight) - this.scroll_args.clientHeight;
             this.processVerticalMove(deltaY);
         }
     }
@@ -156,12 +156,12 @@ class ScrollViewGesture {
             return;
         }
 
-        if (deltaY > 0 && this.below_item != null) {
+        if (deltaY < 0 && this.below_item != null) {
             move(this.active_item.element).y(0 - this.container_height).end();
             move(this.below_item.element).y(0).end();
             this.set_activeItem(this.below_item);
         }
-        else if (deltaY < 0 && this.above_item != null) {
+        else if (deltaY > 0 && this.above_item != null) {
             move(this.active_item.element).y(this.container_height).end();
             move(this.above_item.element).y(0).end();
             this.set_activeItem(this.above_item);
