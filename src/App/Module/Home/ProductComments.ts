@@ -1,4 +1,5 @@
-﻿import shopping = require('Services/Shopping');
+﻿import chitu = require('chitu');
+import shopping = require('Services/Shopping');
 
 class ProductCommentsPage extends chitu.Page {
     private model = {
