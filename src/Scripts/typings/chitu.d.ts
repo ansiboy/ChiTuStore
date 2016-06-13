@@ -71,7 +71,7 @@ declare namespace chitu {
         private _page;
         private static ControlTags;
         protected _name: string;
-        load: Callback<{}, {}>;
+        load: Callback<Control, any>;
         parent: Control;
         constructor(element: HTMLElement, page: Page);
         private createChildren(element, page);
@@ -114,6 +114,7 @@ declare namespace chitu {
         constructor(element: HTMLElement, page: Page);
     }
     class IScrollView extends ScrollView {
+        private static SCROLLER_TAG_NAME;
         private iscroller;
         constructor(element: HTMLElement, page: Page);
         private init(element);
@@ -151,6 +152,7 @@ declare namespace chitu {
         static viewCanntNull(): Error;
         static createPageFail(pageName: string): Error;
         static actionTypeError(pageName: string): Error;
+        static scrollerElementNotExists(): Error;
     }
 }
 declare namespace chitu {

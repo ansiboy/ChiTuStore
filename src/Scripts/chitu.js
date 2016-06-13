@@ -632,23 +632,35 @@ var chitu;
     var DivScrollView = (function (_super) {
         __extends(DivScrollView, _super);
         function DivScrollView(element, page) {
-            var _this = this;
+            var scroller_node;
+            if (element.firstElementChild != null && element.firstElementChild.tagName == DivScrollView.SCROLLER_TAG_NAME) {
+                scroller_node = element.firstElementChild;
+            }
+            else {
+                scroller_node = document.createElement(DivScrollView.SCROLLER_TAG_NAME);
+                scroller_node.innerHTML = element.innerHTML;
+                element.innerHTML = '';
+                element.appendChild(scroller_node);
+            }
             _super.call(this, element, page);
             this.cur_scroll_args = {};
-            this.CHECK_INTERVAL = 30;
-            this.element.onscroll = function () {
-                _this.cur_scroll_args.scrollTop = _this.element.scrollTop;
-                _this.cur_scroll_args.clientHeight = _this.element.clientHeight;
-                _this.cur_scroll_args.scrollHeight = _this.element.scrollHeight;
-                var scroll_args = {
-                    clientHeight: _this.element.clientHeight,
-                    scrollHeight: _this.element.scrollHeight,
-                    scrollTop: 0 - Math.abs(_this.element.scrollTop)
-                };
-                _this.on_scroll(scroll_args);
-                _this.scrollEndCheck();
-            };
+            this.scroller_node = scroller_node;
+            this.scroller_node.onscroll = $.proxy(this.on_elementScroll, this);
+            new GesturePull(this, $.proxy(this.on_scroll, this));
         }
+        DivScrollView.prototype.on_elementScroll = function () {
+            var scroller_node = this.scroller_node;
+            this.cur_scroll_args.scrollTop = scroller_node.scrollTop;
+            this.cur_scroll_args.clientHeight = scroller_node.clientHeight;
+            this.cur_scroll_args.scrollHeight = scroller_node.scrollHeight;
+            var scroll_args = {
+                clientHeight: scroller_node.clientHeight,
+                scrollHeight: scroller_node.scrollHeight,
+                scrollTop: 0 - scroller_node.scrollTop
+            };
+            this.on_scroll(scroll_args);
+            this.scrollEndCheck();
+        };
         DivScrollView.prototype.scrollEndCheck = function () {
             var _this = this;
             if (this.checking_num != null)
@@ -663,10 +675,99 @@ var chitu;
                     return;
                 }
                 _this.pre_scroll_top = _this.cur_scroll_args.scrollTop;
-            }, this.CHECK_INTERVAL);
+            }, DivScrollView.CHECK_INTERVAL);
         };
+        DivScrollView.CHECK_INTERVAL = 30;
+        DivScrollView.SCROLLER_TAG_NAME = 'SCROLLER';
         return DivScrollView;
     }(ScrollView));
+    var GesturePull = (function () {
+        function GesturePull(scrollView, on_scroll) {
+            this.is_vertical = false;
+            this.moved = false;
+            if (scrollView == null)
+                throw chitu.Errors.argumentNull('scrollView');
+            if (on_scroll == null)
+                throw chitu.Errors.argumentNull('on_scroll');
+            this.scrollView = scrollView;
+            this.on_scroll = on_scroll;
+            this.containerElement = this.scrollView.element;
+            this.scrollerElement = $(this.scrollView.element).find('scroller')[0];
+            if (this.scrollerElement == null)
+                throw chitu.Errors.scrollerElementNotExists();
+            this.hammer = new Hammer.Manager(this.containerElement);
+            this.hammer.add(new Hammer.Pan({ direction: Hammer.DIRECTION_VERTICAL }));
+            this.hammer.on('pandown', $.proxy(this.on_pandown, this));
+            this.hammer.on('panup', $.proxy(this.on_panup, this));
+            this.hammer.on('panstart', $.proxy(this.on_panstart, this));
+            this.hammer.on('panend', $.proxy(this.on_panend, this));
+        }
+        GesturePull.prototype.on_panstart = function (e) {
+            this.pre_y = e.deltaY;
+            this.elementScrollTop = this.scrollerElement.scrollTop;
+            var d = Math.atan(Math.abs(e.deltaY / e.deltaX)) / 3.14159265 * 180;
+            this.is_vertical = d >= 70;
+            var enablePullDown = this.scrollerElement.scrollTop == 0 && this.is_vertical;
+            var enablePullUp = (this.scrollerElement.scrollHeight - this.scrollerElement.scrollTop <= this.scrollerElement.clientHeight) && this.is_vertical;
+            if (enablePullDown && e.deltaY > 0) {
+                this.pullType = 'down';
+            }
+            else if (enablePullUp && e.deltaY < 0) {
+                this.pullType = 'up';
+            }
+            else {
+                this.pullType = 'none';
+            }
+        };
+        GesturePull.prototype.on_pandown = function (e) {
+            if (e.deltaY >= 0 && this.pullType == 'up') {
+                move(this.containerElement).y(0).duration(0).end();
+            }
+            else if (e.deltaY >= 0 && this.pullType == 'down') {
+                this.move(e);
+            }
+            else if (e.deltaY < 0 && this.pullType == 'up') {
+                this.move(e);
+            }
+        };
+        GesturePull.prototype.on_panup = function (e) {
+            if (e.deltaY <= 0 && this.pullType == 'down') {
+                move(this.containerElement).y(0).duration(0).end();
+            }
+            else if (e.deltaY <= 0 && this.pullType == 'up') {
+                this.move(e);
+            }
+            else if (e.deltaY > 0 && this.pullType == 'down') {
+                this.move(e);
+            }
+        };
+        GesturePull.prototype.on_panend = function (e) {
+            if (this.moved) {
+                $(this.scrollerElement).scrollTop(this.elementScrollTop);
+                move(this.containerElement).y(0).end();
+                this.moved = false;
+            }
+            this.enableNativeScroll();
+        };
+        GesturePull.prototype.move = function (e) {
+            this.disableNativeScroll();
+            move(this.containerElement).y(e.deltaY).duration(0).end();
+            this.moved = true;
+            var args = {
+                scrollHeight: this.scrollerElement.scrollHeight,
+                clientHeight: this.scrollerElement.clientHeight,
+                scrollTop: e.deltaY - this.scrollerElement.scrollTop
+            };
+            this.on_scroll(args);
+        };
+        GesturePull.prototype.disableNativeScroll = function () {
+            this.scrollerElement.style.overflowY = 'hidden';
+        };
+        GesturePull.prototype.enableNativeScroll = function () {
+            this.scrollerElement.style.overflowY = 'scroll';
+        };
+        return GesturePull;
+    }());
     var ScrollViewStatusBar = (function (_super) {
         __extends(ScrollViewStatusBar, _super);
         function ScrollViewStatusBar(element, page) {
@@ -685,10 +786,12 @@ var chitu;
         __extends(IScrollView, _super);
         function IScrollView(element, page) {
             var _this = this;
-            var scroller_node = document.createElement('scroller');
-            scroller_node.innerHTML = element.innerHTML;
-            element.innerHTML = '';
-            element.appendChild(scroller_node);
+            if (element.firstElementChild == null || element.firstElementChild.tagName != IScrollView.SCROLLER_TAG_NAME) {
+                var scroller_node = document.createElement(IScrollView.SCROLLER_TAG_NAME);
+                scroller_node.innerHTML = element.innerHTML;
+                element.innerHTML = '';
+                element.appendChild(scroller_node);
+            }
             _super.call(this, element, page);
             requirejs(['iscroll'], function () { return _this.init(_this.element); });
         }
@@ -747,6 +850,7 @@ var chitu;
             if (this.iscroller != null)
                 this.iscroller.refresh();
         };
+        IScrollView.SCROLLER_TAG_NAME = 'SCROLLER';
         return IScrollView;
     }(ScrollView));
     chitu.IScrollView = IScrollView;
@@ -888,6 +992,10 @@ var chitu;
         };
         Errors.actionTypeError = function (pageName) {
             var msg = chitu.Utility.format('Export of \'{0}\' page is expect chitu.Page type.', pageName);
+            return new Error(msg);
+        };
+        Errors.scrollerElementNotExists = function () {
+            var msg = "Scroller element is not exists.";
             return new Error(msg);
         };
         return Errors;
