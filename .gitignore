@@ -1,3 +1,6 @@
+/.tscache
+/.git
+/node_modules
 /www
 /platforms/android/assets/www
 /platforms/ios/www
