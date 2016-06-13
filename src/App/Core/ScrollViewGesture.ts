@@ -21,55 +21,74 @@ class ScrollViewGesture {
 
     on_release: (deltaX: number, deltaY: number) => boolean;
 
+    /** 滚动视图改变时调用 */
+    viewChanged = chitu.Callbacks<ScrollViewGesture, { view: chitu.ScrollView, prev: chitu.ScrollView }>();
+
     constructor(scroll_view: chitu.ScrollView) {
         if (scroll_view == null) throw chitu.Errors.argumentNull('scroll_view');
 
-        let page_container = scroll_view.page.container;
-        $(page_container.element).data('ScrollViewGesture', this);
-
-        this.container_width = $(page_container.element).width();
-        this.container_height = $(page_container.element).height();
-
+        scroll_view.load.add((sender: chitu.ScrollView, args) => this.on_scrollViewLoad(sender, args));//($.proxy(this.on_scrollViewLoad, this));
 
         this.set_activeItem(scroll_view);
+        //<<<<<<< HEAD
 
-        var pan = page_container.gesture.createPan();
-        pan.start = $.proxy(this.on_panStart, this);
-        pan.left = $.proxy(this.on_panLeft, this);
-        pan.right = $.proxy(this.on_panRight, this);
-        pan.end = $.proxy(this.on_panEnd, this);
+        // var pan = page_container.gesture.createPan();
+        // pan.start = $.proxy(this.on_panStart, this);
+        // pan.left = $.proxy(this.on_panLeft, this);
+        // pan.right = $.proxy(this.on_panRight, this);
+        // pan.end = $.proxy(this.on_panEnd, this);
 
         this._offset = {
             up: -100,
             down: 100,
-            left: 0 - this.container_width/2,
-            right: this.container_width/2
+            left: 0 - this.container_width / 2,
+            right: this.container_width / 2
         }
 
+        //=======
+        //>>>>>>> ad1bd6516b94f59fb9763714833ba46b3bd9030a
         this.on_release = (deltaX: number, deltaY: number) => {
             if (deltaX != 0 && Math.abs(deltaX) / this.container_width >= 0.5) {
                 return true;
             }
+            //<<<<<<< HEAD
             else if (deltaY != 0 && deltaY < this.offset.up) {
                 return true;
             }
             else if (deltaY != 0 && deltaY > this.offset.down) {
+                //=======
+                //            else if (Math.abs(deltaY) >= 80) {
+                //>>>>>>> ad1bd6516b94f59fb9763714833ba46b3bd9030a
                 return true;
             }
 
             return false;
         };
     }
+    //<<<<<<< HEAD
 
     get offset(): { up: number, down: number, left: number, right: number } {
         return this._offset;
     }
+    //=======
+
+    private on_scrollViewLoad(sender: chitu.ScrollView, args) {
+        let page_container = sender.page.container;
+        $(page_container.element).data('ScrollViewGesture', this);
+
+        this.container_width = $(page_container.element).width();
+        this.container_height = $(page_container.element).height();
+
+        var pan = page_container.gesture.createPan();
+        pan.start = $.proxy(this.on_panStart, this);
+        pan.left = $.proxy(this.on_panLeft, this);
+        pan.right = $.proxy(this.on_panRight, this);
+        pan.end = $.proxy(this.on_panEnd, this);
+        //>>>>>>> ad1bd6516b94f59fb9763714833ba46b3bd9030a
+    }
 
     private on_panStart(e: Hammer.PanEvent) {
         let $active_item = $(this.active_item.element);
-        // if (chitu.ScrollView.scrolling) {
-        //     return false;
-        // }
 
         //==================================================
         // 说明：计算角度，超过了水平滑动角度，则认为不是水平滑动。
@@ -177,14 +196,15 @@ class ScrollViewGesture {
     }
 
     private set_activeItem(active_item: chitu.ScrollView) {
-        //new GesturePull(active_item);
         if (active_item == null) throw chitu.Errors.argumentNull('active_item');
 
+        let prev_view = this.active_item;
         if (this.active_item != null) {
             this.active_item.scroll.remove(this.on_scroll);
         }
         this.active_item = active_item;
         this.active_item.scroll.add(this.on_scroll);
+        chitu.fireCallback(this.viewChanged, this, { view: active_item, prev: prev_view });
 
         var pos = $(this.active_item.element).position();
         this.next_item_pos = this.container_width;

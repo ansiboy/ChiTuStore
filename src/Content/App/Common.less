@@ -15,12 +15,15 @@
 
 .scrollViewTopPadding(@padding){
     
-    scroller, scroll-view[scroll-type="div"] scroller, scroll-view[scroll-type="iscroll"] scroller {
+    scroller, 
+    scroll-view[scroll-type="div"] scroller, 
+    scroll-view[scroll-type="iscroll"] scroller {
         padding-top: @padding;
     }
-
     &.immersion {
-        scroller, scroll-view[scroll-type="div"] scroller, scroll-view[scroll-type="iscroll"] scroller {
+        scroller, 
+        scroll-view[scroll-type="div"] scroller, 
+        scroll-view[scroll-type="iscroll"] scroller {
             padding-top: @padding + @immersion-height;
         }
     }
@@ -28,7 +31,9 @@
 }
 
 .scrollViewBottomPadding(@padding){
-    scroller, scroll-view[scroll-type="div"] scroller, scroll-view[scroll-type="iscroll"] scroller {
+    scroller, 
+    scroll-view[scroll-type="div"] scroller, 
+    scroll-view[scroll-type="iscroll"] scroller {
         padding-bottom: @padding;
     }
 }

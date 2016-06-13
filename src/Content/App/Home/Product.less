@@ -4,9 +4,13 @@
 
 .Home-Product {
 
-    @buy_bar: 50px;
+    @buy_bar_height: 50px;
     .scrollViewTopPadding(@header-height);
-    //.scrollViewBottomPadding(@buy_bar);
+    .scrollViewBottomPadding(@buy_bar_height);
+    
+    .container {
+        padding-top: 10px;
+    }
     
     .page-footer {
         position: fixed;
@@ -59,9 +63,29 @@
         padding-bottom: 12px;
         border-bottom: 4px solid @gray-dark;
     }
-
+    
     .pull-up-bar {
-        height: @buy_bar;
+        height: @buy_bar_height;
+        padding-top: 20px;
+        h4 {
+            margin: 0px;
+        }
+    }
+    .pull-down-bar(@height) {
+        height: @height;
+        padding-bottom: 20px;
+        h4 {
+            margin: 0px;
+        }
+    }
+    
+    .pull-down-bar {
+        .pull-down-bar(@header-height);
+    }
+    &.immersion {
+        .pull-down-bar{
+            .pull-down-bar(@header-height + @immersion-height);
+        }
     }
 }
 
