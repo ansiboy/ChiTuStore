@@ -1,17 +1,42 @@
 # ChiTu Store
-一个基于 ChiTu 的电商前端，供学习 ChiTu 框架使用。
+一个开源的电商混合 APP。
 ## 特点
 * 界面设计精美
 * 功能丰富，其功能包括电商常用的功能，很多功能都可以从这里找到例子。
 * 接近原生的用户体验，优其是在 IPhone 以及 Android 5.0  。
 * 兼容性好，可以运行于微信，以及打包为 APP 。
 
-## 知识点
-由于这个项目是使用 typescript 编写的，所以你 typescript 你是必须得懂的。另外，如果想把这项目吃透，还需要了解以下类库
-* knockout
-* knockout mapping
-* iscroll
+## 开发工具
+* Visual Studio Code
+* Android Studio
+* XCode
+
+## 开发语言
+* 主要开发语言为 TypeScript
+* 另外还用到 Java（Android APP），Object-C（IOS APP）
+* less
+
+## 使用到的第三方类库或框架
 * bootstrap
+* chitu
+* cordova（另外：在安卓APP中还使用了cross-walk）
+* hammerjs
+* iscroll
+* jquery
+* knockout（另外:还用到 knockout mapping及 knockout validation）
+* requirejs
+
+## 项目生成
+本项目是使用 Grunt 来生成项目，所以需要安装 Grunt 。
+* 下载源码
+* 安装 Grunt
+* 运行 npm install 命令，安装所需要的 grunt 插件
+* 运行 grunt 命令生成项目
+
+**生成目录**
+1. WEB（位于 ChiTuStore目录/www）
+2. Android APP（位于 ChiTuStore目录/platforms/android）
+3. IOS APP（位于 ChiTuStore目录/platforms/ios）
 
 ## 演示
 <div>
@@ -44,3 +69,5 @@
 [项目分享二：APP 小红点中数字的处理](http://www.cnblogs.com/ansiboy/p/5049892.html)
 
 [项目分享一：在项目中使用 IScroll 所碰到的那些坑](http://www.cnblogs.com/ansiboy/p/5049230.html)
+
+
