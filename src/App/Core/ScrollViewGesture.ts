@@ -66,8 +66,8 @@ class ScrollViewGesture {
         this._offset = {
             up: -100,
             down: 100,
-            left: 0 - this.container_width / 2,
-            right: this.container_width / 2
+            left: -100,//0 - this.container_width / 2,
+            right: 100//this.container_width / 2
         }
 
         this.on_release = (deltaX: number, deltaY: number) => {
@@ -119,6 +119,12 @@ class ScrollViewGesture {
 
         this.container_width = $(page_container.element).width();
         this.container_height = $(page_container.element).height();
+
+        this.offset.left = 0 - this.container_width / 2;
+        this.offset.right = this.container_width / 2;
+
+        this.next_item_pos = this.container_width;
+        this.prev_item_pos = 0 - this.container_width;
 
         var pan = page_container.gesture.createPan();
         pan.start = $.proxy(this.on_panStart, this);
