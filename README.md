@@ -41,6 +41,9 @@
 * Android APP（位于 ChiTuStore目录/platforms/android）
 * IOS APP（位于 ChiTuStore目录/platforms/ios）
 
+## 技术交流讨论
+QQ群：119038574
+
 ## 演示
 <div>
 由于项目是基于微信，在微信下才能够使用完整的功能。查看演示，请使用微信扫描下面的二维码
