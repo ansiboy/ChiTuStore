@@ -35,6 +35,22 @@ class ScrollViewGesture {
     private moveType: 'none' | 'horizontal' | 'vertical' = 'none';
     private _offset: { up: number, down: number, left: number, right: number };
 
+
+    /** 下拉执行 */
+    pullDownExecute: () => JQueryPromise<any> | void;
+
+    /** 上拉执行 */
+    pullUpExecute: () => JQueryPromise<any> | void;
+
+    /** 左拖动执行 */
+    panLeftExecute: () => JQueryPromise<any> | void;
+
+    /** 右拖动执行 */
+    panRightExecute: () => JQueryPromise<any> | void;
+
+    /** 上拉、下拉、或左右拖动释放时调用
+     * @returns 返回 true 时，执行操作，false 不执行。
+     */
     on_release: (deltaX: number, deltaY: number) => boolean;
 
     /** 滚动视图改变时调用 */
@@ -55,19 +71,39 @@ class ScrollViewGesture {
         }
 
         this.on_release = (deltaX: number, deltaY: number) => {
-            if (deltaX != 0 && Math.abs(deltaX) / this.container_width >= 0.5) {
-                return true;
-            }
-            else if (deltaY != 0 && deltaY < this.offset.up) {
-                return true;
-            }
-            else if (deltaY != 0 && deltaY > this.offset.down) {
-                return true;
-            }
+            let allowExecute = (deltaX < 0 && deltaX < this.offset.left) ||
+                (deltaX > 0 && deltaX > this.offset.right) ||
+                (deltaY < 0 && deltaY < this.offset.up) ||
+                (deltaY > 0 && deltaY > this.offset.down);
 
-            return false;
+            return allowExecute;
+        };
+
+        this.pullDownExecute = () => {
+            move(this.active_item.element).y(this.container_height).end();
+            move(this.above_item.element).y(0).end();
+            this.set_activeItem(this.above_item);
+        };
+
+        this.pullUpExecute = () => {
+            move(this.active_item.element).y(0 - this.container_height).end();
+            move(this.below_item.element).y(0).end();
+            this.set_activeItem(this.below_item);
+        };
+
+        this.panLeftExecute = () => {
+            move(this.active_item.element).x(this.prev_item_pos).end();
+            move(this.next_item.element).x(this.active_item_pos_x).end();
+            this.set_activeItem(this.next_item);
+        };
+
+        this.panRightExecute = () => {
+            move(this.active_item.element).x(this.next_item_pos).end();
+            move(this.prev_item.element).x(this.active_item_pos_x).end();
+            this.set_activeItem(this.prev_item);
         };
     }
+
 
     private createNode(scrollView: chitu.ScrollView) {
 
@@ -151,20 +187,15 @@ class ScrollViewGesture {
     private processVerticalMove(deltaY: number) {
         let cancel = this.on_release(0, deltaY) == false;
         if (cancel) {
-            move(this.active_item.element).y(this.active_item_pos_y);
-
+            //move(this.active_item.element).y(this.active_item_pos_y);
             return;
         }
 
         if (deltaY < 0 && this.below_item != null) {
-            move(this.active_item.element).y(0 - this.container_height).end();
-            move(this.below_item.element).y(0).end();
-            this.set_activeItem(this.below_item);
+            this.pullUpExecute();
         }
         else if (deltaY > 0 && this.above_item != null) {
-            move(this.active_item.element).y(this.container_height).end();
-            move(this.above_item.element).y(0).end();
-            this.set_activeItem(this.above_item);
+            this.pullDownExecute();
         }
     }
 
@@ -180,16 +211,11 @@ class ScrollViewGesture {
             return;
         }
 
-        if (deltaX < 0 && this.next_item != null) { // 向左移动
-            move(this.active_item.element).x(this.prev_item_pos).end();
-            move(this.next_item.element).x(this.active_item_pos_x).end();
-            //this.active_item = this.next_item;
-            this.set_activeItem(this.next_item);
+        if (deltaX < 0 && this.next_item != null && this.panLeftExecute != null) { // 向左移动
+            this.panLeftExecute();
         }
-        else if (deltaX > 0 && this.prev_item != null) { // 向右移动
-            move(this.active_item.element).x(this.next_item_pos).end();
-            move(this.prev_item.element).x(this.active_item_pos_x).end();
-            this.set_activeItem(this.prev_item);
+        else if (deltaX > 0 && this.prev_item != null && this.panRightExecute != null) { // 向右移动
+            this.panRightExecute();
         }
     }
 
