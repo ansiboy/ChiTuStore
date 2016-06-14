@@ -2,8 +2,8 @@
     "files.exclude": {
         "Build": true,
         "node_modules": true,
-        
         "LICENSE": true,
-        "README.md": true
+        "README.md": true,
+        ".baseDir.ts": true
     }
 }
