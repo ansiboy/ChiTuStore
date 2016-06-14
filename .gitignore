@@ -6,3 +6,4 @@
 /platforms/ios/www
 /platforms/browser/www
 .baseDir.ts
+xcuserdata
