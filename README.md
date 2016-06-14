@@ -30,7 +30,7 @@
 本项目是使用 Grunt 来生成项目，所以需要安装 Grunt 。
 * 下载源码
 * 安装 Grunt
-* 运行 npm install 命令，安装所需要的 grunt 插件
+* 运行 npm install 命令，安装所需要的 grunt 插件
 * 运行 grunt 命令生成项目
 
 **生成目录**
