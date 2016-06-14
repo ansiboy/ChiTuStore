@@ -5,7 +5,7 @@
 * 界面设计精美
 * 功能丰富，其功能包括电商常用的功能，很多功能都可以从这里找到例子。
 * 接近原生的用户体验。
-
+
 ## 授权协议
 使用 MIT 协议进行授权。（ 代码尽管拿去用 ^_^ ）
 
@@ -37,9 +37,9 @@
 * 运行 grunt 命令生成项目
 
 **生成目录**
-1. WEB（位于 ChiTuStore目录/www）
-2. Android APP（位于 ChiTuStore目录/platforms/android）
-3. IOS APP（位于 ChiTuStore目录/platforms/ios）
+* WEB（位于 ChiTuStore目录/www）
+* Android APP（位于 ChiTuStore目录/platforms/android）
+* IOS APP（位于 ChiTuStore目录/platforms/ios）
 
 ## 演示
 <div>
