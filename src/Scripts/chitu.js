@@ -1860,7 +1860,8 @@ var chitu;
     }());
     chitu.Utility = Utility;
 })(chitu || (chitu = {}));
-//# sourceMappingURL=chitu.js.map window['chitu']=chitu 
+
+window['chitu'] = window['chitu'] || chitu 
                     
  return chitu;
     });
