@@ -23,18 +23,18 @@
 ## 使用到的第三方类库或框架
 * bootstrap
 * chitu
-* cordova（另外：在安卓APP中还使用了cross-walk）
+* cordova（另外：在安卓APP中还使用了cross-walk）
 * hammerjs
 * iscroll
 * jquery
-* knockout（另外:还用到 knockout mapping及 knockout validation）
+* knockout（另外:还用到 knockout mapping及 knockout validation）
 * requirejs
 
 ## 项目生成
 本项目是使用 Grunt 来生成项目，所以需要安装 Grunt 。
 * 下载源码
 * 安装 Grunt
-* 运行 npm install 命令，安装所需要的 grunt 插件
+* 运行 npm install 命令，安装所需要的 grunt 插件
 * 运行 grunt 命令生成项目
 
 **生成目录**
