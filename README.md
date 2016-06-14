@@ -23,7 +23,7 @@
 * hammerjs
 * iscroll
 * jquery
-* knockout（另外:还用到 knockout mapping及 knockout validation）
+* knockout（另外:还用到 knockout mapping及 knockout validation）
 * requirejs
 
 ## 项目生成
