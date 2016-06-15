@@ -415,7 +415,7 @@ interface KnockoutStatic {
     virtualElements: KnockoutVirtualElements;
     extenders: KnockoutExtenders;
 
-    applyBindings(viewModelOrBindingContext?: any, rootNode?: any): void;
+    applyBindings(viewModelOrBindingContext?: any, rootNode?: Element): void;
 	applyBindingsToDescendants(viewModelOrBindingContext: any, rootNode: any): void;
 	applyBindingAccessorsToNode(node: Node, bindings: (bindingContext: KnockoutBindingContext, node: Node) => {}, bindingContext: KnockoutBindingContext): void;
 	applyBindingAccessorsToNode(node: Node, bindings: {}, bindingContext: KnockoutBindingContext): void;
