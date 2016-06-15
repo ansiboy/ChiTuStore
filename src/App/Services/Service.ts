@@ -24,9 +24,12 @@ class Services {
         return this._config;
     }
     error = $.Callbacks()
-    callMethod(serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<any> {
 
-        return (function (service: Services, serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<any> {
+    callMethod(serviceUrl: string, method: string): JQueryPromise<any>;
+    callMethod(serviceUrl: string, method: string, data: Object): JQueryPromise<any>;
+    callMethod<T>(serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<T> {
+
+        return (function (service: Services, serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<T> {
 
             data = data || {};
             if (serviceUrl == null)
