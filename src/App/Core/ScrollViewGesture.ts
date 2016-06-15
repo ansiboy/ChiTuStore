@@ -16,6 +16,7 @@ class ScrollViewNode {
     }
 }
 
+type Offset = { pullUp: number, pullDown: number, panLeft: number, panRight: number }
 /** 通用手势切换 ScrollView */
 class ScrollViewGesture {
     private active_item: chitu.ScrollView;
@@ -33,7 +34,7 @@ class ScrollViewGesture {
     private container_width: number;
     private container_height: number;
     private moveType: 'none' | 'horizontal' | 'vertical' = 'none';
-    private _offset: { up: number, down: number, left: number, right: number };
+    private _offset: Offset;
 
 
     /** 下拉执行 */
@@ -64,17 +65,17 @@ class ScrollViewGesture {
         this.set_activeItem(scroll_view);
 
         this._offset = {
-            up: -100,
-            down: 100,
-            left: -100,//0 - this.container_width / 2,
-            right: 100//this.container_width / 2
+            pullUp: -100,
+            pullDown: 100,
+            panLeft: -100,
+            panRight: 100
         }
 
         this.on_release = (deltaX: number, deltaY: number) => {
-            let allowExecute = (deltaX < 0 && deltaX < this.offset.left) ||
-                (deltaX > 0 && deltaX > this.offset.right) ||
-                (deltaY < 0 && deltaY < this.offset.up) ||
-                (deltaY > 0 && deltaY > this.offset.down);
+            let allowExecute = (deltaX < 0 && deltaX < this.offset.panLeft) ||
+                (deltaX > 0 && deltaX > this.offset.panRight) ||
+                (deltaY < 0 && deltaY < this.offset.pullUp) ||
+                (deltaY > 0 && deltaY > this.offset.pullDown);
 
             return allowExecute;
         };
@@ -109,7 +110,7 @@ class ScrollViewGesture {
 
     }
 
-    get offset(): { up: number, down: number, left: number, right: number } {
+    get offset(): Offset {
         return this._offset;
     }
 
@@ -120,8 +121,8 @@ class ScrollViewGesture {
         this.container_width = $(page_container.element).width();
         this.container_height = $(page_container.element).height();
 
-        this.offset.left = 0 - this.container_width / 2;
-        this.offset.right = this.container_width / 2;
+        this.offset.panLeft = 0 - this.container_width / 2;
+        this.offset.panRight = this.container_width / 2;
 
         this.next_item_pos = this.container_width;
         this.prev_item_pos = 0 - this.container_width;
@@ -185,8 +186,13 @@ class ScrollViewGesture {
             this.processHorizontalMove(e.deltaX);
         }
         else if (this.moveType == "vertical" && this.scroll_args != null) {
-            let deltaY = (this.scroll_args.scrollTop + this.scroll_args.scrollHeight) - this.scroll_args.clientHeight;
-            this.processVerticalMove(deltaY);
+            let deltaY: number;
+            if (e.deltaY < 0)
+                deltaY = (this.scroll_args.scrollTop + this.scroll_args.scrollHeight) - this.scroll_args.clientHeight;
+            else
+                deltaY = e.deltaY;
+
+            this.processVerticalMove(e.deltaY);
         }
     }
 
