@@ -16,15 +16,14 @@ function generateProductHeader(headerNode: HTMLElement, routeData: chitu.RouteDa
     var model = {
         isFavored: ko.observable<boolean>(false),
         favor: () => {
-            if (this.product == null)
-                return;
-
-            if (this.isFavored()) {
-                shopping.unFavorProduct(ko.unwrap(this.product.Id));
+            if (model.isFavored()) {
+                shopping.unFavorProduct(ko.unwrap(productId));
                 return;
             }
 
-            shopping.favorProduct(ko.unwrap(this.product.Id), ko.unwrap(this.product.Name));
+            shopping.favorProduct(ko.unwrap(productId), 'NULL PRODUCT NAME').done(() => {
+                model.isFavored(true);
+            });
         }
     };
 
@@ -55,7 +54,7 @@ function setHeaderTitle(node: HTMLElement, title: string) {
 
 class PageContainerFactory {
     static createContainerHeader(routeData: chitu.RouteData, container: chitu.PageContainer) {
-        
+
         var controller = routeData.values.controller;
         var action = routeData.values.action;
 
