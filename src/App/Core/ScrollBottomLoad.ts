@@ -21,6 +21,7 @@ class ScrollViewStatusBar {
     }
 }
 
+/** 实现滚动视图滚动到底部时，加载数据 */
 class ScrollBottomLoad {
 
     private scrollLoad: ScrollLoad;
@@ -49,14 +50,12 @@ class ScrollBottomLoad {
         if (clientHeight + scrollTop < scrollHeight - marginBottom)
             return;
 
-        //if (sender.scrollLoad != null) {
         var result = this.scrollLoad(sender, args);
         result.done(() => {
             if (this.bottomLoading != null) {
                 this.bottomLoading.visible = this.enableScrollLoad != false;
             }
         })
-        //}
     }
 }
 
