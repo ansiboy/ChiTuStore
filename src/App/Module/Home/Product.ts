@@ -1,18 +1,14 @@
 ﻿import app = require('Application');
-import site = require('Site');
 import shopping = require('Services/Shopping');
 import shoppingCart = require('Services/ShoppingCart');
 import mapping = require('knockout.mapping');
 import chitu = require('chitu');
-import TopBar = require('UI/TopBar');
 import ProductPanel = require('Module/Home/Product/ProductPanel');
 import ProductDetailPanel = require('Module/Home/Product/ProductDetailPanel');
-import auth = require('Services/Auth');
 import ScrollViewGesture = require('Core/ScrollViewGesture');
 
-var services = window['services'];
-
 //TODO:以弹出方式显示图片
+chitu.Utility.loadjs('UI/Promotion');
 
 const PRODUCT_PULL_UP_DEFAULT_TEXT = '上拉查看图文详情';
 const PRODUCT_PULL_UP_RELEASE_TEXT = '释放查看图文详情';
@@ -46,7 +42,6 @@ class ProductModel {
 
         return this._detailPanel;
     }
-    isFavored = ko.observable<boolean>(false)
     addToShoppingCart = () => {
         var product = this['product'];
         return shoppingCart.addItem(product, product.Count()).done(() => {
@@ -64,17 +59,6 @@ class ProductModel {
         console.log('showPanel');
         this.panel.open();
     }
-    favor = () => {
-        if (this.product == null)
-            return;
-
-        if (this.isFavored()) {
-            shopping.unFavorProduct(ko.unwrap(this.product.Id));
-            return;
-        }
-
-        shopping.favorProduct(ko.unwrap(this.product.Id), ko.unwrap(this.product.Name));
-    }
     get product() {
         return this._product;
     }
@@ -83,13 +67,17 @@ class ProductModel {
     }
 
     productPullUpText = ko.observable(PRODUCT_PULL_UP_DEFAULT_TEXT);
+}
+
+class ImageTextModel {
+    Introduce = ko.observable<string>();
     imageTextPullDownText = ko.observable(IMAGE_TEXT_PULL_DOWN_DEFAULT_TEXT);
 }
 
-chitu.Utility.loadjs('UI/Promotion');
-
 class ProductPage extends chitu.Page {
+
     private model: ProductModel;
+    private imageTextModel: ImageTextModel;
     private product_view: chitu.ScrollView;
     private image_text_view: chitu.ScrollView;
     private scroll_view_gesture: ScrollViewGesture;
@@ -98,6 +86,8 @@ class ProductPage extends chitu.Page {
         super(html);
 
         this.model = new ProductModel(this);
+        this.imageTextModel = new ImageTextModel();
+
         this.load.add(this.page_load);
 
         this.product_view = this.findControl<chitu.ScrollView>('product');
@@ -107,13 +97,13 @@ class ProductPage extends chitu.Page {
 
         this.scroll_view_gesture = new ScrollViewGesture(this.product_view);
         this.scroll_view_gesture.viewChanged.add((sender, args) => this.view_changed(sender, args));
-        this.scroll_view_gesture.offset.up = -50;
-        this.scroll_view_gesture.offset.down = 80;
+        this.scroll_view_gesture.offset.pullUp = -50;
+        this.scroll_view_gesture.offset.pullDown = 100;
     }
 
     private page_load(sender: ProductPage, args: any) {
-
-        return $.when(shopping.getProduct(args.id), services.shopping.getProductStock(args.id),
+        ko.applyBindings(this.imageTextModel, this.image_text_view.element);
+        return $.when(shopping.getProduct(args.id), shopping.getProductStock(args.id),
             shopping.getProductComments(args.id, 4))
 
             .done(function (product: any, stock, comments) {
@@ -139,20 +129,27 @@ class ProductPage extends chitu.Page {
                     return str;
 
                 }, sender.model.product)
-                ko.applyBindings(sender.model, sender.element);
+                ko.applyBindings(sender.model, sender.product_view.element);
             });
     }
 
     private view_changed(sender: ScrollViewGesture, args: { view: chitu.ScrollView }) {
         // TODO:切换视图，加载数据
         this.model.productPullUpText(PRODUCT_PULL_UP_DEFAULT_TEXT);
+
+        let productId = args.view.page.routeData.values.id;
+        if (args.view == this.image_text_view && !this.imageTextModel.Introduce()) {
+            shopping.getProductIntroduce(productId).done((data) => {
+                this.imageTextModel.Introduce(data.Introduce);
+            })
+        }
     }
 
     private view_scroll(sender: chitu.ScrollView, args: chitu.ScrollArguments) {
         if (sender == this.product_view) {
             // 说明：处理上拉
             let deltaY = (args.scrollHeight + args.scrollTop) - args.clientHeight;
-            if (deltaY < this.scroll_view_gesture.offset.up) {
+            if (deltaY < this.scroll_view_gesture.offset.pullUp) {
                 this.model.productPullUpText(PRODUCT_PULL_UP_RELEASE_TEXT);
             }
             else {
@@ -163,11 +160,11 @@ class ProductPage extends chitu.Page {
         else if (sender == this.image_text_view) {
             // 说明：处理下拉
             let deltaY = args.scrollTop;
-            if (deltaY > this.scroll_view_gesture.offset.down) {
-                this.model.imageTextPullDownText(IMAGE_TEXT_PULL_DOWN_RELEASE_TEXT);
+            if (deltaY > this.scroll_view_gesture.offset.pullDown) {
+                this.imageTextModel.imageTextPullDownText(IMAGE_TEXT_PULL_DOWN_RELEASE_TEXT);
             }
             else {
-                this.model.imageTextPullDownText(IMAGE_TEXT_PULL_DOWN_DEFAULT_TEXT);
+                this.imageTextModel.imageTextPullDownText(IMAGE_TEXT_PULL_DOWN_DEFAULT_TEXT);
             }
         }
 
