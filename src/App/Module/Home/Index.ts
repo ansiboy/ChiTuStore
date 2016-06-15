@@ -5,6 +5,7 @@ import app = require('Application');
 import services = require('Services/Service');
 import home = require('Services/Home');
 import Carousel = require('Core/Carousel');
+import ScrollBottomLoad = require('Core/ScrollBottomLoad');
 
 chitu.Utility.loadjs('UI/PromotionLabel');
 
@@ -20,18 +21,22 @@ class IndexPage extends chitu.Page {
         homeProducts: ko.observableArray()
     };
 
+    private scrollBottomLoad: ScrollBottomLoad;
+
     constructor(html) {
         super(html);
 
-        this.findControl<chitu.ScrollView>('products').scrollLoad = IndexPage.scrollView_load;
+        let productsView = this.findControl<chitu.ScrollView>('products');
         this.load.add(this.page_load);
 
         ko.applyBindings(this.model, this.element);
+        this.scrollBottomLoad = new ScrollBottomLoad(productsView, IndexPage.scrollView_load);
+        IndexPage.scrollView_load(productsView, {});
     }
 
     private static scrollView_load(sender: chitu.ScrollView, args) {
         var page = <IndexPage>sender.page;
-        
+
         var result = home.homeProducts(page.homeProductQueryArguments.pageIndex)
             .done(function (homeProducts: Array<any>) {
                 for (var i = 0; i < homeProducts.length; i++) {
@@ -40,7 +45,7 @@ class IndexPage extends chitu.Page {
                 }
 
                 page.homeProductQueryArguments.pageIndex++;
-                args.enableScrollLoad = (homeProducts.length == services.defaultPageSize);
+                page.scrollBottomLoad.enableScrollLoad = (homeProducts.length == services.defaultPageSize);
             });
 
         return result;
