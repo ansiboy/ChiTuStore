@@ -16,7 +16,9 @@ class ScrollViewNode {
     }
 }
 
-type Offset = { pullUp: number, pullDown: number, panLeft: number, panRight: number }
+type Offset = { pullUp: number, pullDown: number, panLeft: number, panRight: number };
+type Direction = 'left' | 'right' | 'up' | 'down' | 'none';
+
 /** 通用手势切换 ScrollView */
 class ScrollViewGesture {
     private active_item: chitu.ScrollView;
@@ -55,14 +57,14 @@ class ScrollViewGesture {
     on_release: (deltaX: number, deltaY: number) => boolean;
 
     /** 滚动视图改变时调用 */
-    viewChanged = chitu.Callbacks<ScrollViewGesture, { view: chitu.ScrollView, prev: chitu.ScrollView }>();
+    viewChanged = chitu.Callbacks<ScrollViewGesture, { view: chitu.ScrollView, prev: chitu.ScrollView, direction: Direction }>();
 
     constructor(scroll_view: chitu.ScrollView) {
         if (scroll_view == null) throw chitu.Errors.argumentNull('scroll_view');
 
         scroll_view.load.add((sender: chitu.ScrollView, args) => this.on_scrollViewLoad(sender, args));
 
-        this.set_activeItem(scroll_view);
+        this.set_activeItem(scroll_view, 'none');
 
         this._offset = {
             pullUp: -100,
@@ -83,25 +85,25 @@ class ScrollViewGesture {
         this.pullDownExecute = () => {
             move(this.active_item.element).y(this.container_height).end();
             move(this.above_item.element).y(0).end();
-            this.set_activeItem(this.above_item);
+            this.set_activeItem(this.above_item, 'down');
         };
 
         this.pullUpExecute = () => {
             move(this.active_item.element).y(0 - this.container_height).end();
             move(this.below_item.element).y(0).end();
-            this.set_activeItem(this.below_item);
+            this.set_activeItem(this.below_item, 'up');
         };
 
         this.panLeftExecute = () => {
             move(this.active_item.element).x(this.prev_item_pos).end();
             move(this.next_item.element).x(this.active_item_pos_x).end();
-            this.set_activeItem(this.next_item);
+            this.set_activeItem(this.next_item, 'left');
         };
 
         this.panRightExecute = () => {
             move(this.active_item.element).x(this.next_item_pos).end();
             move(this.prev_item.element).x(this.active_item_pos_x).end();
-            this.set_activeItem(this.prev_item);
+            this.set_activeItem(this.prev_item, 'right');
         };
     }
 
@@ -237,7 +239,7 @@ class ScrollViewGesture {
         self.scroll_args = args;
     }
 
-    private set_activeItem(active_item: chitu.ScrollView) {
+    private set_activeItem(active_item: chitu.ScrollView, direction: Direction) {
         if (active_item == null) throw chitu.Errors.argumentNull('active_item');
 
         let prev_view = this.active_item;
@@ -246,7 +248,7 @@ class ScrollViewGesture {
         }
         this.active_item = active_item;
         this.active_item.scroll.add(this.on_scroll);
-        chitu.fireCallback(this.viewChanged, this, { view: active_item, prev: prev_view });
+        chitu.fireCallback(this.viewChanged, this, { view: active_item, prev: prev_view, direction: direction });
 
         var pos = $(this.active_item.element).position();
         this.next_item_pos = this.container_width;
