@@ -1,4 +1,4 @@
-﻿<scroll-view name="product" class="active" next="detail" below='image-text'>
+﻿<scroll-view name="product" class="active" next="image-text2" below='image-text'>
     <scroller style="">
         <div class="container">
             <div name="productImages" class="swiper-container">
@@ -118,105 +118,35 @@
         </div>
     </scroller>
 </scroll-view>
-<scroll-view name="detail" style="transform: translateX(100%);" next="detail2" prev="product">
-    <div class="container">
-        <div style="height:50px;">
-            Hello World
+<scroll-view name="image-text2" style="transform: translateY(100%);" prev="product" next="product-comments">
+    <scroller>
+        <div data-bind="html:Introduce" class="container">
         </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Hello World
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
+    </scroller>
+</scroll-view>
+<scroll-view name="product-comments" style="transform: translateX(200%);" prev="image-text2">
+    <div class="container comments" data-bind="visible:comments().length>0">
+        <div class="clearfix"></div>
+        <div data-bind="foreach:comments">
+            <div class="pull-left">
+                <span data-bind="text:UserName"></span>
+            </div>
+            <div class="pull-right">
+                <span data-bind="text:CreateDateTime"></span>
+            </div>
+            <div class="clearfix"></div>
+            <div class="stars pull-left" data-bind="foreach:Stars" style="margin-bottom:10px;">
+                <i class="icon-star" style="color:#bf0705"></i>
+            </div>
+            <div class="clearfix"></div>
+            <div data-bind="text:Evaluation"></div>
+            <div data-bind="foreach:ImageThumbs">
+                <img data-bind="attr:{src:$data}" style="width:80px;height:80px;" />
+            </div>
+            <hr class="row" style="margin-top:10px;margin-bottom:10px;" />
         </div>
     </div>
 </scroll-view>
-<scroll-view name="detail2" style="transform: translateX(200%);" prev="detail">
-    <div class="container">
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-        <div style="height:50px;">
-            Detail Detail Detail
-        </div>
-    </div>
-</scroll-view>
-
 <bottom-bar>
     <nav ch-part="footer" name="bottom_bar" class="">
         <a href="#Shopping_ShoppingCart" name="btn_shopping_cart" class="pull-left">

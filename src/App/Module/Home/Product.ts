@@ -74,24 +74,34 @@ class ImageTextModel {
     imageTextPullDownText = ko.observable(IMAGE_TEXT_PULL_DOWN_DEFAULT_TEXT);
 }
 
+class CommentsModel {
+    comments = ko.observableArray();
+}
+
 class ProductPage extends chitu.Page {
 
     private model: ProductModel;
     private imageTextModel: ImageTextModel;
+    private commentsModel: CommentsModel;
     private product_view: chitu.ScrollView;
     private image_text_view: chitu.ScrollView;
+    private image_text_view2: chitu.ScrollView;
     private scroll_view_gesture: ScrollViewGesture;
-
+    private product_comments_view: chitu.ScrollView;
     constructor(html) {
         super(html);
 
         this.model = new ProductModel(this);
         this.imageTextModel = new ImageTextModel();
+        this.commentsModel = new CommentsModel();
 
         this.load.add(this.page_load);
 
         this.product_view = this.findControl<chitu.ScrollView>('product');
         this.image_text_view = this.findControl<chitu.ScrollView>('image-text');
+        this.image_text_view2 = this.findControl<chitu.ScrollView>('image-text2');
+        this.product_comments_view = this.findControl<chitu.ScrollView>('product-comments');
+
         this.product_view.scroll.add($.proxy(this.view_scroll, this));
         this.image_text_view.scroll.add($.proxy(this.view_scroll, this));
 
@@ -103,6 +113,9 @@ class ProductPage extends chitu.Page {
 
     private page_load(sender: ProductPage, args: any) {
         ko.applyBindings(this.imageTextModel, this.image_text_view.element);
+        ko.applyBindings(this.imageTextModel, this.image_text_view2.element);
+        ko.applyBindings(this.commentsModel, this.product_comments_view.element);
+
         return $.when(shopping.getProduct(args.id), shopping.getProductStock(args.id),
             shopping.getProductComments(args.id, 4))
 
@@ -133,15 +146,22 @@ class ProductPage extends chitu.Page {
             });
     }
 
-    private view_changed(sender: ScrollViewGesture, args: { view: chitu.ScrollView }) {
+    private view_changed(sender: ScrollViewGesture, args: { view: chitu.ScrollView, direction: string, prev: chitu.ScrollView }) {
         // TODO:切换视图，加载数据
         this.model.productPullUpText(PRODUCT_PULL_UP_DEFAULT_TEXT);
 
         let productId = args.view.page.routeData.values.id;
-        if (args.view == this.image_text_view && !this.imageTextModel.Introduce()) {
-            shopping.getProductIntroduce(productId).done((data) => {
-                this.imageTextModel.Introduce(data.Introduce);
-            })
+        if (args.view == this.image_text_view || args.view == this.image_text_view2) {
+            if (!this.imageTextModel.Introduce()) {
+                shopping.getProductIntroduce(productId).done((data) => {
+                    this.imageTextModel.Introduce(data.Introduce);
+                })
+            }
+        }
+        else if (args.view == this.product_comments_view) {
+            shopping.getProductComments(productId, 10).done((comments) => {
+                return this.commentsModel.comments(comments);
+            });
         }
     }
 
