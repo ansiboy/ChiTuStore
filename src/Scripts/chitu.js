@@ -751,12 +751,13 @@ var chitu;
         };
         GesturePull.prototype.move = function (e) {
             this.disableNativeScroll();
-            move(this.containerElement).y(e.deltaY).duration(0).end();
+            var destY = e.deltaY / 2;
+            move(this.containerElement).y(destY).duration(0).end();
             this.moved = true;
             var args = {
                 scrollHeight: this.scrollerElement.scrollHeight,
                 clientHeight: this.scrollerElement.clientHeight,
-                scrollTop: e.deltaY - this.scrollerElement.scrollTop
+                scrollTop: destY - this.scrollerElement.scrollTop
             };
             this.on_scroll(args);
         };

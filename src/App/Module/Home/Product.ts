@@ -108,7 +108,7 @@ class ProductPage extends chitu.Page {
         this.scroll_view_gesture = new ScrollViewGesture(this.product_view);
         this.scroll_view_gesture.viewChanged.add((sender, args) => this.view_changed(sender, args));
         this.scroll_view_gesture.offset.pullUp = -50;
-        this.scroll_view_gesture.offset.pullDown = 100;
+        this.scroll_view_gesture.offset.pullDown = 80;
     }
 
     private page_load(sender: ProductPage, args: any) {

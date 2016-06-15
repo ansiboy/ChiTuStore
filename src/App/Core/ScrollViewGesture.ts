@@ -192,9 +192,9 @@ class ScrollViewGesture {
             if (e.deltaY < 0)
                 deltaY = (this.scroll_args.scrollTop + this.scroll_args.scrollHeight) - this.scroll_args.clientHeight;
             else
-                deltaY = e.deltaY;
+                deltaY = this.scroll_args.scrollTop;
 
-            this.processVerticalMove(e.deltaY);
+            this.processVerticalMove(deltaY);
         }
     }
 
