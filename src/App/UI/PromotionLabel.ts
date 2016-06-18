@@ -9,7 +9,7 @@ ko.components.register('promotion-label', {
         this.givenText = '满赠';
         this.reduceText = '满减';
         this.discountText = '满折';
-        var routeData = app.config.urlParser.pareeUrl(location.href); 
+        var routeData = app.parseUrl(location.href); 
         if (site.env.isIPhone && routeData.pageName != 'Shopping.ShoppingCart') {
             this.givenText = '赠';
             this.reduceText = '减';

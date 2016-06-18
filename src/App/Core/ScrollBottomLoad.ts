@@ -46,9 +46,12 @@ class ScrollBottomLoad {
 
         //====================================================================
 
-        var marginBottom = clientHeight / 3;
-        if (clientHeight + scrollTop < scrollHeight - marginBottom)
+        var deltaH = clientHeight / 3;
+        //if (clientHeight + scrollTop < scrollHeight - marginBottom)
+        //    return;
+        if (scrollTop + scrollHeight - clientHeight > deltaH) {
             return;
+        }
 
         var result = this.scrollLoad(sender, args);
         result.done(() => {

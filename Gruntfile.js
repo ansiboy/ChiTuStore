@@ -85,9 +85,9 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        clean: {
-            css: [src_root + '/Content/**/*.css'] // 清除编辑器自动生成的 CSS 文件
-        }
+        // clean: {
+        //     css: [src_root + '/Content/**/*.css'] // 清除编辑器自动生成的 CSS 文件
+        // }
     });
 
     grunt.loadNpmTasks('grunt-ts');
