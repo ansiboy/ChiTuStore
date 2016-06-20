@@ -5,13 +5,7 @@ class InfoService {
     constructor() {
     }
     getArticles(args): JQueryPromise<Array<any>> {
-        var result = services.callMethod(services.config.siteServiceUrl, 'Info/GetNewsList', args)
-        result.done($.proxy(function (items) {
-            this.loadCompleted = items.length < site.config.pageSize;
-            return items;
-
-        }, result));
-
+        var result = services.callMethod(services.config.siteServiceUrl, 'Info/GetNewsList', args);
         return result;
     }
     getArticleById(newsId): JQueryPromise<any> {

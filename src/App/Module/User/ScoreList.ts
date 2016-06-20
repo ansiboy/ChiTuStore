@@ -1,4 +1,5 @@
-﻿import account = require('Services/Account');
+﻿import services = require('Services/Service');
+import account = require('Services/Account');
 
 import site = require('Site');
 
@@ -37,7 +38,7 @@ class ScoreListPage extends chitu.Page {
                 }
                 model.scoreRecords(data);
                 model.loading(false);
-                args.enableScrollLoad = data.length == site.config.pageSize;
+                args.enableScrollLoad = data.length == services.defaultPageSize;
             })
         });
     }

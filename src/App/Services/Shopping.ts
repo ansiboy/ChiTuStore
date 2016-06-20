@@ -12,13 +12,13 @@ function translateOrder(source) {
     var orderDetails = order.OrderDetails();
     order.OrderDetails = ko.observableArray();
     for (var i = 0; i < orderDetails.length; i++) {
-        orderDetails[i].Amount = ko.computed(function() {
+        orderDetails[i].Amount = ko.computed(function () {
             return this.Price() * this.Quantity();
         }, orderDetails[i]);
         order.OrderDetails.push(orderDetails[i]);
     }
 
-    order.ProductsAmount = ko.computed(function() {
+    order.ProductsAmount = ko.computed(function () {
         var amount = 0;
         for (var i = 0; i < orderDetails.length; i++) {
             amount = amount + orderDetails[i].Amount();
@@ -26,7 +26,7 @@ function translateOrder(source) {
         return amount;
     }, order);
 
-    order.StatusText = ko.computed(function() {
+    order.StatusText = ko.computed(function () {
         var status = this.Status();
         switch (status) {
             case 'WaitingForPayment':
@@ -89,7 +89,7 @@ function translateComment(data) {
 }
 
 class ShoppingService {
-    getCategories = (parentName: string = undefined): JQueryPromise<any>=> {
+    getCategories = (parentName: string = undefined): JQueryPromise<any> => {
         var result = services.callRemoteMethod('Product/GetCategories', { parentName: parentName });
         return result;
     }
@@ -106,26 +106,19 @@ class ShoppingService {
         var result = services.callMethod(services.config.serviceUrl, 'Product/GetProducts', { brand: brand });
         return result;
     }
-    getProduct = (productId): JQueryPromise<any>=> {
+    getProduct = (productId): JQueryPromise<any> => {
         var result = services.callMethod(services.config.serviceUrl, 'Product/GetProduct', { productId: productId })
             .then(translateProductData);
         return result;
     }
     getProducts = (args) => {
         var result = $.Deferred();
-        services.callRemoteMethod('Product/GetProducts', args).then($.proxy(function(args) {
-            //for (var i = 0; i < args.Products.length; i++) {
-            //    args.Products[i].ImageUrl = site.config.imageServer + args.Products[i].ImageUrl;
-            //}
-            this._result.loadCompleted = args.Products.length < site.config.pageSize;
-            return args;
-
-        }, { _result: result }))
-            .fail($.proxy(function(args) {
+        services.callRemoteMethod('Product/GetProducts', args)
+            .fail($.proxy(function (args) {
                 this._result.reject(args);
 
             }, { _result: result }))
-            .done($.proxy(function(args) {
+            .done($.proxy(function (args) {
                 var products = args.Products;
                 var filters = args.Filters;
                 this._result.resolve(products, filters);
@@ -146,7 +139,7 @@ class ShoppingService {
         /// <param name="productids" type="Array">所购买产品的编号</param>
         /// <param name="quantities" type="Array"></param>
         var result = services.callRemoteMethod('Order/CreateOrder', { productIds: productIds, quantities: quantities })
-            .then(function(order) {
+            .then(function (order) {
                 return translateOrder(order);
             });
         return result;
@@ -154,7 +147,7 @@ class ShoppingService {
     getOrder = (orderId) => {
         /// <param name="orderId">订单编号</param>
         /// <returns type="models.order"/>
-        var result = services.callRemoteMethod('Order/GetOrder', { orderId: orderId }).then(function(order) {
+        var result = services.callRemoteMethod('Order/GetOrder', { orderId: orderId }).then(function (order) {
             return translateOrder(order);
         });
         return result;
@@ -184,20 +177,14 @@ class ShoppingService {
         }
 
         var filter = filters.join(' && ');
-        var args = { filter: filter, StartRowIndex: pageIndex * site.config.pageSize, MaximumRows: site.config.pageSize };
+        var args = { filter: filter, StartRowIndex: pageIndex * services.defaultPageSize, MaximumRows: services.defaultPageSize };
         var result = services.callRemoteMethod('Order/GetMyOrders', args)
-            .then(function(orders) {
+            .then(function (orders) {
                 for (var i = 0; i < orders.length; i++) {
                     orders[i] = translateOrder(orders[i]);
                 }
                 return orders;
             });
-
-
-        result.done($.proxy(function(orders) {
-            this._result.loadCompleted = orders.length < site.config.pageSize;
-        }, { _result: result }));
-
 
         return result;
     }
@@ -209,7 +196,7 @@ class ShoppingService {
             dateTime = dateTime.toFormattedString('G') + '.' + m;
         }
         return services.callRemoteMethod('Order/GetMyLastestOrders', { dateTime: d, status: status })
-            .then(function(orders) {
+            .then(function (orders) {
                 for (var i = 0; i < orders.length; i++) {
                     orders[i] = translateOrder(orders[i]);
                 }
@@ -223,23 +210,23 @@ class ShoppingService {
         //}
 
         //var filter = filters.join(' && ');
-        var args = { status, StartRowIndex: pageIndex * site.config.pageSize, MaximumRows: site.config.pageSize };
+        var args = { status, StartRowIndex: pageIndex * services.defaultPageSize, MaximumRows: services.defaultPageSize };
         var result = services.callRemoteMethod('Order/GetMyOrderList', args)
-            .then(function(orders) {
+            .then(function (orders) {
                 //for (var i = 0; i < orders.length; i++) {
                 //    orders[i] = translateOrder(orders[i]);
                 //}
                 return orders;
             });
 
-        result.done($.proxy(function(orders) {
-            this._result.loadCompleted = orders.length < site.config.pageSize;
+        result.done($.proxy(function (orders) {
+            this._result.loadCompleted = orders.length < services.defaultPageSize;
         }, { _result: result }));
 
         return result;
     }
     getBrands = (args) => {
-        var result = services.callRemoteMethod('Product/GetBrands', args).then(function(data) {
+        var result = services.callRemoteMethod('Product/GetBrands', args).then(function (data) {
             return data;
         });
         return result;
@@ -274,7 +261,7 @@ class ShoppingService {
     getProductCustomProperties = (productId: string): JQueryPromise<any> => {
         return services.callMethod(services.config.serviceUrl, 'Product/GetCustomProperties', { productId: productId });
     }
-    getProductByNumberValues = (groupId, data): JQueryPromise<any>=> {
+    getProductByNumberValues = (groupId, data): JQueryPromise<any> => {
         var d = $.extend({ groupId: groupId }, data);
         return services.callMethod(services.config.serviceUrl, 'Product/GetProductByNumberValues', d)
             .then(translateProductData);
@@ -301,7 +288,6 @@ class ShoppingService {
     }
     getFavorProducts(): LoadListPromise<any> {
         var result = <LoadListPromise<any>>services.callMethod(services.config.serviceUrl, 'Product/GetFavorProducts');
-        result.done((data) => result.loadCompleted = data.length < site.config.pageSize);
         return result;
     }
     unFavorProduct(productId: string) {

@@ -16,9 +16,6 @@ class HomeService {
     homeProducts(pageIndex: number): JQueryPromise<Array<any>> {
         var result = services.callMethod(services.config.siteServiceUrl, 'Home/GetHomeProducts', { pageIndex });
         result.then((data: Array<any>) => {
-            if (data.length < site.config.pageSize)
-                result['loadCompleted'] = true;
-
             return data;
         })
         return result;

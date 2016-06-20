@@ -1,9 +1,9 @@
-﻿
-import account = require('Services/Account');
+﻿import account = require('Services/Account');
 import shopping = require('Services/Shopping');
 import app = require('Application');
 import mapping = require('knockout.mapping');
 import site = require('Site');
+import ScrollBottomLoad = require('Core/ScrollBottomLoad');
 
 //==================================================
 // 说明：不能直接引入 Services/WeiXin 因为环境不一定是微信
@@ -106,19 +106,23 @@ class Model {
 
 class OrderListPage extends chitu.Page {
     private model: Model;
+    private scrollBottomLoad: ScrollBottomLoad;
     constructor(html) {
         super(html);
         this.model = new Model(this);
         this.load.add(this.page_load);
+        ko.applyBindings(this.model, this.element);
+        var view = this.findControl<chitu.ScrollView>('order-list');
+        this.scrollBottomLoad = new ScrollBottomLoad(view, (s, a) => {
+            return this.model.loadOrders().done((items) => {
+                this.scrollBottomLoad.enableScrollLoad = items.length < services.defaultPageSize;
+            });
+        });
     }
 
     private page_load(sender: OrderListPage, args: any) {
-        ko.applyBindings(sender.model, sender.element);
-
-         sender.findControl<chitu.ScrollView>('order-list').scrollLoad = function () {
-            sender.model.status(args.status || '');
-            return sender.model.loadOrders().done((items) => items.length < site.config.pageSize);
-        }
+        //this.model.status(args.status || '');
+        return this.model.loadOrders();
     }
 }
 

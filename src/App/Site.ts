@@ -104,7 +104,7 @@ class SiteStorage {
 
 class SiteConfig {
     storeName = '零食有约'
-    pageSize = 10
+    //pageSize = 10
     defaultUrl = 'Home_Index'
     baseUrl = 'u.alinq.cn/test/Index.html'
     purchaseUrlFormat = 'pay/Purchase.html#{0}'
@@ -231,12 +231,12 @@ export = site;
 
 
 if (site.env.isApp) {
-    document.addEventListener('deviceready', function() {
+    document.addEventListener('deviceready', function () {
         console.log('deviceready');
-    
+
     });
 
-    requirejs(['../cordova'], function() {
+    requirejs(['../cordova'], function () {
 
     });
 }

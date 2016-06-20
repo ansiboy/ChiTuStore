@@ -301,7 +301,7 @@ class AccountService {
             filter = 'it.Status=="' + status + '"';
         }
 
-        var args = { filter: filter, StartRowIndex: pageIndex * site.config.pageSize, MaximumRows: site.config.pageSize };
+        var args = { filter: filter, StartRowIndex: pageIndex * services.defaultPageSize, MaximumRows: services.defaultPageSize };
         var result = services.callRemoteMethod('Order/GetMyOrders', args)
             .then(function (orders) {
                 for (var i = 0; i < orders.length; i++) {
@@ -312,7 +312,7 @@ class AccountService {
 
 
         result.done($.proxy(function (orders) {
-            this._result.loadCompleted = orders.length < site.config.pageSize;
+            this._result.loadCompleted = orders.length < services.defaultPageSize;
         }, { _result: result }));
 
 
@@ -353,7 +353,7 @@ class AccountService {
     /**
      * 评价晒单
      */
-    evaluateProduct(orderDetailId: string, score: number, evaluation: string, anonymous: boolean, imageDatas: string, imageThumbs: string){
+    evaluateProduct(orderDetailId: string, score: number, evaluation: string, anonymous: boolean, imageDatas: string, imageThumbs: string) {
         var data = { orderDetailId, evaluation, imageDatas, score, imageThumbs, anonymous };
         var result = services.callMethod(services.config.serviceUrl, 'Product/EvaluateProduct', data).done(() => {
             var count = this.orderInfo.evaluateCount();

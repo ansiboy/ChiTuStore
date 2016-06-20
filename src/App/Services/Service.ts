@@ -15,7 +15,7 @@ class ServiceConfig {
 class Services {
     private _config: ServiceConfig;
     get defaultPageSize(): number {
-        return site.config.pageSize;
+        return 10;
     }
     get config(): ServiceConfig {
         if (!this._config)
@@ -70,7 +70,7 @@ class Services {
     loadList(serviceUrl: string, method: string, data: Object = undefined): LoadListPromise<Array<any>> {
         var defferd = <LoadListPromise<any>>this.callMethod(serviceUrl, method, data);
         defferd.then(function (data: Array<any>) {
-            if (data.length < site.config.pageSize) {
+            if (data.length < services.defaultPageSize) {
                 defferd.loadCompleted = true;
             }
             return data;

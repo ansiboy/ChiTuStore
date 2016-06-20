@@ -18,8 +18,6 @@ class Coupon {
         result.then($.proxy((data) => {
             /// <param name="data" type="Array"/>
             $(data).each((i, item) => this.extendCoupon(item));
-
-            result['loadCompleted'] = data.length < site.config.pageSize;
             return data;
         }, result));
 
