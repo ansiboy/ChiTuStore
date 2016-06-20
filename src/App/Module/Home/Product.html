@@ -11,7 +11,7 @@
             </div>
 
             <div>
-                <a data-bind="attr:{href: '#Home_ProductDetail_' + ko.unwrap(product.Id)}">
+                <a data-bind="click:showDetailView,tap:showDetailView">
                     <div name="productName" class="pull-left" style="width:100%;margin-left:-20px;">
                         <h4 class="text-left" style="font-weight:bold;padding-left:20px;" data-bind="html: product.Name"></h4>
                     </div>
@@ -107,6 +107,11 @@
     </scroller>
 </scroll-view>
 <scroll-view name="image-text" style="transform: translateY(100%);" above="product">
+    <div data-bind="visible:loading" class="page-loading">
+        <div class="spin">
+            <i class="icon-spinner icon-spin"></i>
+        </div>
+    </div>
     <scroller style="padding-top:0px;">
         <div class="pull-down-bar">
             <h4 class="text-center">
@@ -120,11 +125,28 @@
 </scroll-view>
 <scroll-view name="image-text2" style="transform: translateY(100%);" prev="product" next="product-comments">
     <scroller>
+        <div data-bind="visible:loading" class="page-loading">
+            <div class="spin">
+                <i class="icon-spinner icon-spin"></i>
+            </div>
+        </div>
         <div data-bind="html:Introduce" class="container">
         </div>
     </scroller>
 </scroll-view>
+
 <scroll-view name="product-comments" style="transform: translateX(200%);" prev="image-text2">
+    <div name="nocomments" class="norecords" data-bind="visible:comments().length==0 && loading() == false" style="display:none">
+        <div class="icon">
+            <i class="icon-comments"></i>
+        </div>
+        <h4 class="text">该商品暂无评论</h4>
+    </div>
+    <div data-bind="visible:loading" class="page-loading">
+        <div class="spin">
+            <i class="icon-spinner icon-spin"></i>
+        </div>
+    </div>
     <div class="container comments" data-bind="visible:comments().length>0">
         <div class="clearfix"></div>
         <div data-bind="foreach:comments">

@@ -16,14 +16,16 @@ const IMAGE_TEXT_PULL_DOWN_DEFAULT_TEXT = '下拉查看商品详情';
 const IMAGE_TEXT_PULL_DOWN_RELEASE_TEXT = '释放查看商品详情';
 
 class ProductModel {
-    private page: chitu.Page
-    private _product: any
-    private _optionPanel: ProductPanel
-    private _detailPanel: ProductDetailPanel
+    private page: ProductPage;
+    private _product: any;
+    private _optionPanel: ProductPanel;
+    private _detailPanel: ProductDetailPanel;
+
+    productPullUpText = ko.observable(PRODUCT_PULL_UP_DEFAULT_TEXT);
 
     comments = ko.observableArray()
 
-    constructor(page: chitu.Page) {
+    constructor(page: ProductPage) {
         this.page = page;
     }
 
@@ -66,16 +68,21 @@ class ProductModel {
         this._product = value;
     }
 
-    productPullUpText = ko.observable(PRODUCT_PULL_UP_DEFAULT_TEXT);
+    private showDetailView() {
+        var displayView = this.page.image_text_view2;
+        this.page.scroll_view_gesture.showView(displayView, 'left');
+    }
 }
 
 class ImageTextModel {
     Introduce = ko.observable<string>();
     imageTextPullDownText = ko.observable(IMAGE_TEXT_PULL_DOWN_DEFAULT_TEXT);
+    loading = ko.observable<boolean>(true);
 }
 
 class CommentsModel {
     comments = ko.observableArray();
+    loading = ko.observable<boolean>(true);
 }
 
 class ProductPage extends chitu.Page {
@@ -85,8 +92,8 @@ class ProductPage extends chitu.Page {
     private commentsModel: CommentsModel;
     private product_view: chitu.ScrollView;
     private image_text_view: chitu.ScrollView;
-    private image_text_view2: chitu.ScrollView;
-    private scroll_view_gesture: ScrollViewGesture;
+    public image_text_view2: chitu.ScrollView;
+    public scroll_view_gesture: ScrollViewGesture;
     private product_comments_view: chitu.ScrollView;
     constructor(html) {
         super(html);
@@ -115,6 +122,7 @@ class ProductPage extends chitu.Page {
         ko.applyBindings(this.imageTextModel, this.image_text_view.element);
         ko.applyBindings(this.imageTextModel, this.image_text_view2.element);
         ko.applyBindings(this.commentsModel, this.product_comments_view.element);
+        //ko.applyBindings(this.commentsModel, $(sender.element).find('[name="nocomments"]')[0]);
 
         return $.when(shopping.getProduct(args.id), shopping.getProductStock(args.id),
             shopping.getProductComments(args.id, 4))
@@ -147,19 +155,21 @@ class ProductPage extends chitu.Page {
     }
 
     private view_changed(sender: ScrollViewGesture, args: { view: chitu.ScrollView, direction: string, prev: chitu.ScrollView }) {
-        // TODO:切换视图，加载数据
+        // 切换视图， 根据不同视图加载对应的数据
         this.model.productPullUpText(PRODUCT_PULL_UP_DEFAULT_TEXT);
 
         let productId = args.view.page.routeData.values.id;
         if (args.view == this.image_text_view || args.view == this.image_text_view2) {
             if (!this.imageTextModel.Introduce()) {
                 shopping.getProductIntroduce(productId).done((data) => {
+                    this.imageTextModel.loading(false);
                     this.imageTextModel.Introduce(data.Introduce);
                 })
             }
         }
         else if (args.view == this.product_comments_view) {
             shopping.getProductComments(productId, 10).done((comments) => {
+                this.commentsModel.loading(false);
                 return this.commentsModel.comments(comments);
             });
         }

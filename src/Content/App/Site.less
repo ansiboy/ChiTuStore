@@ -1,4 +1,6 @@
-﻿body {
+﻿@import "Common.less";
+
+body {
   overflow-x: hidden;
 }
 .caption hr {
@@ -360,16 +362,16 @@ p {
   height: 50px;
   text-align: center;
 }
+
 .norecords {
   text-align: center;
-  padding-top: 80px;
+  padding-top: @norecords-padding-top;
   width: 100%;
 }
 .norecords .icon {
   position: relative;
   width: 160px;
   height: 160px;
-  /*padding: 24px 20px 0px 20px;*/
   left: 50%;
   margin-left: -80px;
   border-radius: 50%;
@@ -381,6 +383,11 @@ p {
   font-size: 120px;
   display: block;
   color: white;
+}
+.immersion {
+  .norecords {
+      padding-top: @norecords-padding-top + @immersion-height;
+  }
 }
 
 

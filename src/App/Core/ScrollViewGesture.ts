@@ -107,9 +107,29 @@ class ScrollViewGesture {
         };
     }
 
-
-    private createNode(scrollView: chitu.ScrollView) {
-
+    showView(displayView: chitu.ScrollView, direction: Direction) {
+        if (!displayView) throw chitu.Errors.argumentNull('displayView');
+        if (direction == 'left') {
+            move(displayView.element).x(this.next_item_pos).y(0).duration(0).end();
+            move(this.active_item.element).x(this.prev_item_pos).end();
+            move(displayView.element).x(0).end();
+        }
+        else if (direction == 'right') {
+            move(displayView.element).x(this.prev_item_pos).y(0).duration(0).end();
+            move(this.active_item.element).x(this.next_item_pos).end();
+            move(displayView.element).x(0).end();
+        }
+        else if (direction == 'up') {
+            move(displayView.element).x(0).y(this.container_height).duration(0).end();
+            move(this.active_item.element).y(0 - this.container_height).end();
+            move(displayView.element).x(0).y(0).end();
+        }
+        else if (direction == 'down') {
+            move(displayView.element).x(0).y(0 - this.container_height).duration(0).end();
+            move(this.active_item.element).y(this.container_height).end();
+            move(displayView.element).y(0).end();
+        }
+        this.set_activeItem(displayView,direction);
     }
 
     get offset(): Offset {
