@@ -20,28 +20,28 @@ module.exports = function (grunt) {
     grunt.initConfig({
         ts: {
             app: {
-                src: [src_root + '/App/**/*.ts'],
-                dest: dest_root + '/App',
+                src: [src_root + '/**/*.ts'],
+                dest: dest_root ,
                 options: ts_options
             }
         },
         copy: {
             main: {
                 files: [
-                    { expand: true, cwd: src_root, src: ['App/**/*.html'], dest: dest_root },
-                    { expand: true, cwd: src_root, src: ['Scripts/**/*.js'], dest: dest_root },
-                    { expand: true, cwd: src_root, src: ['Content/css/*.css'], dest: dest_root },
-                    { expand: true, cwd: src_root, src: ['Content/swiper.css'], dest: dest_root },
-                    { expand: true, cwd: src_root, src: ['Content/font/*.*'], dest: dest_root },
-                    { expand: true, cwd: src_root, src: ['Images/**/*.*'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['**/*.html'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['scripts/**/*.js'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['content/css/*.css'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['content/swiper.css'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['content/font/*.*'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['images/**/*.*'], dest: dest_root },
                     { expand: true, src: [src_root + '/*.html'], flatten: true, dest: dest_root },
                 ],
                 app_js: {
-                    files: [{ expand: true, cwd: src_root, src: ['App/**/*.js'], dest: dest_root }]
+                    files: [{ expand: true, cwd: src_root, src: ['**/*.js'], dest: dest_root }]
                 }
             },
             bootbox: {
-                files: [{ expand: true, cwd: src_root, src: 'App/Core/bootbox.js', dest: dest_root }]
+                files: [{ expand: true, cwd: src_root, src: 'core/bootbox.js', dest: dest_root }]
             },
             www: {
                 files: [{
@@ -66,22 +66,22 @@ module.exports = function (grunt) {
             app: {
                 files: [{
                     expand: true,
-                    cwd: src_root + '/Content/App',
+                    cwd: src_root + '/content/App',
                     src: ['**/*.less'],
-                    dest: dest_root + '/Content/',
+                    dest: dest_root + '/content/',
                     ext: '.css'
                 }]
             },
             bootstrap: {
                 files: [{
-                    src: [src_root + '/Content/bootstrap-3.3.5/bootstrap.less'],
-                    dest: dest_root + '/Content/css/bootstrap.css'
+                    src: [src_root + '/content/bootstrap-3.3.5/bootstrap.less'],
+                    dest: dest_root + '/content/css/bootstrap.css'
                 }]
             },
             chitu: {
                 files: [{
-                    src: [src_root + '/Content/chitu.less'],
-                    dest: dest_root + '/Content/chitu.css'
+                    src: [src_root + '/content/chitu.less'],
+                    dest: dest_root + '/content/chitu.css'
                 }]
             }
         },
@@ -94,5 +94,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.registerTask('default', ['ts:app', 'copy', 'less', 'clean']);
+    grunt.registerTask('default', ['ts:app', 'copy', 'less']);
 };

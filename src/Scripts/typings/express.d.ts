@@ -290,7 +290,7 @@ declare module "express" {
              *     // => "application/json"
              *
              *     // Accept: text/*, application/json
-             *     req.accepts('image/png');
+             *     req.accepts('/png');
              *     req.accepts('png');
              *     // => undefined
              *
