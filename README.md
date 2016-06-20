@@ -22,7 +22,7 @@
 ## 使用到的第三方类库或框架
 * bootstrap
 * chitu
-* cordova（另外：在安卓APP中还使用了cross-walk）
+* cordova（另外：在安卓APP中还使用了crosswalk）
 * hammerjs
 * iscroll
 * jquery
