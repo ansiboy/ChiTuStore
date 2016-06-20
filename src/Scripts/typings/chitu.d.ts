@@ -102,17 +102,14 @@ declare namespace chitu {
     }
     class ScrollView extends Control {
         private _bottomLoading;
-        static scrolling: boolean;
         scroll: Callback<ScrollView, ScrollArguments>;
         scrollEnd: Callback<ScrollView, ScrollArguments>;
-        scrollLoad: (sender: ScrollView, args) => JQueryPromise<any>;
         constructor(element: HTMLElement, page: Page);
         on_load(args: any): JQueryPromise<any>;
         protected on_scrollEnd(args: ScrollArguments): JQueryPromise<any>;
         protected on_scroll(args: ScrollArguments): JQueryPromise<any>;
         static createInstance(element: HTMLElement, page: Page): ScrollView;
         bottomLoading: ScrollViewStatusBar;
-        private static page_scrollEnd(sender, args);
     }
     class ScrollViewStatusBar extends Control {
         constructor(element: HTMLElement, page: Page);
@@ -199,8 +196,13 @@ declare namespace chitu {
         Div = 1,
         Document = 2,
     }
+    type PageArguemnts = {
+        container: PageContainer;
+        routeData: RouteData;
+        view: string;
+    };
     interface PageConstructor {
-        new (html: string): Page;
+        new (args: PageArguemnts): Page;
     }
     class Page {
         static animationTime: number;
@@ -232,8 +234,8 @@ declare namespace chitu {
         shown: Callback<{}, {}>;
         hiding: Callback<{}, {}>;
         hidden: Callback<{}, {}>;
-        constructor(html: string);
-        initialize(container: PageContainer, pageInfo: RouteData): void;
+        constructor(args: PageArguemnts);
+        private initialize(container, pageInfo);
         private createControls(element);
         routeData: RouteData;
         name: string;
