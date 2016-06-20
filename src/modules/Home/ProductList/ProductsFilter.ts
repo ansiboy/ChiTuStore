@@ -1,5 +1,5 @@
 ﻿import move = require('move');
-import html = require('text!Module/Home/ProductList/ProductsFilter.html');
+import html = require('text!mod/Home/ProductList/ProductsFilter.html');
 import IScroll = require('iscroll');
 import site = require('Site');
 

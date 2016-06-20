@@ -1,7 +1,7 @@
 ﻿
 /// <reference path="jquery.d.ts"/>
 
-declare module 'text!Module/Home/ProductList/ProductsFilter.html' {
+declare module 'text!mod/Home/ProductList/ProductsFilter.html' {
 }
 
 
