@@ -6,22 +6,6 @@ declare namespace chitu {
         pageName: string;
         resource?: string[];
     }
-    class UrlParser {
-        private path_string;
-        private path_spliter_char;
-        private param_spliter;
-        private name_spliter_char;
-        private _actionPath;
-        private _viewPath;
-        private _cssPath;
-        private _parameters;
-        private _pageName;
-        private pathBase;
-        private HASH_MINI_LENGTH;
-        constructor(pathBase?: string);
-        pareeUrl(url: string): RouteData;
-        private pareeUrlQuery(query);
-    }
     interface ApplicationConfig {
         container?: (routeData: RouteData, prevous: PageContainer) => PageContainer;
         openSwipe?: (routeData: RouteData) => SwipeDirection;
@@ -59,7 +43,6 @@ declare namespace chitu {
     class ControlFactory {
         static createControls(element: HTMLElement, page: Page): Array<Control>;
         static createControl(element: HTMLElement, page: Page): Control;
-        private static transformElement(element);
     }
     class ControlCollection {
         private parent;
@@ -101,7 +84,6 @@ declare namespace chitu {
         clientHeight?: number;
     }
     class ScrollView extends Control {
-        private _bottomLoading;
         scroll: Callback<ScrollView, ScrollArguments>;
         scrollEnd: Callback<ScrollView, ScrollArguments>;
         constructor(element: HTMLElement, page: Page);
@@ -109,7 +91,6 @@ declare namespace chitu {
         protected on_scrollEnd(args: ScrollArguments): JQueryPromise<any>;
         protected on_scroll(args: ScrollArguments): JQueryPromise<any>;
         static createInstance(element: HTMLElement, page: Page): ScrollView;
-        bottomLoading: ScrollViewStatusBar;
         disabled: boolean;
     }
     class ScrollViewStatusBar extends Control {
@@ -122,15 +103,6 @@ declare namespace chitu {
         private init(element);
         refresh(): void;
         disabled: boolean;
-    }
-    class FormLoading extends Control {
-        private loading_element;
-        private _loaded_count;
-        private static _on_load;
-        constructor(element: HTMLElement, page: Page);
-        private defaultHtml();
-        private loaded_count;
-        protected createChild(element: HTMLElement, page: Page): Control;
     }
 }
 declare namespace chitu {

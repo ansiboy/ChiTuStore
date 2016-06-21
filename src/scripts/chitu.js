@@ -28,7 +28,7 @@ var chitu;
                 pathBase = 'modules/';
             this.pathBase = pathBase;
         }
-        UrlParser.prototype.pareeUrl = function (url) {
+        UrlParser.prototype.parseUrl = function (url) {
             if (!url)
                 throw chitu.Errors.argumentNull('url');
             var a = document.createElement('a');
@@ -68,7 +68,6 @@ var chitu;
         };
         return UrlParser;
     }());
-    chitu.UrlParser = UrlParser;
     var PAGE_STACK_MAX_SIZE = 10;
     var ACTION_LOCATION_FORMATER = '{controller}/{action}';
     var VIEW_LOCATION_FORMATER = '{controller}/{action}';
@@ -88,7 +87,7 @@ var chitu;
             }, { app: this });
             var urlParser = new UrlParser(this._config.pathBase);
             this.parseUrl = function (url) {
-                return urlParser.pareeUrl(url);
+                return urlParser.parseUrl(url);
             };
         }
         Application.prototype.on_pageCreating = function () {
@@ -240,68 +239,36 @@ var chitu;
     };
     var Environment = (function () {
         function Environment() {
-            var userAgent = navigator.userAgent;
-            if (userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('iPad') > 0) {
-                this._os = OS.ios;
-                var match = userAgent.match(/iPhone OS\s([0-9\-]*)/);
-                if (match) {
-                    var major_version = parseInt(match[1], 10);
-                    this._version = major_version;
-                }
-            }
-            else if (userAgent.indexOf('Android') > 0) {
-                this._os = OS.android;
-                var match = userAgent.match(/Android\s([0-9\.]*)/);
-                if (match) {
-                    var major_version = parseInt(match[1], 10);
-                    this._version = major_version;
-                }
-            }
-            else {
-                this._os = OS.other;
-            }
         }
-        Object.defineProperty(Environment.prototype, "osVersion", {
+        Object.defineProperty(Environment, "osVersion", {
             get: function () {
                 return this._version;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Environment.prototype, "os", {
+        Object.defineProperty(Environment, "os", {
             get: function () {
-                return this._os;
+                return Environment._os;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Environment.prototype, "isIOS", {
+        Object.defineProperty(Environment, "isIOS", {
             get: function () {
                 return this.os == OS.ios;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Environment.prototype, "isAndroid", {
+        Object.defineProperty(Environment, "isAndroid", {
             get: function () {
                 return this.os == OS.android;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Environment.prototype, "isDegrade", {
-            get: function () {
-                if ((this.isWeiXin || this.osVersion <= 4) && this.isAndroid)
-                    return true;
-                if (navigator.userAgent.indexOf('MQQBrowser') >= 0) {
-                    return true;
-                }
-                return false;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Environment.prototype, "isWeiXin", {
+        Object.defineProperty(Environment, "isWeiXin", {
             get: function () {
                 var ua = navigator.userAgent.toLowerCase();
                 return (ua.match(/MicroMessenger/i)) == 'micromessenger';
@@ -309,29 +276,41 @@ var chitu;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Environment.prototype, "isIPhone", {
+        Object.defineProperty(Environment, "isIPhone", {
             get: function () {
                 return window.navigator.userAgent.indexOf('iPhone') > 0;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Environment, "instance", {
-            get: function () {
-                if (!Environment._instance)
-                    Environment._instance = new Environment();
-                return Environment._instance;
-            },
-            enumerable: true,
-            configurable: true
-        });
+        Environment.init = (function () {
+            var userAgent = navigator.userAgent;
+            if (userAgent.indexOf('iPhone') > 0 || userAgent.indexOf('iPad') > 0) {
+                Environment._os = OS.ios;
+                var match = userAgent.match(/iPhone OS\s([0-9\-]*)/);
+                if (match) {
+                    var major_version = parseInt(match[1], 10);
+                    Environment._version = major_version;
+                }
+            }
+            else if (userAgent.indexOf('Android') > 0) {
+                Environment._os = OS.android;
+                var match = userAgent.match(/Android\s([0-9\.]*)/);
+                if (match) {
+                    var major_version = parseInt(match[1], 10);
+                    Environment._version = major_version;
+                }
+            }
+            else {
+                Environment._os = OS.other;
+            }
+        })();
         return Environment;
     }());
     var ControlFactory = (function () {
         function ControlFactory() {
         }
         ControlFactory.createControls = function (element, page) {
-            ControlFactory.transformElement(element);
             var controls = new Array();
             var elements = element.childNodes;
             for (var i = 0; i < elements.length; i++) {
@@ -347,32 +326,6 @@ var chitu;
         };
         ControlFactory.createControl = function (element, page) {
             return Control.createControl(element, page);
-        };
-        ControlFactory.transformElement = function (element) {
-            var node = element;
-            switch (node.tagName) {
-                case 'SCROLL-VIEW':
-                    var scroll_type = $(node).attr('scroll-type');
-                    if (scroll_type == null) {
-                        if (Environment.instance.isDegrade) {
-                            scroll_type = scroll_types.doc;
-                        }
-                        else if (Environment.instance.isIOS) {
-                            scroll_type = scroll_types.div;
-                        }
-                        else if (Environment.instance.isAndroid && Environment.instance.osVersion >= 5) {
-                            scroll_type = scroll_types.div;
-                        }
-                        else {
-                            scroll_type = scroll_types.doc;
-                        }
-                        $(node).attr('scroll-type', scroll_type);
-                    }
-                    break;
-            }
-            for (var i = 0; i < element.childNodes.length; i++) {
-                ControlFactory.transformElement(element.childNodes[i]);
-            }
         };
         return ControlFactory;
     }());
@@ -535,10 +488,6 @@ var chitu;
             _super.call(this, element, page);
             this.scroll = chitu.Callbacks();
             this.scrollEnd = chitu.Callbacks();
-            var $status_bar = $(element).find('STATUS-BAR');
-            if ($status_bar.length > 0) {
-                this._bottomLoading = new ScrollViewStatusBar($status_bar[0], page);
-            }
         }
         ScrollView.prototype.on_load = function (args) {
             var result;
@@ -557,23 +506,12 @@ var chitu;
             return chitu.fireCallback(this.scroll, this, args);
         };
         ScrollView.createInstance = function (element, page) {
-            var scroll_type = $(element).attr('scroll-type');
-            if (scroll_type == scroll_types.doc)
+            if (Environment.isAndroid && Environment.isWeiXin)
                 return new DocumentScrollView(element, page);
-            if (scroll_type == scroll_types.iscroll) {
-                return new IScrollView(element, page);
-            }
-            if (scroll_type == scroll_types.div)
+            if (Environment.isIOS || (Environment.isAndroid && Environment.osVersion >= 5))
                 return new DivScrollView(element, page);
             return new DocumentScrollView(element, page);
         };
-        Object.defineProperty(ScrollView.prototype, "bottomLoading", {
-            get: function () {
-                return this._bottomLoading;
-            },
-            enumerable: true,
-            configurable: true
-        });
         return ScrollView;
     }(Control));
     chitu.ScrollView = ScrollView;
@@ -584,6 +522,7 @@ var chitu;
             _super.call(this, element, page);
             this.cur_scroll_args = {};
             this.CHECK_INTERVAL = 300;
+            $(element).attr('scroll-type', scroll_types.doc);
             $(document).scroll(function (event) {
                 _this.cur_scroll_args.clientHeight = $(window).height();
                 _this.cur_scroll_args.scrollHeight = document.body.scrollHeight;
@@ -618,6 +557,7 @@ var chitu;
     var DivScrollView = (function (_super) {
         __extends(DivScrollView, _super);
         function DivScrollView(element, page) {
+            $(element).attr('scroll-type', scroll_types.div);
             var scroller_node;
             if (element.firstElementChild != null && element.firstElementChild.tagName == DivScrollView.SCROLLER_TAG_NAME) {
                 scroller_node = element.firstElementChild;
@@ -787,6 +727,7 @@ var chitu;
         __extends(IScrollView, _super);
         function IScrollView(element, page) {
             var _this = this;
+            $(element).attr('scroll-type', scroll_types.iscroll);
             if (element.firstElementChild == null || element.firstElementChild.tagName != IScrollView.SCROLLER_TAG_NAME) {
                 var scroller_node = document.createElement(IScrollView.SCROLLER_TAG_NAME);
                 scroller_node.innerHTML = element.innerHTML;
@@ -868,56 +809,6 @@ var chitu;
         return IScrollView;
     }(ScrollView));
     chitu.IScrollView = IScrollView;
-    var FormLoading = (function (_super) {
-        __extends(FormLoading, _super);
-        function FormLoading(element, page) {
-            _super.call(this, element, page);
-            this._loaded_count = 0;
-            this.loading_element = document.createElement('page-loading');
-            this.loading_element.className = 'page-loading';
-            this.loading_element.innerHTML = this.defaultHtml();
-            element.appendChild(this.loading_element);
-        }
-        FormLoading.prototype.defaultHtml = function () {
-            var html = '<div class="spin"><i class="icon-spinner icon-spin"></i><div>';
-            return html;
-        };
-        Object.defineProperty(FormLoading.prototype, "loaded_count", {
-            set: function (value) {
-                this._loaded_count = this._loaded_count + 1;
-                if (this._loaded_count >= this.children.length) {
-                    this.loading_element.style.display = 'none';
-                    for (var j = 0; j < this.children.length; j++) {
-                        this.children[j].visible = true;
-                    }
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        FormLoading.prototype.createChild = function (element, page) {
-            var self = this;
-            var control = _super.prototype.createChild.call(this, element, page);
-            if (control == null)
-                return;
-            control.visible = false;
-            control.on_load = function (args) {
-                var result = FormLoading._on_load.apply(this, [args]);
-                if (chitu.Utility.isDeferred(result)) {
-                    result.done(function () { return self.loaded_count = self.loaded_count + 1; });
-                }
-                else {
-                    self.loaded_count = self.loaded_count + 1;
-                }
-                return result;
-            };
-            return control;
-        };
-        FormLoading._on_load = Control.prototype.on_load;
-        return FormLoading;
-    }(Control));
-    chitu.FormLoading = FormLoading;
-    Control.register('FORM-LOADING', FormLoading);
     Control.register('HEADER', PageHeader);
     Control.register('TOP-BAR', PageHeader);
     Control.register('SCROLL-VIEW', ScrollView.createInstance);
