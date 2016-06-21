@@ -2,7 +2,6 @@
 var src_root = 'src';
 var dest_root = 'www';
 
-var www_browser = 'platforms/browser';
 var www_ios = 'platforms/ios'
 var www_android = 'platforms/android/assets'
 
@@ -53,11 +52,6 @@ module.exports = function (grunt) {
                         expand: true,
                         src: dest_root + '/**/*.*',
                         dest: www_android,
-                    },
-                    {
-                        expand: true,
-                        src: dest_root + '/**/*.*',
-                        dest: www_browser,
                     },
                 ]
             }
