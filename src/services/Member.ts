@@ -148,7 +148,7 @@ class MemberService {
         /// <returns type="jQuery.Deferred"/>
         return call('UserInfo/Get').then(function (data) {
             data = data || {};
-            data.HeadImageUrl = data.HeadImageUrl || 'Content//nophoto.png';
+            data.HeadImageUrl = data.HeadImageUrl || 'content//nophoto.png';
             data.Region = ko.computed(() => {
                 return data.Province + ' ' + data.City;
             });
