@@ -358,7 +358,7 @@ var chitu;
                             scroll_type = scroll_types.doc;
                         }
                         else if (Environment.instance.isIOS) {
-                            scroll_type = scroll_types.iscroll;
+                            scroll_type = scroll_types.div;
                         }
                         else if (Environment.instance.isAndroid && Environment.instance.osVersion >= 5) {
                             scroll_type = scroll_types.div;
@@ -366,8 +366,8 @@ var chitu;
                         else {
                             scroll_type = scroll_types.doc;
                         }
+                        $(node).attr('scroll-type', scroll_type);
                     }
-                    $(node).attr('scroll-type', scroll_type);
                     break;
             }
             for (var i = 0; i < element.childNodes.length; i++) {
@@ -663,6 +663,20 @@ var chitu;
                 _this.pre_scroll_top = _this.cur_scroll_args.scrollTop;
             }, DivScrollView.CHECK_INTERVAL);
         };
+        Object.defineProperty(DivScrollView.prototype, "disabled", {
+            get: function () {
+                var s = document.defaultView.getComputedStyle(this.scroller_node);
+                return s.overflowY != 'scroll';
+            },
+            set: function (value) {
+                if (value == true)
+                    this.scroller_node.style.overflowY = 'hidden';
+                else
+                    this.scroller_node.style.overflowY = 'scroll';
+            },
+            enumerable: true,
+            configurable: true
+        });
         DivScrollView.CHECK_INTERVAL = 30;
         DivScrollView.SCROLLER_TAG_NAME = 'SCROLLER';
         return DivScrollView;
@@ -837,6 +851,19 @@ var chitu;
             if (this.iscroller != null)
                 this.iscroller.refresh();
         };
+        Object.defineProperty(IScrollView.prototype, "disabled", {
+            get: function () {
+                return !this.iscroller.enabled;
+            },
+            set: function (value) {
+                if (value)
+                    this.iscroller.disable();
+                else
+                    this.iscroller.enable();
+            },
+            enumerable: true,
+            configurable: true
+        });
         IScrollView.SCROLLER_TAG_NAME = 'SCROLLER';
         return IScrollView;
     }(ScrollView));
@@ -1399,6 +1426,7 @@ var chitu;
             var node = container.element;
             var colse_position = $(window).width() / 2;
             var horizontal_swipe_angle = 35;
+            var scroll_views;
             var pan = container.gesture.createPan();
             pan.start = function (e) {
                 node.style.webkitTransform = '';
@@ -1414,9 +1442,11 @@ var chitu;
                     previous_visible = _this.previous.visible;
                     _this.previous.visible = true;
                 }
+                scroll_views = currentPageScrollViews();
                 return result;
             };
             pan.left = function (e) {
+                discableScrollViews(scroll_views);
                 if (e.deltaX <= 0) {
                     move(node).x(0).duration(0).end();
                     move(_this.previous.element).x(previous_start_x).duration(0).end();
@@ -1426,6 +1456,7 @@ var chitu;
                 move(_this.previous.element).x(previous_start_x + e.deltaX * _this._previousOffsetRate).duration(0).end();
             };
             pan.right = function (e) {
+                discableScrollViews(scroll_views);
                 move(node).x(e.deltaX).duration(0).end();
                 move(_this.previous.element).x(previous_start_x + e.deltaX * _this._previousOffsetRate).duration(0).end();
             };
@@ -1437,6 +1468,19 @@ var chitu;
                 move(node).x(0).duration(chitu.Page.animationTime).end();
                 move(container.previous.element).x(previous_start_x).duration(chitu.Page.animationTime)
                     .end(function () { return _this.previous.visible = previous_visible; });
+            };
+            var currentPageScrollViews = function () {
+                var result = [];
+                $(_this.currentPage.element).find('scroll-view').each(function (index, item) {
+                    var scroll_view = $(item).data('control');
+                    result.push(scroll_view);
+                });
+                return result;
+            };
+            var discableScrollViews = function (views) {
+                for (var i = 0; i < views.length; i++) {
+                    views[i].disabled = true;
+                }
             };
         };
         PageContainer.prototype.createNode = function () {

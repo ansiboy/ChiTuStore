@@ -12,8 +12,8 @@ var ts_options = {
     removeComments: true,
     sourceMap: false,
     references: [
-        src_root + "/Scripts/typings/*.d.ts",
-        src_root + "/Scripts/typings/*.ts"
+        src_root + "/scripts/typings/*.d.ts",
+        src_root + "/scripts/typings/*.ts"
     ]
 };
 module.exports = function (grunt) {
@@ -31,9 +31,9 @@ module.exports = function (grunt) {
                     { expand: true, cwd: src_root, src: ['**/*.html'], dest: dest_root },
                     { expand: true, cwd: src_root, src: ['scripts/**/*.js'], dest: dest_root },
                     { expand: true, cwd: src_root, src: ['content/css/*.css'], dest: dest_root },
-                    { expand: true, cwd: src_root, src: ['content/swiper.css'], dest: dest_root },
+                    //{ expand: true, cwd: src_root, src: ['content/swiper.css'], dest: dest_root },
                     { expand: true, cwd: src_root, src: ['content/font/*.*'], dest: dest_root },
-                    { expand: true, cwd: src_root, src: ['images/**/*.*'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['images/*.*'], dest: dest_root },
                     { expand: true, src: [src_root + '/*.html'], flatten: true, dest: dest_root },
                 ],
                 app_js: {

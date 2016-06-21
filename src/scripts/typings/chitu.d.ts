@@ -110,6 +110,7 @@ declare namespace chitu {
         protected on_scroll(args: ScrollArguments): JQueryPromise<any>;
         static createInstance(element: HTMLElement, page: Page): ScrollView;
         bottomLoading: ScrollViewStatusBar;
+        disabled: boolean;
     }
     class ScrollViewStatusBar extends Control {
         constructor(element: HTMLElement, page: Page);
@@ -120,6 +121,7 @@ declare namespace chitu {
         constructor(element: HTMLElement, page: Page);
         private init(element);
         refresh(): void;
+        disabled: boolean;
     }
     class FormLoading extends Control {
         private loading_element;

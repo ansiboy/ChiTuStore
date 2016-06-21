@@ -6,4 +6,6 @@
 /platforms/ios/www
 /platforms/browser/www
 .baseDir.ts
-xcuserdata
+/platforms/ios/**/*.xcuserdata
+/platforms/ios/**/*.xcuserstate
+/platforms/android/.idea/vcs.xml

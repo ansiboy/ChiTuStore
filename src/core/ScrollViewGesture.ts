@@ -120,16 +120,16 @@ class ScrollViewGesture {
             move(displayView.element).x(0).end();
         }
         else if (direction == 'up') {
-            move(displayView.element).to(0,this.container_height).duration(0).end();
-            move(this.active_item.element).to(0,0 - this.container_height).end();
-            move(displayView.element).to(0,0).end();
-        }
-        else if (direction == 'down') {
-            move(displayView.element).to(0,0 - this.container_height).duration(0).end();
-            move(this.active_item.element).to(0,this.container_height).end();
+            move(displayView.element).to(0, this.container_height).duration(0).end();
+            move(this.active_item.element).to(0, 0 - this.container_height).end();
             move(displayView.element).to(0, 0).end();
         }
-        this.set_activeItem(displayView,direction);
+        else if (direction == 'down') {
+            move(displayView.element).to(0, 0 - this.container_height).duration(0).end();
+            move(this.active_item.element).to(0, this.container_height).end();
+            move(displayView.element).to(0, 0).end();
+        }
+        this.set_activeItem(displayView, direction);
     }
 
     get offset(): Offset {
@@ -183,6 +183,7 @@ class ScrollViewGesture {
         if (this.moveType != "horizontal")
             return;
 
+        this.active_item.disabled = true;
         move(this.active_item.element).x(this.active_item_pos_x + e.deltaX).duration(0).end();
         if (this.next_item != null)
             move(this.next_item.element).x(this.next_item_pos + e.deltaX).duration(0).end();
@@ -195,6 +196,7 @@ class ScrollViewGesture {
         if (this.moveType != "horizontal")
             return;
 
+        this.active_item.disabled = true;
         move(this.active_item.element).x(this.active_item_pos_x + e.deltaX).duration(0).end();
         if (this.next_item != null)
             move(this.next_item.element).x(this.next_item_pos + e.deltaX).duration(0).end();
@@ -216,6 +218,7 @@ class ScrollViewGesture {
 
             this.processVerticalMove(deltaY);
         }
+        this.active_item.disabled = false;
     }
 
     private processVerticalMove(deltaY: number) {
