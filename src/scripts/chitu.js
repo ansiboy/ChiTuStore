@@ -73,7 +73,6 @@ var chitu;
     var VIEW_LOCATION_FORMATER = '{controller}/{action}';
     var Application = (function () {
         function Application(config) {
-            this.pageCreating = chitu.Callbacks();
             this.pageCreated = chitu.Callbacks();
             this._runned = false;
             this.container_stack = new Array();
@@ -90,9 +89,6 @@ var chitu;
                 return urlParser.parseUrl(url);
             };
         }
-        Application.prototype.on_pageCreating = function () {
-            return chitu.fireCallback(this.pageCreating, this, {});
-        };
         Application.prototype.on_pageCreated = function (page) {
             return chitu.fireCallback(this.pageCreated, this, page);
         };
@@ -1479,11 +1475,19 @@ var chitu;
         };
         PageContainer.prototype.close = function (swipe) {
             var _this = this;
+            if (swipe == null)
+                swipe = chitu.SwipeDirection.None;
             if (this.is_closing)
                 return;
+            this.pages.forEach(function (item, index, Array) {
+                item.on_closing(item.routeData.values);
+            });
             this.is_closing = true;
             this.hide(swipe).done(function () {
                 $(_this._node).remove();
+                _this.pages.forEach(function (item, index, Array) {
+                    item.on_closed(item.routeData.values);
+                });
             });
         };
         PageContainer.prototype.showLoading = function () {

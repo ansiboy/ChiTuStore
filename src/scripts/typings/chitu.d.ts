@@ -13,7 +13,6 @@ declare namespace chitu {
         pathBase?: string;
     }
     class Application {
-        pageCreating: Callback<Application, any>;
         pageCreated: Callback<Application, Page>;
         private _config;
         private _runned;
@@ -24,7 +23,6 @@ declare namespace chitu {
         private container_stack;
         parseUrl: (url: string) => RouteData;
         constructor(config?: ApplicationConfig);
-        private on_pageCreating();
         private on_pageCreated(page);
         config: chitu.ApplicationConfig;
         currentPage(): chitu.Page;
@@ -203,11 +201,11 @@ declare namespace chitu {
         preLoad: Callback<Page, any>;
         load: Callback<Page, any>;
         closing: Callback<Page, any>;
-        closed: Callback<{}, {}>;
-        showing: Callback<{}, {}>;
-        shown: Callback<{}, {}>;
-        hiding: Callback<{}, {}>;
-        hidden: Callback<{}, {}>;
+        closed: Callback<Page, any>;
+        showing: Callback<Page, any>;
+        shown: Callback<Page, any>;
+        hiding: Callback<Page, any>;
+        hidden: Callback<Page, any>;
         constructor(args: PageArguemnts);
         private initialize(container, pageInfo);
         private createControls(element);
@@ -251,7 +249,7 @@ declare namespace chitu {
         show(swipe: SwipeDirection): JQueryPromise<any>;
         hide(swipe: SwipeDirection): JQueryPromise<any>;
         private is_closing;
-        close(swipe: SwipeDirection): void;
+        close(swipe?: SwipeDirection): void;
         private showLoading();
         private hideLoading();
         visible: boolean;
