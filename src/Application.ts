@@ -2,6 +2,7 @@
 import site = require('Site');
 import PageContainerFactory = require('PageContainerFactory');
 
+
 chitu.Page.animationTime = site.config.pageAnimationTime;
 
 

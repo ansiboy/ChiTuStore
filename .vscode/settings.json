@@ -4,7 +4,7 @@
         "node_modules": true,
         "LICENSE": true,
         "README.md": true,
-        ".baseDir.ts": true,
+        "/**/.baseDir.ts": true,
         ".tscache": true
     }
 }

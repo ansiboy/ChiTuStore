@@ -1,8 +1,13 @@
 
 import ko = require('knockout');
 import $ = require('jquery');
-import site = require('Site');
+//import site = require('Site');
 import chitu = require('chitu');
+
+export let config = {
+    imageBaseUrl: '',
+    storeName: ''
+}
 
 //=====================================================================
 // 说明：实现数据格式化
@@ -305,7 +310,7 @@ ko.bindingHandlers.click = {
 function getImageUrl(src) {
     // 说明：替换图片路径
     if (src.substr(0, 1) == '/') {
-        src = site.config.imageBaseUrl + src;
+        src = config.imageBaseUrl + src;
     }
     return src;
 }
@@ -381,7 +386,7 @@ function getPreviewImage(img_width, img_height) {
     // 设置填充颜色
     ctx.fillStyle = "#999";
     // 设置字体内容，以及在画布上的位置
-    ctx.fillText(site.config.storeName, canvas.width / 2 - 75, canvas.height / 2);
+    ctx.fillText(config.storeName, canvas.width / 2 - 75, canvas.height / 2);
 
     img_src = canvas.toDataURL('/png');
     localStorage.setItem(img_name, img_src);
@@ -598,5 +603,5 @@ ko.bindingHandlers['tap'] = {
 
 //})
 
-window['ko'] = ko;
-export = ko;
+// window['ko'] = ko;
+// export = ko;

@@ -1,4 +1,7 @@
-﻿
+﻿import ko_ext = require('core/ko.ext');
+
+ko_ext.config.imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop';
+ko_ext.config.storeName = '零食有约';
 
 enum OS {
     ios,
@@ -103,14 +106,14 @@ class SiteStorage {
 }
 
 class SiteConfig {
-    storeName = '零食有约'
+    //storeName = '零食有约'
     //pageSize = 10
     defaultUrl = 'Home_Index'
     baseUrl = 'u.alinq.cn/test/Index.html'
     purchaseUrlFormat = 'pay/Purchase.html#{0}'
 
     cookiePrefix = 'lsyy'//该值需要设置
-    imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop'
+    //imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop'
 
     pageAnimationTime = 400
     get animationSpeed() {
