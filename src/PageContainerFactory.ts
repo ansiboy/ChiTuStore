@@ -235,9 +235,9 @@ class PageContainerFactory {
         }
 
     }
-    static createInstance(app: chitu.Application, routeData: chitu.RouteData, previous: chitu.PageContainer): chitu.PageContainer {
+    static createInstance(app: chitu.Application, routeData: chitu.RouteData, previous: chitu.PageContainer, enableSwipeClose: boolean): chitu.PageContainer {
         //debugger;
-        var c: chitu.PageContainer = chitu.PageContainerFactory.createInstance(app, routeData, previous);
+        var c: chitu.PageContainer = chitu.PageContainerFactory.createInstance({ app, previous, enableSwipeClose });
         $(c.element).addClass(routeData.values.controller + '-' + routeData.values.action);
         PageContainerFactory.createContainerHeader(routeData, c);
         PageContainerFactory.createContainerFooter(routeData, c);

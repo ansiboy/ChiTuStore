@@ -76,14 +76,14 @@ var chitu;
             this.pageCreated = chitu.Callbacks();
             this._runned = false;
             this.container_stack = new Array();
-            if (config == null)
-                config = {};
-            this._config = {};
-            this._config.openSwipe = config.openSwipe || function (routeData) { return chitu.SwipeDirection.None; };
-            this._config.closeSwipe = config.closeSwipe || function (routeData) { return chitu.SwipeDirection.None; };
-            this._config.container = config.container || $.proxy(function (routeData, previous) {
-                return chitu.PageContainerFactory.createInstance(this.app, routeData, previous);
-            }, { app: this });
+            config = config || {};
+            this._config = $.extend({
+                openSwipe: function (routeData) { return chitu.SwipeDirection.None; },
+                closeSwipe: function () { return chitu.SwipeDirection.None; },
+                container: $.proxy(function (routeData, previous) {
+                    return chitu.PageContainerFactory.createInstance({ app: this.app, previous: previous });
+                }, { app: this })
+            }, config);
             var urlParser = new UrlParser(this._config.pathBase);
             this.parseUrl = function (url) {
                 return urlParser.parseUrl(url);
@@ -156,7 +156,7 @@ var chitu;
                 var c = this.container_stack.pop();
                 var swipe = this.config.closeSwipe(c.currentPage.routeData);
                 if (c.previous != null) {
-                    c.previous.visible = true;
+                    c.previous.show(chitu.SwipeDirection.None);
                 }
                 c.close(swipe);
             }
@@ -1286,19 +1286,21 @@ var chitu;
         return PageContainerTypeClassNames;
     }());
     var PageContainer = (function () {
-        function PageContainer(app, previous) {
+        function PageContainer(params) {
             this.animationTime = 300;
             this._previousOffsetRate = 0.5;
-            this.enableSwipeClose = true;
             this.pageCreated = chitu.Callbacks();
             this.is_closing = false;
+            params = $.extend({ enableGesture: true, enableSwipeClose: true }, params);
             this._node = this.createNode();
             this._loading = this.createLoading(this._node);
             this._pages = new Array();
-            this._previous = previous;
-            this._app = app;
-            this.gesture = new Gesture(this._node);
-            this._enableSwipeBack();
+            this._previous = params.previous;
+            this._app = params.app;
+            if (params.enableGesture)
+                this.gesture = new Gesture(this._node);
+            if (this.previous != null && params.enableSwipeClose)
+                this._enableSwipeBack();
         }
         PageContainer.prototype.on_pageCreated = function (page) {
             return chitu.fireCallback(this.pageCreated, this, page);
@@ -1306,8 +1308,6 @@ var chitu;
         PageContainer.prototype._enableSwipeBack = function () {
             var _this = this;
             var container = this;
-            if (container.previous == null || this.enableSwipeClose == false)
-                return;
             var previous_start_x;
             var previous_visible;
             var node = container.element;
@@ -1388,6 +1388,7 @@ var chitu;
             var _this = this;
             if (this.visible == true)
                 return $.Deferred().resolve();
+            this.currentPage.on_showing(this.currentPage.routeData.values);
             var container_width = $(this._node).width();
             var container_height = $(this._node).height();
             if (container_width <= 0 || container_height <= 0)
@@ -1397,6 +1398,7 @@ var chitu;
             var on_end = function () {
                 if (_this.previous != null)
                     _this.previous.visible = false;
+                _this.currentPage.on_shown(_this.currentPage.routeData.values);
                 result.resolve();
             };
             this.open_swipe = swipe;
@@ -1600,7 +1602,7 @@ var chitu;
                 });
             }).fail(function (err) {
                 result.reject();
-                console.log(err);
+                console.error(err);
                 throw chitu.Errors.createPageFail(routeData.pageName);
             });
             if (routeData.resource != null && routeData.resource.length > 0) {
@@ -1614,9 +1616,7 @@ var chitu;
                 .done(function (page) {
                 _this.element.appendChild(page.element);
                 _this._currentPage = page;
-                page.on_showing(page.routeData.values);
                 _this.show(swipe).done(function () {
-                    page.on_shown(page.routeData.values);
                 });
             });
         };
@@ -1627,8 +1627,9 @@ var chitu;
         function PageContainerFactory(app) {
             this._app = app;
         }
-        PageContainerFactory.createInstance = function (app, routeData, previous) {
-            return new PageContainer(app, previous);
+        PageContainerFactory.createInstance = function (params) {
+            var c = new PageContainer(params);
+            return c;
         };
         return PageContainerFactory;
     }());
