@@ -20,7 +20,7 @@ module.exports = function (grunt) {
         ts: {
             app: {
                 src: [src_root + '/**/*.ts'],
-                dest: dest_root ,
+                dest: dest_root,
                 options: ts_options
             }
         },
@@ -34,10 +34,10 @@ module.exports = function (grunt) {
                     { expand: true, cwd: src_root, src: ['content/font/*.*'], dest: dest_root },
                     { expand: true, cwd: src_root, src: ['images/*.*'], dest: dest_root },
                     { expand: true, src: [src_root + '/*.html'], flatten: true, dest: dest_root },
-                ],
-                app_js: {
-                    files: [{ expand: true, cwd: src_root, src: ['**/*.js'], dest: dest_root }]
-                }
+                ]
+            },
+            app_js: {
+                files: [{ expand: true, cwd: src_root, src: ['**/*.js'], dest: dest_root }]
             },
             bootbox: {
                 files: [{ expand: true, cwd: src_root, src: 'core/bootbox.js', dest: dest_root }]
