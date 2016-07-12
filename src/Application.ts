@@ -44,17 +44,18 @@ var config: chitu.ApplicationConfig = {
         return chitu.SwipeDirection.Right;
     },
     container: function (routeData: chitu.RouteData, prevous: chitu.PageContainer): chitu.PageContainer {
-        var c = PageContainerFactory.createInstance(app, routeData, prevous);
 
+        let enableSwipeClose = true;
         var action = routeData.values.action;
         var controller = routeData.values.controller;
         if ((controller == 'Home' && action == 'Index') || (controller == 'Home' && action == 'Class') ||
             (controller == 'Shopping' && action == 'ShoppingCart') || (controller == 'Home' && action == 'NewList') ||
             (controller == 'User' && action == 'Index')) {
             //prevous = null;
-            c.enableSwipeClose = false;
+            enableSwipeClose = false;
         }
 
+        var c = PageContainerFactory.createInstance(app, routeData, prevous, enableSwipeClose);
         return c;
     },
 }

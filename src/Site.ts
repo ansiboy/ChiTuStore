@@ -236,7 +236,7 @@ if (site.env.isApp) {
 
     });
 
-    requirejs(['../cordova'], function () {
+    requirejs(['cordova'], function () {
 
     });
 }

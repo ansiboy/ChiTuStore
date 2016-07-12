@@ -5,7 +5,8 @@
 /platforms/android/assets/www
 /platforms/ios/www
 /platforms/browser/www
-.baseDir.ts
+/**/.baseDir.ts
+/**/.baseDir.js
 /platforms/ios/**/*.xcuserdata
 /platforms/ios/**/*.xcuserstate
 /platforms/android/.idea/vcs.xml
