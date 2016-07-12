@@ -106,14 +106,14 @@ class SiteStorage {
 }
 
 class SiteConfig {
-    //storeName = '零食有约'
+    storeName = ko_ext.config.storeName;
     //pageSize = 10
     defaultUrl = 'Home_Index'
     baseUrl = 'u.alinq.cn/test/Index.html'
     purchaseUrlFormat = 'pay/Purchase.html#{0}'
 
     cookiePrefix = 'lsyy'//该值需要设置
-    //imageBaseUrl = 'http://shop.alinq.cn/AdminServices/Shop'
+    imageBaseUrl = ko_ext.config.imageBaseUrl;
 
     pageAnimationTime = 400
     get animationSpeed() {
