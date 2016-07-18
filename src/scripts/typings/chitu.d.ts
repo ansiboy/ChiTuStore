@@ -28,12 +28,15 @@ declare namespace chitu {
         currentPage(): chitu.Page;
         pageContainers: Array<PageContainer>;
         private createPageContainer(routeData);
-        protected hashchange(): void;
+        protected hashchange: () => void;
+        private bindHashChange();
+        private unbindHashChange();
+        private updateHash(hash);
         run(): void;
         getPage(name: string): chitu.Page;
         showPage<T extends Page>(url: string, args?: any): JQueryPromise<T>;
         protected createPageNode(): HTMLElement;
-        redirect<T extends Page>(url: string, args?: any): JQueryPromise<T>;
+        redirect<T extends Page>(hash: string, args?: any): JQueryPromise<T>;
         back(args?: any): JQueryPromise<any>;
     }
 }
@@ -113,8 +116,6 @@ declare namespace chitu {
         static pathPairRequireView(index: any): Error;
         static notImplemented(name: any): Error;
         static routeExists(name: any): Error;
-        static routeResultRequireController(routeName: any): Error;
-        static routeResultRequireAction(routeName: any): Error;
         static ambiguityRouteMatched(url: any, routeName1: any, routeName2: any): Error;
         static noneRouteMatched(url: any): Error;
         static emptyStack(): Error;

@@ -73,9 +73,42 @@ var chitu;
     var VIEW_LOCATION_FORMATER = '{controller}/{action}';
     var Application = (function () {
         function Application(config) {
+            var _this = this;
             this.pageCreated = chitu.Callbacks();
             this._runned = false;
             this.container_stack = new Array();
+            this.hashchange = function () {
+                var back_deferred;
+                if (_this.back_deferred && _this.back_deferred['processed'] == null) {
+                    back_deferred = _this.back_deferred;
+                    back_deferred['processed'] = true;
+                }
+                var hash = window.location.hash;
+                if (!hash) {
+                    if (!hash)
+                        console.log('The url is not contains hash.url is ' + window.location.href);
+                    if (back_deferred)
+                        back_deferred.reject();
+                    return;
+                }
+                var url = location.href;
+                var pageInfo = _this.parseUrl(url);
+                var page = _this.getPage(pageInfo.pageName);
+                var container = page != null ? page.container : null;
+                if (container != null && $.inArray(container, _this.container_stack) == _this.container_stack.length - 2) {
+                    var c = _this.container_stack.pop();
+                    var swipe = _this.config.closeSwipe(c.currentPage.routeData);
+                    if (c.previous != null) {
+                        c.previous.show(chitu.SwipeDirection.None);
+                    }
+                    c.close(swipe);
+                }
+                else {
+                    _this.showPage(url);
+                }
+                if (back_deferred)
+                    back_deferred.resolve();
+            };
             config = config || {};
             this._config = $.extend({
                 openSwipe: function (routeData) { return chitu.SwipeDirection.None; },
@@ -120,58 +153,23 @@ var chitu;
             }
             return container;
         };
-        Application.prototype.hashchange = function () {
-            if (window.location['skip'] == true) {
-                window.location['skip'] = false;
-                return;
-            }
-            var back_deferred;
-            if (this.back_deferred && this.back_deferred['processed'] == null) {
-                back_deferred = this.back_deferred;
-                back_deferred['processed'] = true;
-            }
-            var hash = window.location.hash;
-            if (!hash || hash == this.start_flag_hash) {
-                if (!hash)
-                    console.log('The url is not contains hash.url is ' + window.location.href);
-                if (hash == this.start_flag_hash) {
-                    window.history.pushState({}, '', this.start_hash);
-                    console.log('The hash is start url, the hash is ' + hash);
-                }
-                if (back_deferred)
-                    back_deferred.reject();
-                return;
-            }
-            if (!this.start_flag_hash) {
-                this.start_flag_hash = '#AABBCCDDEEFF';
-                this.start_hash = hash;
-                window.history.replaceState({}, '', this.start_flag_hash);
-                window.history.pushState({}, '', hash);
-            }
-            var url = location.href;
-            var pageInfo = this.parseUrl(url);
-            var page = this.getPage(pageInfo.pageName);
-            var container = page != null ? page.container : null;
-            if (container != null && $.inArray(container, this.container_stack) == this.container_stack.length - 2) {
-                var c = this.container_stack.pop();
-                var swipe = this.config.closeSwipe(c.currentPage.routeData);
-                if (c.previous != null) {
-                    c.previous.show(chitu.SwipeDirection.None);
-                }
-                c.close(swipe);
-            }
-            else {
-                this.showPage(url);
-            }
-            if (back_deferred)
-                back_deferred.resolve();
+        Application.prototype.bindHashChange = function () {
+            $(window).on('hashchange', this.hashchange);
+        };
+        Application.prototype.unbindHashChange = function () {
+            $(window).off('hashchange', this.hashchange);
+        };
+        Application.prototype.updateHash = function (hash) {
+            this.unbindHashChange();
+            window.location.hash = hash;
+            this.bindHashChange();
         };
         Application.prototype.run = function () {
             if (this._runned)
                 return;
             var app = this;
             $.proxy(this.hashchange, this)();
-            $(window).bind('hashchange', $.proxy(this.hashchange, this));
+            this.bindHashChange();
             this._runned = true;
         };
         Application.prototype.getPage = function (name) {
@@ -201,10 +199,9 @@ var chitu;
             var element = document.createElement('div');
             return element;
         };
-        Application.prototype.redirect = function (url, args) {
-            window.location['skip'] = true;
-            window.location.hash = url;
-            return this.showPage(url, args);
+        Application.prototype.redirect = function (hash, args) {
+            this.updateHash(hash);
+            return this.showPage(hash, args);
         };
         Application.prototype.back = function (args) {
             if (args === void 0) { args = undefined; }
@@ -845,14 +842,6 @@ var chitu;
         };
         Errors.routeExists = function (name) {
             var msg = chitu.Utility.format('Route named "{0}" is exists.', name);
-            return new Error(msg);
-        };
-        Errors.routeResultRequireController = function (routeName) {
-            var msg = chitu.Utility.format('The parse result of route "{0}" does not contains controler.', routeName);
-            return new Error(msg);
-        };
-        Errors.routeResultRequireAction = function (routeName) {
-            var msg = chitu.Utility.format('The parse result of route "{0}" does not contains action.', routeName);
             return new Error(msg);
         };
         Errors.ambiguityRouteMatched = function (url, routeName1, routeName2) {

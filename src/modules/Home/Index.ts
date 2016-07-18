@@ -23,8 +23,8 @@ class IndexPage extends chitu.Page {
 
     private scrollBottomLoad: ScrollBottomLoad;
 
-    constructor(html) {
-        super(html);
+    constructor(params) {
+        super(params);
 
         let productsView = this.findControl<chitu.ScrollView>('products');
         this.load.add(this.page_load);

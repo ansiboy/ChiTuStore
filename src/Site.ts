@@ -105,7 +105,7 @@ class SiteStorage {
 class SiteConfig {
     storeName = '零食有约'
     //pageSize = 10
-    defaultUrl = 'Home_Index'
+    defaultUrl = '#Home_Index'
     baseUrl = 'u.alinq.cn/test/Index.html'
     purchaseUrlFormat = 'pay/Purchase.html#{0}'
 
