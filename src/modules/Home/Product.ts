@@ -72,9 +72,6 @@ class ProductModel {
         var displayView = this.page.image_text_view2;
         this.page.scroll_view_gesture.showView(displayView, 'left');
     }
-    private showCommentsView() {
-        this.page.scroll_view_gesture.showView(this.page.product_comments_view, 'left');
-    }
 }
 
 class ImageTextModel {
@@ -97,10 +94,10 @@ class ProductPage extends chitu.Page {
     private image_text_view: chitu.ScrollView;
     public image_text_view2: chitu.ScrollView;
     public scroll_view_gesture: ScrollViewGesture;
-    public product_comments_view: chitu.ScrollView;
+    private product_comments_view: chitu.ScrollView;
     constructor(html) {
         super(html);
-
+ 
         this.model = new ProductModel(this);
         this.imageTextModel = new ImageTextModel();
         this.commentsModel = new CommentsModel();
@@ -152,11 +149,8 @@ class ProductPage extends chitu.Page {
                     str = str + this.Count() + '件';
                     return str;
 
-                }, sender.model.product);
-                
+                }, sender.model.product)
                 ko.applyBindings(sender.model, sender.product_view.element);
-                ko.applyBindings(sender.model, $(sender.element).find('[name="bottom_bar"]')[0]);
-
             });
     }
 

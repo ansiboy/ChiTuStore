@@ -1,0 +1,27 @@
+﻿<div class="container">
+    <div style="padding-top:20px;">
+        <label class="choose">
+            <input data-bind="checked:invoice.type" value="个人" type="radio"> 个人
+        </label>
+    </div>
+    <hr>
+    <div>
+        <label class="choose">
+            <input data-bind="checked:invoice.type" value="公司" type="radio"> 公司
+        </label>
+    </div>
+    <hr />
+    <div class="form-group">
+        <label>
+            发票抬头
+        </label>
+        <input data-bind="value:invoice.title" type="text" class="form-control" placeholder="个人或公司名称">
+    </div>
+
+
+
+    <div style="margin-top:10px;">
+        <button data-bind="click:confirm" class="btn btn-block btn-primary" role="button">确认</button>
+    </div>
+
+</div>

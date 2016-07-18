@@ -1,0 +1,57 @@
+﻿
+<top-bar style="padding: 0px;">
+    <ul class="tabs" style="margin: 0px;">
+        <li>
+            <a data-bind="click:sort,tap:sort, attr:{class: queryArguments.sort() ? '' : 'active'}" data-type="Default">综合</a>
+        </li>
+        <li>
+            <a data-bind="click:sort,tap:sort, attr:{class: queryArguments.sort().substr(0, 'SalesNumber'.length) == 'SalesNumber' ? 'active' : ''}"
+            data-type="SalesNumber">销量</a>
+        </li>
+        <li>
+            <a data-bind="click:sort, tap: sort, attr:{class: queryArguments.sort().substr(0, 'Price'.length) == 'Price' ? 'active' : ''}"
+            data-type="Price">
+                价格
+                <span data-bind="visible: queryArguments.sort().substr('Price'.length + 1) == 'asc'" class="glyphicon glyphicon-triangle-top"></span>
+                <span data-bind="visible: queryArguments.sort().substr('Price'.length + 1) == 'desc'" class="glyphicon glyphicon-triangle-bottom"></span>
+            </a>
+        </li>
+        <li>
+            <a data-bind="click: showFilterDialog,tap:showFilterDialog, attr:{ class: queryArguments.filter() ? 'active' : '' }">
+                筛选
+                <span class="glyphicon glyphicon-filter" style="top: 3px;"></span>
+            </a>
+        </li>
+    </ul>
+</top-bar>
+<scroll-view name="products">
+    <div class="container products" data-bind="foreach: products" style="padding:0px;">
+        <div class="col-xs-6 text-center item">
+            <a data-bind="attr: { href: '#Home_Product_' + ko.unwrap(Id) }">
+                <img data-bind="attr: { src: ImageUrl }" class="img-responsive-80" />
+                <div class="small interception" style="margin-top: 8px;" data-bind="html: Name"></div>
+                <div class="small interception color-grey" data-bind="html: Unit"></div>
+            </a>
+            <div>
+                <div class="price pull-left">
+                    <strong data-bind="money: Price,visible:Price"></strong>
+                </div>
+                <div class="price pull-left">
+                    <strong data-bind="text: ko.unwrap(Score)+'积分',visible:Score"></strong>
+                </div>
+                <div class="pull-right">
+                    <promotion-label params="value:PromotionLabel"></promotion-label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container text-center" data-bind="visible: products().length == 0 && !isLoading()">
+        <h5>没有相关的产品信息</h5>
+    </div>
+    <status-bar>
+    </status-bar>
+</scroll-view>
+
+

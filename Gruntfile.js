@@ -2,6 +2,7 @@
 var src_root = 'src';
 var dest_root = 'www';
 
+var www_browser = 'platforms/browser';
 var www_ios = 'platforms/ios'
 var www_android = 'platforms/android/assets'
 
@@ -11,8 +12,8 @@ var ts_options = {
     removeComments: true,
     sourceMap: false,
     references: [
-        src_root + "/scripts/typings/*.d.ts",
-        src_root + "/scripts/typings/*.ts"
+        src_root + "/Scripts/typings/*.d.ts",
+        src_root + "/Scripts/typings/*.ts"
     ]
 };
 module.exports = function (grunt) {
@@ -20,7 +21,7 @@ module.exports = function (grunt) {
         ts: {
             app: {
                 src: [src_root + '/**/*.ts'],
-                dest: dest_root,
+                dest: dest_root ,
                 options: ts_options
             }
         },
@@ -30,14 +31,14 @@ module.exports = function (grunt) {
                     { expand: true, cwd: src_root, src: ['**/*.html'], dest: dest_root },
                     { expand: true, cwd: src_root, src: ['scripts/**/*.js'], dest: dest_root },
                     { expand: true, cwd: src_root, src: ['content/css/*.css'], dest: dest_root },
-                    //{ expand: true, cwd: src_root, src: ['content/swiper.css'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['content/swiper.css'], dest: dest_root },
                     { expand: true, cwd: src_root, src: ['content/font/*.*'], dest: dest_root },
-                    { expand: true, cwd: src_root, src: ['images/*.*'], dest: dest_root },
+                    { expand: true, cwd: src_root, src: ['images/**/*.*'], dest: dest_root },
                     { expand: true, src: [src_root + '/*.html'], flatten: true, dest: dest_root },
-                ]
-            },
-            app_js: {
-                files: [{ expand: true, cwd: src_root, src: ['**/*.js'], dest: dest_root }]
+                ],
+                app_js: {
+                    files: [{ expand: true, cwd: src_root, src: ['**/*.js'], dest: dest_root }]
+                }
             },
             bootbox: {
                 files: [{ expand: true, cwd: src_root, src: 'core/bootbox.js', dest: dest_root }]
@@ -52,6 +53,11 @@ module.exports = function (grunt) {
                         expand: true,
                         src: dest_root + '/**/*.*',
                         dest: www_android,
+                    },
+                    {
+                        expand: true,
+                        src: dest_root + '/**/*.*',
+                        dest: www_browser,
                     },
                 ]
             }

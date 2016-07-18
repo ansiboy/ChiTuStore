@@ -74,7 +74,7 @@
 
         <hr data-bind="visible:comments().length>0" />
         <div class="container comments" data-bind="visible:comments().length>0">
-            <a data-bind="click:showCommentsView,tap:showCommentsView">
+            <a data-bind="attr:{href:'#Home_ProductComments_'+ko.unwrap(product.Id)}">
                 <h4 style="font-weight: bold;width:100%;">商品评价</h4>
                 <div class="pull-right" style="margin-top:-28px;">
                     <h4 class="icon-chevron-right"></h4>

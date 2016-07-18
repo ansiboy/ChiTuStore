@@ -1,8 +1,14 @@
 
 import ko = require('knockout');
 import $ = require('jquery');
-import site = require('Site');
+//import site = require('Site');
 import chitu = require('chitu');
+
+export let config = {
+    imageBaseUrl: '',
+    storeName: '',
+    ajaxTimeoutSeconds: 10
+}
 
 //=====================================================================
 // 说明：实现数据格式化
@@ -236,7 +242,6 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
                     return result;
                 });
             }
-            //}
 
             deferred = deferred.pipe(function () {
                 var result = $.isFunction(value) ? (<Function>value).apply(viewModel, [viewModel, event]) : value;
@@ -255,7 +260,7 @@ function translateClickAccessor(element, valueAccessor, allBindings, viewModel, 
                     setTimeout($.proxy(function () {
                         $(this._element).removeAttr('disabled');
                         $(this._element).removeClass('disabled');
-                    }, { _element: element }), 1000 * 20);
+                    }, { _element: element }), 1000 * config.ajaxTimeoutSeconds);
                     //===============================================
 
                     result.done(function () {
@@ -305,54 +310,10 @@ ko.bindingHandlers.click = {
 function getImageUrl(src) {
     // 说明：替换图片路径
     if (src.substr(0, 1) == '/') {
-        src = site.config.imageBaseUrl + src;
+        src = config.imageBaseUrl + src;
     }
     return src;
 }
-
-// var ImageLoader = (function () {
-//     var MAX_THREAD = 200;
-//     var thread_count = 0;
-//     var items = [];
-//     var imageLoaded = $.Callbacks();
-// 
-//     window.setInterval(function () {
-//         if (items.length <= 0)
-//             return;
-// 
-//         if (thread_count >= MAX_THREAD)
-//             return;
-// 
-// 
-//         var item = items.shift();
-//         var element = item.element;
-//         var src = item.src;
-// 
-//         element. = new Image();
-//         element..element = element;
-// 
-//         element..src = getImageUrl(src);
-//         thread_count = thread_count + 1;
-// 
-//         element..onload = function () {
-//             this.element.src = this.src;
-//             thread_count = thread_count - 1;
-//             imageLoaded.fire(this.element);
-//         };
-//         element..onerror = function () {
-//             thread_count = thread_count - 1;
-//             //TODO:显示图片加载失败
-//         };
-// 
-//     }, 100);
-// 
-//     return {
-//         load: function (element, src) {
-//             items.push({ element: element, src: src });
-//         },
-//         imageLoaded: imageLoaded
-//     };
-// })();
 
 function getPreviewImage(img_width, img_height) {
 
@@ -381,7 +342,7 @@ function getPreviewImage(img_width, img_height) {
     // 设置填充颜色
     ctx.fillStyle = "#999";
     // 设置字体内容，以及在画布上的位置
-    ctx.fillText(site.config.storeName, canvas.width / 2 - 75, canvas.height / 2);
+    ctx.fillText(config.storeName, canvas.width / 2 - 75, canvas.height / 2);
 
     img_src = canvas.toDataURL('/png');
     localStorage.setItem(img_name, img_src);
@@ -500,88 +461,11 @@ function refreshScrollView(scroll_view: chitu.IScrollView) {
     }
 
     timeid = window.setTimeout(function () {
-        //console.log('refresh scroll view. ' + $(scroll_view.element).attr('name'));
         scroll_view.refresh();
     }, 60);
 
     $(scroll_view.element).data('timeid', timeid);
 }
-
-//===============================================================================
-
-//if (app) {
-
-
-//    function loadVisibleImages(sender, args) {
-//        if (!sender.visible())
-//            return;
-
-//        if (sender._$imgs == null) {
-//            sender._$imgs = $(sender.node()).find('img');
-//        }
-
-//        var imgs = sender._$imgs;
-//        var i = 0;
-//        for (; i < imgs.length; i++) {
-//            var img = imgs[i];
-//            if (img.original_image == null)
-//                continue;
-
-//            var $img_wrapper = $(img).parents('li, div').first();
-//            var img_pos = $img_wrapper.position();
-//            var img_height = $img_wrapper.height();
-//            if (img_pos.top < args.scrollTop + args.clientHeight && img_pos.top + img_height > args.scrollTop) {
-//                //==================================
-//                // 说明：一个元素对应一个 Image 对象，如果有多个，
-//                // 则为多线程加载图片，不能确定最终显示哪一张图（应为最后一张图）
-//                var element = img;
-//                if (!element.) {
-//                    element. = new Image();
-//                    element..element = element;
-//                }
-
-//                if (element.original_image && element..src != element.original_image) {
-//                    element..src = element.original_image;
-//                    element..onload = function () {
-//                        this.element.src = this.src;
-//                        this.element.original_image = null;
-//                    };
-//                }
-//                //==================================
-//            }
-//        }
-//    };
-
-//    var pages = [];
-//    app.pageCreated.add(function (sender, page) {
-//        /// <param name="page" type="chitu.Page"/>
-//        page.shown.add(function (sender, args) {
-//            if ($.inArray(page, pages) >= 0 || page.scrollCompleted == null)
-//                return;
-
-//            sender.scrollCompleted.add(loadVisibleImages);
-
-
-//            if (!sender.loadCompleted) {
-//                return;
-//            }
-
-//            sender.loadCompleted.add(function (sender) {
-//                sender._$imgs = $(sender.node()).find('img');
-//                if (sender.visible()) {
-//                    loadVisibleImages(sender, { scrollTop: 0, clientHeight: $(window).height() });
-//                }
-//                else {
-//                    window.setTimeout(function () {
-//                        loadVisibleImages(sender, { scrollTop: 0, clientHeight: $(window).height() });
-//                    }, 100);
-//                }
-
-//            });
-
-//        });
-//    });
-//}
 
 ko.bindingHandlers['tap'] = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -593,10 +477,3 @@ ko.bindingHandlers['tap'] = {
         }, { _valueAccessor: valueAccessor }));
     }
 }
-
-//    return ko;
-
-//})
-
-window['ko'] = ko;
-export = ko;

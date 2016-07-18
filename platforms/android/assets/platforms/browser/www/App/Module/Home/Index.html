@@ -1,0 +1,99 @@
+﻿
+<scroll-view name="products">
+    <!--<button data-bind="tap:pay,click:pay">支付测试</button>-->
+    <div class="container" style="padding:0px;">
+        <div style="min-height:80px;" data-bind="visible:ko.unwrap(advertItems).length > 0" name="ad-swiper" class="carousel slide"
+        data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators" data-bind="foreach: advertItems">
+                <li data-bind="attr: {'data-slide-to': $index(), 'class': $index() == 0 ? 'active' : ''}" data-target="#carousel-ad"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div data-bind="foreach: advertItems" class="carousel-inner">
+                <div data-bind="attr: {'class': $index() == 0 ? 'active item': 'item'}">
+                    <img data-bind="attr: { src: ImgUrl }" data-image="" alt="..." class="img-responsive">
+                    <div class="carousel-caption">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-bind="visible:ko.unwrap(advertItems).length == 0" style="padding:80px 0px 80px 0px" class="text-center">
+        </div>
+
+        <!--//class="carousel slide" data-ride="carousel"-->
+        <div style="padding-top:20px;padding-bottom:20px;">
+            <div class="quickbar">
+                <div class="col-xs-3 text-center">
+                    <a href="#User_Favors">
+                        <div style="position:relative;left:50%;">
+                            <div class="item">
+                                <i class="icon-heart"></i>
+                            </div>
+                        </div>
+                        <div class="text">我的收藏</div>
+                    </a>
+                </div>
+                <div class="col-xs-3 text-center">
+                    <!--<img src="Images/APP/order.png" class="img-responsive-70" /><br />-->
+                    <a href="#Shopping_OrderList">
+                        <div style="position:relative;left:50%;">
+                            <div class="item">
+                                <i class="icon-list"></i>
+                            </div>
+                        </div>
+                        <div class="text">订单查询</div>
+                    </a>
+                </div>
+                <div class="col-xs-3 text-center">
+                    <!--<img src="Images/APP/recharge.png" class="img-responsive-70" /><br />-->
+                    <a href="#User_RechargeList">
+                        <div style="position:relative;left:50%;">
+                            <div class="item">
+                                <i class="icon-credit-card"></i>
+                            </div>
+                        </div>
+                        <div class="text">会员充值</div>
+                    </a>
+                </div>
+                <div class="col-xs-3 text-center">
+                    <!--<img src="Images/APP/score.png" class="img-responsive-70" /><br />-->
+                    <a href="#Home_ProductList_category_cc5a34d4-9e9d-4b9e-8715-46a3ba69dbe1">
+                        <div style="position:relative;left:50%;width:0px;">
+                            <div class="item">
+                                <i class="icon-exchange"></i>
+                            </div>
+                        </div>
+                        <div class="text">积分兑换</div>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <hr style="margin:0px;" />
+        <h4 id="h4" class="text-primary" style="font-weight:bold;margin:0px;padding:15px 15px 10px 15px;">推荐商品</h4>
+        <div data-bind="foreach:homeProducts,visible:ko.unwrap(homeProducts).length > 0" class="row products" style="margin:0px;">
+            <div class="col-xs-6 text-center item">
+                <a data-bind="attr:{href:'#Home_Product_'+ProductId}" href="product.html">
+                    <img data-bind="attr:{src:ImagePath}" class="img-responsive-70">
+                    <div class="bottom">
+                        <div class="interception" data-bind="html:Name"></div>
+                        <div>
+                            <div class="price pull-left" data-bind="money:Price"></div>
+                            <promotion-label params="value:PromotionLabel" class="pull-right"></promotion-label>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div data-bind="visible:ko.unwrap(homeProducts).length == 0" style="padding:120px 0px 120px 0px" class="text-center">
+            <!--暂无推荐商品，请到后台设置。-->
+        </div>
+        <status-bar>
+        </status-bar>
+    </div>
+</scroll-view>

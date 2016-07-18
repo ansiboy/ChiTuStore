@@ -1,0 +1,11 @@
+﻿<scroll-view name="news">
+    <div class="container news">
+        <div class="padding-lr-15">
+            <h2 class="color-black" data-bind="html:news.Title"></h2>
+            <time class="small"><span data-bind="text:['{0:d}',news.Date]">N/A</span></time>
+        </div>
+        <div class="padding-lr-15 detail">
+            <div data-bind="html:news.Content"></div>
+        </div>
+    </div>
+</scroll-view>

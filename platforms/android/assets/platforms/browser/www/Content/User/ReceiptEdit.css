@@ -1,0 +1,14 @@
+.User-ReceiptEdit scroller,
+.User-ReceiptEdit scroll-view[scroll-type="div"],
+.User-ReceiptEdit scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 70px;
+}
+.User-ReceiptEdit.immersion scroller,
+.User-ReceiptEdit.immersion scroll-view[scroll-type="div"],
+.User-ReceiptEdit.immersion scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 85px;
+}
+.User-ReceiptEdit .color-red {
+  color: red;
+  margin-left: -6px;
+}

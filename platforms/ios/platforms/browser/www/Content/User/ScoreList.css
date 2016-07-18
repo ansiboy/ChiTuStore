@@ -1,0 +1,10 @@
+.User-ScoreList scroller,
+.User-ScoreList scroll-view[scroll-type="div"],
+.User-ScoreList scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 50px;
+}
+.User-ScoreList.immersion scroller,
+.User-ScoreList.immersion scroll-view[scroll-type="div"],
+.User-ScoreList.immersion scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 65px;
+}

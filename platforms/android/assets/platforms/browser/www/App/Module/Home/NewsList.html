@@ -1,0 +1,24 @@
+﻿<scroll-view name="news">
+    <div class="container">
+
+        <div data-topbar="text:'微资讯'"></div>
+
+        <div data-bind="foreach:articles,visible:ko.unwrap(articles).length > 0">
+            <div class="item">
+
+                <a data-bind="attr:{href:'#Home_News_' + ko.unwrap(Id)}">
+                    <img data-bind="attr:{src:ImgUrl}" class="img-full">
+                </a>
+                <div>
+                    <div data-bind="html:Title" class="title"></div>
+                    <div data-bind="text:['{0:d}', CreateDateTime]" class="date"></div>
+                </div>
+            </div>
+        </div>
+        <!--<div data-bind="visible:ko.unwrap(articles).length == 0" class="text-center" style="padding:120px 0px 120px 0px">
+        暂无资讯内容，请到后台添加。
+    </div>-->
+    </div>
+    <status-bar>
+    </status-bar>
+</scroll-view>

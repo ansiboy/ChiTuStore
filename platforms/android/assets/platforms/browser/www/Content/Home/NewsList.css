@@ -1,0 +1,45 @@
+.Home-NewsList scroller,
+.Home-NewsList scroll-view[scroll-type="div"],
+.Home-NewsList scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 50px;
+}
+.Home-NewsList.immersion scroller,
+.Home-NewsList.immersion scroll-view[scroll-type="div"],
+.Home-NewsList.immersion scroll-view[scroll-type="iscroll"] scroller {
+  padding-top: 65px;
+}
+.Home-NewsList scroller,
+.Home-NewsList scroll-view[scroll-type="div"],
+.Home-NewsList scroll-view[scroll-type="iscroll"] scroller {
+  padding-bottom: 50px;
+}
+.Home-NewsList .page-pulldown {
+  width: 100%;
+  height: 50px;
+}
+.Home-NewsList .container {
+  padding: 0px;
+}
+.Home-NewsList .item {
+  margin-top: 30px;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 40px;
+}
+.Home-NewsList .item:first-child {
+  margin-top: 15px;
+}
+.Home-NewsList .item .date {
+  float: right;
+  padding: 10px 12px 8px 0;
+  display: none;
+}
+.Home-NewsList .title {
+  font-size: medium;
+  float: left;
+  padding: 10px 0 8px 12px;
+}
+.Home-NewsList img {
+  width: 100%;
+  height: auto;
+}
