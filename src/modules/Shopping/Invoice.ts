@@ -39,10 +39,10 @@ class InvoicePage extends chitu.Page {
         this.load.add((sender: InvoicePage, args) => {
             ko.applyBindings(sender.model, sender.element);
         });
-        this.showing.add(function (sender: InvoicePage, args) {
-            if (sender.model.validation)
-                sender.model.validation.showAllMessages(false);
-        });
+        // this.showing.add(function (sender: InvoicePage, args) {
+        //     if (sender.model.validation)
+        //         sender.model.validation.showAllMessages(false);
+        // });
     }
     private page_load(sender: InvoicePage, args) {
 

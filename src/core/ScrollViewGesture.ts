@@ -1,4 +1,5 @@
 import chitu = require('chitu');
+import move = require('move');
 
 class ScrollViewNode {
     private _scrollView: chitu.ScrollView;
@@ -120,16 +121,16 @@ class ScrollViewGesture {
             move(displayView.element).x(0).end();
         }
         else if (direction == 'up') {
-            move(displayView.element).to(0,this.container_height).duration(0).end();
-            move(this.active_item.element).to(0,0 - this.container_height).end();
-            move(displayView.element).to(0,0).end();
-        }
-        else if (direction == 'down') {
-            move(displayView.element).to(0,0 - this.container_height).duration(0).end();
-            move(this.active_item.element).to(0,this.container_height).end();
+            move(displayView.element).to(0, this.container_height).duration(0).end();
+            move(this.active_item.element).to(0, 0 - this.container_height).end();
             move(displayView.element).to(0, 0).end();
         }
-        this.set_activeItem(displayView,direction);
+        else if (direction == 'down') {
+            move(displayView.element).to(0, 0 - this.container_height).duration(0).end();
+            move(this.active_item.element).to(0, this.container_height).end();
+            move(displayView.element).to(0, 0).end();
+        }
+        this.set_activeItem(displayView, direction);
     }
 
     get offset(): Offset {
@@ -137,7 +138,7 @@ class ScrollViewGesture {
     }
 
     private on_scrollViewLoad(sender: chitu.ScrollView, args) {
-        let page_container = sender.page.container;
+        let page_container = (<chitu.Page>sender.parent).container;
         $(page_container.element).data('ScrollViewGesture', this);
 
         this.container_width = $(page_container.element).width();
@@ -255,7 +256,7 @@ class ScrollViewGesture {
 
     private on_scroll(sender: chitu.ScrollView, args: chitu.ScrollArguments) {
         //console.log(sender.name + ' scrollTop:' + args.scrollTop);
-        var self = <ScrollViewGesture><any>$(sender.page.container.element).data('ScrollViewGesture');
+        var self = <ScrollViewGesture><any>$((<chitu.Page>sender.parent).container.element).data('ScrollViewGesture');
         self.scroll_args = args;
     }
 
@@ -279,7 +280,7 @@ class ScrollViewGesture {
         let prev_name = $active_item.attr('prev');
         let above_name = $active_item.attr('above');
         let below_name = $active_item.attr('below');
-        let page = active_item.page;
+        let page = <chitu.Page>active_item.parent;
         if (next_name) {
             this.next_item = page.findControl<chitu.ScrollView>(next_name);
             if (this.next_item == null)

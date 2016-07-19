@@ -35,7 +35,7 @@ class IndexPage extends chitu.Page {
     }
 
     private static scrollView_load(sender: chitu.ScrollView, args) {
-        var page = <IndexPage>sender.page;
+        var page = <IndexPage>sender.parent;
 
         var result = home.homeProducts(page.homeProductQueryArguments.pageIndex)
             .done(function (homeProducts: Array<any>) {

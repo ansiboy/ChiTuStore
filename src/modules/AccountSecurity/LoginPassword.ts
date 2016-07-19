@@ -57,7 +57,7 @@ class LoginPassword {
     private loadHtmlDeferred = $.Deferred<string>()
 
     constructor() {
-        requirejs(['text!Module/User/AccountSecurity/LoginPassword.html'], (html) => {
+        requirejs(['text!modules/AccountSecurity/LoginPassword.html'], (html) => {
             this.html = html;
             this.loadHtmlDeferred.resolve(html);
         })

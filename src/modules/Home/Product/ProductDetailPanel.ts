@@ -28,15 +28,12 @@ class ProductDetailPanel {
     constructor(page: chitu.Page) {
 
         this._page = page;
-        //this._productId = productId;
         this._node = document.createElement('div');
         this._node.style.position = 'fixed';
         this._node.style.height = ($(window).height() - 50) + 'px';
         this._node.className = 'product-detail wrapper';
-        //this._node.style.zIndex = this._page.nodes().body.style.zIndex;
 
         page.container.element.appendChild(this._node);
-        //document.body.appendChild(this._node);
 
         this._hammer = new Hammer.Manager(this._node);
         this._hammer.get('pan').set({ direction: Hammer.DIRECTION_DOWN | Hammer.DIRECTION_UP })
@@ -64,7 +61,7 @@ class ProductDetailPanel {
 
         if (!this._loaded) {
             var load_html = $.Deferred();
-            requirejs(['text!Module/Home/Product/ProductDetailPanel.html'], (html) => {
+            requirejs(['text!modules/Home/Product/ProductDetailPanel.html'], (html) => {
                 this._node.innerHTML = html;
                 load_html.resolve(html);
                 this.content_node = $(this._node).find('.container')[0];

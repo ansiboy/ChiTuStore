@@ -39,9 +39,6 @@ requirejs.config({
             deps: ['scripts/CryptoJS/core'],
             exports: 'CryptoJS'
         },
-        'Application': {
-            deps: ['chitu', 'knockout', 'ko.ext', 'Site']
-        },
         'jquery.cookie': {
             deps: ['jquery']
         },

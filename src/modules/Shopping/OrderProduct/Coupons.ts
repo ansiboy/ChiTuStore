@@ -1,5 +1,4 @@
-﻿//import html = require('text!Module/Home/ProductList/ProductsFilter.html');
-import coupon = require('services/Coupon');
+﻿import coupon = require('services/Coupon');
 import move = require('move');
 import site = require('Site');
 import IScroll = require('iscroll');
@@ -18,7 +17,7 @@ class Model {
 
     constructor() {
 
-        requirejs(['text!Module/Shopping/OrderProduct/Coupons.html', 'ui/CouponListItem'], (html) => {
+        requirejs(['text!modules/Shopping/OrderProduct/Coupons.html', 'ui/CouponListItem'], (html) => {
             var $html = $(html).appendTo($('#footer'));
             var win_width = $(window).width();
             this.width = win_width;// * site.config.panelWithRate;

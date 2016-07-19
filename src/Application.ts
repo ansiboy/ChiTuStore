@@ -1,13 +1,11 @@
 ﻿import chitu = require('chitu');
 import site = require('Site');
 import PageContainerFactory = require('PageContainerFactory');
+import ko = require('knockout');
 
+window['ko'] = ko;
 
 chitu.Page.animationTime = site.config.pageAnimationTime;
-
-
-
-
 var config: chitu.ApplicationConfig = {
     openSwipe: (routeData) => {
         if (site.env.isDegrade)
@@ -44,18 +42,19 @@ var config: chitu.ApplicationConfig = {
         //============================================
         return chitu.SwipeDirection.Right;
     },
-    container: function (routeData: chitu.RouteData, prevous: chitu.PageContainer): chitu.PageContainer {
-        var c = PageContainerFactory.createInstance(app, routeData, prevous);
+    container: function (routeData: chitu.RouteData, previous: chitu.PageContainer): chitu.PageContainer {
 
+        var enableSwipeClose = true;
         var action = routeData.values.action;
         var controller = routeData.values.controller;
         if ((controller == 'Home' && action == 'Index') || (controller == 'Home' && action == 'Class') ||
             (controller == 'Shopping' && action == 'ShoppingCart') || (controller == 'Home' && action == 'NewList') ||
             (controller == 'User' && action == 'Index')) {
             //prevous = null;
-            c.enableSwipeClose = false;
+            enableSwipeClose = false;
         }
 
+        var c = PageContainerFactory.createInstance(app, routeData, previous, enableSwipeClose);
         return c;
     },
 }
@@ -75,13 +74,6 @@ app.parseUrl = (url: string): chitu.RouteData => {
 
     let a = document.createElement('a');
     a.href = url;
-
-    // if (a.search && a.search.length > 1) {
-    //     this._parameters = this.pareeUrlQuery(a.search.substr(1));
-    // }
-    // if (a.hash && a.hash.length > 1) {
-    //     this._pageName = a.hash.substr(1);
-    // }
 
     let path_parts = a.hash.substr(1).split(path_spliter_char);
     if (path_parts.length < 2)
