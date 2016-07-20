@@ -106,39 +106,32 @@ class ScrollViewGesture {
             move(this.prev_item.element).x(this.active_item_pos_x).end();
             this.set_activeItem(this.prev_item, 'right');
         };
-
-        var on_end = () => {
-            this.active_item.visible = false;
-        }
     }
 
     showView(displayView: chitu.ScrollView, direction: Direction) {
         if (!displayView) throw chitu.Errors.argumentNull('displayView');
+        displayView.visible = true;
         if (direction == 'left') {
             move(displayView.element).x(this.next_item_pos).y(0).duration(0).end();
-            move(this.active_item.element).x(this.prev_item_pos).end(on_end);
+            move(this.active_item.element).x(this.prev_item_pos).end(this.panLeftExecute);
             move(displayView.element).x(0).end();
         }
         else if (direction == 'right') {
             move(displayView.element).x(this.prev_item_pos).y(0).duration(0).end();
-            move(this.active_item.element).x(this.next_item_pos).end(on_end);
+            move(this.active_item.element).x(this.next_item_pos).end(this.panRightExecute);
             move(displayView.element).x(0).end();
         }
         else if (direction == 'up') {
             move(displayView.element).to(0, this.container_height).duration(0).end();
-            move(this.active_item.element).to(0, 0 - this.container_height).end(on_end);
-            move(displayView.element).to(0, 0).end(on_end);
+            move(this.active_item.element).to(0, 0 - this.container_height).end(this.pullUpExecute);
+            move(displayView.element).to(0, 0).end();
         }
         else if (direction == 'down') {
             move(displayView.element).to(0, 0 - this.container_height).duration(0).end();
-            move(this.active_item.element).to(0, this.container_height).end(on_end);
+            move(this.active_item.element).to(0, this.container_height).end(this.pullDownExecute);
             move(displayView.element).to(0, 0).end();
         }
 
-        var on_end = () => {
-            this.active_item.visible = false;
-            this.set_activeItem(displayView, direction);
-        };
     }
 
     get offset(): Offset {
@@ -239,7 +232,6 @@ class ScrollViewGesture {
     private processVerticalMove(deltaY: number) {
         let cancel = this.on_release(0, deltaY) == false;
         if (cancel) {
-            //move(this.active_item.element).y(this.active_item_pos_y);
             return;
         }
 
@@ -333,8 +325,10 @@ class ScrollViewGesture {
             this.below_item = null;
         }
 
-        if (prev_view)
-            prev_view.visible = false;
+        if (prev_view) {
+            let animation_time = 200;
+            window.setTimeout(() => prev_view.visible = false, animation_time);
+        }
 
     }
 }
