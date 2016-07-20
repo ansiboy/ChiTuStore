@@ -215,7 +215,6 @@ declare namespace chitu {
         private _previous;
         private _app;
         private _previousOffsetRate;
-        private open_swipe;
         private _routeData;
         showing: Callback<PageContainer, any>;
         shown: Callback<PageContainer, any>;

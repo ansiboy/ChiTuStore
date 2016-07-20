@@ -1269,8 +1269,7 @@ var chitu;
                 var d = Math.atan(Math.abs(e.deltaY / e.deltaX)) / 3.14159265 * 180;
                 if (d > horizontal_swipe_angle)
                     return false;
-                var result = (container.previous != null && (e.direction & Hammer.DIRECTION_RIGHT) != 0) &&
-                    (_this.open_swipe == chitu.SwipeDirection.Left || _this.open_swipe == chitu.SwipeDirection.Right);
+                var result = (container.previous != null && (e.direction & Hammer.DIRECTION_RIGHT) != 0);
                 if (result == true) {
                     previous_visible = _this.previous.visible;
                     _this.previous.visible = true;
@@ -1356,7 +1355,6 @@ var chitu;
                 _this.on_shown(_this.routeData.values);
                 result.resolve();
             };
-            this.open_swipe = swipe;
             switch (swipe) {
                 case chitu.SwipeDirection.None:
                 default:
