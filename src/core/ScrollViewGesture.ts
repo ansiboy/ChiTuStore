@@ -106,31 +106,39 @@ class ScrollViewGesture {
             move(this.prev_item.element).x(this.active_item_pos_x).end();
             this.set_activeItem(this.prev_item, 'right');
         };
+
+        var on_end = () => {
+            this.active_item.visible = false;
+        }
     }
 
     showView(displayView: chitu.ScrollView, direction: Direction) {
         if (!displayView) throw chitu.Errors.argumentNull('displayView');
         if (direction == 'left') {
             move(displayView.element).x(this.next_item_pos).y(0).duration(0).end();
-            move(this.active_item.element).x(this.prev_item_pos).end();
+            move(this.active_item.element).x(this.prev_item_pos).end(on_end);
             move(displayView.element).x(0).end();
         }
         else if (direction == 'right') {
             move(displayView.element).x(this.prev_item_pos).y(0).duration(0).end();
-            move(this.active_item.element).x(this.next_item_pos).end();
+            move(this.active_item.element).x(this.next_item_pos).end(on_end);
             move(displayView.element).x(0).end();
         }
         else if (direction == 'up') {
             move(displayView.element).to(0, this.container_height).duration(0).end();
-            move(this.active_item.element).to(0, 0 - this.container_height).end();
-            move(displayView.element).to(0, 0).end();
+            move(this.active_item.element).to(0, 0 - this.container_height).end(on_end);
+            move(displayView.element).to(0, 0).end(on_end);
         }
         else if (direction == 'down') {
             move(displayView.element).to(0, 0 - this.container_height).duration(0).end();
-            move(this.active_item.element).to(0, this.container_height).end();
+            move(this.active_item.element).to(0, this.container_height).end(on_end);
             move(displayView.element).to(0, 0).end();
         }
-        this.set_activeItem(displayView, direction);
+
+        var on_end = () => {
+            this.active_item.visible = false;
+            this.set_activeItem(displayView, direction);
+        };
     }
 
     get offset(): Offset {
@@ -176,6 +184,15 @@ class ScrollViewGesture {
             (this.prev_item != null && (e.direction & Hammer.DIRECTION_RIGHT) == Hammer.DIRECTION_RIGHT) ||
             (this.below_item != null && (e.direction & Hammer.DIRECTION_UP) == Hammer.DIRECTION_UP) ||
             (this.above_item != null && (e.direction & Hammer.DIRECTION_DOWN) == Hammer.DIRECTION_DOWN);
+
+        if ((this.next_item != null && (e.direction & Hammer.DIRECTION_LEFT) == Hammer.DIRECTION_LEFT))
+            this.next_item.visible = true;
+        if (this.prev_item != null && (e.direction & Hammer.DIRECTION_RIGHT) == Hammer.DIRECTION_RIGHT)
+            this.prev_item.visible = true;
+        if (this.below_item != null && (e.direction & Hammer.DIRECTION_UP) == Hammer.DIRECTION_UP)
+            this.below_item.visible = true;
+        if (this.above_item != null && (e.direction & Hammer.DIRECTION_DOWN) == Hammer.DIRECTION_DOWN)
+            this.above_item.visible = true;
 
         return started;
     }
@@ -255,7 +272,6 @@ class ScrollViewGesture {
     }
 
     private on_scroll(sender: chitu.ScrollView, args: chitu.ScrollArguments) {
-        //console.log(sender.name + ' scrollTop:' + args.scrollTop);
         var self = <ScrollViewGesture><any>$((<chitu.Page>sender.parent).container.element).data('ScrollViewGesture');
         self.scroll_args = args;
     }
@@ -316,6 +332,10 @@ class ScrollViewGesture {
         else {
             this.below_item = null;
         }
+
+        if (prev_view)
+            prev_view.visible = false;
+
     }
 }
 
