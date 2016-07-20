@@ -60,6 +60,7 @@ class PageContainerFactory {
 
         var header_path = DEFAULT_HEADER_PATH;
         var header_title: JQueryPromise<string>;
+
         switch (controller) {
             case 'AccountSecurity':
                 switch (action) {
@@ -132,7 +133,7 @@ class PageContainerFactory {
                         break;
                 }
                 break;
-            case 'Shopping':
+            case 'Shopping'://Shopping_OrderProducts
                 switch (action) {
                     case 'OrderDetail':
                         createHeaderNode(container, DEFAULT_WITH_BACK)
@@ -141,6 +142,14 @@ class PageContainerFactory {
                     case 'OrderList':
                         createHeaderNode(container, DEFAULT_WITH_BACK)
                             .done((node) => setHeaderTitle(node, '我的订单'));
+                        break;
+                    case 'OrderProducts':
+                        createHeaderNode(container, DEFAULT_WITH_BACK)
+                            .done((node) => setHeaderTitle(node, '确认订单'));
+                        break;
+                    case 'Invoice':
+                        createHeaderNode(container, DEFAULT_WITH_BACK)
+                            .done((node) => setHeaderTitle(node, '发票信息'));
                         break;
                     case 'ShoppingCart':
                         createHeaderNode(container, DEFAULT_HEADER_PATH)
@@ -214,16 +223,6 @@ class PageContainerFactory {
                     });
                 break;
         }
-        // if (header_path) {
-        //     requirejs(['text!' + header_path + '.html', 'css!sc/Headers.css'], function(html) {
-        //         header_node.innerHTML = html;
-        //         if (header_title) {
-        //             header_title.done(function(title) {
-        //                 $(header_node).find('h4').html(title);
-        //             });
-        //         }
-        //     });
-        // }
     }
     static createContainerFooter(routeData: chitu.RouteData, container: chitu.PageContainer) {
         var controller = routeData.values.controller;

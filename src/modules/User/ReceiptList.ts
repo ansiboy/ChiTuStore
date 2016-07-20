@@ -11,9 +11,9 @@ class PageModel {
     selectedItemId = ko.observable();
     allowSelect = ko.observable(false);  //允许选择某个地址
     noSelect = ko.observable(true);
-    page: chitu.Page;
+    page: ReceiptListPage;
 
-    constructor(page) {
+    constructor(page: ReceiptListPage) {
         this.page = page;
     }
 
@@ -29,15 +29,15 @@ class PageModel {
     newReceipt(model: PageModel, event) {
         app.redirect('#User_ReceiptEdit', { receipts: model.receipts });
     }
-    setAddress(item, event) {
+    setAddress = (item, event) => {
         debugger;
-        var order = this.page['order'];
+        var order = this.page.order;
         if (order) {
             order.ReceiptAddress(item.Detail());
             order.ReceiptInfoId(item.Id());
             order.ReceiptRegionId(item.CountyId());
             shopping.changeReceipt(order.Id(), item.Id())
-                .done(function (data) {
+                .done((data) => {
                     //page.order.Freight(data.Freight);
                     mapping.fromJS(data, {}, order);
                 });
@@ -47,8 +47,8 @@ class PageModel {
         this.selectedItemId(item.Id());
         app.back();
     }
-    setDefaultReceipt(item) {
-        return account.setDefaultReceipt(ko.unwrap(item.Id)).done(function () {
+    setDefaultReceipt = (item) => {
+        return account.setDefaultReceipt(ko.unwrap(item.Id)).done(() => {
             var receipts = this.receipts();
             for (var i = 0; i < receipts.length; i++) {
                 receipts[i].IsDefault(false);
@@ -65,6 +65,8 @@ class PageModel {
 
 class ReceiptListPage extends chitu.Page {
     private model: PageModel;
+    order: any;
+
     constructor(html) {
         super(html);
         this.model = new PageModel(this);
@@ -73,9 +75,9 @@ class ReceiptListPage extends chitu.Page {
 
     private page_load(sender: ReceiptListPage, args: any) {
         if (args.order) {
-            sender['order'] = args.order;
+            sender.order = args.order;
         }
-        
+
         ko.applyBindings(sender.model, sender.element);
         return account.getReceiptInfos().done(function (receipts) {
             mapping.fromJS(receipts, {}, sender.model.receipts);
