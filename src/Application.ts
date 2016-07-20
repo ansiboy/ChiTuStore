@@ -47,10 +47,9 @@ var config: chitu.ApplicationConfig = {
         var enableSwipeClose = true;
         var action = routeData.values.action;
         var controller = routeData.values.controller;
-        if ((controller == 'Home' && action == 'Index') || (controller == 'Home' && action == 'Class') ||
-            (controller == 'Shopping' && action == 'ShoppingCart') || (controller == 'Home' && action == 'NewList') ||
-            (controller == 'User' && action == 'Index')) {
-            //prevous = null;
+        if (routeData.pageName == 'Home.Index' || routeData.pageName == 'Home.Class' ||
+            routeData.pageName == 'Shopping.ShoppingCart' || routeData.pageName == 'Home.NewsList' ||
+            routeData.pageName == 'User.Index') {
             enableSwipeClose = false;
         }
 
