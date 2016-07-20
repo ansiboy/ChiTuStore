@@ -157,6 +157,7 @@ class ProductPage extends chitu.Page {
 
                 }, sender.model.product)
                 ko.applyBindings(sender.model, sender.product_view.element);
+                ko.applyBindings(sender.model, $(sender.element).find('[name="bottom_bar"]')[0]);
             });
     }
 
