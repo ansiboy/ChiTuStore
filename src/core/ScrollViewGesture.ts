@@ -39,7 +39,6 @@ class ScrollViewGesture {
     private moveType: 'none' | 'horizontal' | 'vertical' = 'none';
     private _offset: Offset;
 
-
     /** 下拉执行 */
     pullDownExecute: () => JQueryPromise<any> | void;
 
@@ -141,7 +140,6 @@ class ScrollViewGesture {
     private on_scrollViewLoad(sender: chitu.ScrollView, args) {
         let page_container = (<chitu.Page>sender.parent).container;
         $(page_container.element).data('ScrollViewGesture', this);
-
         this.container_width = $(page_container.element).width();
         this.container_height = $(page_container.element).height();
 
@@ -194,29 +192,32 @@ class ScrollViewGesture {
         if (this.moveType != "horizontal")
             return;
 
-        move(this.active_item.element).x(this.active_item_pos_x + e.deltaX).duration(0).end();
+        let distanceX = this.ease(e.deltaX);
+        move(this.active_item.element).x(this.active_item_pos_x + distanceX).duration(0).end();
         if (this.next_item != null)
-            move(this.next_item.element).x(this.next_item_pos + e.deltaX).duration(0).end();
+            move(this.next_item.element).x(this.next_item_pos + distanceX).duration(0).end();
 
         if (this.prev_item != null)
-            move(this.prev_item.element).x(this.prev_item_pos + e.deltaX).duration(0).end();
+            move(this.prev_item.element).x(this.prev_item_pos + distanceX).duration(0).end();
     }
 
     private on_panRight(e: Hammer.PanEvent) {
         if (this.moveType != "horizontal")
             return;
 
-        move(this.active_item.element).x(this.active_item_pos_x + e.deltaX).duration(0).end();
+        let distanceX = this.ease(e.deltaX);
+        move(this.active_item.element).x(this.active_item_pos_x + distanceX).duration(0).end();
         if (this.next_item != null)
-            move(this.next_item.element).x(this.next_item_pos + e.deltaX).duration(0).end();
+            move(this.next_item.element).x(this.next_item_pos + distanceX).duration(0).end();
 
         if (this.prev_item != null)
-            move(this.prev_item.element).x(this.prev_item_pos + e.deltaX).duration(0).end();
+            move(this.prev_item.element).x(this.prev_item_pos + distanceX).duration(0).end();
     }
 
     private on_panEnd(e: Hammer.PanEvent) {
         if (this.moveType == "horizontal") {
-            this.processHorizontalMove(e.deltaX);
+            let distanceX = this.ease(e.deltaX);
+            this.processHorizontalMove(distanceX);
         }
         else if (this.moveType == "vertical" && this.scroll_args != null) {
             let deltaY: number;
@@ -227,6 +228,12 @@ class ScrollViewGesture {
 
             this.processVerticalMove(deltaY);
         }
+    }
+
+    private ease(x: number): number {
+        let X_SCALE = 1.3;
+        let distanceX = x * X_SCALE;
+        return distanceX;
     }
 
     private processVerticalMove(deltaY: number) {
@@ -243,8 +250,8 @@ class ScrollViewGesture {
         }
     }
 
-    private processHorizontalMove(deltaX: number) {
-        let cancel = this.on_release(deltaX, 0) == false;
+    private processHorizontalMove(distanceX: number) {
+        let cancel = this.on_release(distanceX, 0) == false;
         if (cancel) {
             move(this.active_item.element).x(this.active_item_pos_x).end();
             if (this.next_item != null)
@@ -255,16 +262,16 @@ class ScrollViewGesture {
             return;
         }
 
-        if (deltaX < 0 && this.next_item != null && this.panLeftExecute != null) { // 向左移动
+        if (distanceX < 0 && this.next_item != null && this.panLeftExecute != null) { // 向左移动
             this.panLeftExecute();
         }
-        else if (deltaX > 0 && this.prev_item != null && this.panRightExecute != null) { // 向右移动
+        else if (distanceX > 0 && this.prev_item != null && this.panRightExecute != null) { // 向右移动
             this.panRightExecute();
         }
     }
 
     private on_scroll(sender: chitu.ScrollView, args: chitu.ScrollArguments) {
-        var self = <ScrollViewGesture><any>$((<chitu.Page>sender.parent).container.element).data('ScrollViewGesture');
+        var self = <ScrollViewGesture>$((<chitu.Page>sender.parent).container.element).data('ScrollViewGesture');
         self.scroll_args = args;
     }
 
