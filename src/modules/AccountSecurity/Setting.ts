@@ -8,7 +8,7 @@ import TopBar = require('ui/TopBar');
 
 import registerVerifyCodeButton = require('ui/VerifyCodeButton');
 
-requirejs(['css!content/User/AccountSecurity/Setting']);
+//requirejs(['css!content/User/AccountSecurity/Setting']);
 
 enum Step {
     Verify,
@@ -73,21 +73,21 @@ export = class AccountSecuritySettingPage extends chitu.Page {
             case 'MobileBinding':
                 this.model.stepTwoName('手机绑定');
                 //(<TopBar>page['topbar']).title('手机绑定');
-                requirejs(['Module/User/AccountSecurity/MobileBinding'], (result: NextStep) => {
+                requirejs(['modules/AccountSecurity/MobileBinding'], (result: NextStep) => {
                     this.next_step = result;
                 });
                 break;
             case 'LoginPassword':
                 this.model.stepTwoName('设置密码');
                 //(<TopBar>page['topbar']).title('登录密码');
-                requirejs(['Module/User/AccountSecurity/LoginPassword'], (result) => {
+                requirejs(['modules/AccountSecurity/LoginPassword'], (result) => {
                     this.next_step = result;
                 });
                 break;
             case 'PaymentPassword':
                 //(<TopBar>page['topbar']).title('支付密码');
                 this.model.stepTwoName('设置密码');
-                requirejs(['Module/User/AccountSecurity/PaymentPassword'], (result) => {
+                requirejs(['modules/AccountSecurity/PaymentPassword'], (result) => {
                     this.next_step = result;
                 });
                 break;

@@ -90,7 +90,6 @@ class Model {
         this.counties.removeAll();
 
         var result = account.getCities(provinceId).done((items) => {
-            /// <param name="items" type="Array"/>
             this.cities.push(city_none);
             for (var i = 0; i < items.length; i++) {
                 this.cities.push(items[i]);
@@ -101,15 +100,12 @@ class Model {
         return result;
     }
     loadCounties = (cityId) => {
-        /// <returns type="jQuery.Deferred"/>
-
         this.county().attr('disabled', 'disabled');
         if (this.isEmptyId(cityId))
             return $.Deferred().resolve();
 
         this.counties.removeAll();
         var result = account.getCounties(cityId).done((items) => {
-            /// <param name="items" type="Array"/>
             this.counties.push(county_none);
             for (var i = 0; i < items.length; i++) {
                 this.counties.push(items[i]);
@@ -125,7 +121,6 @@ class Model {
             return $.Deferred().reject();
         }
 
-        //var obj = mapping.toJS(this.receipt);
         return account.saveReceiptInfo(this.receipt).done(() => {
             //===========================================
             // 说明：触发加载事件，重新加载数据。
@@ -182,6 +177,7 @@ class ReceiptEditPage extends chitu.Page {
     constructor(html) {
         super(html);
         let model = this.model = new Model(this);
+        ko.applyBindings(model, this.element);
 
         account.getProvinces().done(function (provinces) {
             model.provinces.push(province_none);
@@ -190,15 +186,11 @@ class ReceiptEditPage extends chitu.Page {
             }
 
         });
-        
+
         this.load.add(this.page_load);
     }
 
     private page_load(sender: ReceiptEditPage, args) {
-        //function ( {
-        /// args 参数说明：
-        /// 1. receipt:   编辑操作
-        /// 2. receipts:  添加操作
 
         if (!args.id) {
             var obj = mapping.toJS(new Receipt());
@@ -212,8 +204,6 @@ class ReceiptEditPage extends chitu.Page {
             var provinceId = data.ProvinceId;
             var cityId = data.CityId;
             var countyId = data.CountyId;
-
-            sender.model['receipts'] = args.receipts;
 
             sender.model.enableProvince();
             return sender.model.loadCities(provinceId)

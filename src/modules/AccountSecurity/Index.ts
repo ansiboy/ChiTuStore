@@ -1,4 +1,4 @@
-﻿requirejs(['css!content/User/AccountSecurity/Index']);
+﻿
 import auth = require('services/Auth');
 import ko = require('knockout');
 import services = require('services/Service');

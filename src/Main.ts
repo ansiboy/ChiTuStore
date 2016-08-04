@@ -39,9 +39,6 @@ requirejs.config({
             deps: ['scripts/CryptoJS/core'],
             exports: 'CryptoJS'
         },
-        'Application': {
-            deps: ['chitu', 'knockout', 'ko.ext', 'Site']
-        },
         'jquery.cookie': {
             deps: ['jquery']
         },
@@ -103,7 +100,7 @@ requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'ui/Loading', 'ui/T
     // 说明：如果是微信环境，则加载微信模块
     var weiXinChecked = $.Deferred();
     var ua = navigator.userAgent.toLowerCase();
-    window['move'] = arguments[6];
+    //window['move'] = arguments[6];
     if (site.env.isWeiXin) { //(ua.match(/MicroMessenger/i) == 'micromessenger') {
         requirejs(['sv/WeiXin', 'WXShare'], function() {
             weiXinChecked.resolve();
@@ -118,15 +115,7 @@ requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'ui/Loading', 'ui/T
         //==================================================
         app.run();
         if (!location.hash) {
-            location.hash = 'Home_Index';
-            //=====================================
-            // 说明：将引导页关闭
-            // if (site.env.isApp) {
-            //     window.setTimeout(function() {
-            //         window['plus'].webview.currentWebview().close();
-            //     }, 1000);
-            // }
-            //=====================================
+            location.hash = site.config.defaultUrl;
         }
 
         //==================================================

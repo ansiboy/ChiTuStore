@@ -12,10 +12,80 @@ import AvalibleCoupons = require('modules/Shopping/OrderProduct/Coupons');
 requirejs(['css!content/Shopping/OrderProducts'], function () { });
 var avalibleCoupons = new AvalibleCoupons();
 
+class Order {
+    private _userBalance: number;
+    private BalanceAmount: KnockoutObservable<number>; //= ko.observable<number>();
+    private Sum: KnockoutObservable<number>;
+    private total: KnockoutComputed<number>;
+    private balance: KnockoutComputed<number>;
+    private isBalancePay: KnockoutComputed<boolean>;
+
+    actualPaid: KnockoutComputed<number>;
+
+    Id: KnockoutObservable<string>;
+    Invoice: KnockoutObservable<string>;
+    ReceiptAddress: KnockoutObservable<string>;
+    ReceiptRegionId: KnockoutObservable<string>;
+    OrderDetails: KnockoutObservableArray<{ ProductId: KnockoutObservable<string> }>;
+
+    isValid: () => boolean;
+
+    constructor(userBalance, source: any) {
+        this._userBalance = userBalance;
+        for (var key in source) {
+            this[key] = source[key];
+        }
+
+        this.total = ko.computed(() => {
+            var total = ko.unwrap(this.Sum);
+            return total;
+        }, this);
+
+        this.balance = ko.computed(() => {
+            var balanceAmount = ko.unwrap(this.BalanceAmount) || 0;
+            if (balanceAmount)
+                return balanceAmount;
+
+            var sum = ko.unwrap(this.Sum);
+            if (this._userBalance > sum) {
+                return sum;
+            }
+
+            return this._userBalance;
+        }, this);
+
+        this.isBalancePay = ko.pureComputed({
+            read: function () {
+                if (ko.unwrap(this.BalanceAmount))
+                    return true;
+
+                return false;
+            },
+            write: function (value) {
+                if (value) {
+                    var balanceAmount = this.balance();
+                    return shopping.balancePay(ko.unwrap(this.model.order.Id), balanceAmount).done(function (data) {
+                        mapping.fromJS(data, {}, this.model.order);
+                    });
+                }
+
+                return shopping.balancePay(ko.unwrap(this.model.order.Id), 0).done(function (data) {
+                    mapping.fromJS(data, {}, this.model.order);
+                });
+
+            }
+        }, this);
+
+        this.actualPaid = ko.computed(function () {
+            return this.Sum() - this.BalanceAmount();
+        }, this);
+    }
+}
+
 class Model {
     private _page: chitu.Page;
 
-    order = null
+    order: Order;
 
     orderSummary = ko.observable()
     balance = ko.observable()
@@ -84,98 +154,199 @@ class Model {
 
 }
 
-export = function (page) {
-    /// <param name="page" type="chitu.Page"/>
+class OrderProductsPage extends chitu.Page {
+    private validation;
+    private model: Model;// = new Model(page);
+    private orderId;
 
-    var validation;
-    var model = new Model(page);
+    constructor(params) {
+        super(params);
+        this.model = new Model(this);
 
-    avalibleCoupons.couponCodeSelected = (coupon) => {
-        shopping.useCoupon(ko.unwrap(model.order.Id), coupon.Code).done((data) => {
-            debugger;
-            mapping.fromJS(data, {}, model.order);
-        });
+        avalibleCoupons.couponCodeSelected = (coupon) => {
+            shopping.useCoupon(ko.unwrap(this.model.order.Id), coupon.Code).done((data) => {
+                debugger;
+                mapping.fromJS(data, {}, this.model.order);
+            });
+        }
+
+        var orderId;
+        this.load.add(this.page_load);
     }
 
-    var orderId;
-    page.load.add(function (sender, args) {
-        /// <param name="sender" type="chitu.Page"/>
-
-        if (orderId == args.id)
+    private page_load(sender: OrderProductsPage, args) {
+        if (this.orderId == args.id)
             return;
 
-        orderId = args.id;
+        this.orderId = args.id;
         return $.when(account.getBalance(), shopping.getOrder(args.id), coupon.getAvailableCoupons(args.id))
-            .done(function (balance, order, coupons) {
+            .done((balance, order, coupons) => {
                 if (order == null) {
                     return app.showPage('Shopping_ShoppingCart', {});
                 }
 
-                model.orderSummary(ko.unwrap(order.Sum));
-                model.balance(balance);
-                model.coupons(coupons);
+                this.model.orderSummary(ko.unwrap(order.Sum));
+                this.model.balance(balance);
+                this.model.coupons(coupons);
 
                 if (coupons.length > 0) {
-                    model.couponTitle(chitu.Utility.format('{0}可用张优惠', coupons.length));
+                    this.model.couponTitle(chitu.Utility.format('{0}可用张优惠', coupons.length));
                 }
 
-                order.total = ko.computed(function () {
-                    var total = ko.unwrap(this.Sum);
-                    return total;
-                }, order);
+                // order.total = ko.computed(function () {
+                //     var total = ko.unwrap(this.Sum);
+                //     return total;
+                // }, order);
 
-                order.balance = ko.computed(function () {
-                    var balanceAmount = ko.unwrap(this.BalanceAmount) || 0;
-                    if (balanceAmount)
-                        return balanceAmount;
+                // order.balance = ko.computed(function () {
+                //     var balanceAmount = ko.unwrap(this.BalanceAmount) || 0;
+                //     if (balanceAmount)
+                //         return balanceAmount;
 
-                    var sum = ko.unwrap(this.Sum);
-                    if (balance > sum) {
-                        return sum;
-                    }
+                //     var sum = ko.unwrap(this.Sum);
+                //     if (balance > sum) {
+                //         return sum;
+                //     }
 
-                    return balance;
-                }, order);
+                //     return balance;
+                // }, order);
 
-                order.isBalancePay = ko.pureComputed({
-                    read: function () {
-                        if (ko.unwrap(this.BalanceAmount))
-                            return true;
+                // order.isBalancePay = ko.pureComputed({
+                //     read: function () {
+                //         if (ko.unwrap(this.BalanceAmount))
+                //             return true;
 
-                        return false;
-                    },
-                    write: function (value) {
-                        if (value) {
-                            var balanceAmount = this.balance();
-                            return shopping.balancePay(ko.unwrap(model.order.Id), balanceAmount).done(function (data) {
-                                mapping.fromJS(data, {}, model.order);
-                            });
-                        }
+                //         return false;
+                //     },
+                //     write: function (value) {
+                //         if (value) {
+                //             var balanceAmount = this.balance();
+                //             return shopping.balancePay(ko.unwrap(this.model.order.Id), balanceAmount).done(function (data) {
+                //                 mapping.fromJS(data, {}, this.model.order);
+                //             });
+                //         }
 
-                        return shopping.balancePay(ko.unwrap(model.order.Id), 0).done(function (data) {
-                            mapping.fromJS(data, {}, model.order);
-                        });
+                //         return shopping.balancePay(ko.unwrap(this.model.order.Id), 0).done(function (data) {
+                //             mapping.fromJS(data, {}, this.model.order);
+                //         });
 
-                    }
-                }, order);
+                //     }
+                // }, order);
 
-                order.actualPaid = ko.computed(function () {
-                    return order.Sum() - order.BalanceAmount();
-                });
+                // order.actualPaid = ko.computed(function () {
+                //     return order.Sum() - order.BalanceAmount();
+                // });
 
-                if (model.order == null) {
-                    model.order = order;
-                    ko.applyBindings(model, page.element);
-                }
-                else {
-                    for (var key in order) {
-                        if (ko.isWriteableObservable(order[key])) {
-                            var value = order[key]();
-                            model.order[key](value);
-                        }
-                    }
-                }
+                //if (this.model.order == null) {
+                this.model.order = $.extend(order, new Order(balance, order));
+                ko.applyBindings(this.model, sender.element);
+                // }
+                // else {
+                //     for (var key in order) {
+                //         if (ko.isWriteableObservable(order[key])) {
+                //             var value = order[key]();
+                //             sender.model.order[key](value);
+                //         }
+                //     }
+                // }
             });
-    });
-
+    }
 }
+
+export = OrderProductsPage;
+
+// export = function (page) {
+//     /// <param name="page" type="chitu.Page"/>
+
+//     var validation;
+//     var model = new Model(page);
+
+//     avalibleCoupons.couponCodeSelected = (coupon) => {
+//         shopping.useCoupon(ko.unwrap(model.order.Id), coupon.Code).done((data) => {
+//             debugger;
+//             mapping.fromJS(data, {}, model.order);
+//         });
+//     }
+
+//     var orderId;
+//     page.load.add(function (sender, args) {
+//         /// <param name="sender" type="chitu.Page"/>
+
+//         if (orderId == args.id)
+//             return;
+
+//         orderId = args.id;
+//         return $.when(account.getBalance(), shopping.getOrder(args.id), coupon.getAvailableCoupons(args.id))
+//             .done(function (balance, order, coupons) {
+//                 if (order == null) {
+//                     return app.showPage('Shopping_ShoppingCart', {});
+//                 }
+
+//                 model.orderSummary(ko.unwrap(order.Sum));
+//                 model.balance(balance);
+//                 model.coupons(coupons);
+
+//                 if (coupons.length > 0) {
+//                     model.couponTitle(chitu.Utility.format('{0}可用张优惠', coupons.length));
+//                 }
+
+//                 order.total = ko.computed(function () {
+//                     var total = ko.unwrap(this.Sum);
+//                     return total;
+//                 }, order);
+
+//                 order.balance = ko.computed(function () {
+//                     var balanceAmount = ko.unwrap(this.BalanceAmount) || 0;
+//                     if (balanceAmount)
+//                         return balanceAmount;
+
+//                     var sum = ko.unwrap(this.Sum);
+//                     if (balance > sum) {
+//                         return sum;
+//                     }
+
+//                     return balance;
+//                 }, order);
+
+//                 order.isBalancePay = ko.pureComputed({
+//                     read: function () {
+//                         if (ko.unwrap(this.BalanceAmount))
+//                             return true;
+
+//                         return false;
+//                     },
+//                     write: function (value) {
+//                         if (value) {
+//                             var balanceAmount = this.balance();
+//                             return shopping.balancePay(ko.unwrap(model.order.Id), balanceAmount).done(function (data) {
+//                                 mapping.fromJS(data, {}, model.order);
+//                             });
+//                         }
+
+//                         return shopping.balancePay(ko.unwrap(model.order.Id), 0).done(function (data) {
+//                             mapping.fromJS(data, {}, model.order);
+//                         });
+
+//                     }
+//                 }, order);
+
+//                 order.actualPaid = ko.computed(function () {
+//                     return order.Sum() - order.BalanceAmount();
+//                 });
+
+//                 if (model.order == null) {
+//                     model.order = order;
+//                     ko.applyBindings(model, page.element);
+//                 }
+//                 else {
+//                     for (var key in order) {
+//                         if (ko.isWriteableObservable(order[key])) {
+//                             var value = order[key]();
+//                             model.order[key](value);
+//                         }
+//                     }
+//                 }
+//             });
+//     });
+
+// }

@@ -1,7 +1,6 @@
 
 import ko = require('knockout');
 import $ = require('jquery');
-//import site = require('Site');
 import chitu = require('chitu');
 
 export let config = {
