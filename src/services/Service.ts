@@ -1,13 +1,13 @@
 ﻿import site = require('Site');
 import $ = require('jquery');
 
-
+const HOST = 'shop.alinq.cn';//'localhost:9000';//
 class ServiceConfig {
-    serviceUrl = 'http://shop.alinq.cn/UserServices/Shop/'
-    siteServiceUrl = 'http://shop.alinq.cn/UserServices/Site/'
-    memberServiceUrl = 'http://shop.alinq.cn/UserServices/Member/'
-    weixinServiceUrl = 'http://shop.alinq.cn/UserServices/WeiXin/'
-    accountServiceUrl = 'http://shop.alinq.cn/UserServices/Account/'
+    serviceUrl = `http://${HOST}/UserServices/Shop/`;
+    siteServiceUrl = `http://${HOST}/UserServices/Site/`;
+    memberServiceUrl = `http://${HOST}/UserServices/Member/`;
+    weixinServiceUrl = `http://${HOST}/UserServices/WeiXin/`;
+    accountServiceUrl = `http://${HOST}/UserServices/Account/`;
     appToken = '7F0B6740588DCFA7E1C29C627B8C87379F1C98D5962FAB01D0D604307C04BFF0182BAE0B98307143'
 }
 
