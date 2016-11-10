@@ -99,7 +99,7 @@ function showError(data) {
                     window.location.href = '#Home_Index';
                 }
                 else {
-                    app.showPage('User_Login', {});
+                    app.showPage('#User_Login', {});
                 }
                 return;
             default:
