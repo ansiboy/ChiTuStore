@@ -1,4 +1,5 @@
 import chitu = require('chitu');
+import move = require('move');
 
 class ScrollViewNode {
     private _scrollView: chitu.ScrollView;
@@ -37,7 +38,6 @@ class ScrollViewGesture {
     private container_height: number;
     private moveType: 'none' | 'horizontal' | 'vertical' = 'none';
     private _offset: Offset;
-
 
     /** 下拉执行 */
     pullDownExecute: () => JQueryPromise<any> | void;
@@ -109,27 +109,28 @@ class ScrollViewGesture {
 
     showView(displayView: chitu.ScrollView, direction: Direction) {
         if (!displayView) throw chitu.Errors.argumentNull('displayView');
+        displayView.visible = true;
         if (direction == 'left') {
             move(displayView.element).x(this.next_item_pos).y(0).duration(0).end();
-            move(this.active_item.element).x(this.prev_item_pos).end();
+            move(this.active_item.element).x(this.prev_item_pos).end(this.panLeftExecute);
             move(displayView.element).x(0).end();
         }
         else if (direction == 'right') {
             move(displayView.element).x(this.prev_item_pos).y(0).duration(0).end();
-            move(this.active_item.element).x(this.next_item_pos).end();
+            move(this.active_item.element).x(this.next_item_pos).end(this.panRightExecute);
             move(displayView.element).x(0).end();
         }
         else if (direction == 'up') {
-            move(displayView.element).to(0,this.container_height).duration(0).end();
-            move(this.active_item.element).to(0,0 - this.container_height).end();
-            move(displayView.element).to(0,0).end();
-        }
-        else if (direction == 'down') {
-            move(displayView.element).to(0,0 - this.container_height).duration(0).end();
-            move(this.active_item.element).to(0,this.container_height).end();
+            move(displayView.element).to(0, this.container_height).duration(0).end();
+            move(this.active_item.element).to(0, 0 - this.container_height).end(this.pullUpExecute);
             move(displayView.element).to(0, 0).end();
         }
-        this.set_activeItem(displayView,direction);
+        else if (direction == 'down') {
+            move(displayView.element).to(0, 0 - this.container_height).duration(0).end();
+            move(this.active_item.element).to(0, this.container_height).end(this.pullDownExecute);
+            move(displayView.element).to(0, 0).end();
+        }
+
     }
 
     get offset(): Offset {
@@ -137,9 +138,8 @@ class ScrollViewGesture {
     }
 
     private on_scrollViewLoad(sender: chitu.ScrollView, args) {
-        let page_container = sender.page.container;
+        let page_container = (<chitu.Page>sender.parent).container;
         $(page_container.element).data('ScrollViewGesture', this);
-
         this.container_width = $(page_container.element).width();
         this.container_height = $(page_container.element).height();
 
@@ -176,6 +176,15 @@ class ScrollViewGesture {
             (this.below_item != null && (e.direction & Hammer.DIRECTION_UP) == Hammer.DIRECTION_UP) ||
             (this.above_item != null && (e.direction & Hammer.DIRECTION_DOWN) == Hammer.DIRECTION_DOWN);
 
+        if ((this.next_item != null && (e.direction & Hammer.DIRECTION_LEFT) == Hammer.DIRECTION_LEFT))
+            this.next_item.visible = true;
+        if (this.prev_item != null && (e.direction & Hammer.DIRECTION_RIGHT) == Hammer.DIRECTION_RIGHT)
+            this.prev_item.visible = true;
+        if (this.below_item != null && (e.direction & Hammer.DIRECTION_UP) == Hammer.DIRECTION_UP)
+            this.below_item.visible = true;
+        if (this.above_item != null && (e.direction & Hammer.DIRECTION_DOWN) == Hammer.DIRECTION_DOWN)
+            this.above_item.visible = true;
+
         return started;
     }
 
@@ -183,29 +192,32 @@ class ScrollViewGesture {
         if (this.moveType != "horizontal")
             return;
 
-        move(this.active_item.element).x(this.active_item_pos_x + e.deltaX).duration(0).end();
+        let distanceX = this.ease(e.deltaX);
+        move(this.active_item.element).x(this.active_item_pos_x + distanceX).duration(0).end();
         if (this.next_item != null)
-            move(this.next_item.element).x(this.next_item_pos + e.deltaX).duration(0).end();
+            move(this.next_item.element).x(this.next_item_pos + distanceX).duration(0).end();
 
         if (this.prev_item != null)
-            move(this.prev_item.element).x(this.prev_item_pos + e.deltaX).duration(0).end();
+            move(this.prev_item.element).x(this.prev_item_pos + distanceX).duration(0).end();
     }
 
     private on_panRight(e: Hammer.PanEvent) {
         if (this.moveType != "horizontal")
             return;
 
-        move(this.active_item.element).x(this.active_item_pos_x + e.deltaX).duration(0).end();
+        let distanceX = this.ease(e.deltaX);
+        move(this.active_item.element).x(this.active_item_pos_x + distanceX).duration(0).end();
         if (this.next_item != null)
-            move(this.next_item.element).x(this.next_item_pos + e.deltaX).duration(0).end();
+            move(this.next_item.element).x(this.next_item_pos + distanceX).duration(0).end();
 
         if (this.prev_item != null)
-            move(this.prev_item.element).x(this.prev_item_pos + e.deltaX).duration(0).end();
+            move(this.prev_item.element).x(this.prev_item_pos + distanceX).duration(0).end();
     }
 
     private on_panEnd(e: Hammer.PanEvent) {
         if (this.moveType == "horizontal") {
-            this.processHorizontalMove(e.deltaX);
+            let distanceX = this.ease(e.deltaX);
+            this.processHorizontalMove(distanceX);
         }
         else if (this.moveType == "vertical" && this.scroll_args != null) {
             let deltaY: number;
@@ -218,10 +230,15 @@ class ScrollViewGesture {
         }
     }
 
+    private ease(x: number): number {
+        let X_SCALE = 1.3;
+        let distanceX = x * X_SCALE;
+        return distanceX;
+    }
+
     private processVerticalMove(deltaY: number) {
         let cancel = this.on_release(0, deltaY) == false;
         if (cancel) {
-            //move(this.active_item.element).y(this.active_item_pos_y);
             return;
         }
 
@@ -233,8 +250,8 @@ class ScrollViewGesture {
         }
     }
 
-    private processHorizontalMove(deltaX: number) {
-        let cancel = this.on_release(deltaX, 0) == false;
+    private processHorizontalMove(distanceX: number) {
+        let cancel = this.on_release(distanceX, 0) == false;
         if (cancel) {
             move(this.active_item.element).x(this.active_item_pos_x).end();
             if (this.next_item != null)
@@ -245,17 +262,16 @@ class ScrollViewGesture {
             return;
         }
 
-        if (deltaX < 0 && this.next_item != null && this.panLeftExecute != null) { // 向左移动
+        if (distanceX < 0 && this.next_item != null && this.panLeftExecute != null) { // 向左移动
             this.panLeftExecute();
         }
-        else if (deltaX > 0 && this.prev_item != null && this.panRightExecute != null) { // 向右移动
+        else if (distanceX > 0 && this.prev_item != null && this.panRightExecute != null) { // 向右移动
             this.panRightExecute();
         }
     }
 
     private on_scroll(sender: chitu.ScrollView, args: chitu.ScrollArguments) {
-        //console.log(sender.name + ' scrollTop:' + args.scrollTop);
-        var self = <ScrollViewGesture><any>$(sender.page.container.element).data('ScrollViewGesture');
+        var self = <ScrollViewGesture>$((<chitu.Page>sender.parent).container.element).data('ScrollViewGesture');
         self.scroll_args = args;
     }
 
@@ -279,7 +295,7 @@ class ScrollViewGesture {
         let prev_name = $active_item.attr('prev');
         let above_name = $active_item.attr('above');
         let below_name = $active_item.attr('below');
-        let page = active_item.page;
+        let page = <chitu.Page>active_item.parent;
         if (next_name) {
             this.next_item = page.findControl<chitu.ScrollView>(next_name);
             if (this.next_item == null)
@@ -315,6 +331,12 @@ class ScrollViewGesture {
         else {
             this.below_item = null;
         }
+
+        if (prev_view) {
+            let animation_time = 200;
+            window.setTimeout(() => prev_view.visible = false, animation_time);
+        }
+
     }
 }
 

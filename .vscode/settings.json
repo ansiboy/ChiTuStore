@@ -3,8 +3,8 @@
         "Build": true,
         "node_modules": true,
         "LICENSE": true,
-        "README.md": true,
-        "/**/.baseDir.ts": true,
+        //"README.md": true,
+        "/**/.baseDir.*": true,
         ".tscache": true
     }
 }

@@ -5,7 +5,7 @@ import ko_val = require('knockout.validation');
 import mapping = require('knockout.mapping');
 
 import TopBar = require('ui/TopBar');
-import ImageFileResize = require('Core/ImageFileResize')
+import ImageFileResize = require('core/ImageFileResize')
 import app = require('Application');
 import site = require('Site');
 

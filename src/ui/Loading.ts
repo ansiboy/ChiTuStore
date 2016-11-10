@@ -15,11 +15,11 @@ function on_shown() {
 
 app.pageCreated.add(function(sender, page) {
     /// <param name="page" type="chitu.Page"/>
-    page.showing.add(on_shown);
+    page.container.showing.add(on_shown);
 });
 
 if (app.currentPage() != null) {
-    app.currentPage().shown.add(on_shown);
+    app.currentPage().container.shown.add(on_shown);
     if (app.currentPage().visible == true) {
         on_shown();
     }

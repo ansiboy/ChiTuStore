@@ -1,0 +1,78 @@
+﻿@import "../../bootstrap-3.3.5/variables.less";
+@import "../Common.less";
+
+.Shopping-OrderProducts {
+    .scrollViewTopPadding(@header-height);
+
+    .page-content {
+        padding-top: @header-height;
+    }
+
+    .text-primary {
+        font-weight: bold;
+    }
+
+    h4 {
+        /*font-weight: bold;*/
+        /*color: @brand-primary;*/
+    }
+
+    .icon-chevron-right {
+        font-size: @font-size-h4 + 4;
+        position: relative;
+        top: 4px;
+    }
+
+    .address {
+        .icon-chevron-right {
+            position: relative;
+            top: -30px;
+            right: 0px;
+        }
+    }
+}
+
+.available-coupons {
+    .nav-tabs {
+        background-color: @brand-primary;
+        color: white;
+        height: @header-height;
+        font-size: @topbar-font-size;
+    }
+
+    .modal-backdrop.in {
+        /*opacity: @modal-backdrop-opacity;*/
+    }
+
+    .modal {
+        .modal-dialog {
+            right: 0px;
+            top: 0px;
+            bottom: 0px;
+            background-color: white;
+            width: 100%;
+            margin: 0px;
+            position: fixed;
+
+            .modal-content {
+                border-radius: 0px;
+                top: 0px;
+                bottom: 0px;
+                width: 100%;
+                position: fixed;
+                border: none;
+
+
+                .modal-header {
+                    padding: 0px;
+                    background-color: white;
+                    opacity: 1;
+                }
+
+                .modal-body {
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+}

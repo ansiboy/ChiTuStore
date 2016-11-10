@@ -253,16 +253,15 @@ function page_shown(sender: chitu.Page) {
 
 app.pageCreated.add(function (sender: chitu.Application, page: chitu.Page) {
     /// <param name="page" type="chitu.Page"/>
-    
-    page.showing.add(function (sender: chitu.Page, args) {
-        if ($.inArray(sender.name.toLowerCase(), ['home.news', 'home.product']) < 0) {
-            document.title = site.config.storeName;
-        }
-    });
 
-    page.shown.add(page_shown);
+    // page.showing.add(function (sender: chitu.Page, args) {
+    //     if ($.inArray(sender.name.toLowerCase(), ['home.news', 'home.product']) < 0) {
+    //         document.title = site.config.storeName;
+    //     }
+    // });
+
+    // page.container.shown.add(page_shown);
+    page.load.add(page_shown);
 });
 
-// if (app.currentPage() != null && app.currentPage().visible())
-//     page_shown(app.currentPage());
 

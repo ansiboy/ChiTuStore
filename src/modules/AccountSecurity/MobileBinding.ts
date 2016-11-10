@@ -1,4 +1,4 @@
-﻿requirejs(['css!content/User/AccountSecurity/MobileBinding']);
+﻿requirejs(['css!content/AccountSecurity/MobileBinding']);
 import shopping = require('services/Shopping');
 import member = require('services/Member');
 import ko_val = require('knockout.validation');
@@ -86,7 +86,7 @@ class MobileBinding {
     private loadHtmlDeferred = $.Deferred<string>()
 
     constructor() {
-        requirejs(['text!Module/User/AccountSecurity/MobileBinding.html'], (html) => {
+        requirejs(['text!modules/AccountSecurity/MobileBinding.html'], (html) => {
             this.html = html;
             this.loadHtmlDeferred.resolve(html);
         })

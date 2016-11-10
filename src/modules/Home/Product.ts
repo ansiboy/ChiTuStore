@@ -6,7 +6,7 @@ import chitu = require('chitu');
 import ProductPanel = require('modules/Home/Product/ProductPanel');
 import ProductDetailPanel = require('modules/Home/Product/ProductDetailPanel');
 import ScrollViewGesture = require('core/ScrollViewGesture');
-
+import site = require('Site');
 //TODO:以弹出方式显示图片
 chitu.Utility.loadjs('ui/Promotion');
 
@@ -97,7 +97,7 @@ class ProductPage extends chitu.Page {
     private product_comments_view: chitu.ScrollView;
     constructor(html) {
         super(html);
- 
+
         this.model = new ProductModel(this);
         this.imageTextModel = new ImageTextModel();
         this.commentsModel = new CommentsModel();
@@ -118,11 +118,17 @@ class ProductPage extends chitu.Page {
         this.scroll_view_gesture.offset.pullDown = 80;
     }
 
+    protected createChild(element: HTMLElement) {
+        if (site.env.isIOS && element.tagName == 'SCROLL-VIEW')
+            $(element).attr('scroll-type', 'iscroll');
+
+        return super.createChild(element, this);
+    }
+
     private page_load(sender: ProductPage, args: any) {
         ko.applyBindings(this.imageTextModel, this.image_text_view.element);
         ko.applyBindings(this.imageTextModel, this.image_text_view2.element);
         ko.applyBindings(this.commentsModel, this.product_comments_view.element);
-        //ko.applyBindings(this.commentsModel, $(sender.element).find('[name="nocomments"]')[0]);
 
         return $.when(shopping.getProduct(args.id), shopping.getProductStock(args.id),
             shopping.getProductComments(args.id, 4))
@@ -151,6 +157,7 @@ class ProductPage extends chitu.Page {
 
                 }, sender.model.product)
                 ko.applyBindings(sender.model, sender.product_view.element);
+                ko.applyBindings(sender.model, $(sender.element).find('[name="bottom_bar"]')[0]);
             });
     }
 
@@ -158,7 +165,7 @@ class ProductPage extends chitu.Page {
         // 切换视图， 根据不同视图加载对应的数据
         this.model.productPullUpText(PRODUCT_PULL_UP_DEFAULT_TEXT);
 
-        let productId = args.view.page.routeData.values.id;
+        let productId = (<chitu.Page>args.view.parent).routeData.values.id;
         if (args.view == this.image_text_view || args.view == this.image_text_view2) {
             if (!this.imageTextModel.Introduce()) {
                 shopping.getProductIntroduce(productId).done((data) => {

@@ -128,7 +128,7 @@ class ProductListPage extends chitu.Page {
     }
 
     scrollView_load(sender: chitu.ScrollView, args) {
-        var model = (<ProductListPage>sender.page).model;
+        var model = (<ProductListPage>sender.parent).model;
         model.isLoading(true);
         return model.loadProducts(false).done((items: Array<any>, filter) => {
             model.isLoading(false);

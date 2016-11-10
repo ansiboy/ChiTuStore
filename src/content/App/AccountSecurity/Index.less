@@ -1,0 +1,43 @@
+﻿@import "../../bootstrap-3.3.5/variables.less";
+@import "../Common.less";
+
+.AccountSecurity-Index {
+    .container {
+        padding-top: @header-height;
+    }
+    
+    &.immersion .container{
+         padding-top: @header-height + @immersion-height;
+    }
+
+    .list-group {
+        i {
+            position: relative;
+            top: 50%;
+            margin-top: 0px;
+            right: 0px;
+        }
+    }
+
+    .list-group-item {
+        &:first-child {
+            border-top: none;
+        }
+
+        i {
+            position: absolute;
+            top: 30px;
+            right: 8px;
+        }
+
+        .name {
+            /*font-size: @font-size-h4;*/
+        }
+
+        i {
+            margin-top: 4px;
+            //&:first-child {
+            //}
+        }
+    }
+}

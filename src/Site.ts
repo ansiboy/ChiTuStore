@@ -108,7 +108,7 @@ class SiteStorage {
 class SiteConfig {
     storeName = ko_ext.config.storeName;
     //pageSize = 10
-    defaultUrl = 'Home_Index'
+    defaultUrl = '#Home_Index'
     baseUrl = 'u.alinq.cn/test/Index.html'
     purchaseUrlFormat = 'pay/Purchase.html#{0}'
 

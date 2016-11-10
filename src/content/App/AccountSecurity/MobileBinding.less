@@ -1,0 +1,79 @@
+﻿@import "../../bootstrap-3.3.5/variables.less";
+@import "../Common.less";
+
+.AccountSecurity-MobileBinding {
+    &.immersion .container{
+        padding-top: @header-height + @v-padding + @immersion-height;
+    }
+    .container {
+        padding-top: @header-height + @v-padding;
+
+        .step {
+            margin-top: 10px;
+            padding: 0px 10px 0px 10px;
+            height: 80px;
+
+            .step1 {
+                float: left;
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                /**/
+                background-color: @gray-light;
+                font-size: 24px;
+                text-align: center;
+                color: white;
+                padding: 2px;
+
+                .name {
+                    position: relative;
+                    top: 10px;
+                    left: -20px;
+                    width: 80px;
+                    font-size: @font-size-base;
+                    color: black;
+                }
+            }
+
+            .step2 {
+                float: right;
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                background-color: @gray-light;
+                font-size: 24px;
+                text-align: center;
+                color: white;
+                padding: 2px;
+
+                .name {
+                    position: relative;
+                    top: 10px;
+                    left: -22px;
+                    width: 80px;
+                    font-size: @font-size-base;
+                    color: black;
+                }
+            }
+
+            .active {
+                background-color: darken(red,2%);
+            }
+
+
+
+            hr {
+                position: relative;
+                top: 20px;
+            }
+        }
+
+        hr {
+            margin-top: 6px;
+        }
+
+        .alert {
+            margin-bottom: 0;
+        }
+    }
+}

@@ -1,0 +1,207 @@
+﻿@import "../../bootstrap-3.3.5/variables.less";
+@import "../Common.less";
+
+.Home-Index {
+
+    .scrollViewTopPadding(@header-height);
+    .scrollViewBottomPadding(@menu-height);
+    
+    nav {
+        border: none;
+        height: 50px;
+    }
+    
+    .right-icon {
+        position: absolute;
+        top: -4px;
+        right: 8px;
+        text-align: center;
+        color: white;
+        font-size: 32px;
+
+        & div {
+            position: relative;
+            font-size: 10px;
+            /*padding-left:4px;*/
+            top: -10px;
+            left: -4px;
+        }
+
+        & .badge {
+            position: relative;
+            right: -50px;
+            color: @brand-primary;
+            background-color: @btn-primary-color;
+        }
+    }
+
+    .pull-down {
+        height: 120px;
+        margin-top: -70px;
+
+        [name="slogan"] {
+            color: @brand-primary;
+            bottom: -40px;
+            position: relative;
+            font-size: 18px;
+            font-family: STXingkai,STXinwei;
+            /*margin-top:-40px;*/
+            img {
+                width: 240px;
+                margin-bottom: 8px;
+            }
+        }
+
+        [name="status-text"] {
+            position: relative;
+            bottom: -55px;
+        }
+    }
+
+    .products {
+        .item {
+            padding-top: 16px;
+            padding-bottom: 10px;
+
+            &:nth-child(2n+1) {
+                border-bottom: 1px solid @gray-lighter;
+                border-right: 1px solid @gray-lighter;
+                /*margin-top: 1px;*/
+            }
+
+
+            &:nth-child(2n) {
+                border-left: 1px solid white;
+                border-bottom: 1px solid @gray-lighter;
+            }
+            /*&:nth-child(1) {
+                margin-top: 0px;
+            }*/
+            .bottom {
+                text-align: left;
+                padding-top: 8px;
+            }
+
+            .price {
+                font-size: 16px;
+                padding-top: 4px;
+            }
+        }
+
+        promotion-label {
+            padding-top: 2px;
+            /*position: relative;
+            display: block;
+            top: -24px;
+            left: 0px;
+            height: 20px;
+            min-height: 20px;
+            text-align: right;*/
+        }
+    }
+}
+
+//
+
+
+@quickbar_item_width: 60px;
+@quickbar_item_left: -28px;
+@quickbar_icon_fontsize: 40px;
+@quickbar_icon_top: 12px;
+
+.Home-Index {
+    .quickbar {
+        .text {
+            margin-top: 6px;
+            //padding-right: 12px;
+            font-size: 12px;
+        }
+
+        .col-xs-3 {
+            padding: 0px;
+        }
+
+        & :nth-child(1) {
+            .item {
+                position: relative;
+                left: @quickbar_item_left;
+                border-radius: 50%;
+                background-color: #F06292;
+                width: @quickbar_item_width;
+                height: @quickbar_item_width;
+                text-align: center;
+
+                i {
+                    color: white;
+                    font-size: @quickbar_icon_fontsize; //48px;
+                    position: relative;
+                    left: 0px;
+                    top: @quickbar_icon_top;
+                }
+            }
+        }
+
+        & :nth-child(2) {
+            .item {
+                position: relative;
+                left: @quickbar_item_left;
+                border-radius: 50%;
+                background-color: #4DD0E2;
+                width: @quickbar_item_width;
+                height: @quickbar_item_width;
+                text-align: center;
+
+                i {
+                    color: white;
+                    font-size: @quickbar_icon_fontsize - 4;
+                    position: relative;
+                    left: 0px;
+                    top: @quickbar_icon_top + 2;
+                }
+            }
+        }
+
+        & :nth-child(3) {
+            .item {
+                position: relative;
+                left: @quickbar_item_left;
+                border-radius: 50%;
+                background-color: #FF8A66;
+                width: @quickbar_item_width;
+                height: @quickbar_item_width;
+                text-align: center;
+
+                i {
+                    color: white;
+                    font-size: @quickbar_icon_fontsize - 4;
+                    position: relative;
+                    left: 0px;
+                    top: @quickbar_icon_top;
+                }
+            }
+        }
+
+        & :nth-child(4) {
+            .item {
+                position: relative;
+                left: @quickbar_item_left;
+                border-radius: 50%;
+                background-color: #CF93D9;
+                width: @quickbar_item_width;
+                height: @quickbar_item_width;
+                text-align: center;
+
+                i {
+                    color: white;
+                    font-size: @quickbar_icon_fontsize;
+                    position: relative;
+                    left: 0px;
+                    top: @quickbar_icon_top - 2;
+                }
+            }
+        }
+    }
+}
+
+
+

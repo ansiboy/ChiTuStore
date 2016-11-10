@@ -27,7 +27,7 @@ class NewsListPage extends chitu.Page {
     }
 
     private scrollView_load(sender: chitu.ScrollView, args) {
-        let page = <NewsListPage>sender.page;
+        let page = <NewsListPage>sender.parent;
         return info.getArticles(page.select_args).done(function (items) {
             for (var i = 0; i < items.length; i++) {
                 page.model.articles.push(items[i]);
