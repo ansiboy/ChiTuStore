@@ -34,33 +34,55 @@ class ProductPanelModel {
     }
 
     select_property = (item) => {
-        var selected_options = [];
+
+        var data = {};
         var selected_property_index: number;
-        var properties: Array<any> = ko.unwrap(this.product.CustomProperties);
+        var properties: Array<{
+            Name: KnockoutObservable<string>,
+            Options: KnockoutObservableArray<{
+                Name: KnockoutObservable<string>,
+                Value: KnockoutObservable<string>,
+                Selected: KnockoutObservable<boolean>
+            }>
+        }>;
+        properties = ko.unwrap(this.product.CustomProperties);
         for (var i = 0; i < properties.length; i++) {
             var p = properties[i];
-            var options: Array<any> = ko.unwrap(p.Options);
-            for (var j = 0; j < options.length; j++) {
-                if (options[j].Selected()) {
-                    selected_options[i] = options[j];
-                }
+            // if (!p.Selected)
+            //     continue;
 
-                if (options[j] == item) {
+            // data[p.Name] = p.Value;
+            // var options: Array<any> = ko.unwrap(p.Options);
+            let options = p.Options();// as Array<{ Name: string, Value: string, Selected: boolean }>;
+            for (var j = 0; j < options.length; j++) {
+                if (options[j].Selected())
+                    data[p.Name()] = options[j].Value();
+
+                if (options[j] == item)
                     selected_property_index = i;
-                }
+
             }
         }
 
-        selected_options[selected_property_index] = item;
+        data[properties[selected_property_index].Name()] = ko.unwrap(item.Value);
 
-        var data = {};
-        for (var i = 0; i < selected_options.length; i++) {
-            data['Value' + (i + 1)] = selected_options[i].Value();
-            data['Name' + (i + 1)] = properties[i].Name();
+        let options = properties[selected_property_index].Options();
+        for (var i = 0; i < options.length; i++) {
+            options[i].Selected(false);
         }
+        item.Selected(true);
+
+        //selected_options[selected_property_index] = item;
+
+
+        // for (var i = 0; i < selected_options.length; i++) {
+        //     // data['Value' + (i + 1)] = selected_options[i].Value();
+        //     // data['Name' + (i + 1)] = properties[i].Name();
+        //     data[properties[i].Name()] = selected_options[i].Value();
+        // }
 
         var groupId = <string>ko.unwrap(this.product.GroupId);
-        shopping.getProductByNumberValues(groupId, data).done((data) => {
+        shopping.getProductByPropertyFilter(groupId, data).done((data) => {
             if (data.Id == null) {
                 mapping.fromJS(data.CustomProperties, {}, this.product.CustomProperties);
             }

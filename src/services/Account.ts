@@ -122,8 +122,7 @@ function translateReceipt(source) {
 
             return phone == '' ? null : phone;
         },
-        write: function (value) {
-            /// <param name="value" type="String"/>
+        write: function (value:string) {
             if (value == null || value == '')
                 return;
 

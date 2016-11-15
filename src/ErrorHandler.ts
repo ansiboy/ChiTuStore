@@ -55,6 +55,7 @@ function showError(data) {
         }
     }
     else if (data.Code) {
+        let code = data.Code as string;
         switch (data.Code) {
             case 'PasswordIncorect':
                 msg = '用户名或密码不正确';
@@ -94,6 +95,9 @@ function showError(data) {
             case 'AppTokenRequired':
                 //site.cookies.appToken('');
                 //site.cookies.token('');
+                if(code == 'InvalidToken'){
+                    site.storage.token = '';
+                }
                 debugger;
                 if (site.env.isWeiXin) {
                     window.location.href = '#Home_Index';

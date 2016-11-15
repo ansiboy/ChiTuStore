@@ -54,12 +54,20 @@ function translateProductData(data) {
     data.ImageUrl = data.ImageUrls[0];
 
     var arr = [];
-    var obj = JSON.parse(data.Arguments || '{}');
-    for (var key in obj) {
-        arr.push({ Name: key, Value: obj[key] });
+    var obj = (data.Arguments || []) as Array<{ key: string, value: string }>; //JSON.parse(data.Arguments || '{}');
+    for (let i = 0; i < obj.length; i++) {
+        let item = obj[i];
+        arr.push({ Name: item.key, Value: item.value });
     }
+    data.Arguments = arr;
 
-    data.Arguments = arr;//JSON.parse(data.Arguments || '{}');
+    // arr = [];
+    // obj = (data.Fields || []) as Array<{ key: string, value: string }>;
+    // for (let i = 0; i < obj.length; i++) {
+    //     let item = obj[i];
+    //     arr.push({ Name: item.key, Options: [{ Name: item.value, Value: item.value, Selected: true }] });
+    // }
+    // data.CustomProperties = arr;
 
     return data;
 }
@@ -240,9 +248,7 @@ class ShoppingService {
         var result = services.callRemoteMethod('Order/ChangeReceipt', { orderId: orderId, receiptId: receiptId });
         return result;
     }
-    allowPurchase = (orderId) => {
-        /// <returns type="jQuery.Deferred"/>
-
+    allowPurchase(orderId) {
         var result = services.callRemoteMethod('Order/AllowPurchase', { orderId: orderId });
         return result;
     }
@@ -257,9 +263,9 @@ class ShoppingService {
     getProductCustomProperties = (productId: string): JQueryPromise<any> => {
         return services.callMethod(services.config.serviceUrl, 'Product/GetCustomProperties', { productId: productId });
     }
-    getProductByNumberValues = (groupId, data): JQueryPromise<any> => {
-        var d = $.extend({ groupId: groupId }, data);
-        return services.callMethod(services.config.serviceUrl, 'Product/GetProductByNumberValues', d)
+    getProductByPropertyFilter(groupId, data): JQueryPromise<any> {
+        var d = { groupId, filter: JSON.stringify(data) };
+        return services.callMethod(services.config.serviceUrl, 'Product/GetProductByPropertyFilter', d)
             .then(translateProductData);
     }
     getProductComments(productId: string, pageSize: number): JQueryPromise<Array<any>> {
