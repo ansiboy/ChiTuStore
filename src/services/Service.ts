@@ -1,7 +1,7 @@
 ﻿import site = require('Site');
 import $ = require('jquery');
 
-const SERVICE_HOST = 'localhost/UserServices';//`shop.alinq.cn`;//
+const SERVICE_HOST = 'service.alinq.cn:2014';//'localhost/UserServices';//`shop.alinq.cn`;//
 class ServiceConfig {
     serviceUrl = `http://${SERVICE_HOST}/Shop/`
     siteServiceUrl = `http://${SERVICE_HOST}/Site/`

@@ -43,6 +43,38 @@ function translateOrder(source) {
         }
     }, order);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
     order.ReceiptInfoId = ko.observable();
     order.ReceiptAddress.extend({ required: { message: '请填写收货信息' } });
 
