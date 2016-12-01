@@ -101,14 +101,14 @@ requirejs(['Site', 'Application', 'bootbox', 'ErrorHandler', 'ui/Loading', 'ui/T
     var weiXinChecked = $.Deferred();
     var ua = navigator.userAgent.toLowerCase();
     //window['move'] = arguments[6];
-    if (site.env.isWeiXin) { //(ua.match(/MicroMessenger/i) == 'micromessenger') {
-        requirejs(['sv/WeiXin', 'WXShare'], function() {
-            weiXinChecked.resolve();
-        });
-    }
-    else {
+    // if (site.env.isWeiXin) { 
+    //     requirejs(['sv/WeiXin', 'WXShare'], function() {
+    //         weiXinChecked.resolve();
+    //     });
+    // }
+    // else {
         weiXinChecked.resolve();
-    }
+    //}
 
 
     weiXinChecked.done(function() {
