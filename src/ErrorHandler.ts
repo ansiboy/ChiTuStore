@@ -95,7 +95,7 @@ function showError(data) {
             case 'AppTokenRequired':
                 //site.cookies.appToken('');
                 //site.cookies.token('');
-                if(code == 'InvalidToken'){
+                if (code == 'InvalidToken') {
                     site.storage.token = '';
                 }
                 debugger;
@@ -106,6 +106,9 @@ function showError(data) {
                     app.showPage('#User_Login', {});
                 }
                 return;
+            case 'HeaderRequiredExeption':
+                console.error(data.Message);
+                break;
             default:
                 if (!data.Message)
                     msg = '未知的错误(Code:' + data.Code + ',' + data.Message || '' + ')';

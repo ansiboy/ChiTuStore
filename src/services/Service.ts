@@ -1,14 +1,15 @@
 ﻿import site = require('Site');
 import $ = require('jquery');
 
-const SERVICE_HOST = 'service.alinq.cn:2014';//'localhost/UserServices';//`shop.alinq.cn`;//
+const SERVICE_HOST ='service.alinq.cn:2800/UserServices';//`shop.alinq.cn`;// 'service.alinq.cn:2800/UserServices'; //
 class ServiceConfig {
-    serviceUrl = `http://${SERVICE_HOST}/Shop/`
-    siteServiceUrl = `http://${SERVICE_HOST}/Site/`
-    memberServiceUrl = `http://${SERVICE_HOST}/Member/`
-    weixinServiceUrl = `http://${SERVICE_HOST}/WeiXin/`
-    accountServiceUrl = `http://${SERVICE_HOST}/Account/`
-    appToken = '7F0B6740588DCFA7E1C29C627B8C87379F1C98D5962FAB01D0D604307C04BFF0182BAE0B98307143'
+    serviceUrl = `http://${SERVICE_HOST}/Shop/`;
+    siteServiceUrl = `http://${SERVICE_HOST}/Site/`;
+    memberServiceUrl = `http://${SERVICE_HOST}/Member/`;
+    weixinServiceUrl = `http://${SERVICE_HOST}/WeiXin/`;
+    accountServiceUrl = `http://${SERVICE_HOST}/Account/`;
+    appToken = '58424776034ff82470d06d3d';
+    storeId = '58401d1906c02a2b8877bd13'
 }
 
 
@@ -37,13 +38,19 @@ class Services {
 
             var ajax: JQueryXHR;
 
-            var url = serviceUrl + method;
+            var url = serviceUrl + method + `?storeId=${service.config.storeId}`;;
+
+            //urlParams = `?storeId=${store_id}`;
+
             data = $.extend({
                 '$token': site.storage.token,
                 '$appToken': services.config.appToken,
             }, data);
 
             var options = {
+                headers: {
+                    'application-token': service.config.appToken
+                },
                 url: url,
                 data: data,
                 method: 'post',
