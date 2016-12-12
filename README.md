@@ -1,6 +1,8 @@
 # ChiTu Store
 一个开源的电商混合 APP。
 
+升级版正在开发中，详情： https://github.com/maishumaishu/ChiTuStore2
+
 ## 特点
 * 界面设计精美
 * 功能丰富，其功能包括电商常用的功能，很多功能都可以从这里找到例子。
