@@ -44,7 +44,7 @@
 * IOS APP（位于 ChiTuStore目录/platforms/ios）
 
 ## 技术交流讨论
-QQ群：119038574 （承接 APP，前端开发，有需求进群后可联系*寒烟*）
+QQ群：119038574 
 
 ## 演示
 <div>
