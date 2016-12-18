@@ -5,11 +5,11 @@ class InfoService {
     constructor() {
     }
     getArticles(args): JQueryPromise<Array<any>> {
-        var result = services.callMethod(services.config.siteServiceUrl, 'Info/GetNewsList', args);
+        var result = services.get(services.config.siteServiceUrl, 'Info/GetNewsList', args);
         return result;
     }
     getArticleById(newsId): JQueryPromise<any> {
-        var result = services.callMethod(services.config.siteServiceUrl, 'Info/GetNews', { newsId: newsId });
+        var result = services.get(services.config.siteServiceUrl, 'Info/GetNews', { newsId: newsId });
         return result;
     }
     //exports = info;

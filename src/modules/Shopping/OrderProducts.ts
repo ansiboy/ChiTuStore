@@ -54,7 +54,7 @@ class Order {
             return this._userBalance;
         }, this);
 
-        this.isBalancePay = ko.pureComputed({
+        this.isBalancePay = ko.pureComputed<boolean>({
             read: function () {
                 if (ko.unwrap(this.BalanceAmount))
                     return true;

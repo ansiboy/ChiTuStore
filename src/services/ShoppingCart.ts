@@ -102,7 +102,7 @@ class ShoppingCartService {
         /// </param>
 
         var self = this;
-        var result = services.callMethod(services.config.serviceUrl, 'ShoppingCart/RemoveItems', { productIds: productIds })
+        var result = services.callMethod(services.config.shopServiceUrl, 'ShoppingCart/RemoveItems', { productIds: productIds })
             .then((data) => this.processData(data));
 
         result.done(() => this.upateProductsCount());
@@ -132,15 +132,15 @@ class ShoppingCartService {
         /// 获取购物车中产品的总数
         /// </summary>
 
-        return services.callMethod(services.config.serviceUrl, 'ShoppingCart/GetProductsCount');
+        return services.callMethod(services.config.shopServiceUrl, 'ShoppingCart/GetProductsCount');
     }
 
     selectAll = (): JQueryPromise<any> => {
-        return services.callMethod(services.config.serviceUrl, 'ShoppingCart/SelectAll')
+        return services.callMethod(services.config.shopServiceUrl, 'ShoppingCart/SelectAll')
             .then((data) => this.processData(data));
     }
     unselectAll = (): JQueryPromise<any> => {
-        return services.callMethod(services.config.serviceUrl, 'ShoppingCart/UnselectAll')
+        return services.callMethod(services.config.shopServiceUrl, 'ShoppingCart/UnselectAll')
             .then((data) => this.processData(data));
     }
 }

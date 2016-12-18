@@ -14,7 +14,7 @@ class Coupon {
         }
     }
     getMyCoupons = (args) => {
-        var result = services.callMethod(services.config.serviceUrl, 'Coupon/GetMyCoupons', args);
+        var result = services.callMethod(services.config.shopServiceUrl, 'Coupon/GetMyCoupons', args);
         result.then($.proxy((data) => {
             /// <param name="data" type="Array"/>
             $(data).each((i, item) => this.extendCoupon(item));
@@ -24,7 +24,7 @@ class Coupon {
         return result;
     }
     getAvailableCoupons(orderId):JQueryPromise<any[]> {
-        return services.callMethod(services.config.serviceUrl, 'Coupon/GetAvailableCouponCodes', { orderId: orderId })
+        return services.callMethod(services.config.shopServiceUrl, 'Coupon/GetAvailableCouponCodes', { orderId: orderId })
             .then((data) => {
                 $(data).each((i, item) => this.extendCoupon(item));
                 return data;

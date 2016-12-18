@@ -29,7 +29,8 @@ function showConnectFailPage() {
 }
 
 
-function showError(data) {
+type MyError = { Code: string, Message: string, status: null, element: HTMLElement, url: string };
+function showError(data: MyError) {
     var msg;
 
     if (data.status !== undefined) {
@@ -107,6 +108,9 @@ function showError(data) {
                 }
                 return;
             case 'HeaderRequiredExeption':
+                if (data.Message.indexOf('user-id') >= 0)
+                    app.showPage('#User_Login', {});
+
                 console.error(data.Message);
                 break;
             default:
@@ -122,7 +126,8 @@ function showError(data) {
         msg = '未知的错误(' + data.url + ')';
     }
 
-    alert(msg);
+    if (msg)
+        alert(msg);
 
     return;
 }

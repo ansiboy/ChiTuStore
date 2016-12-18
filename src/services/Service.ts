@@ -1,13 +1,14 @@
 ﻿import site = require('Site');
 import $ = require('jquery');
 
-const SERVICE_HOST ='service.alinq.cn:2800/UserServices';//`shop.alinq.cn`;// 'service.alinq.cn:2800/UserServices'; //
+const SERVICE_HOST = 'service.alinq.cn:2800';//`shop.alinq.cn`;// 'service.alinq.cn:2800/UserServices'; //
 class ServiceConfig {
-    serviceUrl = `http://${SERVICE_HOST}/Shop/`;
-    siteServiceUrl = `http://${SERVICE_HOST}/Site/`;
-    memberServiceUrl = `http://${SERVICE_HOST}/Member/`;
-    weixinServiceUrl = `http://${SERVICE_HOST}/WeiXin/`;
-    accountServiceUrl = `http://${SERVICE_HOST}/Account/`;
+    baseService = `http://${SERVICE_HOST}/`;
+    shopServiceUrl = `http://${SERVICE_HOST}/UserServices/Shop/`;
+    siteServiceUrl = `http://${SERVICE_HOST}/UserServices/Site/`;
+    memberServiceUrl = `http://${SERVICE_HOST}/UserServices/Member/`;
+    weixinServiceUrl = `http://${SERVICE_HOST}/UserServices/WeiXin/`;
+    accountServiceUrl = `http://${SERVICE_HOST}/UserServices/Account/`;
     appToken = '58424776034ff82470d06d3d';
     storeId = '58401d1906c02a2b8877bd13'
 }
@@ -26,9 +27,8 @@ class Services {
     }
     error = $.Callbacks()
 
-    callMethod(serviceUrl: string, method: string): JQueryPromise<any>;
-    callMethod(serviceUrl: string, method: string, data: Object): JQueryPromise<any>;
-    callMethod<T>(serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<T> {
+
+    private ajax<T>(serviceUrl: string, method: string, type = 'post' || 'get', data: Object = undefined): JQueryPromise<T> {
 
         return (function (service: Services, serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<T> {
 
@@ -40,20 +40,18 @@ class Services {
 
             var url = serviceUrl + method + `?storeId=${service.config.storeId}`;;
 
-            //urlParams = `?storeId=${store_id}`;
-
-            data = $.extend({
-                '$token': site.storage.token,
-                '$appToken': services.config.appToken,
-            }, data);
+            let headers = {
+                'application-token': service.config.appToken
+            };
+            if (site.storage.token) {
+                headers['user-token'] = site.storage.token;
+            }
 
             var options = {
-                headers: {
-                    'application-token': service.config.appToken
-                },
+                headers,
                 url: url,
                 data: data,
-                method: 'post',
+                method: type,
                 dataType: 'json',
                 traditional: true
             };
@@ -70,8 +68,24 @@ class Services {
 
 
     }
+
+    callMethod(serviceUrl: string, method: string): JQueryPromise<any>;
+    callMethod(serviceUrl: string, method: string, data: Object): JQueryPromise<any>;
+    callMethod<T>(serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<T> {
+
+        return this.ajax(serviceUrl, method, 'post', data);
+
+
+    }
     callRemoteMethod(method: string, data: Object = undefined): JQueryPromise<any> {
-        return this.callMethod(services.config.serviceUrl, method, data);
+        return this.callMethod(services.config.shopServiceUrl, method, data);
+    }
+
+    get<T>(serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<T> {
+
+        return this.ajax(serviceUrl, method, 'get', data);
+
+
     }
 
     loadList(serviceUrl: string, method: string, data: Object = undefined): LoadListPromise<Array<any>> {

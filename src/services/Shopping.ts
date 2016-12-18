@@ -73,7 +73,7 @@ function translateOrder(source) {
 
 
 
-    
+
 
     order.ReceiptInfoId = ko.observable();
     order.ReceiptAddress.extend({ required: { message: '请填写收货信息' } });
@@ -126,30 +126,30 @@ function translateComment(data) {
 
 class ShoppingService {
     getCategories = (parentName: string = undefined): JQueryPromise<any> => {
-        var result = services.callRemoteMethod('Product/GetCategories', { parentName: parentName });
+        var result = services.get(services.config.shopServiceUrl, 'Product/GetCategories', { parentName: parentName });
         return result;
     }
     getCategory = (categoryId): JQueryPromise<any> => {
-        var result = services.callRemoteMethod('Product/GetCategory', { categoryId: categoryId });
+        var result = services.get(services.config.shopServiceUrl, 'Product/GetCategory', { categoryId: categoryId });
         return result;
     }
     getProductsByCategory = (categoryName): JQueryPromise<any> => {
-        var result = services.callRemoteMethod('Product/GetProducts',
+        var result = services.get(services.config.shopServiceUrl, 'Product/GetProducts',
             { categoryName: categoryName });
         return result;
     }
     getProductsByBrand = (brand): JQueryPromise<any> => {
-        var result = services.callMethod(services.config.serviceUrl, 'Product/GetProducts', { brand: brand });
+        var result = services.get(services.config.shopServiceUrl, 'Product/GetProducts', { brand: brand });
         return result;
     }
     getProduct = (productId): JQueryPromise<any> => {
-        var result = services.callMethod(services.config.serviceUrl, 'Product/GetProduct', { productId: productId })
+        var result = services.get(services.config.shopServiceUrl, 'Product/GetProduct', { productId: productId })
             .then(translateProductData);
         return result;
     }
     getProducts = (args) => {
         var result = $.Deferred();
-        services.callRemoteMethod('Product/GetProducts', args)
+        services.get(services.config.shopServiceUrl, 'Product/GetProducts', args)
             .fail($.proxy(function (args) {
                 this._result.reject(args);
 
@@ -165,10 +165,10 @@ class ShoppingService {
         return result;
     }
     getProductIntroduce = (productId) => {
-        return services.callMethod(services.config.serviceUrl, 'Product/GetProductIntroduce', { productId: productId });
+        return services.get<any>(services.config.shopServiceUrl, 'Product/GetProductIntroduce', { productId: productId });
     }
     findProductsByName = (name) => {
-        var result = services.callRemoteMethod('Product/FindProducts', { name: name });
+        var result = services.get(services.config.shopServiceUrl,'Product/FindProducts', { name: name });
         return result;
     }
     createOrder = (productIds, quantities) => {
@@ -183,7 +183,7 @@ class ShoppingService {
     getOrder = (orderId) => {
         /// <param name="orderId">订单编号</param>
         /// <returns type="models.order"/>
-        var result = services.callRemoteMethod('Order/GetOrder', { orderId: orderId }).then(function (order) {
+        var result = services.get(services.config.shopServiceUrl, 'Order/GetOrder', { orderId: orderId }).then(function (order) {
             return translateOrder(order);
         });
         return result;
@@ -214,7 +214,7 @@ class ShoppingService {
 
         var filter = filters.join(' && ');
         var args = { filter: filter, StartRowIndex: pageIndex * services.defaultPageSize, MaximumRows: services.defaultPageSize };
-        var result = services.callRemoteMethod('Order/GetMyOrders', args)
+        var result = services.get<any[]>(services.config.shopServiceUrl, 'Order/GetMyOrders', args)
             .then(function (orders) {
                 for (var i = 0; i < orders.length; i++) {
                     orders[i] = translateOrder(orders[i]);
@@ -247,7 +247,7 @@ class ShoppingService {
 
         //var filter = filters.join(' && ');
         var args = { status, StartRowIndex: pageIndex * services.defaultPageSize, MaximumRows: services.defaultPageSize };
-        var result = services.callRemoteMethod('Order/GetMyOrderList', args)
+        var result = services.get(services.config.shopServiceUrl, 'Order/GetMyOrderList', args)
             .then(function (orders) {
                 //for (var i = 0; i < orders.length; i++) {
                 //    orders[i] = translateOrder(orders[i]);
@@ -286,23 +286,23 @@ class ShoppingService {
     }
     getProductStock = (productId) => {
         /// <returns type="jQuery.Deferred"/>
-        return services.callRemoteMethod('Stock/GetProductStock', { productId: productId });
+        return services.get(services.config.shopServiceUrl, 'Stock/GetProductStock', { productId: productId });
     }
     balancePay = (orderId, amount) => {
         /// <returns type="jQuery.Deferred"/>
         return services.callRemoteMethod('Order/BalancePay', { orderId: orderId, amount: amount });
     }
     getProductCustomProperties = (productId: string): JQueryPromise<any> => {
-        return services.callMethod(services.config.serviceUrl, 'Product/GetCustomProperties', { productId: productId });
+        return services.callMethod(services.config.shopServiceUrl, 'Product/GetCustomProperties', { productId: productId });
     }
     getProductByPropertyFilter(groupId, data): JQueryPromise<any> {
         var d = { groupId, filter: JSON.stringify(data) };
-        return services.callMethod(services.config.serviceUrl, 'Product/GetProductByPropertyFilter', d)
+        return services.callMethod(services.config.shopServiceUrl, 'Product/GetProductByPropertyFilter', d)
             .then(translateProductData);
     }
     getProductComments(productId: string, pageSize: number): JQueryPromise<Array<any>> {
         var data = { productId, pageSize };
-        return services.callMethod(services.config.serviceUrl, 'Product/GetProductCommentList', data).then((datas) => {
+        return services.get<any[]>(services.config.shopServiceUrl, 'Product/GetProductCommentList', data).then((datas) => {
             for (var i = 0; i < datas.length; i++) {
                 datas[i] = translateComment(datas[i]);
             }
@@ -311,21 +311,21 @@ class ShoppingService {
     }
     favorProduct(productId: string, productName: string): JQueryPromise<any> {
         var data = { productId, productName };
-        return services.callMethod(services.config.serviceUrl, 'Product/FavorProduct', data);
+        return services.callMethod(services.config.shopServiceUrl, 'Product/FavorProduct', data);
     }
     isFavored(productId: string): JQueryPromise<boolean> {
         if (!site.storage.token) {
             return $.Deferred<boolean>().resolve(false);
         }
         var data = { productId };
-        return services.callMethod(services.config.serviceUrl, 'Product/IsFavored', data);
+        return services.callMethod(services.config.shopServiceUrl, 'Product/IsFavored', data);
     }
     getFavorProducts(): LoadListPromise<any> {
-        var result = <LoadListPromise<any>>services.callMethod(services.config.serviceUrl, 'Product/GetFavorProducts');
+        var result = <LoadListPromise<any>>services.callMethod(services.config.shopServiceUrl, 'Product/GetFavorProducts');
         return result;
     }
     unFavorProduct(productId: string) {
-        return services.callMethod(services.config.serviceUrl, 'Product/UnFavorProduct', { productId });
+        return services.callMethod(services.config.shopServiceUrl, 'Product/UnFavorProduct', { productId });
     }
 }
 

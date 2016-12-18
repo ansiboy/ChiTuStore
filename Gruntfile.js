@@ -18,11 +18,19 @@ var ts_options = {
 };
 module.exports = function (grunt) {
     grunt.initConfig({
-        ts: {
-            app: {
-                src: [src_root + '/**/*.ts'],
-                dest: dest_root ,
-                options: ts_options
+        // ts: {
+        //     app: {
+        //         src: [src_root + '/**/*.ts'],
+        //         dest: dest_root,
+        //         options: ts_options
+        //     }
+        // },
+        shell: {
+            client: {
+                command: 'tsc -p ./src',
+                options: {
+                    failOnError: false
+                }
             }
         },
         copy: {
@@ -49,16 +57,16 @@ module.exports = function (grunt) {
                     src: dest_root + '/**/*.*',
                     dest: www_ios,
                 },
-                    {
-                        expand: true,
-                        src: dest_root + '/**/*.*',
-                        dest: www_android,
-                    },
-                    {
-                        expand: true,
-                        src: dest_root + '/**/*.*',
-                        dest: www_browser,
-                    },
+                {
+                    expand: true,
+                    src: dest_root + '/**/*.*',
+                    dest: www_android,
+                },
+                {
+                    expand: true,
+                    src: dest_root + '/**/*.*',
+                    dest: www_browser,
+                },
                 ]
             }
         },
@@ -90,9 +98,11 @@ module.exports = function (grunt) {
         // }
     });
 
-    grunt.loadNpmTasks('grunt-ts');
+    grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.registerTask('default', ['ts:app', 'copy', 'less']);
+
+
+    grunt.registerTask('default', ['shell', 'copy', 'less']);
 };

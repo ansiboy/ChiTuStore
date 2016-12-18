@@ -33,13 +33,15 @@ class AuthService {
     logouted = $.Callbacks()
     logined = $.Callbacks()
     login(username: string, password: string): JQueryPromise<any> {
-        password = CryptoJS.MD5(password).toString();
-        var result = services.callMethod(services.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
+        //password = CryptoJS.MD5(password).toString();
+        let data = { username, password };
+        var result = services.callMethod(services.config.baseService, 'user/login', data) //services.callMethod(services.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
 
         var member = this;
         result.then((data) => {
+            debugger;
             //site.cookies.token(data.UserToken);
-            site.storage.token = data.UserToken;
+            site.storage.token = data.token;
             return data;
 
         }).done($.proxy(function (data) {

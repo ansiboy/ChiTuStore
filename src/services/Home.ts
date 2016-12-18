@@ -6,22 +6,22 @@ class HomeService {
         /// 获取系统设置的菜单
         /// </summary>
 
-        var result = services.callMethod(services.config.siteServiceUrl, 'ui/GetMenus');
+        var result = services.get(services.config.siteServiceUrl, 'ui/GetMenus');
         return result;
     }
-    advertItems():JQueryPromise<any[]> {
-        var result = services.callMethod(services.config.siteServiceUrl, 'Home/GetAdvertItems');
+    advertItems(): JQueryPromise<any[]> {
+        var result = services.get(services.config.siteServiceUrl, 'Home/GetAdvertItems');
         return result;
     }
     homeProducts(pageIndex: number): JQueryPromise<Array<any>> {
-        var result = services.callMethod(services.config.siteServiceUrl, 'Home/GetHomeProducts', { pageIndex });
+        var result = services.get(services.config.siteServiceUrl, 'Home/GetHomeProducts', { pageIndex });
         result.then((data: Array<any>) => {
             return data;
         })
         return result;
     }
     getBrands(args) {
-        var result = services.callRemoteMethod('Product/GetBrands', args);
+        var result = services.get(services.config.siteServiceUrl, 'Product/GetBrands', args);
         return result;
     }
 }

@@ -33,7 +33,7 @@ class Receipt {
     AreaCode = ko.observable()
     PhoneNumber = ko.observable()
     BranchNumber = ko.observable()
-    Phone = ko.computed({
+    Phone = ko.computed<string>({
         read: function () {
             var phone = '';
             var areaCode = $.trim(this.AreaCode());

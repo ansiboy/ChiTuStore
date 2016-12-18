@@ -28,22 +28,6 @@ class SiteCookies {
 
         site.cookies.set_value(name, value);
     }
-    //appToken(value: string = undefined): string {
-    //    //只读，数据由服务端写入
-    //    var name = 'appToken';
-    //    if (value === undefined)
-    //        return site.cookies.get_value(name);
-
-    //    $.cookie(name, value);
-    //    site.cookies.set_value(name, value);
-    //}
-    //token(value: string = undefined) {
-    //    var name $= 'token';
-    //    if (value === undefined)
-    //        return site.cookies.get_value(name);
-
-    //    site.cookies.set_value(name, value);
-    //}
     set_value(name: string, value: string, expires: number = 7) {
         var cookieName = site.cookies.get_cookieName(name);
         $.cookie(cookieName, value, { expires });
@@ -55,20 +39,6 @@ class SiteCookies {
     get_cookieName(name) {
         return site.config.cookiePrefix + "_" + name;
     }
-    //getAppToken() {
-    //    /// <returns type="jQuery.Deferred"/>
-    //    //debugger;
-    //    if (site.cookies.appToken() != null)
-    //        return $.Deferred().resolve(site.cookies.appToken());
-
-    //    return $.ajax({
-    //        url: 'Account/GetAppToken'
-
-    //    }).then(function (data) {
-    //        site.cookies.appToken(data.AppToken);//DA4A5B44C12F4E9D8E0872C4FDA8A6ABA2C0334CDB81CF84F12E29F7FB129F72F6EA604995785165
-    //        return data.AppToken;
-    //    });
-    //}
 }
 
 class SiteStorage {
@@ -78,8 +48,13 @@ class SiteStorage {
     get_item<T>(name: string) {
         var item_name = this.get_itemName(name);
         var str = window.localStorage.getItem(item_name);
-        var obj = JSON.parse(str);
-        return obj;
+        try {
+            var obj = JSON.parse(str);
+            return obj;
+        }
+        catch (err) {
+            return {};
+        }
     }
     set_item<T>(name: string, value: T) {
         var item_name = this.get_itemName(name);

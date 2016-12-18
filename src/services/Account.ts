@@ -227,7 +227,7 @@ class AccountService {
         obj.RegionId = receiptInfo.CountyId();
 
         var self = this;
-        var result = services.callMethod(services.config.serviceUrl, 'Address/SaveReceiptInfo', obj)
+        var result = services.callMethod(services.config.shopServiceUrl, 'Address/SaveReceiptInfo', obj)
             .done(function (data) {
                 receiptInfo.Id(data.Id);
                 receiptInfo.IsDefault(data.IsDefault);
@@ -320,7 +320,7 @@ class AccountService {
     confirmReceived = (orderId: string): JQueryPromise<any> => {
         /// <summary>确认已收到货</summary>
         /// <param name="orderId" type="String"/>
-        var result = services.callMethod(services.config.serviceUrl, 'Order/ConfirmReceived', { orderId: orderId })
+        var result = services.callMethod(services.config.shopServiceUrl, 'Order/ConfirmReceived', { orderId: orderId })
             .then((data) => {
                 this.orderStatusChanged('Send', data.Status);
                 return data;
@@ -354,7 +354,7 @@ class AccountService {
      */
     evaluateProduct(orderDetailId: string, score: number, evaluation: string, anonymous: boolean, imageDatas: string, imageThumbs: string) {
         var data = { orderDetailId, evaluation, imageDatas, score, imageThumbs, anonymous };
-        var result = services.callMethod(services.config.serviceUrl, 'Product/EvaluateProduct', data).done(() => {
+        var result = services.callMethod(services.config.shopServiceUrl, 'Product/EvaluateProduct', data).done(() => {
             var count = this.orderInfo.evaluateCount();
             this.orderInfo.evaluateCount(count - 1);
         })
@@ -412,14 +412,14 @@ class AccountService {
     }
     orderInfo = new OrderInfo()
     getToCommentProducts(): LoadListPromise<any> {
-        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(services.config.serviceUrl, 'Product/GetToCommentProducts')
+        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(services.config.shopServiceUrl, 'Product/GetToCommentProducts')
             .done(() => {
                 result.loadCompleted = true
             });
         return result;
     }
     getCommentedProducts(): LoadListPromise<any> {
-        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(services.config.serviceUrl, 'Product/GetCommentedProducts')
+        var result: LoadListPromise<any> = <LoadListPromise<any>>services.callMethod(services.config.shopServiceUrl, 'Product/GetCommentedProducts')
             .done(() => {
                 result.loadCompleted = true
             });
