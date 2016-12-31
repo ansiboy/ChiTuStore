@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="debug"><source path="/home/maishu/projects/ChiTuStore/platforms/android/CordovaLib/build/intermediates/bundles/debug/assets"/></dataSet><dataSet config="main"><source path="/home/maishu/projects/ChiTuStore/platforms/android/CordovaLib/src/androidTest/assets"/><source path="/home/maishu/projects/ChiTuStore/platforms/android/CordovaLib/build/generated/assets/shaders/androidTest/debug"/></dataSet></merger>
