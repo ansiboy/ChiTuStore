@@ -3,6 +3,10 @@
 
 升级版正在开发中，详情： https://github.com/maishumaishu/ChiTuStore2
 
+演示地址：
+http://web.alinq.cn/store2/ （新版）
+http://web.alinq.cn/store/ （旧版）
+
 ## 特点
 * 界面设计精美
 * 功能丰富，其功能包括电商常用的功能，很多功能都可以从这里找到例子。
