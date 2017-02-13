@@ -4,7 +4,9 @@
 升级版正在开发中，详情： https://github.com/maishumaishu/ChiTuStore2
 
 演示地址：
+
 http://web.alinq.cn/store2/ （新版）
+
 http://web.alinq.cn/store/ （旧版）
 
 ## 特点
