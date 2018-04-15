@@ -35,7 +35,8 @@ class AuthService {
     login(username: string, password: string): JQueryPromise<any> {
         //password = CryptoJS.MD5(password).toString();
         let data = { username, password };
-        var result = services.callMethod(services.config.baseService, 'user/login', data) //services.callMethod(services.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
+        //let url = `UserMember/User/Login`;
+        var result = services.callMethod(services.config.memberServiceUrl, 'User/Login', data) //services.callMethod(services.config.memberServiceUrl, 'Member/Login', { username: username, password: password });
 
         var member = this;
         result.then((data) => {
@@ -53,14 +54,14 @@ class AuthService {
         return result;
     }
     isLogined(): JQueryPromise<boolean> {
-        var result = $.Deferred();
+        var result = $.Deferred<boolean>();
         var value = site.storage.token != null && site.storage.token != ''; //site.cookies.token() != null && site.cookies.token() != '';
         result.resolve(value);
 
         return result;
     }
     getMember(): JQueryPromise<any> {
-        return services.callMethod(services.config.memberServiceUrl, 'Member/GetMember');
+        return services.get(services.config.memberServiceUrl, 'User/CurrentUserInfo');
     }
 
 }

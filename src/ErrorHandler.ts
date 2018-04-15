@@ -47,6 +47,9 @@ function showError(data: MyError) {
                 //====================================================
 
                 break;
+            case 601:
+                app.showPage('#User_Login', {});
+                return;
             default:
                 if (!data.Message)
                     msg = '未知的错误(Code:' + data.Code + ',' + data.Message || '' + ')';//chitu.Utility.format('未知的错误(Code:{0},{1})', data.Code, data.Message || '');

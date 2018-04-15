@@ -395,7 +395,7 @@ function processImageElement(element: HTMLElement) {
     image['element'] = element;
     image['updateScrollView'] = match == null || match.length == 0;
     image.onload = function () {
-        $(this['element']).attr('src', this.src);
+        $(this['element']).attr('src', (this as HTMLImageElement).src);
         if (image['updateScrollView'] == true)
             tryUpdateScrollView(this['element']);
     };

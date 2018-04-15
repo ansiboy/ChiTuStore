@@ -5,7 +5,7 @@ class InfoService {
     constructor() {
     }
     getArticles(args): JQueryPromise<Array<any>> {
-        var result = services.get(services.config.siteServiceUrl, 'Info/GetNewsList', args);
+        var result = services.get<Array<any>>(services.config.siteServiceUrl, 'Info/GetNewsList', args);
         return result;
     }
     getArticleById(newsId): JQueryPromise<any> {

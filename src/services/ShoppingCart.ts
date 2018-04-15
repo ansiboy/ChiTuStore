@@ -47,7 +47,7 @@ class ShoppingCartService {
         }
         return result.reject();
     }
-    addItem = (product, count): JQueryPromise<any>=> {
+    addItem = (product, count): JQueryPromise<any> => {
         /// <param name="product" type="models.product">
         /// 添加到购物车的产品
         /// </param>
@@ -80,10 +80,11 @@ class ShoppingCartService {
         /// <returns type="jQuery.Deferred"/>
 
         var self = this;
+        var id = ko.unwrap(item.Id);
         var productId = ko.unwrap(item.ProductId);
         var count = ko.unwrap(item.Count);
         var selected = ko.unwrap(item.Selected);
-        var result = services.callRemoteMethod('ShoppingCart/UpdateItem', { productId: productId, count: count, selected: selected })
+        var result = services.put(services.config.shopServiceUrl, 'ShoppingCart/SetItemCount', { itemId: id, count: count, selected: selected })
             .then((data: Array<any>) => {
                 this.itemUpdated.fire();
                 return this.processData(data);
@@ -112,12 +113,12 @@ class ShoppingCartService {
     getItems = (): JQueryPromise<any> => {
         /// <summary>
         /// 获取购物车中的产品
-  
+
         if (this._getItemsResult)
             return this._getItemsResult;
 
         var self = this;
-        this._getItemsResult = services.callRemoteMethod('ShoppingCart/GetItems', {})
+        this._getItemsResult = services.get(services.config.shopServiceUrl, 'ShoppingCart/GetItems')
             .then((data: Array<any>) => {
                 return this.processData(data);
             });
@@ -132,7 +133,7 @@ class ShoppingCartService {
         /// 获取购物车中产品的总数
         /// </summary>
 
-        return services.callMethod(services.config.shopServiceUrl, 'ShoppingCart/GetProductsCount');
+        return services.get(services.config.shopServiceUrl, 'ShoppingCart/GetProductsCount');
     }
 
     selectAll = (): JQueryPromise<any> => {

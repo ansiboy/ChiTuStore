@@ -14,7 +14,7 @@ class Coupon {
         }
     }
     getMyCoupons = (args) => {
-        var result = services.callMethod(services.config.shopServiceUrl, 'Coupon/GetMyCoupons', args);
+        var result = services.get(services.config.shopServiceUrl, 'Coupon/GetMyCoupons', args);
         result.then($.proxy((data) => {
             /// <param name="data" type="Array"/>
             $(data).each((i, item) => this.extendCoupon(item));

@@ -1,16 +1,15 @@
 ﻿import site = require('Site');
 import $ = require('jquery');
 
-const SERVICE_HOST = 'service.alinq.cn:2800';//`shop.alinq.cn`;// 'service.alinq.cn:2800/UserServices'; //
+const SERVICE_HOST = 'userservices.alinq.cn'; //'localhost:2800';//`shop.alinq.cn`;// 'service.alinq.cn:2800/UserServices'; //
 class ServiceConfig {
     baseService = `http://${SERVICE_HOST}/`;
-    shopServiceUrl = `http://${SERVICE_HOST}/UserServices/Shop/`;
-    siteServiceUrl = `http://${SERVICE_HOST}/UserServices/Site/`;
-    memberServiceUrl = `http://${SERVICE_HOST}/UserServices/Member/`;
-    weixinServiceUrl = `http://${SERVICE_HOST}/UserServices/WeiXin/`;
-    accountServiceUrl = `http://${SERVICE_HOST}/UserServices/Account/`;
-    appToken = '58424776034ff82470d06d3d';
-    storeId = '58401d1906c02a2b8877bd13'
+    shopServiceUrl = `http://${SERVICE_HOST}/UserShop/`;
+    siteServiceUrl = `http://${SERVICE_HOST}/UserSite/`;
+    memberServiceUrl = `http://${SERVICE_HOST}/UserMember/`;
+    weixinServiceUrl = `http://${SERVICE_HOST}/UserWeiXin/`;
+    accountServiceUrl = `http://${SERVICE_HOST}/UserAccount/`;
+    appId = '7bbfa36c-8115-47ad-8d47-9e52b58e7efd';
 }
 
 
@@ -38,13 +37,13 @@ class Services {
 
             var ajax: JQueryXHR;
 
-            var url = serviceUrl + method + `?storeId=${service.config.storeId}`;;
+            var url = serviceUrl + method;// + `?storeId=${service.config.storeId}`;;
 
             let headers = {
-                'application-token': service.config.appToken
+                'application-id': service.config.appId
             };
             if (site.storage.token) {
-                headers['user-token'] = site.storage.token;
+                headers['token'] = site.storage.token;
             }
 
             var options = {
@@ -82,10 +81,11 @@ class Services {
     }
 
     get<T>(serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<T> {
-
         return this.ajax(serviceUrl, method, 'get', data);
+    }
 
-
+    put<T>(serviceUrl: string, method: string, data: Object = undefined): JQueryPromise<T> {
+        return this.ajax(serviceUrl, method, 'put', data);
     }
 
     loadList(serviceUrl: string, method: string, data: Object = undefined): LoadListPromise<Array<any>> {

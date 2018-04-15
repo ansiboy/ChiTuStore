@@ -168,7 +168,7 @@ class ShoppingService {
         return services.get<any>(services.config.shopServiceUrl, 'Product/GetProductIntroduce', { productId: productId });
     }
     findProductsByName = (name) => {
-        var result = services.get(services.config.shopServiceUrl,'Product/FindProducts', { name: name });
+        var result = services.get(services.config.shopServiceUrl, 'Product/FindProducts', { name: name });
         return result;
     }
     createOrder = (productIds, quantities) => {
@@ -247,7 +247,7 @@ class ShoppingService {
 
         //var filter = filters.join(' && ');
         var args = { status, StartRowIndex: pageIndex * services.defaultPageSize, MaximumRows: services.defaultPageSize };
-        var result = services.get(services.config.shopServiceUrl, 'Order/GetMyOrderList', args)
+        var result = services.get<Array<any>>(services.config.shopServiceUrl, 'Order/GetMyOrderList', args)
             .then(function (orders) {
                 //for (var i = 0; i < orders.length; i++) {
                 //    orders[i] = translateOrder(orders[i]);
@@ -286,7 +286,10 @@ class ShoppingService {
     }
     getProductStock = (productId) => {
         /// <returns type="jQuery.Deferred"/>
-        return services.get(services.config.shopServiceUrl, 'Stock/GetProductStock', { productId: productId });
+        return services.get<any[]>(services.config.shopServiceUrl, 'Product/GetProductStocks', { productIds: productId })
+            .then(o => {
+                return o[0] ? o[0] : { Quantity: null };
+            });
     }
     balancePay = (orderId, amount) => {
         /// <returns type="jQuery.Deferred"/>
@@ -318,7 +321,7 @@ class ShoppingService {
             return $.Deferred<boolean>().resolve(false);
         }
         var data = { productId };
-        return services.callMethod(services.config.shopServiceUrl, 'Product/IsFavored', data);
+        return services.get(services.config.shopServiceUrl, 'Product/IsFavored', data);
     }
     getFavorProducts(): LoadListPromise<any> {
         var result = <LoadListPromise<any>>services.callMethod(services.config.shopServiceUrl, 'Product/GetFavorProducts');

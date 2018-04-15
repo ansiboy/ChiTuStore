@@ -10,7 +10,7 @@ class WeiXinService {
         var url = services.config.weixinServiceUrl + method
         //return site.cookies.getAppToken().pipe($.proxy(function (appToken) {
         //
-        data.$appToken = services.config.appToken;//site.cookies.appToken();
+        data.$appToken = services.config.appId;//site.cookies.appToken();
         return $.ajax({
             url: url,
             data: data,
@@ -40,7 +40,7 @@ class WeiXinService {
         }
 
 
-        var $result = $.Deferred();
+        var $result = $.Deferred<string>();
 
         var nonceStr = getNonceStr();
         var timeStamp = getTimeStamp();

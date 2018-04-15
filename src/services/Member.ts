@@ -8,7 +8,7 @@ import mapping = require('knockout.mapping');
 
 function call(method, data = undefined) {
     /// <returns type="jQuery.Deferred"/>
-    
+
     //data = data || {};
     //var url = site.config.memberServiceUrl + method
     //data.$appToken = site.cookies.appToken();
@@ -146,14 +146,16 @@ class MemberService {
     }
     getUserInfo(): JQueryPromise<UserInfo> {
         /// <returns type="jQuery.Deferred"/>
-        return call('UserInfo/Get').then(function (data) {
-            data = data || {};
-            data.HeadImageUrl = data.HeadImageUrl || 'Content//nophoto.png';
-            data.Region = ko.computed(() => {
-                return data.Province + ' ' + data.City;
-            });
-            return data;
-        });
+        // return call('UserInfo/Get').then(function (data) {
+        //     data = data || {};
+        //     data.HeadImageUrl = data.HeadImageUrl || 'Content//nophoto.png';
+        //     data.Region = ko.computed(() => {
+        //         return data.Province + ' ' + data.City;
+        //     });
+        //     return data;
+        // });
+        var result = $.Deferred<UserInfo>().resolve();
+        return result;
     }
     setUserInfo(userInfo: UserInfo) {
         if (!userInfo.Gender)

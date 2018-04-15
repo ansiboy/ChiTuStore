@@ -122,7 +122,7 @@ function translateReceipt(source) {
 
             return phone == '' ? null : phone;
         },
-        write: function (value:string) {
+        write: function (value: string) {
             if (value == null || value == '')
                 return;
 
@@ -199,7 +199,7 @@ class AccountService {
     getReceiptInfos = () => {
         /// <returns type="jQuery.Deferred"/>
 
-        var result = services.callRemoteMethod('Address/GetReceiptInfos', {}).then(function (items) {
+        var result = services.get<Array<any>>(services.config.shopServiceUrl, 'Address/GetReceiptInfos').then(function (items) {
             var result = [];
             for (var i = 0; i < items.length; i++) {
                 result[i] = translateReceipt(items[i]);
@@ -256,7 +256,7 @@ class AccountService {
      */
     getMyCoupons = () => {
         var args = {};
-        var result = services.callRemoteMethod('Coupon/GetMyCoupons', args);
+        var result = services.get(services.config.shopServiceUrl, 'Coupon/GetMyCoupons', args);
 
         return result;
     }
@@ -271,15 +271,15 @@ class AccountService {
         return result;
     }
     getProvinces(): JQueryPromise<any[]> {
-        var result = services.callRemoteMethod('Address/GetProvinces', {});
+        var result = services.get<any[]>(services.config.shopServiceUrl, 'Address/GetProvinces');
         return result;
     }
     getCities(province): JQueryPromise<any[]> {
         var guidRule = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
         if (guidRule.test(province))
-            return services.callRemoteMethod('Address/GetCities', { provinceId: province });
+            return services.get(services.config.shopServiceUrl, 'Address/GetCities', { provinceId: province });
 
-        return services.callRemoteMethod('Address/GetCities', { provinceName: province });;
+        return services.get(services.config.shopServiceUrl, 'Address/GetCities', { provinceName: province });;
     }
     getCounties = (city) => {
         /// <summary>获取县</summary>
@@ -290,7 +290,7 @@ class AccountService {
         else
             cityId = city.id();
 
-        var result = services.callRemoteMethod('Address/GetCounties', { cityId: cityId });
+        var result = services.get(services.config.shopServiceUrl, 'Address/GetCounties', { cityId: cityId });
         return result;
     }
     getMyOrders = (status, pageIndex) => {
@@ -341,7 +341,7 @@ class AccountService {
     purchaseOrder = (orderId: string, amount: number): JQueryPromise<any> => {
         var weixin = services['weixin'];
         var openid = weixin.openid();
-        var notify_url = services.config.weixinServiceUrl + 'WeiXin/OrderPurchase/' + services.config.appToken;
+        var notify_url = services.config.weixinServiceUrl + 'WeiXin/OrderPurchase/' + services.config.appId;
         var out_trade_no = ko.unwrap(orderId).replace(/\-/g, '');
         return weixin.pay(openid, notify_url, out_trade_no, site.config.storeName, amount)
             .done(() => {
@@ -408,7 +408,7 @@ class AccountService {
      * 获取用户信息
      */
     userInfo = () => {
-        return services.callRemoteMethod('User/GetUserInfo');
+        return services.get<any>(services.config.memberServiceUrl, 'User/CurrentUserInfo');
     }
     orderInfo = new OrderInfo()
     getToCommentProducts(): LoadListPromise<any> {

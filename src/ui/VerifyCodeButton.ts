@@ -126,7 +126,7 @@ class Model {
 ko.components.register('verify-code-button', {
     viewModel: function (params: Arguments) {
         if (params.checkMobile == null)
-            params.checkMobile = (mobile: string) => $.Deferred().resolve(true);
+            params.checkMobile = (mobile: string) => $.Deferred<boolean>().resolve(true);
 
         var model = new Model(params);
         $.extend(this, model);

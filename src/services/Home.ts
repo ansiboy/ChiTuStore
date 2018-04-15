@@ -10,11 +10,11 @@ class HomeService {
         return result;
     }
     advertItems(): JQueryPromise<any[]> {
-        var result = services.get(services.config.siteServiceUrl, 'Home/GetAdvertItems');
+        var result = services.get<any[]>(services.config.siteServiceUrl, 'Home/GetAdvertItems');
         return result;
     }
     homeProducts(pageIndex: number): JQueryPromise<Array<any>> {
-        var result = services.get(services.config.siteServiceUrl, 'Home/GetHomeProducts', { pageIndex });
+        var result = services.get<any[]>(services.config.siteServiceUrl, 'Home/GetHomeProducts', { pageIndex });
         result.then((data: Array<any>) => {
             return data;
         })

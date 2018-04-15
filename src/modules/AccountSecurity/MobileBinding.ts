@@ -94,7 +94,7 @@ class MobileBinding {
 
     private loadHtml(): JQueryDeferred<string> {
         if (this.html)
-            return $.Deferred().resolve(this.html);
+            return $.Deferred<string>().resolve(this.html);
 
         return this.loadHtmlDeferred;
     }

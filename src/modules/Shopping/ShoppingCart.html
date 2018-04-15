@@ -26,7 +26,6 @@
                             <a data-bind="attr:{href:'#Home_Product_' + ko.unwrap(ProductId)}" href="javascript:">
                                 <promotion-label params="value:ko.unwrap(Type)" style="display:inline;"></promotion-label>
                                 <span data-bind="text:Name,attr:{href:'#Home_Product_' + ko.unwrap(ProductId)}"></span>
-                                <span data-bind="visible:ko.unwrap(Score) > 0">（积分兑换）</span>
                             </a>
                         </div>
                         <div style="margin-top:10px;">
@@ -34,13 +33,6 @@
                                 <div>
                                     <span data-bind="money:Price" class="price"></span>
                                 </div>
-                                <div>
-                                    <span data-bind="visible:Score, text: ko.unwrap(Score)+'积分'"></span>
-                                </div>
-
-                                <!--<div data-bind="visible:Score">
-                                <span data-bind="text:Score" class="price"></span>
-                            </div>-->
                             </div>
                             <div class="pull-right">
                                 <div data-bind="visible:!ko.unwrap(IsGiven)" class="input-group" style="width:120px;">

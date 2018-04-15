@@ -43,7 +43,7 @@ class Model {
             if (site.env.isWeiXin) {
                 var openid = services['weixin'].openid();
 
-                var notify_url = services.config.weixinServiceUrl + 'WeiXin/RechargePurchase/' + services.config.appToken;
+                var notify_url = services.config.weixinServiceUrl + 'WeiXin/RechargePurchase/' + services.config.appId;
 
                 return services['weixin'].pay(openid, notify_url, out_trade_no, site.config.storeName, args.Amount).done(function () {
                     app.back();

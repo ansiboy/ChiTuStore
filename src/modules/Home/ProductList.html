@@ -28,7 +28,7 @@
     <div class="container products" data-bind="foreach: products" style="padding:0px;">
         <div class="col-xs-6 text-center item">
             <a data-bind="attr: { href: '#Home_Product_' + ko.unwrap(Id) }">
-                <img data-bind="attr: { src: ImageUrl }" class="img-responsive-80" />
+                <img data-bind="attr: { src: ImagePath }" class="img-responsive-80" />
                 <div class="small interception" style="margin-top: 8px;" data-bind="html: Name"></div>
                 <div class="small interception color-grey" data-bind="html: Unit"></div>
             </a>
